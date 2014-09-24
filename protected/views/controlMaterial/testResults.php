@@ -10,6 +10,7 @@
 /* @var $mark Array*/
 /* @var $answerContent Array*/
 /* @var $model UserControlMaterial*/
+/* @var $summWeight int */
 
 $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial);
 ?>
@@ -66,6 +67,7 @@ $this->renderPartial('/site/top');
                     </div>
 
                     <?php $i = 0; ?>
+                    <?php ?>
                     <?php foreach($questions as $item): ?>
                         <div class="text-block">
                             <div class="block-header">
@@ -95,7 +97,12 @@ $this->renderPartial('/site/top');
                                             <dd>0%</dd>
 
                                             <dt>Итого:</dt>
-                                            <dd>+0.00</dd>
+                                            <dd>
+                                                <?php
+                                                   $bonus = $mark[$i] * $questions[$i]->weight / $summWeight;
+                                                   echo "+".round($bonus,2);
+                                                ?>
+                                            </dd>
                                         </dl>
 
                                         <div class="clearfix"></div>
@@ -105,10 +112,7 @@ $this->renderPartial('/site/top');
                         </div>
                         <?php $i++; ?>
                     <? endforeach ?>
-
-
                 </div>
-
             </div>
             <?php
             $this->renderPartial('/site/bottom');

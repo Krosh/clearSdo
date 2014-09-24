@@ -179,16 +179,18 @@ class ControlMaterialController extends CController
         $model->dateEnd = date("Y-m-d H:i:s");
         $model->questions = $questionString;
         $totalMark = 0;
+        $summWeight = 0;
         for ($i = 0; $i<count($questions); $i++)
         {
+            $summWeight+= $questions[$i]->weight;
             $userAnswer = UserAnswer::model()->findAll('idUserControlMaterial = :idCur and idQuestion = :idQuestion', array(':idCur' => $currentTestGo,':idQuestion' => $questions[$i]->id));
             if ($userAnswer != null)
             {
                 $answerInfo = $questions[$i]->getMark($userAnswer[0]);
-                $totalMark+=$answerInfo['mark'];
+                $totalMark+=$answerInfo['mark']*$questions[$i]->weight;
             }
         }
-        $model->mark = (int)($totalMark/count($questions));
+        $model->mark = (int)($totalMark/$summWeight);
         $model->save();
         $this->redirect($this->createUrl('/controlMaterial/viewTestResults', array('id' => $model->id)));
     }
@@ -209,8 +211,10 @@ class ControlMaterialController extends CController
         }
         $answerContent = array();
         $mark = array();
+        $summWeight = 0;
         for ($i = 0; $i<count($questions); $i++)
         {
+            $summWeight+= $questions[$i]->weight;
             $userAnswer = UserAnswer::model()->findAll('idUserControlMaterial = :idCur and idQuestion = :idQuestion', array(':idCur' => $currentTestGo,':idQuestion' => $questions[$i]->id));
             if ($userAnswer != null)
             {
@@ -223,7 +227,7 @@ class ControlMaterialController extends CController
                 $answerContent[] = "";
             }
         }
-        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel));
+        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => $summWeight));
 
     }
 
