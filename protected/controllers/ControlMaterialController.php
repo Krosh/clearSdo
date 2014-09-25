@@ -74,7 +74,7 @@ class ControlMaterialController extends CController
         $test = ControlMaterial::model()->findByPk($currentTestGo->idControlMaterial);
         $addTimeValue = $test->dotime;
         $dateTime->modify("+$addTimeValue minute");
-        $dateTime->modify("+7 hour");
+        $dateTime->modify("-1 hour");
 
         // Так как у нас php<5.3 ТО передаем такой костыль
         $this->render('/question/viewQuestion', array('question' => $question, 'answers' => $answers, 'endTime' => $dateTime->format("U")));
@@ -133,7 +133,14 @@ class ControlMaterialController extends CController
                 return;
             };
         }
-        // TODO:: тут проверки на кончившееся время
+        // Проверка на окончание времени
+        $testModel = ControlMaterial::model()->findByPk(Yii::app()->session['currentTest']);
+        $goModel = UserControlMaterial::model()->findByPk(Yii::app()->session['currentTestGo']);
+        $time = strtotime(date("Y-m-d H:i:s"))-strtotime($goModel->dateStart)/60;
+        if ($time > $testModel->dotime)
+        {
+            $this->redirect($this->createUrl("/controlMaterial/endTest",array("reason" => 2)));
+        }
         // Отмечаем вопрос как отвеченный
         $currentQuestion = Yii::app()->session['currentQuestion'];
         $array = Yii::app()->session['flags'];
@@ -150,6 +157,11 @@ class ControlMaterialController extends CController
         {
             $this->redirect('/controlMaterial/endTest');
         }
+        $this->nextQuestion();
+    }
+
+    public function nextQuestion()
+    {
         $i = Yii::app()->session['currentQuestion'];
         do
         {
@@ -159,6 +171,11 @@ class ControlMaterialController extends CController
 
         Yii::app()->session['currentQuestion'] = $i;
         $this->redirect('/controlMaterial/question');
+    }
+
+    public function actionSkipQuestion()
+    {
+        $this->nextQuestion();
     }
 
 

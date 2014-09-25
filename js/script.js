@@ -68,4 +68,10 @@ $(document).ready(function(){
         window.location = $(this).data('href');
         return false;
     });
+
+    if ($('#timerSpan').length)
+    {
+        startTimer(document.getElementById("timerSpan"),window.endTime);
+    }
+
 });

@@ -43,11 +43,3 @@ function startTimer(obj, time)
     window.timerObj = obj;
     setTimeout(onTimer, 1);
 }
-
-/**
- * Created with JetBrains PhpStorm.
- * User: БОСС
- * Date: 26.01.14
- * Time: 12:25
- * To change this template use File | Settings | File Templates.
- */

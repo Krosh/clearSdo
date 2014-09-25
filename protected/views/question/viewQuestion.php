@@ -24,9 +24,9 @@ $this->renderPartial('/site/top');
                 </div>
                 <div class="col-6 right">
                     <i class="timer"></i>
-                    до конца теста осталось: <span id = "timerSpan" class="red">14:59</span>
+                    до конца теста осталось: <span id = "timerSpan" class="red"></span>
                     <script>
-                        startTimer(document.getElementById("timerSpan"),'<?php echo date("Y-m-d H:i:s",$endTime )?>');
+                        window.endTime = "<?php echo date("Y-m-d H:i:s",$endTime )?>";
                     </script>
                 </div>
             </div>
@@ -35,7 +35,7 @@ $this->renderPartial('/site/top');
                     <div class="block-header">
                         <div class="col-group">
                             <div class="col-10"><?php echo $question->content;?></div>
-                            <div class="col-2 right"><div class="test-stat"><?php echo Yii::app()->session['currentQuestion']?>/<?php echo Yii::app()->session['totalQuestions']?></div></div>
+                            <div class="col-2 right"><div class="test-stat"><?php echo (Yii::app()->session['currentQuestion']+1)?>/<?php echo Yii::app()->session['totalQuestions']?></div></div>
                         </div>
                     </div>
                     <div class="block-content">
@@ -76,7 +76,7 @@ $this->renderPartial('/site/top');
 
                 <div class="test-submit">
                     <button type="submit" class="btn green">Ответить</button>
-                    <a href="#" class="btn gray">Пропустить</a>
+                    <a href="/controlMaterial/skipQuestion" class="btn gray">Пропустить</a>
                 </div>
             </form>
 
