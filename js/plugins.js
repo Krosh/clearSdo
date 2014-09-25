@@ -1,6 +1,6 @@
 (function ( $ ) {
 
-    // Ð›Ð¾Ð°Ð´ÐµÑ€ - Ð°Ð½Ð¸Ð¼Ð°ÑˆÐºÐ° Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸
+    // Лоадер - анимашка загрузки
     $.fn.loader = function(callback) {
         var self = this;
         
@@ -22,7 +22,7 @@
     };
     
     
-    // ÐšÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€ Ð”Ñ€Ð¾Ð¿Ð´Ð°ÑƒÐ½Ð¾Ð²
+    // Контроллер Дропдаунов
     $.fn.dropdown = function() {
         var t = this;
         
@@ -32,27 +32,31 @@
         });
 
         this.click(function(e) {
-            e.preventDefault();
             
-            var self = $(this);
-            var dContainer = self.find(".dropdown-container");
-            
-            $(".dropdown").not(self).removeClass("active");
-            $(".dropdown-container").not(dContainer).removeClass("fadeInDown").fadeOut(150);
-            
-            if(!self.hasClass("active")) {
-                dContainer.show().addClass("fadeInDown");
-                self.addClass("active");
+            if($(e.target).is("a")) {
+                return true;
             } else {
-                self.removeClass("active");
-                dContainer.removeClass("fadeInDown").fadeOut(150);
+                e.preventDefault();
+                
+                var self = $(this);
+                var dContainer = self.find(".dropdown-container");
+                
+                $(".dropdown").not(self).removeClass("active");
+                $(".dropdown-container").not(dContainer).removeClass("fadeInDown").fadeOut(150);
+                
+                if(!self.hasClass("active")) {
+                    dContainer.show().addClass("fadeInDown");
+                    self.addClass("active");
+                } else {
+                    self.removeClass("active");
+                    dContainer.removeClass("fadeInDown").fadeOut(150);
+                }
+                return false;   
             }
-            
-            return false;
         });
     };
     
-    // ÐÐ°Ð²Ð¸Ð³Ð°Ñ†Ð¸Ñ
+    // Навигация
     $.fn.nav = function() {
         
         this.click(function(){
@@ -60,7 +64,7 @@
         });
     };
     
-    // Ð¤ÑƒÑ‚ÐµÑ€
+    // Футер
     $.fn.footer = function() {
         var docHeight = $(window).height();
         var footerHeight = this.height();
@@ -72,7 +76,7 @@
         }
     };
     
-    // Ð›Ð¾Ð³Ð¾
+    // Лого
     $.fn.logo = function() {
         
         this.hover(function() {

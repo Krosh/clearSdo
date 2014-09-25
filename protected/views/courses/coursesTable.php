@@ -11,18 +11,38 @@
 ?>
 <table class="all-courses">
 <?php
-foreach ($courses as $item)
-{
-echo '<tr>
-    <td>
-        <a href="#"><span>'.$item->title.'</span></a>
-    </td>
-    <td>
-        <div class="right">
-            <a href="/viewCourse?idCourse='.$item->id.'">Перейти на страницу курса</a>
-        </div>
-    </td>
-</tr>';
+foreach ($courses as $item) {
+?>
+
+<tr data-href="/viewCourse?idCourse=<?=$item->id?>">
+	<td width="77%">
+	    <div class="page-title"><?=$item->title?></div>
+    	<div class="page-subtitle">Преподаватели: </div>
+    	
+    	<div class="progress-bar">
+            <div class="progress-bar-title">Прогресс курса: <span>0/12</span> выполнено</div>
+            
+            <div class="progress-out">
+                <div class="progress-in" style="width: 0%"></div>
+            </div>
+            
+    	</div>
+	</td>
+	<td>
+    	<div class="right">
+        	<div class="course-icons">
+        	    <div class="course-icon">
+            	    <i class="fa fa-file-text"></i> <a href="#"><strong>0</strong> новых файлов</a>
+        	    </div>
+                <div class="course-icon">
+                    <i class="fa fa-wechat"></i><a href="#"><strong>0</strong> новых сообщений</a>
+                </div>
+        	</div>
+    	</div>
+	</td>
+</tr>
+
+<?
 }
 ?>
 </table>
