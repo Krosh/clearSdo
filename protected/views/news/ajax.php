@@ -23,10 +23,11 @@ $count = min(count($index["TITLE"])-1,$MAX_NEWS_COUNT);
     $text = str_replace("<br>"," ",$text);
     $text = strip_tags($text);
     $text = str_replace("Читать дальше","",$text);
-    $time = DateTime::createFromFormat(DateTime::RSS, $element[$index["PUBDATE"][$i+1]]["value"]);
+ //   $time = date("D, d M Y H:i:s O",$element[$index["PUBDATE"][$i+1]]["value"]);
+    $time = strtotime($element[$index["PUBDATE"][$i+1]]["value"]);
     ?>
     <div class="sidebar-small-item">
         <a href="<?php $element[$index["LINK"][$i+1]]["value"]; ?>"><?php echo $text?></a>
-        <div class="description"><i><?php echo $time->format("d.m.Y")?></i></div>
+        <div class="description"><i><?php echo date("d.m.Y",$time)?></i></div>
     </div>
 <?php endfor; ?>
