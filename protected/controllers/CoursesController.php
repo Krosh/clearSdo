@@ -5,6 +5,13 @@
  */
 class CoursesController extends CController
 {
+    public function filters()
+    {
+        return array(
+            array('application.filters.TimezoneFilter')
+        );
+    }
+
     public function actionGetCourses()
     {
         $idTerm = $_POST['idTerm'];

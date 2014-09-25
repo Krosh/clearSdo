@@ -7,6 +7,14 @@ class SiteController extends CController
 {
     public $layout = "/layouts/main";
 
+
+    public function filters()
+    {
+        return array(
+            array('application.filters.TimezoneFilter')
+        );
+    }
+
     public function actionLogout()
     {
         Yii::app()->user->logout();

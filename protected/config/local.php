@@ -13,7 +13,8 @@ return array(
 	'name'=>'SDO Stimul v 2.0',
 	//'defaultController'=>'site',
 	'params' => array(
-        roles => array ('2' => 'Администратор', '0' => 'Студент', '1' => 'Преподаватель'),
+        'timezone' => "Asia/Omsk",
+        'roles' => array ('2' => 'Администратор', '0' => 'Студент', '1' => 'Преподаватель'),
     ),
     'import'=>array(
         'application.models.*',

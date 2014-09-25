@@ -4,6 +4,14 @@ class ControlMaterialController extends CController
 {
     public $layout = "/layouts/main";
 
+    public function filters()
+    {
+        return array(
+            array('application.filters.TimezoneFilter')
+        );
+    }
+
+
     public function actionStartTest($idTest)
     {
         // TODO:: Генерация последовательности вопросов в зависимости от настроек теста
@@ -74,7 +82,6 @@ class ControlMaterialController extends CController
         $test = ControlMaterial::model()->findByPk($currentTestGo->idControlMaterial);
         $addTimeValue = $test->dotime;
         $dateTime->modify("+$addTimeValue minute");
-        $dateTime->modify("-1 hour");
 
         // Так как у нас php<5.3 ТО передаем такой костыль
         $this->render('/question/viewQuestion', array('question' => $question, 'answers' => $answers, 'endTime' => $dateTime->format("U")));
@@ -136,7 +143,7 @@ class ControlMaterialController extends CController
         // Проверка на окончание времени
         $testModel = ControlMaterial::model()->findByPk(Yii::app()->session['currentTest']);
         $goModel = UserControlMaterial::model()->findByPk(Yii::app()->session['currentTestGo']);
-        $time = strtotime(date("Y-m-d H:i:s"))-strtotime($goModel->dateStart)/60;
+        $time = (strtotime(date("Y-m-d H:i:s"))-strtotime($goModel->dateStart))/60;
         if ($time > $testModel->dotime)
         {
             $this->redirect($this->createUrl("/controlMaterial/endTest",array("reason" => 2)));
