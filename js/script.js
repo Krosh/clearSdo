@@ -74,4 +74,19 @@ $(document).ready(function(){
         startTimer(document.getElementById("timerSpan"),window.endTime);
     }
 
+    if ($('#news-content').length)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/news/news",
+            success: function(data)
+            {
+                $("#news-content").html(data);
+            },
+            error: function()
+            {
+                alert("Ошибка при загрузке новостей");
+            }
+        });
+    }
 });

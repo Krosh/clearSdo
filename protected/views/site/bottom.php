@@ -20,29 +20,8 @@
             </div>
         </div>
 
-        <div class="sidebar-item">
-            <div class="sidebar-title">
-                Новости
-            </div>
-            <div class="sidebar-content">
-                <div class="sidebar-small-item">
-                    <a href="#">День танкиста в АлтГТУ им. И.И. Ползунова</a>
-                    <div class="description"><i>13 сентября 2014</i></div>
-                </div>
-                <div class="sidebar-small-item">
-                    <a href="#">День танкиста в АлтГТУ им. И.И. Ползунова</a>
-                    <div class="description"><i>13 сентября 2014</i></div>
-                </div>
-                <div class="sidebar-small-item">
-                    <a href="#">День танкиста в АлтГТУ им. И.И. Ползунова</a>
-                    <div class="description"><i>13 сентября 2014</i></div>
-                </div>
-                <div class="sidebar-small-item">
-                    <a href="#">День танкиста в АлтГТУ им. И.И. Ползунова</a>
-                    <div class="description"><i>13 сентября 2014</i></div>
-                </div>
-            </div>
-        </div>
+        <?php $this->renderPartial("/news/block") ?>
+
 
         <div class="sidebar-item">
             <div class="sidebar-title">

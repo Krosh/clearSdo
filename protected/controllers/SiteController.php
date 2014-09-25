@@ -66,4 +66,5 @@ class SiteController extends CController
         $this->render('viewCourse', array('model' => $course));
     }
 
+
 }
