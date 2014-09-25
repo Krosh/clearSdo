@@ -73,7 +73,11 @@
         if (footerTop < docHeight) {
             //this.css('margin-top', (docHeight - footerTop) + 'px');
             this.addClass("fixed");
+        } else {
+            this.removeClass("fixed");
         }
+        
+        //console.log(footerTop + " < " + docHeight);
     };
     
     // Лого

@@ -23,13 +23,13 @@ return array(
     ),
 	 
 	'components'=>array(
-			'db'=>array(
-		            'class'=>'system.db.CDbConnection',
-		            'connectionString'=>'mysql:host=db36.valuehost.ru;dbname=mvtom_stml2',
-		            'username'=>'mvtom_stml2',
-		            'password'=>'perchik',
-		            'charset'=>'utf8'
-		        ),
+		'db'=>array(
+            'class'=>'system.db.CDbConnection',
+            'connectionString'=>'mysql:host=db36.valuehost.ru;dbname=mvtom_stml2',
+            'username'=>'mvtom_stml2',
+            'password'=>'perchik',
+            'charset'=>'utf8'
+        ),
         'authManager' => array(
             // Будем использовать свой менеджер авторизации
             'class' => 'PhpAuthManager',

@@ -1218,11 +1218,16 @@ table.all-courses tr:hover td {
   display: inline-block;
   vertical-align: top;
 }
-.course-icons a {
-  margin-left: 6px;
-}
 .course-icons .course-icon {
   margin-bottom: 7px;
+}
+.course-icons .course-icon .ci {
+  display: inline-block;
+  width: 11px;
+}
+.course-icons .course-icon a {
+  margin-left: 6px;
+  display: inline-block;
 }
 .sidebar {
   background: #ecf0f1;
