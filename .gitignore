@@ -1,4 +1,4 @@
 framework/
 img/
 protected/config/local.php
-.idea/
+/.idea/
