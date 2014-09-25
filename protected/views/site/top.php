@@ -13,12 +13,14 @@
         <div class="col-group">
             <div class="col-7 col-mb-3">
                 <div class="logo">
-                    <img src="../../img/logo-small.png" alt="">
-                    <span>Интерактивная<br>Образовательная<br>Среда</span>
+                    <a href="/">
+                        <img src="/img/logo-small.png" alt="">
+                        <span>Стимул</span>
+                    </a>
                 </div>
                 <nav>
                     <div class="small-nav">
-                        <a href="/"><img src="../../img/icon-menu.png" alt=""></a>
+                        <a href="/"><img src="/img/icon-menu.png" alt=""></a>
                     </div>
                     <div class="big-nav">
                         <a href="/" class="active">Главная</a>
@@ -62,7 +64,7 @@
                         </div>
                     </div>
                     <div class="avatar">
-                        <img src="../../img/avatar-default.png" alt="">
+                        <img src="/img/avatar-default.png" alt="">
                     </div>
                 </div>
             </div>

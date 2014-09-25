@@ -43,9 +43,9 @@ $this->renderPartial('top');
                                     ?>
                                 </div>
                             </div>
-
                         </div>
                         <div class="col-6 right">
+                            <i class="fa fa-refresh fa-spin fa-loading-icon"></i>
                             <a href="#" class="page-print"><i class="print"></i> <span>Версия для печати</span></a>
                         </div>
                     </div>

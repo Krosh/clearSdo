@@ -8,9 +8,12 @@
 
 <div class="login">
     <div class="center">
-        <div class="logo"><img src="img/logo-big.png" alt=""></div>
-        <h1>Интерактивная Образовательная Среда</h1>
-        <h2>Алтайский государственный технический университет им. И.И. Ползунова</h2>
+        <div class="logo">
+            <img src="/img/logo-big.png" alt="">
+            <span>Стимул</span>
+        </div>
+        <h2>Интерактивная Образовательная Среда</h2>
+        <h3>Алтайский государственный технический университет им. И.И. Ползунова</h3>
     </div>
 
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -35,6 +38,6 @@
     <div class="center"><a href="#">Забыли пароль?</a></div>
     <?php $this->endWidget(); ?>
 
-    <div class="copyright">Copyright © 2008-2013, все права защищены <a href="#">СДО Стимул</a></div>
+    <div class="copyright">Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a></div>
 </div>
 

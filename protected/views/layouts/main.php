@@ -6,7 +6,7 @@
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Стимул</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="js/less-1.7.5.min.js"></script> -->
 
     <link rel="shortcut icon" href="img/favicons/favicon.ico" type="image/x-icon" />

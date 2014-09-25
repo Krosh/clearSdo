@@ -5,10 +5,18 @@ function loadCourses(idTerm,newTitle)
         url: '/courses/getCourses',
         data: {idTerm: idTerm},
         type: "POST",
+        beforeSend: function() {
+            $(".fa-loading-icon").fadeIn(100);
+        },
         success: function(data)
         {
-            $("#currentTermTitle").html(newTitle);
-            $("#ajaxCoursesDiv").html(data);
+            $("#ajaxCoursesDiv").fadeOut(300, function() {
+                $("#currentTermTitle").html(newTitle);
+                $("#ajaxCoursesDiv").html(data); 
+                $("#ajaxCoursesDiv").fadeIn(300, function() {
+                    $(".fa-loading-icon").fadeOut(100);
+                });
+            });
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -60,13 +68,21 @@ $(document).ready(function(){
             }
         }
     });
-    if (window.currentTerm !== undefined)
-    {
+    
+    // Переход у таблиц по data-href
+    if (window.currentTerm !== undefined) {
         loadCourses(window.currentTerm);
     }
-    $('[data-href]').click(function(){
+    
+    $(document).on("click", '[data-href]', function() {
         window.location = $(this).data('href');
         return false;
+    });
+        
+    $(document).on("click", "[data-href] a", function(e) {
+       e.preventDefault();
+       
+       return false;
     });
 
     if ($('#timerSpan').length)
