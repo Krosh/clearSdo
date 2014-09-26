@@ -21,10 +21,13 @@ function loadCourses(idTerm,newTitle)
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        complete: function() {
+            //$("footer").footer();
         }
     });
-
 }
+
 $(document).ready(function(){
     
     // Запуск лоадера, скрываем элемент
@@ -45,7 +48,7 @@ $(document).ready(function(){
     $(".tabbed").tabber();
     
     // Футер
-    $("footer").footer();
+    //$("footer").footer();
     
     // Лого
     //$(".logo").logo();
@@ -95,9 +98,13 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "/news/news",
+            beforeSend: function() {
+                $("#news-content").hide();
+            },
             success: function(data)
             {
                 $("#news-content").html(data);
+                $("#news-content").fadeIn(200);
             },
             error: function()
             {
