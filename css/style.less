@@ -3,6 +3,7 @@
 @import url("animations.less");
 @import url("http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=cyrillic-ext,latin-ext,latin,cyrillic");
 @import url("fonts/fonts.css");
+@import url("fonts/fileicon.css");
 @import url("plugins/jquery.fs.picker.css");
 @import url("plugins/jquery.fs.tabber.css");
 @import url("http://cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
@@ -461,13 +462,16 @@ menu {
     }
 }
 
+tr[data-href] {
+    cursor: pointer;
+}
+
 table.all-courses {
     width: 100%;
     border-collapse: separate; 
     border-spacing: 0 15px;
     
     tr {
-        cursor: pointer;
             
         td {
             font-size: 13px;
@@ -915,7 +919,7 @@ h2 {
             td {
                 border-bottom: 1px solid #edf0f1;
                 vertical-align: middle;
-                padding: 10px 0;
+                padding: 20px 0;
                 
                 color: #354050;
                 
@@ -932,7 +936,7 @@ h2 {
     
     .title {
         font-weight: bold;
-        padding-left: 30px;
+        padding: 10px 0 10px 30px;
     }
     
     &.green {

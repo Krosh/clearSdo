@@ -49,7 +49,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                     <th>Вопросов</th>
                     <th>Время</th>
                     <th>Попыток</th>
-                    <th width="20%">Дата</th>
+                    <th width="20%"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,13 +62,13 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         <?php
                         if ($item->question_show_count == -1) $showCount = count(Question::getQuestionsByControlMaterial($item->id)); else $showCount = $mat->question_show_count;
                         ?>
-                        <td class="center"><?php echo $showCount ?></td>
-                        <td class="center"><?php echo $item->dotime?></td>
+                        <td class="center"><?php echo $showCount == "" ? "—" : $showCount ?></td>
+                        <td class="center"><?php echo $item->dotime == "" ? "—" : $item->dotime ?></td>
                         <?php
                         $tries = UserControlMaterial::model()->findAll('idUser = :idUser and idControlMaterial = :idControlMaterial', array(':idUser' => Yii::app()->user->getId(), ':idControlMaterial' => $item->id));
                         $countTries = count($tries);
                         ?>
-                        <td class="center"><?php echo $countTries?>/<?php echo ($item->try_amount == -1?'Неограниченно':$item->try_amount)?></td>
+                        <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
                         <?php
                         $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :idControlMaterial AND idGroup = NULL', array(':idControlMaterial' => $item->id));
                         if ($access == null)
@@ -105,34 +105,37 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
             <h2>Учебные материалы</h2>
             <table class="table green">
                 <thead>
-                <tr>
-                    <th>№</th>
-                    <th width="40%" class="left">Название</th>
-                    <th>Расширение</th>
-                    <th>Размер </th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th colspan="2" width="70%" class="left">Файл</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <?php
-                $i = 1;
                 $learnMaterials = LearnMaterial::getMaterialsFromCourse($model->id);
                 ?>
                 <?php foreach ($learnMaterials as $item):?>
-                    <tr>
+                    <? if($item->category != MATERIAL_TITLE) { ?>
+                        <tr data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
+                    <? } else { ?>
+                        <tr>
+                    <? } ?>
+                    
                         <?php if ($item->category == MATERIAL_TITLE):?>
-                            <td class="title" colspan="5">
-                                <?php echo $item->title; ?>
+                            <td class="title" colspan="2">
+                                <!-- <i class="fileicon-file"></i> -->
+                                <?= $item->title;?>
                             </td>
                         <? else: ?>
-                            <td class="center"><?php echo $i; ?></td>
-                            <td><?php echo $item->title; ?></td>
-                            <td class="center">
-                                <?php $path = "" ?>
-                                <?php if ($item->category==MATERIAL_FILE) $path = pathinfo($item->path, PATHINFO_EXTENSION)?>
-                                <?php echo $path?>
+                            <td>
+                                <?
+                                    $path = "";
+                                    if ($item->category==MATERIAL_FILE) {
+                                        $path = pathinfo($item->path, PATHINFO_EXTENSION);
+                                    }
+                                    echo '<i class="fileicon-'.$path.'"></i>' . $item->title;
+                                ?>
                             </td>
-                            <td class="center">
+                            <td class="right">
                                 <?php
                                 $sizeText = "";
                                 if ($item->category == MATERIAL_FILE)
@@ -143,7 +146,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                     do
                                     {
                                         $sizeText = $size.$sizePrefixxes[$i];
-                                        $i += 1;
+                                        $i++;
                                         $size = floor($size/1024);
                                     } while ($size>0);
                                 }
@@ -151,13 +154,9 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                 ?>
 
                             </td>
-                            <td class="right"><a href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">Скачать</a></td>
-                            <?php $i++; ?>
                         <? endif; ?>
                     </tr>
                 <?php endforeach; ?>
-                <tr>
-                </tr>
                 </tbody>
             </table>
         </div>

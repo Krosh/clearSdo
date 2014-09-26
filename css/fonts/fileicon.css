@@ -1,0 +1,120 @@
+@font-face {
+	font-family: "fileicon";
+	src: url("fileicon.eot");
+	src: url("fileicon.eot#iefix") format("embedded-opentype"),
+	url("fileicon.woff") format("woff"),
+	url("fileicon.ttf") format("truetype"),
+	url("fileicon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="fileicon-"]:before, [class*=" fileicon-"]:before,
+[class^="fileicon-"]:after, [class*=" fileicon-"]:after {   
+	font-family: fileicon;
+    font-size: 30px;
+    font-style: normal;
+    margin-right: 4px;
+    vertical-align: sub;
+}.fileicon-7z:before {
+	content: "\e000";
+}
+.fileicon-avi:before {
+	content: "\e001";
+}
+.fileicon-dmg:before {
+	content: "\e002";
+}
+.fileicon-doc:before {
+	content: "\e003";
+}
+.fileicon-docx:before {
+	content: "\e004";
+}
+.fileicon-exe:before {
+	content: "\e005";
+}
+.fileicon-file:before {
+	content: "\e006";
+	font-size: 17px !important;
+}
+.fileicon-flv:before {
+	content: "\e007";
+}
+.fileicon-gif:before {
+	content: "\e008";
+}
+.fileicon-html:before {
+	content: "\e009";
+}
+.fileicon-iso:before {
+	content: "\e00a";
+}
+.fileicon-jar:before {
+	content: "\e00b";
+}
+.fileicon-jpg:before {
+	content: "\e00c";
+}
+.fileicon-mov:before {
+	content: "\e00d";
+}
+.fileicon-mp3:before {
+	content: "\e00e";
+}
+.fileicon-mp4:before {
+	content: "\e00f";
+}
+.fileicon-mpg:before {
+	content: "\e010";
+}
+.fileicon-msi:before {
+	content: "\e011";
+}
+.fileicon-pdf:before {
+	content: "\e012";
+}
+.fileicon-pkg:before {
+	content: "\e013";
+}
+.fileicon-png:before {
+	content: "\e014";
+}
+.fileicon-ppt:before {
+	content: "\e015";
+}
+.fileicon-pptx:before {
+	content: "\e016";
+}
+.fileicon-rar:before {
+	content: "\e017";
+}
+.fileicon-rtf:before {
+	content: "\e018";
+}
+.fileicon-swf:before {
+	content: "\e019";
+}
+.fileicon-torrent:before {
+	content: "\e01a";
+}
+.fileicon-txt:before {
+	content: "\e01b";
+}
+.fileicon-wav:before {
+	content: "\e01c";
+}
+.fileicon-wma:before {
+	content: "\e01d";
+}
+.fileicon-wmv:before {
+	content: "\e01e";
+}
+.fileicon-xls:before {
+	content: "\e01f";
+}
+.fileicon-xlsx:before {
+	content: "\e020";
+}
+.fileicon-zip:before {
+	content: "\e021";
+}
