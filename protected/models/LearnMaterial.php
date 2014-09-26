@@ -12,6 +12,7 @@
  */
 class LearnMaterial extends CActiveRecord
 {
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -45,7 +46,8 @@ class LearnMaterial extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
         return array(
-            'courses'=>array(self::MANY_MANY, 'Course', 'tbl_coursesMaterial(idMaterial,idCourse)'),
+//            'courses'=>array(self::MANY_MANY, 'Course', 'tbl_coursesmaterials(idMaterial,idCourse)'),
+            // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
         );
 	}
 
@@ -92,6 +94,20 @@ class LearnMaterial extends CActiveRecord
 		));
 	}
 
+    static public function getMaterialsFromCourse($idCourse)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse',$idCourse);
+        $criteria->order = "zindex";
+        $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
+        $result = array();
+        foreach ($coursesMaterials as $item)
+        {
+            $result[] = LearnMaterial::model()->findByPk($item->idMaterial);
+        }
+        return $result;
+    }
+
 
     public function getPathToMaterial()
     {
@@ -137,6 +153,7 @@ class LearnMaterial extends CActiveRecord
         {
             $this->deleteDocument();
         }
+        CoursesMaterial::model()->deleteAll("idMaterial = :id",array("id" => $this->id));
     }
 
     public function deleteDocument()

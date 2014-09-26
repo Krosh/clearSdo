@@ -46,7 +46,8 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
         return array(
-            'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesMaterial(idCourse,idMaterial)'),
+      //      'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesmaterials(idCourse,idMaterial)'),
+      // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
         );
 	}
 
