@@ -1070,6 +1070,7 @@ header .user .avatar img {
 a.caret-link {
   color: #000;
   text-decoration: none;
+  display: inline-block;
 }
 a.caret-link span {
   margin-right: 3px;
