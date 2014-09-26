@@ -84,17 +84,15 @@ $(document).ready(function(){
         
     $(document).on("click", "[data-href] a", function(e) {
        e.preventDefault();
-       
+       window.location = $(this).attr('href');
        return false;
     });
 
-    if ($('#timerSpan').length)
-    {
+    if ($('#timerSpan').length) {
         startTimer(document.getElementById("timerSpan"),window.endTime);
     }
 
-    if ($('#news-content').length)
-    {
+    if ($('#news-content').length) {
         $.ajax({
             type: "POST",
             url: "/news/news",
