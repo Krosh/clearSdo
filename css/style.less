@@ -199,6 +199,15 @@ span {
     nav {
         display: inline-block;
         
+        .link {
+            display: inline-block;
+            
+            &.active > a, &:hover > a {
+                color: #8a8c8d;
+                background: @lightblue;
+            }
+        }
+        
         .big-nav a {
             display: inline-block;
             height: 51px;
@@ -208,19 +217,53 @@ span {
             color: #000;
             
             margin-left: -4px;
-            
-            &.active, &:hover {
-                color: #8a8c8d;
-                background: @lightblue;
-            }
         }
         
         .small-nav {
             display: none;
             
-            a {
+            .link {
                 vertical-align: sub;
                 margin-left: 10px;
+            }
+        }
+        
+        
+        .more {
+            position: relative;
+            
+            .more-menu {
+                display: none;
+                .transition(all, .2s);
+                width: 150%;
+                box-shadow: 0px 6px 5px -1px rgba(0,0,0,.2);
+                position: absolute;
+                left: -4px;
+                background: #fff;
+                    
+                a {
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-left: 0 !important;
+                    
+                    text-align: center;
+                    
+                    &.active, &:hover {
+                        color: #8a8c8d;
+                        background: @lightblue;
+                    }
+                }
+                
+                .more-menu-links {
+                    position: relative;
+                    width: 100%;
+                }
+            }
+            
+            &:hover {
+                .more-menu {
+                    display: block;
+                }
             }
         }
     }
@@ -1421,8 +1464,10 @@ textarea {
     }
 }
 
-@media (max-width: 1140px) {
+@media (max-width: 1280px) {
     header {
+        padding-top: 5px;
+        
         .search {
             display: none;
         }
@@ -1432,10 +1477,22 @@ textarea {
             
             .small-nav {
                 display: block !important;
+                z-index: 10;
+                cursor: pointer;
+                
+                &:hover {
+                    opacity: .8;
+                }
+                   
+                img {
+                    vertical-align: text-top;
+                }
             }
             
             .big-nav {
                 display: none !important;
+                
+                z-index: 9;
                 
                 position: absolute;
                 background: #fff;
@@ -1452,6 +1509,12 @@ textarea {
                     width: 100px;
                     margin: 0 !important;
                 }
+            }
+            
+            .more-menu {
+                left: 100% !important;
+                top: 0 !important;
+                margin-left: 0 !important;
             }
         }
     }

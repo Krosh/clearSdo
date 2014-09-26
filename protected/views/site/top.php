@@ -20,14 +20,34 @@
                 </div>
                 <nav>
                     <div class="small-nav">
-                        <a href="/"><img src="/img/icon-menu.png" alt=""></a>
+                        <img src="/img/icon-menu.png" alt="">
                     </div>
                     <div class="big-nav">
-                        <a href="/" class="active">Главная</a>
-                        <a href="#">Общение</a>
-                        <a href="#">Документы</a>
-                        <a href="#">Обучение</a>
-                        <a href="#">Форум</a>
+                        <div class="link active">
+                            <a href="/">Главная</a>
+                        </div>
+                        <div class="link">
+                            <a href="#">Общение</a>
+                        </div>
+                        <div class="link">
+                            <a href="#">Документы</a>
+                        </div>
+                        <div class="link">
+                            <a href="#">Обучение</a>
+                        </div>
+                        <div class="link">
+                            <a href="#">Форум</a>
+                        </div>
+                        <div class="link more">
+                            <a href="#">Справочники</a>
+                            <div class="more-menu">
+                                <div class="more-menu-links">
+                                    <a href="#">Группы</a>
+                                    <a href="#">Пользователи</a>
+                                    <a href="#">Периоды</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </div>

@@ -953,6 +953,14 @@ header .logo a {
 header nav {
   display: inline-block;
 }
+header nav .link {
+  display: inline-block;
+}
+header nav .link.active > a,
+header nav .link:hover > a {
+  color: #8a8c8d;
+  background: #ecf0f1;
+}
 header nav .big-nav a {
   display: inline-block;
   height: 51px;
@@ -962,17 +970,46 @@ header nav .big-nav a {
   color: #000;
   margin-left: -4px;
 }
-header nav .big-nav a.active,
-header nav .big-nav a:hover {
-  color: #8a8c8d;
-  background: #ecf0f1;
-}
 header nav .small-nav {
   display: none;
 }
-header nav .small-nav a {
+header nav .small-nav .link {
   vertical-align: sub;
   margin-left: 10px;
+}
+header nav .more {
+  position: relative;
+}
+header nav .more .more-menu {
+  display: none;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  width: 150%;
+  box-shadow: 0px 6px 5px -1px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: -4px;
+  background: #fff;
+}
+header nav .more .more-menu a {
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 0 !important;
+  text-align: center;
+}
+header nav .more .more-menu a.active,
+header nav .more .more-menu a:hover {
+  color: #8a8c8d;
+  background: #ecf0f1;
+}
+header nav .more .more-menu .more-menu-links {
+  position: relative;
+  width: 100%;
+}
+header nav .more:hover .more-menu {
+  display: block;
 }
 header .search {
   height: 51px;
@@ -1933,7 +1970,10 @@ textarea:active {
     width: 100px !important;
   }
 }
-@media (max-width: 1140px) {
+@media (max-width: 1280px) {
+  header {
+    padding-top: 5px;
+  }
   header .search {
     display: none;
   }
@@ -1942,9 +1982,18 @@ textarea:active {
   }
   header nav .small-nav {
     display: block !important;
+    z-index: 10;
+    cursor: pointer;
+  }
+  header nav .small-nav:hover {
+    opacity: .8;
+  }
+  header nav .small-nav img {
+    vertical-align: text-top;
   }
   header nav .big-nav {
     display: none !important;
+    z-index: 9;
     position: absolute;
     background: #fff;
     text-align: center;
@@ -1958,6 +2007,11 @@ textarea:active {
   header nav .big-nav a {
     width: 100px;
     margin: 0 !important;
+  }
+  header nav .more-menu {
+    left: 100% !important;
+    top: 0 !important;
+    margin-left: 0 !important;
   }
 }
 @media (max-width: 767px) {
