@@ -7,6 +7,7 @@ class UserController extends CController
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/main';
+    public $noNeedJquery = false;
 
 	/**
 	 * @return array action filters
@@ -110,6 +111,7 @@ class UserController extends CController
 	 */
 	public function actionAdmin()
 	{
+        $this->noNeedJquery = true;
 		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['User']))
