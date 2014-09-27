@@ -50,7 +50,7 @@ class Group extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'Title' => 'Title',
+			'Title' => 'Название',
 		);
 	}
 

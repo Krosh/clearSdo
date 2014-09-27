@@ -19,7 +19,12 @@ class WebUser extends CWebUser {
 
     function isStudent()
     {
-        return ($user->role == 0);
+        return ($this->getRole() == 0);
+    }
+
+    function isAdmin()
+    {
+        return ($this->getRole() == 2);
     }
 
     function getRole() {

@@ -38,16 +38,18 @@
                         <div class="link">
                             <a href="#">Форум</a>
                         </div>
-                        <div class="link more">
-                            <a href="#">Справочники</a>
-                            <div class="more-menu">
-                                <div class="more-menu-links">
-                                    <a href="#">Группы</a>
-                                    <a href="#">Пользователи</a>
-                                    <a href="#">Периоды</a>
+                        <?php if (Yii::app()->user->isAdmin()):?>
+                            <div class="link more">
+                                <a href="#">Справочники</a>
+                                <div class="more-menu">
+                                    <div class="more-menu-links">
+                                        <a href="<?php echo $this->createUrl("group/admin")?>">Группы</a>
+                                        <a href="<?php echo $this->createUrl("user/admin")?>">Пользователи</a>
+                                        <a href="<?php echo $this->createUrl("term/admin")?>">Периоды</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <? endif; ?>
                     </div>
                 </nav>
             </div>

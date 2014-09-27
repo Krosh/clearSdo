@@ -8,13 +8,16 @@ define("MATERIAL_TORRENT", 3);
 define("MATERIAL_TITLE", 4);
 define("MATERIAL_TEST", 5);
 
+define("ROLE_STUDENT",0);
+define("ROLE_TEACHER",1);
+define("ROLE_ADMIN",2);
 
 return array(
 	'name'=>'SDO Stimul v 2.0',
 	//'defaultController'=>'site',
 	'params' => array(
         'timezone' => "Asia/Omsk",
-        'roles' => array ('2' => 'Администратор', '0' => 'Студент', '1' => 'Преподаватель'),
+        'roles' => array (ROLE_ADMIN => 'Администратор', ROLE_STUDENT => 'Студент', ROLE_TEACHER => 'Преподаватель'),
     ),
     'import'=>array(
         'application.models.*',
@@ -23,6 +26,7 @@ return array(
     ),
 	 
 	'components'=>array(
+
 		'db'=>array(
             'class'=>'system.db.CDbConnection',
             'connectionString'=>'mysql:host=db36.valuehost.ru;dbname=mvtom_stml2',

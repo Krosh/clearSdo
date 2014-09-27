@@ -66,5 +66,11 @@ class SiteController extends CController
         $this->render('viewCourse', array('model' => $course));
     }
 
+    public function actionConfig()
+    {
+        $config = Config::model()->findByPk(1);
+        $this->render('config',array("config" => $config));
+    }
+
 
 }

@@ -1,4 +1,11 @@
 <?php header("Content-Type: text/html; charset=UTF-8");?>
+<?php
+$cs=Yii::app()->clientScript;
+$cs->scriptMap=array(
+    'jquery.js'=>false,
+    'jquery.ui.js' => false,
+);?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -17,7 +24,9 @@
     <link rel="apple-touch-icon" sizes="144x144" href="../../img/favicons/apple-touch-icon-144x144.png" />
 </head>
 <?php echo $content;  ?>
+<?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
 <script src="../../js/jquery-2.1.1.min.js"></script>
+<?php endif; ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
 <script src="../../js/jquery.easing.1.3.js"></script>
