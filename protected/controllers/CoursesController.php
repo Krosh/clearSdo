@@ -34,5 +34,30 @@ class CoursesController extends CController
         }
     }
 
+    public function actionAddTeacherToCourse()
+    {
+        $fio = $_POST["fio"];
+        $idCourse = $_POST["idCourse"];
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition("fio",$fio);
+        $user = User::model()->findAll($criteria);
+        $model = new CoursesAutor();
+        $model->idCourse = $idCourse;
+        $model->idAutor = $user[0]->id;
+        $model->save();
+    }
+
+    public function actionDeleteTeacher()
+    {
+        $idCourse = $_POST["idCourse"];
+        $idTeacher = $_POST["idTeacher"];
+        CoursesAutor::model()->deleteAll("idCourse = :idCourse and idAutor = :idTeacher",array(":idCourse" => $idCourse, ":idTeacher" => $idTeacher));
+    }
+
+    public function actionGetTeachers()
+    {
+        $this->renderPartial('teachers',array("idCourse" => $_POST["idCourse"]));
+    }
+
 
 }

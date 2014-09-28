@@ -46,7 +46,7 @@
 
                         <?php
                         $mas = array();
-                        $models = User::model()->findAll("role = 'student'");
+                        $models = User::model()->findAll("role = ".ROLE_STUDENT);
                         foreach ($models as $item)
                         {
                             $mas[$item->id] = $item->fio;

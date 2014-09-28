@@ -33,9 +33,11 @@ class UserController extends CController
     public function actionGetStudents()
     {
         $name = $_POST["searchText"];
-        $name = " ";
         header('Content-type: text/html; charset=UTF-8');
-        $model = User::model()->findAll("fio LIKE '% %' AND role = 0", array (':name' => $name));
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition("fio", $name);
+        $criteria->compare("role",0);
+        $model = User::model()->findAll($criteria);
         $answer = array();
         foreach ($model as $item)
         {

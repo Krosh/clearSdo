@@ -28,6 +28,41 @@ function loadCourses(idTerm,newTitle)
     });
 }
 
+function updateTeachers(idCourse)
+{
+    $.ajax({
+        url: '/courses/getTeachers',
+        data: {idCourse: idCourse},
+        type: "POST",
+        success: function(data)
+        {
+            $("#editCourse-teachers").html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function deleteTeacher(idCourse,idTeacher)
+{
+    $.ajax({
+        url: '/courses/deleteTeacher',
+        data: {idCourse: idCourse, idTeacher: idTeacher},
+        type: "POST",
+        success: function(data)
+        {
+            updateTeachers(idCourse);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+
 $(document).ready(function(){
     
     // Запуск лоадера, скрываем элемент
@@ -109,5 +144,10 @@ $(document).ready(function(){
                 alert("Ошибка при загрузке новостей");
             }
         });
+    }
+
+    if ($("#editCourse-teachers").length)
+    {
+        updateTeachers(window.idCourse);
     }
 });

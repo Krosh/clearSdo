@@ -123,9 +123,13 @@ class Course extends CActiveRecord
         return User::model()->findAll($criteria);
     }
 
-    static public function getGroups($idCourse,$idTerm)
+    static public function getGroups($idCourse,$idTerm = -1)
     {
-        $models = CoursesGroup::model()->findAll('idCourse = :idCourse and idTerm = :idTerm',array(':idCourse' => $idCourse, ':idTerm' => $idTerm));
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse', $idCourse);
+        if ($idTerm != -1)
+            $criteria->compare('idTerm', $idTerm);
+        $models = CoursesGroup::model()->findAll($criteria);
         $ids = array();
         foreach ($models as  $item)
         {

@@ -6,6 +6,7 @@
 class SiteController extends CController
 {
     public $layout = "/layouts/main";
+    public $noNeedJquery = false;
 
 
     public function filters()
@@ -69,12 +70,13 @@ class SiteController extends CController
 
     public function actionEditCourse($idCourse)
     {
+        $this->noNeedJquery = true;
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
         {
             // Бросить ошибку
         }
-        $this->render('viewCourse', array('model' => $course));
+        $this->render('editCourse', array('model' => $course));
     }
 
     public function actionConfig()

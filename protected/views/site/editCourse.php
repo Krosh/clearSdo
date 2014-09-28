@@ -15,9 +15,12 @@ $this->renderPartial('top');
 
 
 <?php
-$teachers = Course::getAutors($model->id);
+$listeners = Course::getGroups($model->id);
 $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->id);
 ?>
+    <script>
+        window.idCourse = <?php echo $model->id; ?>
+    </script>
 <div class="wrapper">
     <div class="container">
     <div class="col-group">
@@ -27,15 +30,50 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
             <div class="page-heading">
                 <div class="page-title">Курс: <?php echo $model->description?></div>
                 <div class="page-subtitle">Преподаватели:
-                    <?php
-                    $arTeachers = array();
-                    foreach ($teachers as $teacher){
-                        array_push($arTeachers, "<a href = '#'>".$teacher->fio."</a>");
-                    }
+                    <div id = "editCourse-teachers" style="display: inline">
 
-                    echo implode(', ', $arTeachers);
-                    ?>
+                    </div>
+                    <div onclick="$('#editCourse-teacherSelect').show()"> Добавить преподавателя</div>
+                    <div style = "display: none" id = "editCourse-teacherSelect">
+                        <?php
+                        $mas = array();
+                        $models = User::model()->findAll("role >= ".ROLE_TEACHER);
+                        foreach ($models as $item)
+                        {
+                            $mas[$item->id] = $item->fio;
+                        }
+                        $fakeModel = new User;
+                        $fakeModel->fio = "";
+                        $this->widget('ext.combobox.EJuiComboBox', array(
+                            'model' => $fakeModel,
+                            'attribute' => 'fio',
+                            'data' => $mas,
+                            'options' => array(
+                                'onSelect' => '
+                                    $.ajax({
+                                    type: "POST",
+                                    url: "/courses/addTeacherToCourse",
+                                    data: {fio: item.value, idCourse:'.$model->id.'},
+                                    success: function(data)
+                                    {
+                                        updateTeachers('.$model->id.')
+                                        $("#editCourse-teacherSelect").hide();
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown){
+                                        alert("error"+textStatus+errorThrown);
+                                    }});
+                                    ',
+                                'allowText' => false,
+                            ),
+                            // Options passed to the text input
+                            'htmlOptions' => array('size' => 10),
+                        ));
+
+                        ?>
+                    </div>
                 </div>
+
+
             </div>
 
 
