@@ -96,6 +96,7 @@ class GroupController extends CController
 	 */
 	public function actionAdmin()
 	{
+        $this->noNeedJquery = true;
 		$model=new Group('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Group']))
