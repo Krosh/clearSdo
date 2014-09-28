@@ -23,6 +23,7 @@ return array(
         'application.models.*',
         'application.components.*',
         'application.classes.*',
+        'application.helpers.*',
     ),
 	 
 	'components'=>array(

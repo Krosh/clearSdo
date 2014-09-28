@@ -53,9 +53,9 @@ class Term extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
-			'start_date' => 'Start Date',
-			'end_date' => 'End Date',
+			'title' => 'Название',
+			'start_date' => 'Дата начала',
+			'end_date' => 'Дата окончания',
 		);
 	}
 
