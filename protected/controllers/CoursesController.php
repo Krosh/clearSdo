@@ -62,16 +62,19 @@ class CoursesController extends CController
 
     public function actionAddGroupToCourse()
     {
-        $title = $_POST["Title"];
+        $groupTitle = $_POST["groupTitle"];
+        $termTitle = $_POST["termTitle"];
         $idCourse = $_POST["idCourse"];
-        $idTerm = Yii::app()->session['currentTerm'];
         $criteria = new CDbCriteria();
-        $criteria->addSearchCondition("Title",$title);
-        $user = Group::model()->findAll($criteria);
+        $criteria->addSearchCondition("Title",$groupTitle);
+        $group = Group::model()->findAll($criteria);
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition("title",$termTitle);
+        $term = Term::model()->findAll($criteria);
         $model = new CoursesGroup();
-        $model->idTerm = $idTerm;
+        $model->idTerm = $term[0]->id;
         $model->idCourse = $idCourse;
-        $model->idGroup = $user[0]->id;
+        $model->idGroup = $group[0]->id;
         $model->save();
     }
 

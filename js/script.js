@@ -96,6 +96,21 @@ function deleteGroup(idCourse,idGroup)
     });
 }
 
+function addGroup(groupTitle,termTitle,currentCourse)
+{
+    $.ajax({
+        type: "POST",
+        url: "/courses/addGroupToCourse",
+        data: {groupTitle: groupTitle, termTitle : termTitle, idCourse:currentCourse},
+        success: function(data)
+        {
+            updateGroups(currentCourse);
+            $("#editCourse-groupSelect").hide();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert("error"+textStatus+errorThrown);
+        }});
+}
 
 $(document).ready(function(){
     

@@ -93,27 +93,35 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                             'attribute' => 'Title',
                             'data' => $mas,
                             'options' => array(
-                                'onSelect' => '
-                                    $.ajax({
-                                    type: "POST",
-                                    url: "/courses/addGroupToCourse",
-                                    data: {Title: item.value, idCourse:'.$model->id.'},
-                                    success: function(data)
-                                    {
-                                        updateGroups('.$model->id.')
-                                        $("#editCourse-groupSelect").hide();
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown){
-                                        alert("error"+textStatus+errorThrown);
-                                    }});
-                                    ',
                                 'allowText' => false,
                             ),
                             // Options passed to the text input
                             'htmlOptions' => array('size' => 10),
                         ));
-
                         ?>
+
+                        <?php
+                        $mas = array();
+                        $models = Term::model()->findAll();
+                        foreach ($models as $item)
+                        {
+                            $mas[$item->id] = $item->title;
+                        }
+                        $fakeModel = new Term();
+                        $fakeModel->title = "";
+                        $this->widget('ext.combobox.EJuiComboBox', array(
+                            'model' => $fakeModel,
+                            'attribute' => 'title',
+                            'data' => $mas,
+                            'options' => array(
+                                'allowText' => false,
+                            ),
+                            // Options passed to the text input
+                            'htmlOptions' => array('size' => 10),
+                        ));
+                        ?>
+                        <div style="display: inline" onclick='addGroup($("#Group_Title").val(),$("#Term_title").val(),<?php echo $model->id; ?>);' >Добавить</div>
+
                     </div>
                 </div>
 
