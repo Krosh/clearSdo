@@ -67,6 +67,16 @@ class SiteController extends CController
         $this->render('viewCourse', array('model' => $course));
     }
 
+    public function actionEditCourse($idCourse)
+    {
+        $course = Course::model()->findByPk($idCourse);
+        if ($course == null)
+        {
+            // Бросить ошибку
+        }
+        $this->render('viewCourse', array('model' => $course));
+    }
+
     public function actionConfig()
     {
         $config = Config::model()->findByPk(1);

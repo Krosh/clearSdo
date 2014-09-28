@@ -24,9 +24,14 @@ class CoursesController extends CController
 
                 $courses = Course::getCoursesByGroup($group->id,$idTerm);
                 $resultCourses = array_merge($resultCourses,$courses);
-           }
-            $this->renderPartial('coursesTable', array('courses' => $resultCourses));
-           }
+            }
+            $this->renderPartial('coursesTable', array('courses' => $resultCourses, 'isStudent' => true, 'idTerm' => $idTerm));
+        }
+        if (Yii::app()->user->isTeacher())
+        {
+            $courses = Course::getCoursesByAutor(Yii::app()->user->getId(),$idTerm);
+            $this->renderPartial('coursesTable', array('courses' => $courses, 'isStudent' => false, 'idTerm' => $idTerm));
+        }
     }
 
 

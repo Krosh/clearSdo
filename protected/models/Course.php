@@ -48,6 +48,8 @@ class Course extends CActiveRecord
         return array(
       //      'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesmaterials(idCourse,idMaterial)'),
       // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
+      //      'groups' => array(self::MANY_MANY, 'Group', 'tbl_coursesgroups(idCourse,idGroup)'),
+      // Для вывода групп использовать Course::getGroups
         );
 	}
 
@@ -94,30 +96,44 @@ class Course extends CActiveRecord
 		));
 	}
 
-    static public function getCoursesByAutor($idAutor)
+    static public function getCoursesByAutor($idAutor, $idTerm)
     {
         $models = CoursesAutor::model()->findAll('idAutor = :idAutor', array(':idAutor' => $idAutor));
-        $idString = '(';
-        foreach ($models as  $item)
+        $ids = array();
+        foreach ($models as $item)
         {
-            $idString.='"'.$item->idCourse.'",';
+            if (CoursesGroup::model()->count('idCourse = :idCourse and idTerm = :idTerm',array(':idCourse' => $item->idCourse, ':idTerm' => $idTerm))>0)
+                $ids[] = $item->idCourse;
         }
-        $idString = substr($idString,0,strlen($idString)-1).')';
-        if ($idString==')') $idString = "(-1)";
-        return Course::model()->findAll("id IN $idString");
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('id',$ids);
+        return Course::model()->findAll($criteria);
     }
 
     static public function getAutors($idCourse)
     {
         $models = CoursesAutor::model()->findAll('idCourse = :idCourse',array(':idCourse' => $idCourse));
-        $idString = '(';
+        $ids = array();
         foreach ($models as  $item)
         {
-            $idString.='"'.$item->idAutor.'",';
+            $ids[] = $item->idAutor;
         }
-        $idString = substr($idString,0,strlen($idString)-1).')';
-        if ($idString==')') $idString = "(-1)";
-        return User::model()->findAll("id IN $idString");
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('id',$ids);
+        return User::model()->findAll($criteria);
+    }
+
+    static public function getGroups($idCourse,$idTerm)
+    {
+        $models = CoursesGroup::model()->findAll('idCourse = :idCourse and idTerm = :idTerm',array(':idCourse' => $idCourse, ':idTerm' => $idTerm));
+        $ids = array();
+        foreach ($models as  $item)
+        {
+            $ids[] = $item->idGroup;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('id',$ids);
+        return Group::model()->findAll($criteria);
     }
 
     static public function getCoursesByGroup($idGroup,$idTerm)
