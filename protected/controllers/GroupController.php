@@ -15,7 +15,8 @@ class GroupController extends CController
 	public function filters()
 	{
 		return array(
-		);
+            array('application.filters.AccessFilter'),
+        );
 	}
 
 	/**

@@ -8,6 +8,7 @@ define("MATERIAL_TORRENT", 3);
 define("MATERIAL_TITLE", 4);
 define("MATERIAL_TEST", 5);
 
+define("ROLE_GUEST",-1);
 define("ROLE_STUDENT",0);
 define("ROLE_TEACHER",1);
 define("ROLE_ADMIN",2);

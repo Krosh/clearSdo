@@ -9,6 +9,13 @@ class TermController extends CController
 	public $layout='//layouts/main';
     public $noNeedJquery = false;
 
+
+    public function filters()
+    {
+        return array(
+            array('application.filters.AccessFilter'),
+        );
+    }
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.

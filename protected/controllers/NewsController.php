@@ -8,6 +8,7 @@ class NewsController extends CController
     public function filters()
     {
         return array(
+            array('application.filters.AccessFilter'),
             array('application.filters.TimezoneFilter')
         );
     }

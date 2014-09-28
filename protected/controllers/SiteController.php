@@ -11,7 +11,8 @@ class SiteController extends CController
     public function filters()
     {
         return array(
-            array('application.filters.TimezoneFilter')
+            array('application.filters.AccessFilter'),
+            array('application.filters.TimezoneFilter'),
         );
     }
 
