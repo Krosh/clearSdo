@@ -62,6 +62,40 @@ function deleteTeacher(idCourse,idTeacher)
     });
 }
 
+function updateGroups(idCourse)
+{
+    $.ajax({
+        url: '/courses/getGroups',
+        data: {idCourse: idCourse},
+        type: "POST",
+        success: function(data)
+        {
+            $("#editCourse-groups").html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function deleteGroup(idCourse,idGroup)
+{
+    $.ajax({
+        url: '/courses/deleteGroup',
+        data: {idCourse: idCourse, idGroup: idGroup},
+        type: "POST",
+        success: function(data)
+        {
+            updateGroups(idCourse);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
 
 $(document).ready(function(){
     
@@ -149,5 +183,6 @@ $(document).ready(function(){
     if ($("#editCourse-teachers").length)
     {
         updateTeachers(window.idCourse);
+        updateGroups(window.idCourse);
     }
 });

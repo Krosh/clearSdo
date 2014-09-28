@@ -73,6 +73,49 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                     </div>
                 </div>
 
+                <div class="page-subtitle">Слушатели:
+                    <div id = "editCourse-groups" style="display: inline">
+
+                    </div>
+                    <div onclick="$('#editCourse-groupSelect').show()"> Добавить слушателя</div>
+                    <div style = "display: none" id = "editCourse-groupSelect">
+                        <?php
+                        $mas = array();
+                        $models = Group::model()->findAll();
+                        foreach ($models as $item)
+                        {
+                            $mas[$item->id] = $item->Title;
+                        }
+                        $fakeModel = new Group;
+                        $fakeModel->Title = "";
+                        $this->widget('ext.combobox.EJuiComboBox', array(
+                            'model' => $fakeModel,
+                            'attribute' => 'Title',
+                            'data' => $mas,
+                            'options' => array(
+                                'onSelect' => '
+                                    $.ajax({
+                                    type: "POST",
+                                    url: "/courses/addGroupToCourse",
+                                    data: {Title: item.value, idCourse:'.$model->id.'},
+                                    success: function(data)
+                                    {
+                                        updateGroups('.$model->id.')
+                                        $("#editCourse-groupSelect").hide();
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown){
+                                        alert("error"+textStatus+errorThrown);
+                                    }});
+                                    ',
+                                'allowText' => false,
+                            ),
+                            // Options passed to the text input
+                            'htmlOptions' => array('size' => 10),
+                        ));
+
+                        ?>
+                    </div>
+                </div>
 
             </div>
 

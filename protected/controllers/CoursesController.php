@@ -16,6 +16,7 @@ class CoursesController extends CController
     public function actionGetCourses()
     {
         $idTerm = $_POST['idTerm'];
+        Yii::app()->session['currentTerm'] = $idTerm;
         if (Yii::app()->user->isStudent())
         {
             $resultCourses = array();
@@ -59,5 +60,31 @@ class CoursesController extends CController
         $this->renderPartial('teachers',array("idCourse" => $_POST["idCourse"]));
     }
 
+    public function actionAddGroupToCourse()
+    {
+        $title = $_POST["Title"];
+        $idCourse = $_POST["idCourse"];
+        $idTerm = Yii::app()->session['currentTerm'];
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition("Title",$title);
+        $user = Group::model()->findAll($criteria);
+        $model = new CoursesGroup();
+        $model->idTerm = $idTerm;
+        $model->idCourse = $idCourse;
+        $model->idGroup = $user[0]->id;
+        $model->save();
+    }
+
+    public function actionDeleteGroup()
+    {
+        $idCourse = $_POST["idCourse"];
+        $idGroup = $_POST["idGroup"];
+        CoursesGroup::model()->deleteAll("idCourse = :idCourse and idGroup = :idGroup",array(":idCourse" => $idCourse, ":idGroup" => $idGroup));
+    }
+
+    public function actionGetGroups()
+    {
+        $this->renderPartial('groups',array("idCourse" => $_POST["idCourse"]));
+    }
 
 }

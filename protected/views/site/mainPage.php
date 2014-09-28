@@ -24,8 +24,12 @@ $this->renderPartial('top');
                             <div class="courses-list dropdown nohover">
 
                                 <?php
-                                $config = Config::model()->findByPk(1);
-                                $idActiveTerm = $config->idActiveTerm;
+                                if (!isset(Yii::app()->session['currentTerm']))
+                                {
+                                    $config = Config::model()->findByPk(1);
+                                    Yii::app()->session['currentTerm'] = $config->idActiveTerm;
+                                }
+                                $idActiveTerm = Yii::app()->session['currentTerm'];
                                 $activeTerm = Term::model()->findByPk($idActiveTerm);
                                 echo '(<a href="#" class="caret-link">
                                     <span id = "currentTermTitle">'.$activeTerm->title.' </span><i class="caret"></i>
