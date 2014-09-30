@@ -33,8 +33,11 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
             <div id = "editCourse-teachers" style="display: inline">
 
             </div>
-            <div onclick="$('#editCourse-teacherSelect').show()"> Добавить преподавателя</div>
-            <div style = "display: none" id = "editCourse-teacherSelect">
+            <div>
+                <i class="fa fa-plus-square-o"></i>
+                <a href="#" onclick="$('#editCourse-teacherSelect').slideToggle(); return false;">Добавить преподавателя</a>
+            </div>
+            <div style = "display: none" id = "editCourse-teacherSelect" class="form inline">
                 <?php
                 $mas = array();
                 $models = User::model()->findAll("role >= ".ROLE_TEACHER);
@@ -65,7 +68,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                     ',
                         'allowText' => false,
                     ),
-                    'htmlOptions' => array('size' => 10),
+                    'htmlOptions' => array('size' => 30),
                 ));
 
                 ?>
@@ -77,8 +80,11 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
             <div id = "editCourse-groups" style="display: inline">
 
             </div>
-            <div onclick="$('#editCourse-groupSelect').show()"> Добавить слушателя</div>
-            <div style = "display: none" id = "editCourse-groupSelect">
+            <div>
+                <i class="fa fa-plus-square-o"></i>
+                <a href="#" onclick="$('#editCourse-groupSelect').slideToggle(); return false;">Добавить слушателя</a>
+            </div>
+            <div style = "display: none" id = "editCourse-groupSelect" class="form inline">
                 <?php
                 $mas = array();
                 $models = Group::model()->findAll();
@@ -95,7 +101,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                     'options' => array(
                         'allowText' => false,
                     ),
-                    'htmlOptions' => array('size' => 10),
+                    'htmlOptions' => array('size' => 15),
                 ));
                 ?>
 
@@ -115,10 +121,10 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                     'options' => array(
                         'allowText' => false,
                     ),
-                    'htmlOptions' => array('size' => 10),
+                    'htmlOptions' => array('size' => 15),
                 ));
                 ?>
-                <div style="display: inline" onclick='addGroup($("#Group_Title").val(),$("#Term_title").val(),<?php echo $model->id; ?>);' >Добавить</div>
+                <div style="display: inline-block" class="btn green" onclick='addGroup($("#Group_Title").val(),$("#Term_title").val(),<?php echo $model->id; ?>);' >Добавить</div>
 
             </div>
         </div>
@@ -187,8 +193,11 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
 
 
     <h2>Учебные материалы</h2>
-    <div onclick="$('#editCourse-materialAddExist').show()"> Добавить из существующих</div>
-    <div style = "display: none" id = "editCourse-materialAddExist">
+    <div>
+        <i class="fa fa-plus-square-o"></i>
+    	<a href="#" onclick="$('#editCourse-materialAddExist').slideToggle(); return false;">Добавить из существующих</a>
+    </div>
+    <div style = "display: none" id = "editCourse-materialAddExist" class="form inline">
         <?php
         $mas = array();
         $models = LearnMaterial::model()->findAll("category != ".MATERIAL_TITLE." and idAutor = ".Yii::app()->user->getId());
@@ -222,7 +231,10 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
         ));
         ?>
     </div>
-    <div onclick="$('#editCourse-materialAdd').show()"> Создать материал</div>
+    <div>
+        <i class="fa fa-plus-square"></i>
+    	<a href="#" onclick="$('#editCourse-materialAdd').slideToggle(); return false;">Создать материал</a>
+    </div>
     <div style = "display: none" id = "editCourse-materialAdd">
         <?php
         $material = new LearnMaterial();
@@ -230,7 +242,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
         ?>
     </div>
 
-    <div id = "editCourse-materials">
+    <div id = "editCourse-materials" style="margin-top:20px">
     </div>
 </div>
 

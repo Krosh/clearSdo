@@ -1951,11 +1951,54 @@ textarea:active {
   vertical-align: middle;
   display: inline-block;
 }
+.form.inline {
+  padding: 20px;
+  border: 5px solid #eee;
+  margin-bottom: 20px;
+}
+.form.inline label {
+  display: inline-block;
+  vertical-align: inherit;
+  width: 220px;
+}
+.form.inline input:not(type='submit'),
+.form.inline select {
+  vertical-align: middle;
+  box-sizing: border-box;
+  width: 300px;
+}
 .fa-loading-icon {
   display: none;
   color: #2c3e50;
   margin-right: 15px;
   vertical-align: middle;
+}
+.ui-menu .ui-menu-item a {
+  font-size: 13px;
+  font: 'PT Sans', sans-serif !important;
+}
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+  background: #f9fafb !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+}
+.ui-button {
+  background: #fff;
+  border-radius: 50%;
+  outline: none;
+  height: 30px !important;
+  width: 30px !important;
+  vertical-align: bottom;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.ui-button.ui-state-hover,
+.ui-button.ui-state-active {
+  background: #f9faffb !important;
 }
 @media (min-width: 1024px) {
   .login {

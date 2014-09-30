@@ -1437,6 +1437,25 @@ textarea {
             display: inline-block;
         }
     }
+    
+    
+    &.inline {
+        padding: 20px;
+        border: 5px solid #eee;
+        margin-bottom: 20px;
+        
+        label {
+            display: inline-block;
+            vertical-align: inherit;
+            width: 220px;
+        }
+        
+        input:not(type='submit'), select {
+            vertical-align: middle;
+            box-sizing: border-box;
+            width: 300px;
+        }
+    }
 }
 
 .fa-loading-icon {
@@ -1444,6 +1463,33 @@ textarea {
     color: @blue;
     margin-right: 15px;
     vertical-align: middle;
+}
+
+.ui-menu .ui-menu-item a {
+    font-size: 13px;
+    font: @pt !important;
+        
+    &.ui-state-focus, &.ui-state-active {
+        background: #f9fafb !important;
+        border-color: transparent !important;
+        border-radius: 0 !important;
+    }
+}
+
+.ui-button {
+    background: #fff;
+    border-radius: 50%;
+    outline: none;
+    
+    height: 30px !important;
+    width: 30px !important;
+    vertical-align: bottom;
+    
+    .transition(all, .2s);
+    
+    &.ui-state-hover, &.ui-state-active {
+        background: #f9faffb !important;
+    }
 }
 
 @media (min-width: 1024px) {
