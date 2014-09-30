@@ -112,6 +112,61 @@ function addGroup(groupTitle,termTitle,currentCourse)
         }});
 }
 
+function addLearnMaterial(idCourse)
+{
+    var form = document.forms.learnMaterialForm;
+    var formData = new FormData(form);
+    formData.append("idCourse",idCourse);
+    formData.append("linkPath",$("#LinkPath").val());
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/material/addLearnMaterial");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if(xhr.status == 200) {
+                $("#editCourse-materialAdd").hide();
+                updateLearnMaterials(idCourse);
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+function deleteLearnMaterial(idCourse,idMaterial)
+{
+    $.ajax({
+        url: '/material/deleteLearnMaterial',
+        data: {idCourse: idCourse, idMaterial:idMaterial},
+        type: "POST",
+        success: function(data)
+        {
+            updateLearnMaterials();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function updateLearnMaterials(idCourse)
+{
+    // Обновляем окно
+    $.ajax({
+        url: '/material/getMaterials',
+        data: {idCourse: idCourse},
+        type: "POST",
+        success: function(data)
+        {
+           $("#editCourse-materials").html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+
 $(document).ready(function(){
     
     // Запуск лоадера, скрываем элемент
@@ -199,5 +254,6 @@ $(document).ready(function(){
     {
         updateTeachers(window.idCourse);
         updateGroups(window.idCourse);
+        updateLearnMaterials(window.idCourse);
     }
 });
