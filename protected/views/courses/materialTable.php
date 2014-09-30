@@ -6,7 +6,7 @@
  * Time: 13:14
  * To change this template use File | Settings | File Templates.
  */?>
-<table class="table green">
+<table class="table green sortable">
 <thead>
 <tr>
     <th colspan="2" width="70%" class="left">Файл</th>

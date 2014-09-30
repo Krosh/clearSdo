@@ -99,8 +99,6 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                 </tbody>
             </table>
 
-            </table>
-
             <h2>Учебные материалы</h2>
             <table class="table green">
                 <thead>

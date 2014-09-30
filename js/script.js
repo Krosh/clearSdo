@@ -157,7 +157,14 @@ function updateLearnMaterials(idCourse)
         type: "POST",
         success: function(data)
         {
-           $("#editCourse-materials").html(data);
+            $("#editCourse-materials").html(data);
+           
+            $(".sortable tbody").sortable({
+                items: 'tr',
+                update: function() {
+                    alert("update");
+                }
+            });
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -210,6 +217,7 @@ $(document).ready(function(){
             }
         }
     });
+
     
     // Переход у таблиц по data-href
     if (window.currentTerm !== undefined) {
