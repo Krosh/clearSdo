@@ -15,19 +15,25 @@
 </thead>
 <tbody>
 <?php
-$learnMaterials = LearnMaterial::getMaterialsFromCourse($idCourse);
+$criteria = new CDbCriteria();
+$criteria->compare('idCourse',$idCourse);
+$criteria->order = "zindex";
+$coursesMaterials = CoursesMaterial::model()->findAll($criteria);
+
 ?>
-<?php foreach ($learnMaterials as $item):?>
+<?php foreach ($coursesMaterials as $currentCourseMaterial):?>
+    <?php $item = LearnMaterial::model()->findByPk($currentCourseMaterial->idMaterial); ?>
     <? if($item->category != MATERIAL_TITLE) { ?>
-        <tr <!--data-href="--><?php /*echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) */?>">
+        <tr id = "<?php echo $currentCourseMaterial->id; ?>"<!--data-href="--><?php /*echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) */?>">
     <? } else { ?>
-        <tr>
+        <tr id = "<?php echo $currentCourseMaterial->id; ?>">
     <? } ?>
 
     <?php if ($item->category == MATERIAL_TITLE):?>
         <td class="title" colspan="3">
             <!-- <i class="fileicon-file"></i> -->
             <?= $item->title;?>
+            <a style="float:right" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
         </td>
     <? else: ?>
         <td>

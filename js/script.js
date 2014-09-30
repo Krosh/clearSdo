@@ -142,8 +142,8 @@ function deleteLearnMaterial(idCourse,idMaterial)
             updateLearnMaterials();
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+//            alert(errorThrown);
+//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         }
     });
 }
@@ -161,8 +161,17 @@ function updateLearnMaterials(idCourse)
            
             $(".sortable tbody").sortable({
                 items: 'tr',
-                update: function() {
-                    alert("update");
+                update: function(event, ui ) {
+                    var itemId = $(ui.item).prev().attr('id') || 0;
+                    $.ajax({
+                        url: '/material/orderMaterial',
+                        data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
+                        type: "POST",
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert(errorThrown);
+                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                        }
+                    });
                 }
             });
         },

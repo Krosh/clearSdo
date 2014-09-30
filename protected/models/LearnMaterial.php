@@ -135,14 +135,16 @@ class LearnMaterial extends CActiveRecord
     {
         if ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT)
         {
+
             $doc = CUploadedFile::getInstance($this,'path');
-            $this->deleteDocument();
             $this->path = $doc;
             if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor))
             {
                 mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor);
             }
-            $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$this->path);
+            $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
+            $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name);
+            $this->path = $name;
         }
         return true;
     }
