@@ -75,7 +75,7 @@ $this->renderPartial('/site/top');
                 </div>
 
                 <div class="test-submit">
-                    <button type="submit" class="btn green">Ответить</button>
+                    <button type="submit" class="btn blue">Ответить</button>
                     <a href="/controlMaterial/skipQuestion" class="btn gray">Пропустить</a>
                 </div>
             </form>
