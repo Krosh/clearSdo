@@ -16,7 +16,6 @@ $this->renderPartial('top');
 
 <?php
 $listeners = Course::getGroups($model->id);
-$controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->id);
 ?>
     <script>
         window.idCourse = <?php echo $model->id; ?>
@@ -29,6 +28,13 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
 <div class="content">
     <div class="page-heading">
         <div class="page-title">Курс: <?php echo $model->description?></div>
+            <div>
+                <i class="fa fa-plus-square-o"></i>
+                <a href="#" onclick="$('#editCourse-courseProperties').slideToggle(); return false;">Редактировать информацию о курсе</a>
+            </div>
+            <div style = "display: none" id = "editCourse-courseProperties" class="form inline">
+                <?php $this->renderPartial("/courses/_form",array("model" => $model))?>
+            </div>
         <div class="page-subtitle">Преподаватели:
             <div id = "editCourse-teachers" style="display: inline">
 
@@ -132,70 +138,52 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
 
 
     <h2>Контрольные материалы</h2>
-    <table class="table green">
-        <thead>
-        <tr>
-            <th>№</th>
-            <th width="40%" class="left">Название</th>
-            <th>Вопросов</th>
-            <th>Время</th>
-            <th>Попыток</th>
-            <th width="20%"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php $num = 0;?>
-        <?php foreach ($controlMaterials as $item):?>
-            <tr data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>">
-                <?php $num++; ?>
-                <td class="center"><?php echo $num; ?></td>
-                <td><?php echo $item->title ?></td>
-                <?php
-                if ($item->question_show_count == -1) $showCount = count(Question::getQuestionsByControlMaterial($item->id)); else $showCount = $mat->question_show_count;
-                ?>
-                <td class="center"><?php echo $showCount == "" ? "—" : $showCount ?></td>
-                <td class="center"><?php echo $item->dotime == "" ? "—" : $item->dotime ?></td>
-                <?php
-                $tries = UserControlMaterial::model()->findAll('idUser = :idUser and idControlMaterial = :idControlMaterial', array(':idUser' => Yii::app()->user->getId(), ':idControlMaterial' => $item->id));
-                $countTries = count($tries);
-                ?>
-                <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
-                <?php
-                $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :idControlMaterial AND idGroup = NULL', array(':idControlMaterial' => $item->id));
-                if ($access == null)
-                {
-                    $accessText = "Открыт";
-                } else
-                {
-                    if ($access->access == 1) $accessText = "Открыт";
-                    if ($access->access == 2) $accessText = "Открыт";
-                    if ($access->access == 3)
-                    {
-                        $accessText = "Открыт";
-                        if ($accessText->startDate != '0000-00-00 00:00:00')
-                            $accessText.= " с "+$accessText->startDate;
-                        if ($accessText->endDate != '0000-00-00 00:00:00')
+    <div>
+        <i class="fa fa-plus-square-o"></i>
+        <a href="#" onclick="$('#editCourse-controlMaterialAddExist').slideToggle(); return false;">Добавить из существующих</a>
+    </div>
+    <div style = "display: none" id = "editCourse-controlMaterialAddExist" class="form inline">
+        <?php
+        $mas = array();
+        $models = ControlMaterial::model()->findAll("idAutor = ".Yii::app()->user->getId());
+        foreach ($models as $item)
+        {
+            $mas[$item->id] = $item->id." ".$item->title;
+        }
+        $fakeModel = new ControlMaterial();
+        $fakeModel->title = "";
+        $this->widget('ext.combobox.EJuiComboBox', array(
+            'model' => $fakeModel,
+            'attribute' => 'title',
+            'data' => $mas,
+            'options' => array(
+                'onSelect' => '
+                     $.ajax({
+                        type: "POST",
+                        url: "/material/addExistMaterial",
+                        data: {idMaterial: item.value.split(" ")[0], idCourse:'.$model->id.'},
+                        success: function(data)
                         {
-                            if ($accessText->startDate != '0000-00-00 00:00:00')
-                                $accessText.= "<br>";
-                            $accessText.= "до "+$accessText->endDate;
-                        }
-                    }
-                    if ($access->access == 4) $accessText = "После предыдущего";
-                }
-                ?>
-                <td class="right"><?php echo $accessText ?></td>
-            </tr>
-        <?
-        endforeach ?>
-        </tbody>
-    </table>
+                            updateControlMaterials('.$model->id.')
+                            $("#editCourse-controlMaterialAddExist").hide();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert("error"+textStatus+errorThrown);
+                        }});',
+                'allowText' => false,
+            ),
+            'htmlOptions' => array('size' => 30),
+        ));
+        ?>
+    </div>
+    <div id = "editCourse-controlMaterials" style="margin-top:20px">
+    </div>
 
 
     <h2>Учебные материалы</h2>
     <div>
         <i class="fa fa-plus-square-o"></i>
-    	<a href="#" onclick="$('#editCourse-materialAddExist').slideToggle(); return false;">Добавить из существующих</a>
+        <a href="#" onclick="$('#editCourse-materialAddExist').slideToggle(); return false;">Добавить из существующих</a>
     </div>
     <div style = "display: none" id = "editCourse-materialAddExist" class="form inline">
         <?php
@@ -215,7 +203,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                 'onSelect' => '
                      $.ajax({
                         type: "POST",
-                        url: "/material/addExistLearnMaterial",
+                        url: "/learnMaterial/addExistMaterial",
                         data: {idMaterial: item.value.split(" ")[0], idCourse:'.$model->id.'},
                         success: function(data)
                         {
@@ -233,7 +221,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
     </div>
     <div>
         <i class="fa fa-plus-square"></i>
-    	<a href="#" onclick="$('#editCourse-materialAdd').slideToggle(); return false;">Создать материал</a>
+        <a href="#" onclick="$('#editCourse-materialAdd').slideToggle(); return false;">Создать материал</a>
     </div>
     <div style = "display: none" id = "editCourse-materialAdd">
         <?php

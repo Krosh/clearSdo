@@ -119,7 +119,7 @@ function addLearnMaterial(idCourse)
     formData.append("idCourse",idCourse);
     formData.append("linkPath",$("#LinkPath").val());
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/material/addLearnMaterial");
+    xhr.open("POST", "/learnMaterial/addMaterial");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
@@ -134,12 +134,12 @@ function addLearnMaterial(idCourse)
 function deleteLearnMaterial(idCourse,idMaterial)
 {
     $.ajax({
-        url: '/material/deleteLearnMaterial',
+        url: '/learnMaterial/deleteMaterial',
         data: {idCourse: idCourse, idMaterial:idMaterial},
         type: "POST",
         success: function(data)
         {
-            updateLearnMaterials();
+            updateLearnMaterials(idCourse);
         },
         error: function(jqXHR, textStatus, errorThrown){
 //            alert(errorThrown);
@@ -152,14 +152,64 @@ function updateLearnMaterials(idCourse)
 {
     // Обновляем окно
     $.ajax({
-        url: '/material/getMaterials',
+        url: '/learnMaterial/getMaterials',
         data: {idCourse: idCourse},
         type: "POST",
         success: function(data)
         {
             $("#editCourse-materials").html(data);
            
-            $(".sortable tbody").sortable({
+            $("#learnMaterialTable tbody").sortable({
+                items: 'tr',
+                update: function(event, ui ) {
+                    var itemId = $(ui.item).prev().attr('id') || 0;
+                    $.ajax({
+                        url: '/learnMaterial/orderMaterial',
+                        data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
+                        type: "POST",
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert(errorThrown);
+                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                        }
+                    });
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function deleteControlMaterial(idCourse,idMaterial)
+{
+    $.ajax({
+        url: '/material/deleteMaterial',
+        data: {idCourse: idCourse, idMaterial:idMaterial},
+        type: "POST",
+        success: function(data)
+        {
+            updateControlMaterials(idCourse);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+//            alert(errorThrown);
+//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function updateControlMaterials(idCourse)
+{
+    // Обновляем окно
+    $.ajax({
+        url: '/material/getMaterials',
+        data: {idCourse: idCourse},
+        type: "POST",
+        success: function(data)
+        {
+            $("#editCourse-controlMaterials").html(data);
+            $("#controlMaterialTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
                     var itemId = $(ui.item).prev().attr('id') || 0;
@@ -181,6 +231,7 @@ function updateLearnMaterials(idCourse)
         }
     });
 }
+
 
 
 $(document).ready(function(){
@@ -272,5 +323,6 @@ $(document).ready(function(){
         updateTeachers(window.idCourse);
         updateGroups(window.idCourse);
         updateLearnMaterials(window.idCourse);
+        updateControlMaterials(window.idCourse);
     }
 });

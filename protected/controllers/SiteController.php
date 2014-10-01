@@ -70,12 +70,19 @@ class SiteController extends CController
 
     public function actionEditCourse($idCourse)
     {
-        $this->noNeedJquery = true;
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
         {
             // Бросить ошибку
         }
+        if(isset($_POST['Course']))
+        {
+            $course->attributes=$_POST['Course'];
+            if($course->save())
+                $this->refresh();
+        }
+
+        $this->noNeedJquery = true;
         $this->render('editCourse', array('model' => $course));
     }
 
