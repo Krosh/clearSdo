@@ -90,4 +90,21 @@ class CoursesController extends CController
         $this->renderPartial('groups',array("idCourse" => $_POST["idCourse"]));
     }
 
+    public function actionCreate()
+    {
+        $model = new Course();
+        $model->title = "Новый курс";
+        $model->save();
+        $ca = new CoursesAutor();
+        $ca->idAutor = Yii::app()->user->getId();
+        $ca->idCourse = $model->id;
+        $ca->save();
+        $cg = new CoursesGroup();
+        $cg->idCourse = $model->id;
+        $cg->idGroup = -1;
+        $cg->idTerm = Yii::app()->session['currentTerm'];
+        $cg->save();
+        $this->redirect($this->createUrl("/editCourse?idCourse=".$model->id));
+    }
+
 }

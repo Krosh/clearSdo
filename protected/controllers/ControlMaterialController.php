@@ -3,6 +3,7 @@
 class ControlMaterialController extends CController
 {
     public $layout = "/layouts/main";
+    public $noNeedJquery = false;
 
     public function filters()
     {
@@ -256,23 +257,6 @@ class ControlMaterialController extends CController
 
     }
 
-    public function actionDeleteMaterialFromCourse($id, $idMaterial)
-    {
-        CoursesControlMaterial::model()->deleteAll('idCourse = :idCourse AND idControlMaterial = :idMaterial', array(':idCourse' => $id, ':idMaterial' =>$idMaterial));
-        Yii::app()->user->setFlash('message', "Тест удален");
-        $this->redirect($this->createUrl('site/editCourse', array('id' => $id)));
-    }
-
-    public function actionAddMaterialToCourse($courseId, $addId)
-    {
-        $model = new CoursesControlMaterial();
-        $model->idControlMaterial = $addId;
-        $model->idCourse = $courseId;
-        $model->zindex = 100;
-        $model->save();
-        Yii::app()->user->setFlash('message', "Тест добавлен");
-        $this->redirect($this->createUrl('site/editCourse', array('id' => $courseId)));
-    }
     /**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -298,28 +282,6 @@ class ControlMaterialController extends CController
 		));
 	}
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new ControlMaterial('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ControlMaterial']))
-			$model->attributes=$_GET['ControlMaterial'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return ControlMaterial the loaded model
-	 * @throws CHttpException
-	 */
 	public function loadModel($id)
 	{
 		$model=ControlMaterial::model()->findByPk($id);
@@ -328,16 +290,18 @@ class ControlMaterialController extends CController
 		return $model;
 	}
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param ControlMaterial $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='control-material-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+    public function actionEdit($idMaterial)
+    {
+        $this->noNeedJquery = true;
+        $model = $this->loadModel($idMaterial);
+        if (isset($_POST['ControlMaterial']))
+        {
+            $model->attributes=$_POST['ControlMaterial'];
+            if($model->save())
+                $this->refresh();
+        }
+        $this->render("editTest",array("model" => $model));
+    }
+
+
 }

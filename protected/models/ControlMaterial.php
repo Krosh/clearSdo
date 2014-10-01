@@ -43,7 +43,6 @@ class ControlMaterial extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'required'),
 			array('dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, show_answers, is_point, calc_mode, idAutor', 'numerical', 'integerOnly'=>true),
 			array('title, short_title', 'length', 'max'=>45),
 			array('access_date', 'safe'),

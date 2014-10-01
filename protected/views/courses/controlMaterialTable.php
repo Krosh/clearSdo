@@ -27,8 +27,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
     <tbody>
     <?php foreach ($coursesMaterials as $curMaterial):?>
         <?php $item = ControlMaterial::model()->findByPk($curMaterial->idControlMaterial); ?>
-        <?php /* data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>"*/?>
-        <tr id = "<?php echo $curMaterial->id?>">
+        <?php ?>
+        <tr id = "<?php echo $curMaterial->id?>" data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>">
             <?php $num++; ?>
             <td><?php echo $item->title ?></td>
             <?php

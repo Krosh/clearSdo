@@ -57,6 +57,9 @@ $this->renderPartial('top');
                     <div id = "ajaxCoursesDiv">
 
                     </div>
+                    <?php if(Yii::app()->user->isTeacher()):?>
+                        <a href = "/courses/create">Создать новый курс</a>
+                    <?php endif; ?>
                     <script>
                         window.currentTerm = <?php echo $idActiveTerm?>
                     </script>

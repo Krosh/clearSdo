@@ -158,7 +158,7 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
-           
+
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -232,10 +232,141 @@ function updateControlMaterials(idCourse)
     });
 }
 
+function updateQuestions(idTest)
+{
+    // Обновляем окно
+    $.ajax({
+        url: '/question/getQuestions',
+        data: {idControlMaterial: idTest},
+        type: "POST",
+        success: function(data)
+        {
+            $("#editTest-questions").html(data);
 
+            $("#questionTable tbody").sortable({
+                items: 'tr',
+                update: function(event, ui ) {
+                    var itemId = $(ui.item).prev().attr('id') || 0;
+                    $.ajax({
+                        url: '/question/orderQuestions',
+                        data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
+                        type: "POST",
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert(errorThrown);
+                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                        }
+                    });
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function deleteQuestion(idQuestion,idControlMaterial)
+{
+    $.ajax({
+        url: '/question/deleteQuestion',
+        data: {idQuestion: idQuestion, idControlMaterial:idControlMaterial},
+        type: "POST",
+        success: function(data)
+        {
+            updateQuestions(idControlMaterial);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+//            alert(errorThrown);
+//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+
+function updateAnswers(idQuestion)
+{
+    // Обновляем окно
+    $.ajax({
+        url: '/answer/getMaterials',
+        data: {idQuestion: idQuestion},
+        type: "POST",
+        success: function(data)
+        {
+            $("#question-answers").html(data);
+
+            $("#answerTable tbody").sortable({
+                items: 'tr',
+                update: function(event, ui ) {
+                    var itemId = $(ui.item).prev().attr('id') || 0;
+                     $.ajax({
+                        url: '/answer/orderMaterial',
+                        data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
+                        type: "POST",
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert(errorThrown);
+                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                        }
+                    });
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function addAnswer(idQuestion)
+{
+    $.ajax({
+        type: "POST",
+        url: '/answer/create',
+        data: {idQuestion:idQuestion},
+        success: function(data){
+            updateAnswers(idQuestion);
+        },
+        error :function()
+        {
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function deleteAnswer(idAnswer)
+{
+    $.ajax({
+        url: '/answer/deleteMaterial',
+        data: {idAnswer: idAnswer},
+        type: "POST",
+        success: function(data)
+        {
+            updateAnswers(window.idQuestion);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
+function changeAnswer(idAnswer,content,right)
+{
+    $.ajax({
+        url: '/answer/changeAnswer',
+        data: {idAnswer: idAnswer,content: content, right:right},
+        type: "POST",
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
 
 $(document).ready(function(){
-    
+
     // Запуск лоадера, скрываем элемент
     if($(".login").length > 0) {
         $(".login").loader();   
@@ -324,5 +455,13 @@ $(document).ready(function(){
         updateGroups(window.idCourse);
         updateLearnMaterials(window.idCourse);
         updateControlMaterials(window.idCourse);
+    }
+    if ($("#editTest-questions").length)
+    {
+        updateQuestions(window.idTest);
+    }
+    if ($("#question-answers").length)
+    {
+        updateAnswers(window.idQuestion);
     }
 });

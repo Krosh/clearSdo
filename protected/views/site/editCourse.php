@@ -27,7 +27,7 @@ $listeners = Course::getGroups($model->id);
 
 <div class="content">
     <div class="page-heading">
-        <div class="page-title">Курс: <?php echo $model->description?></div>
+        <div class="page-title">Курс: <?php echo $model->title?></div>
             <div>
                 <i class="fa fa-plus-square-o"></i>
                 <a href="#" onclick="$('#editCourse-courseProperties').slideToggle(); return false;">Редактировать информацию о курсе</a>
