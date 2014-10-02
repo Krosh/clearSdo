@@ -5,7 +5,7 @@
 
 ?>
 
-    <div class = "answer">
+    <div class = "answer wide">
     <?php
         // Делается для унификации обработки вопросов на соответствие и обычных
         // В вопросах на соответствие соответствующие варианты хранятся через символ '~'
@@ -14,7 +14,7 @@
 
 	<div class="row">
 		<?php echo CHtml::label("Содержимое ответа", "");?>
-        <?php echo CHtml::textArea('content'.$model->id, $model->content,array('rows'=>6, 'cols'=>50)); ?>
+        <?php echo CHtml::textArea('content'.$model->id, str_replace("~","",$model->content),array('rows'=>2, 'cols'=>50,'onchange' => 'changeAnswer('.$model->id.',$("#content'.$model->id.'").val(),$("#right'.$model->id.'").prop("checked"));')); ?>
 	</div>
 
 <!--    --><?php
@@ -30,9 +30,8 @@
 
     <div class="row">
         <?php echo CHtml::label("Правильность", "");?>
-		<?php echo CHtml::checkBox('right'.$model->id, $model->right); ?>
+		<?php echo CHtml::checkBox('right'.$model->id, $model->right, array('onclick' => 'changeAnswer('.$model->id.',$("#content'.$model->id.'").val(),$("#right'.$model->id.'").prop("checked"));')); ?>
 	</div>
 
-    <button  onclick="changeAnswer(<?php echo $model->id?>,$('#content<?php echo $model->id; ?>').val(),$('#right<?php echo $model->id; ?>').val() ); return false">Сохранить</button>
     </div>
     <!-- form -->

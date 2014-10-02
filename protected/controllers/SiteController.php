@@ -92,5 +92,10 @@ class SiteController extends CController
         $this->render('config',array("config" => $config));
     }
 
+    public function actionNoAccess()
+    {
+        $this->render("noAccess");
+    }
+
 
 }

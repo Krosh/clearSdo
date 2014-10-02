@@ -13,9 +13,10 @@ class AccessFilter extends CFilter {
         preg_match($reg,Yii::app()->request->requestUri."?",$matches);
         $namePage = substr($matches[0],0,strlen($matches[0])-1);
         $rules = array();
-        $rules[ROLE_GUEST] = array("");
-        $rules[ROLE_STUDENT] = array("","logout","viewCourse","startTest","question","endTest","nextQuestion","skipQuestion","endTest","viewTestResults","news","getCourses");
+        $rules[ROLE_GUEST] = array("","noAccess");
+        $rules[ROLE_STUDENT] = array("","noAccess","logout","viewCourse","startTest","question","endTest","nextQuestion","skipQuestion","endTest","viewTestResults","news","getCourses");
         $rules[ROLE_TEACHER] = array_merge($rules[ROLE_STUDENT],array("editCourse","addTeacherToCourse","getTeachers","deleteTeacher","addGroupToCourse","getGroups","deleteGroup","addMaterial","getMaterials","addExistMaterial","deleteMaterial","orderMaterial","create","edit","getQuestions","orderQuestions","deleteQuestion","addAnswer","changeAnswer"));
+        $rules[ROLE_ADMIN] = array_merge($rules[ROLE_TEACHER],array("admin","update","delete","addToGroup","deleteFromGroup"));
         if (Yii::app()->user->isGuest)
             $curRole = ROLE_GUEST;
         else

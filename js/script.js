@@ -320,6 +320,11 @@ function updateAnswers(idQuestion)
 
 function addAnswer(idQuestion)
 {
+    if ($("#Question_type").val() == 3 || $("#Question_type").val()==4)
+    {
+        alert("У этого типа вопроса может быть только один вариант ответа!");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: '/answer/create',
@@ -354,15 +359,42 @@ function deleteAnswer(idAnswer)
 
 function changeAnswer(idAnswer,content,right)
 {
+    if (right)
+    right = 1;
+    else
+    right = 0;
     $.ajax({
         url: '/answer/changeAnswer',
-        data: {idAnswer: idAnswer,content: content, right:right},
+        data: {idAnswer: idAnswer,content: content, right: right},
         type: "POST",
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         }
     });
+}
+
+function isValidQuestion()
+{
+    var questionType = $("#Question_type").val();
+    var answerCount = $(".answer").length;
+    var rightAnswerCount = $(".answer input:checked").length;
+    if (rightAnswerCount == 0)
+    {
+        alert("Должен быть хотя бы один правильный ответ!");
+        return false;
+    }
+    if (questionType != 2 && rightAnswerCount>1)
+    {
+        alert("Должен быть один правильный ответ!");
+        return false;
+    }
+    if ((questionType == 3||questionType == 4) && answerCount>1)
+    {
+        alert("Должен быть только один вариант ответа!");
+        return false;
+    }
+    return true;
 }
 
 $(document).ready(function(){

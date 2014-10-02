@@ -55,7 +55,7 @@
     <a href = "" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант ответа</a>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить изменения', array('onclick' => 'makeAnswersToUpload()')); ?>
+		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить изменения', array('onclick' => 'if (!isValidQuestion()) return false;')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

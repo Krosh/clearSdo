@@ -100,4 +100,10 @@ class Answer extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function beforeSave()
+    {
+        $this->content = str_replace("~","",$this->content)."~";
+        return true;
+    }
 }
