@@ -1331,6 +1331,11 @@ footer {
   color: #2c3e50;
   margin-top: 20px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 footer.fixed {
   position: fixed;
@@ -1916,6 +1921,8 @@ textarea {
   font-size: 13px;
   padding: 9px 7px;
   outline: none;
+  vertical-align: middle;
+  margin-bottom: 15px;
   resize: none;
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
@@ -1972,6 +1979,9 @@ textarea:active {
   box-sizing: border-box;
   width: 300px;
 }
+.form.noborder {
+  border: none !important;
+}
 .fa-loading-icon {
   display: none;
   color: #2c3e50;
@@ -2005,7 +2015,7 @@ textarea:active {
 .ui-button.ui-state-active {
   background: #f9faffb !important;
 }
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
   .login {
     position: absolute;
     top: 50%;
@@ -2013,12 +2023,12 @@ textarea:active {
     margin: -310px 0 0 -320px;
   }
 }
-@media (max-width: 1320px) {
+@media screen and (max-width: 1320px) {
   header .search input {
     width: 100px !important;
   }
 }
-@media (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
   header {
     padding-top: 5px;
   }
@@ -2062,7 +2072,7 @@ textarea:active {
     margin-left: 0 !important;
   }
 }
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   header .logo {
     width: 40px !important;
   }

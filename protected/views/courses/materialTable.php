@@ -33,7 +33,9 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
         <td class="title" colspan="3">
             <!-- <i class="fileicon-file"></i> -->
             <?= $item->title;?>
-            <a style="float:right" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+            <div style="float:right;">
+                <i class="fa fa-remove"></i> <a href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+            </div>
         </td>
     <? else: ?>
         <td>
@@ -65,7 +67,7 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
 
         </td>
         <td class="right">
-            <a onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+            <i class="fa fa-remove"></i> <a href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
         </td>
     <? endif; ?>
     </tr>

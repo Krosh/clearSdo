@@ -15,6 +15,7 @@ function loadCourses(idTerm,newTitle)
                 $("#ajaxCoursesDiv").html(data); 
                 $("#ajaxCoursesDiv").fadeIn(300, function() {
                     $(".fa-loading-icon").fadeOut(100);
+                    footerUpdate();
                 });
             });
         },
@@ -37,6 +38,7 @@ function updateTeachers(idCourse)
         success: function(data)
         {
             $("#editCourse-teachers").html(data);
+            footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -71,6 +73,7 @@ function updateGroups(idCourse)
         success: function(data)
         {
             $("#editCourse-groups").html(data);
+            footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -106,6 +109,7 @@ function addGroup(groupTitle,termTitle,currentCourse)
         {
             updateGroups(currentCourse);
             $("#editCourse-groupSelect").hide();
+            footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert("error"+textStatus+errorThrown);
@@ -158,7 +162,8 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
-
+            footerUpdate();
+            
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -209,6 +214,7 @@ function updateControlMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-controlMaterials").html(data);
+            footerUpdate();
             $("#controlMaterialTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -242,7 +248,8 @@ function updateQuestions(idTest)
         success: function(data)
         {
             $("#editTest-questions").html(data);
-
+            footerUpdate();
+            
             $("#questionTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -294,7 +301,8 @@ function updateAnswers(idQuestion)
         success: function(data)
         {
             $("#question-answers").html(data);
-
+            footerUpdate();
+            
             $("#answerTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -397,8 +405,22 @@ function isValidQuestion()
     return true;
 }
 
-$(document).ready(function(){
+function footerUpdate() {
+    var wrapperHeight = $(".wrapper").height() + $("header").height();
+    var windowHeight = $(window).height();
+    
+    $("footer").removeClass("fixed");
+    if(wrapperHeight <= windowHeight) {
+        $("footer").addClass("fixed");
+    }
+}
 
+$(document).ready(function(){
+    footerUpdate();
+    $(window).resize(function(){
+        footerUpdate();
+    });
+    
     // Запуск лоадера, скрываем элемент
     if($(".login").length > 0) {
         $(".login").loader();   
@@ -415,9 +437,6 @@ $(document).ready(function(){
     
     // Табер
     $(".tabbed").tabber();
-    
-    // Футер
-    //$("footer").footer();
     
     // Лого
     //$(".logo").logo();

@@ -70,10 +70,10 @@
                         <div class="ci"><i class="fa fa-file-text"></i></div> <a href="#"><strong>0</strong> файлов</a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-comments"></i></div> <a href="#"><strong>0</strong> тестов</a>
+                        <div class="ci"><i class="fa fa-check-square-o"></i></div> <a href="#"><strong>0</strong> тестов</a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-check-square-o red"></i></div> <a href="#"><strong class="red">5</strong> сообщений</a>
+                        <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5</strong> сообщений</a>
                     </div>
                 </div>
             </div>

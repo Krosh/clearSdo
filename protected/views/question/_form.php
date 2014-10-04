@@ -7,6 +7,9 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'question-form',
+	'htmlOptions'=>array(
+        'class'=>'form inline noborder',
+    ),
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -52,10 +55,10 @@
     </script>
     <div id = "question-answers">
     </div>
-    <a href = "" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант ответа</a>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить изменения', array('onclick' => 'if (!isValidQuestion()) return false;')); ?>
+		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить изменения', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
+		<a href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант ответа</a>
 	</div>
 
 <?php $this->endWidget(); ?>

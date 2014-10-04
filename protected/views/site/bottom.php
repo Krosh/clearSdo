@@ -54,13 +54,13 @@
 </div>
 </div>
 
-<footer>
+<footer class="fixed">
     <div class="container">
         <div class="col-6">
-            Copyright © 2008-2013, все права защищены <a href="#">СДО Стимул</a>
+            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a>
         </div>
         <div class="col-6 right">
-            СДО Стимул 1.7.2 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
+            СДО Стимул 2.0 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
         </div>
     </div>
 </footer>

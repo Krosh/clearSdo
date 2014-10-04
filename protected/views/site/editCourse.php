@@ -35,6 +35,9 @@ $listeners = Course::getGroups($model->id);
             <div style = "display: none" id = "editCourse-courseProperties" class="form inline">
                 <?php $this->renderPartial("/courses/_form",array("model" => $model))?>
             </div>
+        
+        <br><br>
+        
         <div class="page-subtitle">Преподаватели:
             <div id = "editCourse-teachers" style="display: inline">
 
@@ -80,7 +83,8 @@ $listeners = Course::getGroups($model->id);
                 ?>
             </div>
         </div>
-
+        
+        <br><br>
 
         <div class="page-subtitle">Слушатели:
             <div id = "editCourse-groups" style="display: inline">

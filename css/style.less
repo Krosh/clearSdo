@@ -676,6 +676,8 @@ footer {
     margin-top: 20px;
     box-shadow: 0 0 5px rgba(0,0,0,.2);
     
+    .transition(all, .2s);
+    
     &.fixed {
         position: fixed;
         bottom: 0;
@@ -1401,7 +1403,8 @@ textarea {
     font-size: 13px;
     padding: 9px 7px;
     outline: none;
-    
+    vertical-align: middle;
+    margin-bottom: 15px;    
     resize: none;
     
     .transition(all, .2s);
@@ -1462,6 +1465,10 @@ textarea {
             width: 300px;
         }
     }
+    
+    &.noborder {
+        border: none !important;
+    }
 }
 
 .fa-loading-icon {
@@ -1498,7 +1505,7 @@ textarea {
     }
 }
 
-@media (min-width: 1024px) {
+@media screen and (min-width: 1024px) {
     .login {
         position: absolute;
         top: 50%;
@@ -1508,7 +1515,7 @@ textarea {
 }
 
 
-@media (max-width: 1320px) {
+@media screen and (max-width: 1320px) {
     header {
         .search input {
             width: 100px !important;
@@ -1516,7 +1523,7 @@ textarea {
     }
 }
 
-@media (max-width: 1280px) {
+@media screen and (max-width: 1279px) {
     header {
         padding-top: 5px;
         
@@ -1572,7 +1579,7 @@ textarea {
     }
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
     header {
         .logo {
             width: 40px !important;

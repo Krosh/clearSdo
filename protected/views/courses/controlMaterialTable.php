@@ -42,7 +42,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
             ?>
             <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
              <td class="right">
-                 <a style="float:right" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+                 <i class="fa fa-remove"></i> <a style="float:right" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
              </td>
         </tr>
     <?
