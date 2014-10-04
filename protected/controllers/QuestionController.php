@@ -3,6 +3,7 @@
 class QuestionController extends CController
 {
     public $layout = "/layouts/main";
+    public $breadcrumbs;
 
     public function filters()
     {
@@ -113,6 +114,13 @@ class QuestionController extends CController
     public function actionEdit($id,$idMaterial)
     {
         $model = Question::model()->findByPk($id);
+        $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
+        $test = ControlMaterial::model()->findByPk($idMaterial);
+        $this->breadcrumbs=array(
+            'Редактирование курса '.$course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            'Редактирование теста '.$test->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
+            'Редактирование вопроса '=> array($this->createUrl("/question/edit",array("idMaterial" => $idMaterial,"id" => $id))),
+        );
         if (isset($_POST['Question']))
         {
             $attrs = $_POST['Question'];
@@ -124,7 +132,7 @@ class QuestionController extends CController
 //          //            $model->attributes=$_POST['Question'];
             if ($model->save())
             {
-                $this->redirect("/controlMaterial/edit?idMaterial=".$idMaterial);
+                $this->redirect($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial)));
             }
         }
         $this->render("/question/create", array("model" => $model));

@@ -4,6 +4,7 @@ class ControlMaterialController extends CController
 {
     public $layout = "/layouts/main";
     public $noNeedJquery = false;
+    public $breadcrumbs;
 
     public function filters()
     {
@@ -292,8 +293,13 @@ class ControlMaterialController extends CController
 
     public function actionEdit($idMaterial)
     {
-        $this->noNeedJquery = true;
         $model = $this->loadModel($idMaterial);
+        $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
+        $this->breadcrumbs=array(
+            'Редактирование курса '.$course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            'Редактирование теста '.$model->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
+        );
+        $this->noNeedJquery = true;
         if (isset($_POST['ControlMaterial']))
         {
             $model->attributes=$_POST['ControlMaterial'];

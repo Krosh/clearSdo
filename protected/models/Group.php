@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_groups':
  * @property integer $id
  * @property string $Title
+ * @property string $id_altstu
  */
 class Group extends CActiveRecord
 {

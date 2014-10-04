@@ -7,6 +7,7 @@ class SiteController extends CController
 {
     public $layout = "/layouts/main";
     public $noNeedJquery = false;
+    public $breadcrumbs;
 
 
     public function filters()
@@ -60,6 +61,7 @@ class SiteController extends CController
 
     public function actionViewCourse($idCourse)
     {
+
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
         {
@@ -75,6 +77,10 @@ class SiteController extends CController
         {
             // Бросить ошибку
         }
+        Yii::app()->session['currentCourse'] = $idCourse;
+        $this->breadcrumbs=array(
+            'Редактирование курса '.$course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse)))
+        );
         if(isset($_POST['Course']))
         {
             $course->attributes=$_POST['Course'];
