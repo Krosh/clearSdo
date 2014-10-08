@@ -309,5 +309,18 @@ class ControlMaterialController extends CController
         $this->render("editTest",array("model" => $model));
     }
 
+    public function actionCreate($idCourse)
+    {
+        $model = new ControlMaterial();
+        $model->idAutor = Yii::app()->user->getId();
+        $model->save();
+        $ccm = new CoursesControlMaterial();
+        $ccm->idCourse = $idCourse;
+        $ccm->idControlMaterial = $model->id;
+        $ccm->zindex = CoursesControlMaterial::model()->count("idCourse = :idCourse", array("idCourse" => $idCourse))+1;
+        $ccm->save();
+        $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
+    }
+
 
 }
