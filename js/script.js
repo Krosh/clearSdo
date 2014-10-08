@@ -108,7 +108,8 @@ function addGroup(groupTitle,termTitle,currentCourse)
         success: function(data)
         {
             updateGroups(currentCourse);
-            $("#editCourse-groupSelect").hide();
+            /* $("#editCourse-groupSelect").hide(); */
+            $("#Group_Title, #Term_title").val(" ");
             footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -162,7 +163,6 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
-            footerUpdate();
             
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
@@ -179,6 +179,8 @@ function updateLearnMaterials(idCourse)
                     });
                 }
             });
+            
+            footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -406,7 +408,7 @@ function isValidQuestion()
 }
 
 function footerUpdate() {
-    var wrapperHeight = $(".wrapper").height() + $("header").height();
+    var wrapperHeight = $(".wrapper").height() + $("header").height() + 100;
     var windowHeight = $(window).height();
     
     $("footer").removeClass("fixed");
@@ -476,6 +478,10 @@ $(document).ready(function(){
        window.location = $(this).attr('href');
        return false;
     });
+    
+    if($(".jsRedactor").length) {
+       $(".jsRedactor").redactor(); 
+    }
 
     if ($('#timerSpan').length) {
         startTimer(document.getElementById("timerSpan"),window.endTime);

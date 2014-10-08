@@ -79,7 +79,7 @@ class SiteController extends CController
         }
         Yii::app()->session['currentCourse'] = $idCourse;
         $this->breadcrumbs=array(
-            'Редактирование курса '.$course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse)))
+            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse)))
         );
         if(isset($_POST['Course']))
         {

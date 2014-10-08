@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form inline">
+<div class="form modal-form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
     'htmlOptions' => array('enctype' => 'multipart/form-data'),
@@ -69,7 +69,7 @@
 
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("class" => "btn green", "onclick" => "addLearnMaterial($idCourse);return false")); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("class" => "btn blue", "onclick" => "addLearnMaterial($idCourse);return false")); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

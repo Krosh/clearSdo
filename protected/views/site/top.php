@@ -94,7 +94,8 @@
         </div>
     </div>
 </header>
-<div style = "margin-left: 45px">
+
+<div class="container">
     <?php if(isset($this->breadcrumbs)):?>
         <?php $this->widget('zii.widgets.CBreadcrumbs', array(
             'links'=>$this->breadcrumbs,

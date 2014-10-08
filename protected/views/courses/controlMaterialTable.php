@@ -41,9 +41,9 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
             $countTries = count($tries);
             ?>
             <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
-             <td class="right">
-                 <i class="fa fa-remove"></i> <a style="float:right" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
-             </td>
+            <td class="right">
+                 <a class="btn white small" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+            </td>
         </tr>
     <?
     endforeach ?>

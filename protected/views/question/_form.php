@@ -17,37 +17,36 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-
-	<div class="row">
-        <?php $categories = array(1 => 'Закрытый', 2 => 'Закрытый с множественным выбором', 3 => 'Числовой ответ', 4 => 'Открытый тест',5 => 'На соответствие', 6 => 'Интерактивный');   ?>
-        <?php echo $form->labelEx($questionModel,'type'); ?>
-		<?php echo $form->dropDownList($questionModel,'type',$categories); ?>
-		<?php echo $form->error($questionModel,'type'); ?>
-	</div>
-
 	<div class="row">
 		<?php echo $form->labelEx($questionModel,'content'); ?>
-		<?php echo $form->textArea($questionModel,'content',array('rows'=>6, 'cols'=>30)); ?>
+		<?php echo $form->textArea($questionModel,'content',array('rows'=>6, 'cols'=>30, 'class'=>'jsRedactor')); ?>
 		<?php echo $form->error($questionModel,'content'); ?>
 	</div>
-
-	<div class="row">
+    <br>
+    
+    <div class="row radio-images">
+        <?php $categories = array(1 => '<img src="/img/q1.png" alt="Закрытый">', 2 => '<img src="/img/q2.png" alt="Закрытый с множественным выбором">', 3 => '<img src="/img/q3.png" alt="Числовой ответ">', 4 => '<img src="/img/q4.png" alt="Открытый тест">',5 => '<img src="/img/q5.png" alt="На соответствие">', 6 => '<img src="/img/q5.png" alt="Интерактивный">');   ?>
+        <?php echo $form->labelEx($questionModel,'type'); ?>
+		<?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
+		<?php echo $form->error($questionModel,'type'); ?>
+	</div>
+    
+	<div class="row row-inline">
 		<?php echo $form->labelEx($questionModel,'fee'); ?>
 		<?php echo $form->textField($questionModel,'fee'); ?>
 		<?php echo $form->error($questionModel,'fee'); ?>
 	</div>
 
-
-	<div class="row">
-		<?php echo $form->labelEx($questionModel,'random_answer'); ?>
-		<?php echo $form->checkBox($questionModel,'random_answer'); ?>
-		<?php echo $form->error($questionModel,'random_answer'); ?>
-	</div>
-
-	<div class="row">
+	<div class="row row-inline">
 		<?php echo $form->labelEx($questionModel,'weight'); ?>
 		<?php echo $form->numberField($questionModel,'weight'); ?>
 		<?php echo $form->error($questionModel,'weight'); ?>
+	</div>
+	
+	<div class="row row-inline">
+		<?php echo $form->labelEx($questionModel,'random_answer'); ?>
+		<?php echo $form->checkBox($questionModel,'random_answer'); ?>
+		<?php echo $form->error($questionModel,'random_answer'); ?>
 	</div>
 
     <script>
@@ -57,8 +56,8 @@
     </div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить изменения', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
-		<a href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант ответа</a>
+		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
+		<a style="margin-left:15px" href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант</a>
 	</div>
 
 <?php $this->endWidget(); ?>

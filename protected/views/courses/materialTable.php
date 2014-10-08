@@ -34,7 +34,7 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
             <!-- <i class="fileicon-file"></i> -->
             <?= $item->title;?>
             <div style="float:right;">
-                <i class="fa fa-remove"></i> <a href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+                <a class="btn white small" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
             </div>
         </td>
     <? else: ?>
@@ -44,7 +44,96 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
             if ($item->category==MATERIAL_FILE) {
                 $path = pathinfo($item->path, PATHINFO_EXTENSION);
             }
-            echo '<i class="fileicon-'.$path.'"></i>' . $item->title;
+            
+            $f = "";
+            
+            switch ($path) {
+                case "docx":
+                    $f = "file";
+                    break;
+                case "txt":
+                    $f = "file";
+                    break;
+                case "rtf":
+                    $f = "file";
+                    break;
+                case "doc":
+                    $f = "file";
+                    break;
+                case "pdf":
+                    $f = "pdf";
+                    break;
+                case "xls":
+                    $f = "excel";
+                    break;
+                case "xlsx":
+                    $f = "excel";
+                    break;
+                case "csv":
+                    $f = "excel";
+                    break;
+                case "ppt":
+                    $f = "presentation";
+                    break;
+                case "pptx":
+                    $f = "presentation";
+                    break;
+                case "zip":
+                    $f = "archive";
+                    break;
+                case "rar":
+                    $f = "archive";
+                    break;
+                case "7z":
+                    $f = "archive";
+                    break;
+                case "tar":
+                    $f = "archive";
+                    break;
+                case "gz":
+                    $f = "archive";
+                    break;
+                case "jpg":
+                    $f = "image";
+                    break;
+                case "jpeg":
+                    $f = "image";
+                    break;
+                case "bmp":
+                    $f = "image";
+                    break;
+                case "png":
+                    $f = "image";
+                    break;
+                case "gif":
+                    $f = "image";
+                    break;
+                case "avi":
+                    $f = "movie";
+                    break;
+                case "mpg":
+                    $f = "movie";
+                    break;
+                case "mp4":
+                    $f = "movie";
+                    break;
+                case "mov":
+                    $f = "movie";
+                    break;
+                case "torrent":
+                    $f = "torrent";
+                    break;
+                default:
+                    $f = "no";
+            }
+            ?>
+            <img class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
+            <?
+            
+            echo $item->title;
+            if(strlen($path) > 0) {
+                echo "." . $path;
+            }
             ?>
         </td>
         <td class="right">
@@ -67,7 +156,7 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
 
         </td>
         <td class="right">
-            <i class="fa fa-remove"></i> <a href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)">Удалить</a>
+            <a class="btn white small" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
         </td>
     <? endif; ?>
     </tr>

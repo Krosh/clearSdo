@@ -22,24 +22,46 @@ $this->renderPartial('/site/top');
     <div class="col-9">
         <div class="content">
             <div class="page-heading">
-                <div class="page-title">Тест: <?php echo $model->title?></div>
-                <div>
-                    <i class="fa fa-plus-square-o"></i>
-                    <a href="#" onclick="$('#editTest-testProperties').slideToggle(); return false;">Редактировать информацию о тесте</a>
+                <div class="col-group">
+                    <div class="col-4">
+                        <div class="page-title">Тест: <?php echo $model->title?></div>
+                    </div>
+                    <div class="col-8 right">
+                        <a href="#" class="btn white small" data-toggle="modal" data-target="#editTestModal"><i class="fa fa-edit"></i> Информация</a>
+                    </div>
                 </div>
-                <div style = "display: none" id = "editTest-testProperties" class="form inline">
-                    <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model))?>
+                
+                
+                <!-- редактирование теста -->
+                <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                		<div class="modal-content">
+                			<div class="modal-header">
+                				<button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Редактирование информации о тесте</h4>
+                			</div>
+                			<div class="modal-body">
+                				<div id="editTest-testProperties" class="form modal-form">
+                                    <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model))?>
+                                </div>
+                			</div>
+                		</div>
+                	</div>
                 </div>
+                
             </div>
+            
+            <hr>
 
-            <div>
-                <a href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>">Добавить вопрос</a>
+            <div class="right">
+                <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
             </div>
- <!--           <div>
+<!--
+           <div>
                 <i class="fa fa-plus-square-o"></i>
                 <a href="#" onclick="$('#editTest-questionAddExist').slideToggle(); return false;">Добавить из существующих</a>
             </div>
- -->           <div style = "display: none" id = "editTest-questionAddExist" class="form inline">
+           <div style = "display: none" id = "editTest-questionAddExist" class="form inline">
                 <?php
                 $mas = array();
                 $models = LearnMaterial::model()->findAll("idAutor = -1");
@@ -74,11 +96,15 @@ $this->renderPartial('/site/top');
                 ?>
             </div>
 
+-->
 
             <div id = "editTest-questions" style="margin-top:20px">
             </div>
 
-
+            <div class="right">
+                <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
+            </div>
+            
         </div>
     </div>
 <?php

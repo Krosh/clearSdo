@@ -34,7 +34,7 @@
 
             </td>
             <td class="right">
-                <i class="fa fa-remove"></i> <a href="#" onclick="deleteAnswer(<?php echo $item->id; ?>)">Удалить</a>
+                <a class="btn white small" href="#" onclick="deleteAnswer(<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
             </td>
         </tr>
     <?php endforeach; ?>

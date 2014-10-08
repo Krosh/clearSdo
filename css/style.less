@@ -7,6 +7,8 @@
 @import url("plugins/jquery.fs.picker.css");
 @import url("plugins/jquery.fs.tabber.css");
 @import url("http://cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
+@import url("bootstrap.css");
+@import url("redactor.css");
 
 //константы
 @din: 'pf_dindisplay_probold', sans-serif;
@@ -1220,9 +1222,21 @@ a.btn {
     color: #fff;
 }
 
+.btn.white {
+    background: #fff;
+    border: 1px solid @blue;
+}
+
 .btn.gray {
     background: #959595;
     color: #fff;
+}
+
+button.close {
+    background: none;
+    border: none;
+    outline: none;
+    float: right;
 }
 
 .picker .picker-label {
@@ -1447,6 +1461,17 @@ textarea {
         }
     }
     
+    &.modal-form {
+        label {
+            display: inline-block;
+            width: 130px;
+            vertical-align: inherit !important;
+        }
+        
+        input {
+            vertical-align: middle;
+        }
+    }
     
     &.inline {
         padding: 20px;
@@ -1469,6 +1494,17 @@ textarea {
     &.noborder {
         border: none !important;
     }
+}
+
+.col-group h2 {
+    margin-top: 5px;
+}
+
+.file-icon {
+    max-width: 20px;
+    width: 100%;
+    margin-right: 20px;
+    vertical-align: bottom;
 }
 
 .fa-loading-icon {
@@ -1502,6 +1538,54 @@ textarea {
     
     &.ui-state-hover, &.ui-state-active {
         background: #f9faffb !important;
+    }
+}
+
+.breadcrumbs {
+    margin: 19px 0;
+}
+
+.row {
+    &.radio-images {
+        & > label {
+            display: inline-block;
+            width: 150px;
+        }
+        
+        .picker {
+            display: inline-block;
+            width: 35px;
+            vertical-align: top;
+        }
+        
+        br {
+            display: none !important;
+        }
+    }
+    
+    &.row-inline {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 50px;
+        
+        label {
+            width: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .picker-label {
+            width: 200px;
+        }
+        
+        .picker {
+            padding-top: 20px;
+        }
+        
+        input {
+            width: 80px;
+            vertical-align: text-bottom;
+        }
     }
 }
 

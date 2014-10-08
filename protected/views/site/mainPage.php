@@ -53,12 +53,15 @@ $this->renderPartial('top');
                             <a href="#" class="page-print"><i class="print"></i> <span>Версия для печати</span></a>
                         </div>
                     </div>
-
+                    
+                    <?php if(Yii::app()->user->isTeacher()):?>
+                        <a class="btn white small" href="/courses/create"><i class="fa fa-plus"></i> Создать новый курс</a>
+                    <?php endif; ?>
                     <div id = "ajaxCoursesDiv">
 
                     </div>
                     <?php if(Yii::app()->user->isTeacher()):?>
-                        <a href = "/courses/create">Создать новый курс</a>
+                        <a class="btn white small" href="/courses/create"><i class="fa fa-plus"></i> Создать новый курс</a>
                     <?php endif; ?>
                     <script>
                         window.currentTerm = <?php echo $idActiveTerm?>
