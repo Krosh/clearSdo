@@ -69,7 +69,7 @@
 
 	<div class="row">
         <?php
-        $this->renderPartial('/accessControlMaterialGroup/_form', array('model' => $accessModel));
+        $this->renderPartial('/accessControlMaterialGroup/_form', array('model' => $accessModel,'idControlMaterial' => $model->id));
         ?>
 	</div>
 

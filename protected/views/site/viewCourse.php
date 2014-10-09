@@ -48,13 +48,22 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                     <th>Вопросов</th>
                     <th>Время</th>
                     <th>Попыток</th>
+                    <th>Оценка</th>
                     <th width="20%"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php $num = 0;?>
                 <?php foreach ($controlMaterials as $item):?>
-                    <tr data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>">
+                    <?php
+                        // TODO:: Не давать data-href, если нет доступа
+                        // Доступ проверять отдельным методом, все равно потом понадобится для системы безопасности
+                    ?>
+                    <tr
+                        <?php if (ControlMaterial::hasAccess($item->id)): ?>
+                            data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>"
+                        <?php endif; ?>
+                        >
                         <?php $num++; ?>
                         <td class="center"><?php echo $num; ?></td>
                         <td><?php echo $item->title ?></td>
@@ -68,8 +77,11 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         $countTries = count($tries);
                         ?>
                         <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
+                        <td class="center">
+                            <?php echo ControlMaterial::getMark(Yii::app()->user->getId(), $item->id); ?>
+                        </td>
                         <?php
-                        $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :idControlMaterial AND idGroup = NULL', array(':idControlMaterial' => $item->id));
+                        $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :idControlMaterial', array(':idControlMaterial' => $item->id));
                         if ($access == null)
                         {
                             $accessText = "Открыт";
@@ -79,17 +91,23 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                             if ($access->access == 2) $accessText = "Открыт";
                             if ($access->access == 3)
                             {
-                                $accessText = "Открыт";
+                                $accessText = "Открыт<br>";
                                 if ($accessText->startDate != '0000-00-00 00:00:00')
-                                    $accessText.= " с "+$accessText->startDate;
+                                    $accessText.= " с ".$access->startDate;
                                 if ($accessText->endDate != '0000-00-00 00:00:00')
                                 {
                                     if ($accessText->startDate != '0000-00-00 00:00:00')
                                         $accessText.= "<br>";
-                                    $accessText.= "до "+$accessText->endDate;
+                                    $accessText.= "до ".$access->endDate;
                                 }
                             }
-                            if ($access->access == 4) $accessText = "После предыдущего";
+                            if ($access->access == 4)
+                            {
+                                $parentTest = ControlMaterial::model()->findByPk($access->idBeforeTest);
+                                $accessText = "После прохождения теста<br>";
+                                $accessText.=$parentTest->title."<br>";
+                                $accessText.="Мин. оценка - ".$access->minMark;
+                            }
                         }
                         ?>
                         <td class="right"><?php echo $accessText ?></td>

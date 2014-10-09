@@ -1,3 +1,18 @@
+function updateAccessDivs()
+{
+    accessVal = $("#Access_access").val();
+    $('.dateAccess').hide();
+    $('.beforeAccess').hide();
+    if (accessVal == 3)
+    {
+        $('.dateAccess').show();
+    }
+    if (accessVal == 4)
+    {
+        $('.beforeAccess').show();
+    }
+}
+
 function loadCourses(idTerm,newTitle)
 {
     // Обновляем окно
@@ -12,7 +27,7 @@ function loadCourses(idTerm,newTitle)
         {
             $("#ajaxCoursesDiv").fadeOut(300, function() {
                 $("#currentTermTitle").html(newTitle);
-                $("#ajaxCoursesDiv").html(data); 
+                $("#ajaxCoursesDiv").html(data);
                 $("#ajaxCoursesDiv").fadeIn(300, function() {
                     $(".fa-loading-icon").fadeOut(100);
                     footerUpdate();
@@ -163,7 +178,7 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
-            
+
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -179,7 +194,7 @@ function updateLearnMaterials(idCourse)
                     });
                 }
             });
-            
+
             footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -251,7 +266,7 @@ function updateQuestions(idTest)
         {
             $("#editTest-questions").html(data);
             footerUpdate();
-            
+
             $("#questionTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
@@ -304,12 +319,12 @@ function updateAnswers(idQuestion)
         {
             $("#question-answers").html(data);
             footerUpdate();
-            
+
             $("#answerTable tbody").sortable({
                 items: 'tr',
                 update: function(event, ui ) {
                     var itemId = $(ui.item).prev().attr('id') || 0;
-                     $.ajax({
+                    $.ajax({
                         url: '/answer/orderMaterial',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
                         type: "POST",
@@ -370,9 +385,9 @@ function deleteAnswer(idAnswer)
 function changeAnswer(idAnswer,content,right)
 {
     if (right)
-    right = 1;
+        right = 1;
     else
-    right = 0;
+        right = 0;
     $.ajax({
         url: '/answer/changeAnswer',
         data: {idAnswer: idAnswer,content: content, right: right},
@@ -410,7 +425,7 @@ function isValidQuestion()
 function footerUpdate() {
     var wrapperHeight = $(".wrapper").height() + $("header").height() + 100;
     var windowHeight = $(window).height();
-    
+
     $("footer").removeClass("fixed");
     if(wrapperHeight <= windowHeight) {
         $("footer").addClass("fixed");
@@ -422,33 +437,37 @@ $(document).ready(function(){
     $(window).resize(function(){
         footerUpdate();
     });
-    
+
     // Запуск лоадера, скрываем элемент
     if($(".login").length > 0) {
-        $(".login").loader();   
+        $(".login").loader();
     }
-    
+
+    $(".datePicker").datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+
     // Дропдауны
     $(".dropdown").dropdown();
-    
+
     // Меню
     $(".small-nav").nav();
-    
+
     // Кастомные чекбоксы
     $("input[type=radio], input[type=checkbox]").picker();
-    
+
     // Табер
     $(".tabbed").tabber();
-    
+
     // Лого
     //$(".logo").logo();
-    
+
     // Календарь
-    
+
     var eventsArray = [
         { date: '2014-09-15', title: 'ЛР 1' },
         { date: '2014-09-11', title: 'ЛР 2' }
-      ];
+    ];
     $("#calendar").clndr({
         template: $('#mini-clndr-template').html(),
         weekOffset: 1,
@@ -462,25 +481,25 @@ $(document).ready(function(){
         }
     });
 
-    
+
     // Переход у таблиц по data-href
     if (window.currentTerm !== undefined) {
         loadCourses(window.currentTerm);
     }
-    
+
     $(document).on("click", '[data-href]', function() {
         window.location = $(this).data('href');
         return false;
     });
-        
+
     $(document).on("click", "[data-href] a", function(e) {
-       e.preventDefault();
-       window.location = $(this).attr('href');
-       return false;
+        e.preventDefault();
+        window.location = $(this).attr('href');
+        return false;
     });
-    
+
     if($(".jsRedactor").length) {
-       $(".jsRedactor").redactor(); 
+        $(".jsRedactor").redactor();
     }
 
     if ($('#timerSpan').length) {
@@ -516,6 +535,7 @@ $(document).ready(function(){
     if ($("#editTest-questions").length)
     {
         updateQuestions(window.idTest);
+        updateAccessDivs();
     }
     if ($("#question-answers").length)
     {

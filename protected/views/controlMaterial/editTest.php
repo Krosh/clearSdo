@@ -42,7 +42,7 @@ $this->renderPartial('/site/top');
                 			</div>
                 			<div class="modal-body">
                 				<div id="editTest-testProperties" class="form modal-form">
-                                    <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model))?>
+                                    <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel))?>
                                 </div>
                 			</div>
                 		</div>

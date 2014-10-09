@@ -97,6 +97,25 @@ class CoursesControlMaterial extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public static function getAllControlMaterials($idCourse,$idExceptionTest = -1)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idcourse',$idCourse);
+        if ($idExceptionTest != -1)
+        {
+            $criteria->addCondition("idControlMaterial != ".$idExceptionTest);
+        }
+        $criteria->order = 'zindex';
+        $cMaterials = CoursesControlMaterial::model()->findAll($criteria);
+        $result = array();
+        foreach ($cMaterials as $item)
+        {
+            $test = ControlMaterial::model()->findByPk($item->idControlMaterial);
+            array_push($result,$test);
+        }
+        return $result;
+    }
+
 
     public static function getAccessedControlMaterials($idCourse)
     {
@@ -110,14 +129,6 @@ class CoursesControlMaterial extends CActiveRecord
             $test = ControlMaterial::model()->findByPk($item->idControlMaterial);
             $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :id AND idGroup IS NULL', array(':id' => $item->id));
             if ($access->access == 2) continue;
-            if ($access->access == 3)
-            {
-                $curDate = new DateTime();
-                $startDate = new DateTime($access->startDate);
-                $endDate = new DateTime($access->endDate);
-                if ($curDate->format("U")<$startDate->format("U") || ($curDate->format("U")>$endDate->format("U") && $endDate->format("U")>0)) continue;
-            }
-            // TODO:: доступ
             array_push($result,$test);
         }
         return $result;

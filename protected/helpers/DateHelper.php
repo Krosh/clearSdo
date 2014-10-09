@@ -14,4 +14,12 @@ class DateHelper {
         return $mas[2].".".$mas[1].".".$mas[0];
     }
 
+    public static function getTimestampFromDateTime($dateTime)
+    {
+        $date = explode(" ",$dateTime);
+        $dayArray = explode("-",$date[0]);
+        $timeArray = explode(":",$date[1]);
+        return mktime($timeArray[0],$timeArray[1],$timeArray[2],$dayArray[1],$dayArray[2],$dayArray[0]);
+    }
+
 }

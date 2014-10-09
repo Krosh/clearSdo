@@ -63,7 +63,72 @@ class ControlMaterial extends CActiveRecord
 		);
 	}
 
-	/**
+    public static function getMark($idStudent,$idControlMaterial)
+    {
+        $controlMaterial = ControlMaterial::model()->findByPk($idControlMaterial);
+        $tries = UserControlMaterial::model()->findAll("idControlMaterial = :idMat AND idUser = :idStudent", array(":idMat" => $idControlMaterial, ":idStudent" => $idStudent));
+        if (count($tries) <1) return "";
+        if ($controlMaterial->calc_mode == CALC_MIN)
+        {
+            $mark = 100;
+            foreach ($tries as $item)
+            {
+                $mark = min($mark, $item->mark);
+            }
+        }
+        if ($controlMaterial->calc_mode == CALC_MAX)
+        {
+            foreach ($tries as $item)
+            {
+                $mark = max($mark, $item->mark);
+            }
+        }
+        if ($controlMaterial->calc_mode == CALC_AVG)
+        {
+            $mark = 100;
+            foreach ($tries as $item)
+            {
+                $mark += $item->mark;
+            }
+            $mark = round($mark/count($tries),0);
+        }
+        if ($controlMaterial->calc_mode == CALC_LAST)
+        {
+            $mark = $tries[count($tries)-1]->mark;
+        }
+        return $mark;
+    }
+
+    public static function hasAccess($idControlMaterial)
+    {
+        $access = AccessControlMaterialGroup::model()->findAll("idControlMaterial = :idControlMaterial", array(":idControlMaterial" => $idControlMaterial));
+        if (count($access) > 0)
+        {
+            $accessModel = $access[0];
+            if ($accessModel->access == 1)
+            {
+                return true;
+            }
+            if ($accessModel->access == 2)
+            {
+                return false;
+            }
+            if ($accessModel->access == 3)
+            {
+                $startDate = DateHelper::getTimestampFromDateTime($accessModel->startDate);
+                $endDate = DateHelper::getTimestampFromDateTime($accessModel->endDate);
+                $curDate = DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s"));
+                return ($curDate<=$endDate && $curDate >= $startDate);
+            }
+            if ($accessModel->access == 4)
+            {
+                return (ControlMaterial::getMark(Yii::app()->user->getId(),$accessModel->idBeforeTest)>$accessModel->minMark);
+            }
+        }
+        else return true;
+    }
+
+    /**
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
