@@ -217,8 +217,10 @@ class ControlMaterialController extends CController
                 $totalMark+=$answerInfo['mark']*$questions[$i]->weight;
             }
         }
-        $model->mark = (int)($totalMark/$summWeight);
+
+        $model->mark = (int)($totalMark/max($summWeight,1));
         $model->save();
+        $idGo = Yii::app()->session['currentTestGo'] = -1;
         $this->redirect($this->createUrl('/controlMaterial/viewTestResults', array('id' => $model->id)));
     }
 
@@ -254,7 +256,7 @@ class ControlMaterialController extends CController
                 $answerContent[] = "";
             }
         }
-        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => $summWeight));
+        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => max($summWeight,1)));
 
     }
 
@@ -293,6 +295,7 @@ class ControlMaterialController extends CController
 
     public function actionEdit($idMaterial)
     {
+        $needRefresh = false;
         $model = $this->loadModel($idMaterial);
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $this->breadcrumbs=array(
@@ -300,13 +303,32 @@ class ControlMaterialController extends CController
             $model->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
         );
         $this->noNeedJquery = true;
+        $accessModel = AccessControlMaterialGroup::model()->findAll("idControlMaterial = :idMaterial",array(":idMaterial" => $idMaterial));
+        if (count($accessModel) == 0)
+        {
+            $accessModel = new AccessControlMaterialGroup();
+            $accessModel->idControlMaterial = $idMaterial;
+            $accessModel->save();
+        } else
+        {
+            // TODO:: вот это ненормальнно
+            $accessModel = $accessModel[0];
+        }
+        if (isset($_POST['Access']))
+        {
+            $accessModel->attributes=$_POST['Access'];
+            if ($accessModel->save())
+                $needRefresh = true;
+        }
         if (isset($_POST['ControlMaterial']))
         {
             $model->attributes=$_POST['ControlMaterial'];
             if($model->save())
-                $this->refresh();
+                $needRefresh = true;
         }
-        $this->render("editTest",array("model" => $model));
+        if ($needRefresh)
+            $this->refresh();
+        $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel));
     }
 
     public function actionCreate($idCourse)

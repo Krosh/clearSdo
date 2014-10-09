@@ -14,6 +14,7 @@ class SiteController extends CController
     {
         return array(
             array('application.filters.AccessFilter'),
+            array('application.filters.ActiveTestFilter'),
             array('application.filters.TimezoneFilter'),
         );
     }
