@@ -88,7 +88,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         } else
                         {
                             if ($access->access == 1) $accessText = "Открыт";
-                            if ($access->access == 2) $accessText = "Открыт";
+                            if ($access->access == 2) $accessText = "Закрыт";
                             if ($access->access == 3)
                             {
                                 $accessText = "Открыт<br>";

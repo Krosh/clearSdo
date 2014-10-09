@@ -127,8 +127,8 @@ class CoursesControlMaterial extends CActiveRecord
         foreach ($cMaterials as $item)
         {
             $test = ControlMaterial::model()->findByPk($item->idControlMaterial);
-            $access = AccessControlMaterialGroup::model()->find('idControlMaterial = :id AND idGroup IS NULL', array(':id' => $item->id));
-            if ($access->access == 2) continue;
+            $access = AccessControlMaterialGroup::model()->findAll('idControlMaterial = :id AND idGroup IS NULL', array(':id' => $item->idControlMaterial));
+            if ($access[0]->access == 2) continue;
             array_push($result,$test);
         }
         return $result;
