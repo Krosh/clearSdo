@@ -120,13 +120,13 @@ class Group extends CActiveRecord
         return Group::model()->findAll($criteria);
     }
 
-    public static function getGroupsByAutor($idAutor)
+    public static function getGroupsByAutor($idAutor,$idTerm = -1)
     {
         $courses = CoursesAutor::model()->findAll('idAutor = :idAutor', array(':idAutor' => $idAutor));
         $ids = array();
         foreach ($courses as $item)
         {
-            $groups = Group::getGroupsByCourse($item->id);
+            $groups = Group::getGroupsByCourse($item->id,$idTerm);
             foreach ($groups as $curGroup)
             {
                 array_push($ids,$curGroup->id);

@@ -1,3 +1,21 @@
+function makeReport_marks()
+{
+    $.ajax({
+        url: '/report/marksAjax',
+        data: {group: $("#group").val(), course: $("#course").val()},
+        type: "POST",
+        success: function(data)
+        {
+            $("#report").html(data);
+            footerUpdate();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
 function updateAccessDivs()
 {
     accessVal = $("#Access_access").val();
@@ -443,10 +461,11 @@ $(document).ready(function(){
         $(".login").loader();
     }
 
-    $(".datePicker").datepicker({
-        dateFormat: 'yy-mm-dd'
-    });
-
+    if($(".datePicker").length) {
+        $(".datePicker").datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    }
     // Дропдауны
     $(".dropdown").dropdown();
 

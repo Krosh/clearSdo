@@ -50,6 +50,16 @@
                                 </div>
                             </div>
                         <? endif; ?>
+                        <?php if (Yii::app()->user->isTeacher()):?>
+                            <div class="link more">
+                                <a href="#">Отчеты</a>
+                                <div class="more-menu">
+                                    <div class="more-menu-links">
+                                        <a href="<?php echo $this->createUrl("report/marks")?>">Успеваемость групп</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <? endif; ?>
                     </div>
                 </nav>
             </div>

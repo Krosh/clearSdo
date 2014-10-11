@@ -19,8 +19,7 @@ $this->renderPartial('top');
                 <div class="content">
                     <div class="page-heading col-group">
                         <div class="col-6">
-                            <div class="page-title">У вас недостаточно для просмотра этой страницы</div>
-
+                            <div class="page-title">У вас недостаточно прав для просмотра этой страницы</div>
                         </div>
                     </div>
                 </div>

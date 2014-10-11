@@ -19,7 +19,7 @@ $this->renderPartial('/site/top');
         <div class="content">
             <div class="page-heading col-group">
                 <div class="col-6">
-                    <div class="page-title">Лабораторная работа №1</div>
+                    <div class="page-title"><?php echo $test->title; ?></div>
 
                 </div>
                 <div class="col-6 right">

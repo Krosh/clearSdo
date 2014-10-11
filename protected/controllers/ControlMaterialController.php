@@ -87,7 +87,7 @@ class ControlMaterialController extends CController
         $dateTime->modify("+$addTimeValue minute");
 
         // Так как у нас php<5.3 ТО передаем такой костыль
-        $this->render('/question/viewQuestion', array('question' => $question, 'answers' => $answers, 'endTime' => $dateTime->format("U")));
+        $this->render('/question/viewQuestion', array('test' => $test, 'question' => $question, 'answers' => $answers, 'endTime' => $dateTime->format("U")));
     }
 
     public function actionNextQuestion()
