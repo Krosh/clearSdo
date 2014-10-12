@@ -67,7 +67,7 @@ class ControlMaterial extends CActiveRecord
     {
         $controlMaterial = ControlMaterial::model()->findByPk($idControlMaterial);
         $tries = UserControlMaterial::model()->findAll("idControlMaterial = :idMat AND idUser = :idStudent", array(":idMat" => $idControlMaterial, ":idStudent" => $idStudent));
-        if (count($tries) <1) return "";
+        if (count($tries) <1) return 0;
         if ($controlMaterial->calc_mode == CALC_MIN)
         {
             $mark = 100;

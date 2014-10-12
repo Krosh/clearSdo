@@ -2144,3 +2144,24 @@ textarea:active {
     display: none !important;
   }
 }
+
+div.wide.form label
+{
+    margin-top: 7px;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    text-align: right;
+    width: 300px;
+}
+
+div.wide.form .row
+{
+    clear: left;
+}
+
+div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage,
+{
+    clear: left;
+    padding-left: 310px;
+}

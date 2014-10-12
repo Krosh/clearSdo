@@ -43,8 +43,9 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
             <table class="table green">
                 <thead>
                 <tr>
-                    <th>№</th>
-                    <th width="40%" class="left">Название</th>
+                    <th></th>
+                <!--    <th>№</th>
+                -->    <th width="40%" class="left">Название</th>
                     <th>Вопросов</th>
                     <th>Время</th>
                     <th>Попыток</th>
@@ -55,19 +56,23 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                 <tbody>
                 <?php $num = 0;?>
                 <?php foreach ($controlMaterials as $item):?>
-                    <?php
-                        // TODO:: Не давать data-href, если нет доступа
-                        // Доступ проверять отдельным методом, все равно потом понадобится для системы безопасности
-                    ?>
                     <tr
-                        <?php if (ControlMaterial::hasAccess($item->id)): ?>
+                        <?php if (ControlMaterial::hasAccess($item->id) && !$item->is_point): ?>
                             data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>"
                         <?php endif; ?>
                         >
                         <?php $num++; ?>
-                        <td class="center"><?php echo $num; ?></td>
-                        <td><?php echo $item->title ?></td>
+                        <td>
+                            <?php if ($item->is_point): ?>
+                                <img src="/img/is_point.png" alt="">
+                            <?php else:?>
+                                <img src="/img/is_test.gif" alt="">
+                            <?php endif; ?>
+                        <td>
+                        <?php echo $item->title ?></td>
                         <?php
+                        if (!$item->is_point)
+                        {
                         if ($item->question_show_count == -1) $showCount = count(Question::getQuestionsByControlMaterial($item->id)); else $showCount = $mat->question_show_count;
                         ?>
                         <td class="center"><?php echo $showCount == "" ? "—" : $showCount ?></td>
@@ -104,10 +109,15 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                             if ($access->access == 4)
                             {
                                 $parentTest = ControlMaterial::model()->findByPk($access->idBeforeTest);
-                                $accessText = "После прохождения теста<br>";
+                                $accessText = "После прохождения<br>";
                                 $accessText.=$parentTest->title."<br>";
                                 $accessText.="Мин. оценка - ".$access->minMark;
                             }
+                        }
+                        } else
+                        {
+                            echo "<td></td><td></td><td></td><td class='center'>".ControlMaterial::getMark(Yii::app()->user->id,$item->id)."</td>";
+                            $accessText = "";
                         }
                         ?>
                         <td class="right"><?php echo $accessText ?></td>

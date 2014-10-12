@@ -30,33 +30,33 @@ $this->renderPartial('/site/top');
                         <a href="#" class="btn white small" data-toggle="modal" data-target="#editTestModal"><i class="fa fa-edit"></i> Информация</a>
                     </div>
                 </div>
-                
-                
+
+
                 <!-- редактирование теста -->
                 <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                		<div class="modal-content">
-                			<div class="modal-header">
-                				<button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
-                				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Редактирование информации о тесте</h4>
-                			</div>
-                			<div class="modal-body">
-                				<div id="editTest-testProperties" class="form modal-form">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Редактирование информации о тесте</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="editTest-testProperties" class="form modal-form">
                                     <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel))?>
                                 </div>
-                			</div>
-                		</div>
-                	</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-            </div>
-            
-            <hr>
 
-            <div class="right">
-                <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
             </div>
-<!--
+            <?php if (!$model->is_point): ?>
+                <hr>
+
+                <div class="right">
+                    <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
+                </div>
+                <!--
            <div>
                 <i class="fa fa-plus-square-o"></i>
                 <a href="#" onclick="$('#editTest-questionAddExist').slideToggle(); return false;">Добавить из существующих</a>
@@ -98,13 +98,46 @@ $this->renderPartial('/site/top');
 
 -->
 
-            <div id = "editTest-questions" style="margin-top:20px">
-            </div>
+                <div id = "editTest-questions" style="margin-top:20px">
+                </div>
 
-            <div class="right">
-                <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
-            </div>
-            
+                <div class="right">
+                    <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
+                </div>
+            <?php else: ?>
+                <?php
+                $mas = array();
+                $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
+                foreach ($models as $item)
+                {
+                    $mas[$item->id] = $item->Title;
+                }
+                $this->widget('ext.combobox.EJuiComboBox', array(
+                    'name' => 'group',
+                    'data' => $mas,
+                    'options' => array(
+                        'onSelect' => '
+                     $.ajax({
+                        type: "POST",
+                        url: "/controlMaterial/getGroupMarks",
+                        data: {groupName: item.value,idControlMaterial: '.$model->id.'},
+                        success: function(data)
+                        {
+                            $("#editTest-groupMarks").html(data);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert("error"+textStatus+errorThrown);
+                        }});',
+                        'allowText' => false,
+                    ),
+                    'htmlOptions' => array('size' => 30),
+                ));
+                ?>
+                <div id = "editTest-groupMarks" style="margin-top:20px">
+                </div>
+
+            <?php endif; ?>
+
         </div>
     </div>
 <?php

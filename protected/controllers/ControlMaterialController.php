@@ -344,5 +344,27 @@ class ControlMaterialController extends CController
         $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
     }
 
+    public function actionSetMark()
+    {
+        $idControlMaterial = $_POST['idControlMaterial'];
+        $idStudent = $_POST['idStudent'];
+        $mark = $_POST['mark'];
+        UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
+        $model = new UserControlMaterial();
+        $model->dateStart = date("Y-m-d H:i:s");
+        $model->dateEnd = $model->dateStart;
+        $model->idControlMaterial = $idControlMaterial;
+        $model->idUser = $idStudent;
+        $model->mark = $mark;
+        $model->save();
+    }
+
+    public function actionGetGroupMarks()
+    {
+        $group = Group::model()->findAll("Title = :title",array(":title" => $_POST['groupName']));
+        $this->renderPartial('groupMarks', array('group' => $group[0],'idControlMaterial' => $_POST['idControlMaterial']));
+
+    }
+
 
 }

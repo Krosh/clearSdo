@@ -102,6 +102,7 @@ class QuestionController extends CController
     {
         $model = new Question();
         $model->type = 1;
+        $model->weight = 1;
         $model->content = "Новый вопрос";
         $model->save();
         $ca = new QuestionsControlMaterial();

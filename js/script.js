@@ -1,3 +1,16 @@
+function saveMark(idStudent,idControlMaterial,mark)
+{
+    $.ajax({
+        url: '/controlMaterial/setMark',
+        data: {idStudent: idStudent, idControlMaterial: idControlMaterial, mark: mark},
+        type: "POST",
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+}
+
 function makeReport_marks()
 {
     $.ajax({
