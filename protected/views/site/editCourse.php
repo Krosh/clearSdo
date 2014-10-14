@@ -207,7 +207,9 @@ $listeners = Course::getGroups($model->id);
                         <i class="fa fa-plus-square-o"></i>
                         <a href="#" onclick="$('#editCourse-controlMaterialAddExist').slideToggle(); return false;">Добавить из существующих</a><br>
                         <i class="fa fa-plus-square"></i>
-                        <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id)); ?>">Создать материал</a>
+                        <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => false)); ?>">Создать тест</a><br>
+                        <i class="fa fa-plus-square"></i>
+                        <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => true)); ?>">Создать контрольную точку</a><br>
                     </div>
                     <div style = "display: none" id = "editCourse-controlMaterialAddExist" class="form modal-form">
                         <?php

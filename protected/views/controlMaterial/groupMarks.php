@@ -12,7 +12,10 @@ echo "<table><tr><td>ФИО студента</td><td>Оценка</td></tr>";
 foreach ($group->students as $student)
 {
     echo "<tr><td>".$student->fio."</td><td>";
-    echo CHtml::textField("Mark[".$student->id."]",ControlMaterial::getMark($student->id,$idControlMaterial), array('onchange' => 'saveMark('.$student->id.','.$idControlMaterial.',$(this).val())'));
+    if ($needEdit)
+        echo CHtml::textField("Mark[".$student->id."]",ControlMaterial::getMark($student->id,$idControlMaterial), array('onchange' => 'saveMark('.$student->id.','.$idControlMaterial.',$(this).val())'));
+    else
+        echo ControlMaterial::getMark($student->id,$idControlMaterial);
     echo "</td></tr>";
 }
 

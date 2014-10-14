@@ -42,7 +42,10 @@ $this->renderPartial('/site/top');
                             </div>
                             <div class="modal-body">
                                 <div id="editTest-testProperties" class="form modal-form">
-                                    <?php $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel))?>
+                                    <?php if (!$model->is_point)
+                                        $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel));
+                                    else
+                                        $this->renderPartial("/controlMaterial/_form-point",array("model" => $model, "accessModel" => $accessModel));?>
                                 </div>
                             </div>
                         </div>
@@ -105,18 +108,53 @@ $this->renderPartial('/site/top');
                     <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
                 </div>
             <?php else: ?>
-                <?php
-                $mas = array();
-                $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
-                foreach ($models as $item)
-                {
-                    $mas[$item->id] = $item->Title;
-                }
-                $this->widget('ext.combobox.EJuiComboBox', array(
-                    'name' => 'group',
-                    'data' => $mas,
-                    'options' => array(
-                        'onSelect' => '
+                <?php if ($model->is_autocalc): ?>
+                    <?php
+                    $mas = array();
+
+                    $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
+                    foreach ($models as $item)
+                    {
+                        $mas[$item->id] = $item->Title;
+                    }
+                    $this->widget('ext.combobox.EJuiComboBox', array(
+                        'name' => 'group',
+                        'data' => $mas,
+                        'options' => array(
+                            'onSelect' => '
+                     $.ajax({
+                        type: "POST",
+                        url: "/controlMaterial/calcAndGetGroupMarks",
+                        data: {groupName: item.value,idControlMaterial: '.$model->id.'},
+                        success: function(data)
+                        {
+                            $("#editTest-groupMarks").html(data);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert("error"+textStatus+errorThrown);
+                        }});',
+                            'allowText' => false,
+                        ),
+                        'htmlOptions' => array('size' => 30),
+                    ));
+                    ?>
+                    <div id = "editTest-groupMarks" style="margin-top:20px">
+                    </div>
+                <?php else: ?>
+
+                    <?php
+                    $mas = array();
+
+                    $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
+                    foreach ($models as $item)
+                    {
+                        $mas[$item->id] = $item->Title;
+                    }
+                    $this->widget('ext.combobox.EJuiComboBox', array(
+                        'name' => 'group',
+                        'data' => $mas,
+                        'options' => array(
+                            'onSelect' => '
                      $.ajax({
                         type: "POST",
                         url: "/controlMaterial/getGroupMarks",
@@ -128,13 +166,14 @@ $this->renderPartial('/site/top');
                         error: function(jqXHR, textStatus, errorThrown){
                             alert("error"+textStatus+errorThrown);
                         }});',
-                        'allowText' => false,
-                    ),
-                    'htmlOptions' => array('size' => 30),
-                ));
-                ?>
-                <div id = "editTest-groupMarks" style="margin-top:20px">
-                </div>
+                            'allowText' => false,
+                        ),
+                        'htmlOptions' => array('size' => 30),
+                    ));
+                    ?>
+                    <div id = "editTest-groupMarks" style="margin-top:20px">
+                    </div>
+                <?php endif; ?>
 
             <?php endif; ?>
 

@@ -31,6 +31,7 @@
             <?php
            if (isset($groupName) && $groupName != "" && $group->Title != $groupName)
                 continue;
+            echo "<tr><td><strong>".$group->Title."</strong></td></tr>";
             foreach ($group->students as $student)
             {
                 echo "<tr>";

@@ -29,6 +29,18 @@
 	</div>
 
     <div class="row">
+        <?php echo $form->labelEx($model,'weight'); ?>
+        <?php echo $form->textField($model,'weight'); ?>
+        <?php echo $form->error($model,'weight'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model,'show_in_reports'); ?>
+        <?php echo $form->checkBox($model,'show_in_reports'); ?>
+        <?php echo $form->error($model,'show_in_reports'); ?>
+    </div>
+
+    <div class="row">
 		<?php echo $form->labelEx($model,'dotime'); ?>
 		<?php echo $form->textField($model,'dotime'); ?>
 		<?php echo $form->error($model,'dotime'); ?>
@@ -36,7 +48,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'question_random'); ?>
-		<?php echo $form->checkBox($model,'question_random'); ?>
+		<?php echo $form->cheфckBox($model,'question_random'); ?>
 		<?php echo $form->error($model,'question_random'); ?>
 	</div>
 
@@ -77,12 +89,6 @@
 		<?php echo $form->labelEx($model,'show_answers'); ?>
 		<?php echo $form->checkBox($model,'show_answers'); ?>
 		<?php echo $form->error($model,'show_answers'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'is_point'); ?>
-		<?php echo $form->checkBox($model,'is_point'); ?>
-		<?php echo $form->error($model,'is_point'); ?>
 	</div>
 
 	<div class="row">

@@ -331,10 +331,12 @@ class ControlMaterialController extends CController
         $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel));
     }
 
-    public function actionCreate($idCourse)
+    public function actionCreate($idCourse,$isPoint)
     {
         $model = new ControlMaterial();
         $model->idAutor = Yii::app()->user->getId();
+        $model->weight = 1;
+        $model->is_point = $isPoint;
         $model->save();
         $ccm = new CoursesControlMaterial();
         $ccm->idCourse = $idCourse;
@@ -362,8 +364,46 @@ class ControlMaterialController extends CController
     public function actionGetGroupMarks()
     {
         $group = Group::model()->findAll("Title = :title",array(":title" => $_POST['groupName']));
-        $this->renderPartial('groupMarks', array('group' => $group[0],'idControlMaterial' => $_POST['idControlMaterial']));
+        $this->renderPartial('groupMarks', array('group' => $group[0],'idControlMaterial' => $_POST['idControlMaterial'], 'needEdit' => true));
+    }
 
+    public function actionCalcAndGetGroupMarks()
+    {
+        $groupName = $_POST['groupName'];
+        $group = Group::model()->findAll("Title = :title",array(":title" => $groupName));
+        $group = $group[0];
+        $idControlMaterial = $_POST['idControlMaterial'];
+        $idCourse = Yii::app()->session['currentCourse'];
+        $ccm = CoursesControlMaterial::model()->findAll("idCourse = :idCourse AND idControlMaterial = :idControlMaterial", array(":idCourse" => $idCourse, ":idControlMaterial" => $idControlMaterial));
+        $ccm = $ccm[0];
+        $tests = CoursesControlMaterial::model()->findAll("idCourse = :idCourse AND zindex < :zindex", array(":idCourse" => $idCourse,":zindex" => $ccm->zindex));
+        $ids = array();
+        foreach ($tests as $test)
+        {
+            array_push($ids,$test->idControlMaterial);
+        }
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition("id",$ids);
+        $controlMaterials = ControlMaterial::model()->findAll($criteria);
+        foreach ($group->students as $user)
+        {
+            $weight = 0;
+            $mark = 0;
+            foreach ($controlMaterials as $controlMaterial)
+            {
+                $weight += $controlMaterial->weight;
+                $mark += $controlMaterial->weight*ControlMaterial::getMark($user->id, $controlMaterial->id);
+            }
+            UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $user->id, ":idControlMaterial" => $idControlMaterial));
+            $model = new UserControlMaterial();
+            $model->dateStart = date("Y-m-d H:i:s");
+            $model->dateEnd = $model->dateStart;
+            $model->idControlMaterial = $idControlMaterial;
+            $model->idUser = $user->id;
+            $model->mark = round($mark / $weight);
+            $model->save();
+        }
+        $this->renderPartial('groupMarks', array('group' => $group,'idControlMaterial' => $idControlMaterial));
     }
 
 

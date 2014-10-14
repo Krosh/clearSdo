@@ -5,6 +5,9 @@ define('CALC_MIN',2);
 define('CALC_AVG',3);
 define('CALC_LAST',0);
 
+define('CALC_AUTO',0);
+define('CALC_LAUNCH',1);
+
 /**
  * This is the model class for table "tbl_controlmaterials".
  *
@@ -24,6 +27,9 @@ define('CALC_LAST',0);
  * @property integer $is_point
  * @property integer $calc_mode
  * @property integer $idAutor
+ * @property integer $show_in_reports
+ * @property string $weight
+ * @property integer $is_autocalc
  */
 class ControlMaterial extends CActiveRecord
 {
@@ -48,7 +54,8 @@ class ControlMaterial extends CActiveRecord
 			array('access_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
+			array('weight,is_autocalc,show_in_reports','safe'),
+            array(' id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -148,6 +155,9 @@ class ControlMaterial extends CActiveRecord
 			'show_answers' => 'Показать ответы после прохождения',
 			'is_point' => 'Является контрольной точкой',
 			'calc_mode' => 'Метод расчета',
+            'is_autocalc' => 'Рассчитывать автоматически',
+            'weight' => 'Вес',
+            'show_in_reports' => 'Включать в отчеты',
 			'idAutor' => 'Id Autor',
 		);
 	}
