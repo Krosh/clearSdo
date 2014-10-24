@@ -48,7 +48,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'question_random'); ?>
-		<?php echo $form->cheфckBox($model,'question_random'); ?>
+		<?php echo $form->checkBox($model,'question_random'); ?>
 		<?php echo $form->error($model,'question_random'); ?>
 	</div>
 
