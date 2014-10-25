@@ -9,9 +9,26 @@ function saveMark(idStudent,idControlMaterial,mark)
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         }
     });
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').text($('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val());
+    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
 }
 
-function makeReport_marks()
+function showMarksOfMaterial(idControlMaterial)
+{
+    $('div[data-material='+idControlMaterial+']').hide();
+    $('input[data-material='+idControlMaterial+']').show();
+//    $('input[data-material='+idControlMaterial+']').focus();
+}
+
+function showMarkTextbox(idStudent,idControlMaterial)
+{
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
+    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
+    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').focus();
+}
+
+    function makeReport_marks()
 {
     $.ajax({
         url: '/report/marksAjax',

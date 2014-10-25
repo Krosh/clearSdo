@@ -10,7 +10,7 @@
 $groups = Course::getGroups($idCourse,Yii::app()->session['currentTerm']);
 $arGroups = array();
 foreach ($groups as $group){
-    array_push($arGroups, "<a href = '#'>".$group->Title."</a> <a onclick = 'deleteGroup(".$idCourse.",".$group->id."); return false'> <i class='fa fa-remove'></i></a>");
+    array_push($arGroups, "<a href = ".$this->createUrl("/site/journal",array("idCourse" => $idCourse, "idGroup" => $group->id)).">".$group->Title."</a> <a onclick = 'deleteGroup(".$idCourse.",".$group->id."); return false'> <i class='fa fa-remove'></i></a>");
 }
 
 echo implode(', ', $arGroups);

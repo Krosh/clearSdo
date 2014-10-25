@@ -76,7 +76,7 @@ class SiteController extends CController
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
         {
-            // Бросить ошибку
+            throw new CHttpException(404,'Не ломайте стимул!!');
         }
         Yii::app()->session['currentCourse'] = $idCourse;
         $this->breadcrumbs=array(
@@ -91,6 +91,21 @@ class SiteController extends CController
 
         $this->noNeedJquery = true;
         $this->render('editCourse', array('model' => $course));
+    }
+
+    public function actionJournal($idCourse,$idGroup)
+    {
+        $course = Course::model()->findByPk($idCourse);
+        if ($course == null)
+        {
+            throw new CHttpException(404,'Не ломайте стимул!!');
+        }
+        $group = Group::model()->findByPk($idGroup);
+        if ($group == null)
+        {
+            throw new CHttpException(404,'Не ломайте стимул!!');
+        }
+        $this->render("/journal/view", array("course" => $course, "group" => $group));
     }
 
     public function actionConfig()
