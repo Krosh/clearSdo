@@ -26,6 +26,10 @@ function showMarkTextbox(idStudent,idControlMaterial)
     $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').focus();
+    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').focusout(function()
+    {
+        saveMark(idStudent,idControlMaterial,$('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val());
+    });
 }
 
     function makeReport_marks()
@@ -548,7 +552,17 @@ $(document).ready(function(){
     });
 
     if($(".jsRedactor").length) {
-        $(".jsRedactor").redactor();
+        tinymce.init({
+            selector: ".jsRedactor",
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste jbimages"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages",
+            relative_urls: false
+        });
+       // $(".jsRedactor").redactor();
     }
 
     if ($('#timerSpan').length) {
