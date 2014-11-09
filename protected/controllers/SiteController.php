@@ -119,5 +119,18 @@ class SiteController extends CController
         $this->render("noAccess");
     }
 
+    public function actionMediateka()
+    {
+        $this->noNeedJquery = true;
+        $this->render("mediateka");
+    }
+
+    public function actionDeleteMedia($name)
+    {
+        $path = Yii::getPathOfAlias("webroot.media.".Yii::app()->user->id).DIRECTORY_SEPARATOR.$name;
+        if (is_file($path))
+            unlink($path);
+    }
+
 
 }

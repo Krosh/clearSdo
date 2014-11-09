@@ -48,7 +48,7 @@ $controlMaterials = ControlMaterial::model()->findAll($criteria2);
             </td>
             <?php foreach ($controlMaterials as $material):?>
                 <?php if ($material->is_point):?>
-                    <td style = "border: 1px solid black; padding: 5px">
+                    <td style = "border: 1px solid black; padding: 5px; background-color: #0080CC">
                         <div data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
                             <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                         </div>

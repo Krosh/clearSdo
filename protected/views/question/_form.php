@@ -5,6 +5,8 @@
 ?>
 <div class="form wide">
 
+<?php $_SESSION['userCode'] = 2; ?>
+
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'question-form',
 	'htmlOptions'=>array(

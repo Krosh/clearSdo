@@ -33,9 +33,6 @@
                             <a href="#">Документы</a>
                         </div>
                         <div class="link">
-                            <a href="#">Обучение</a>
-                        </div>
-                        <div class="link">
                             <a href="#">Форум</a>
                         </div>
                         <?php if (Yii::app()->user->isAdmin()):?>
@@ -58,6 +55,9 @@
                                         <a href="<?php echo $this->createUrl("report/marks")?>">Успеваемость групп</a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="link">
+                                <a href="<?php echo $this->createUrl("/site/mediateka"); ?>">Медиатека</a>
                             </div>
                         <? endif; ?>
                     </div>

@@ -103,7 +103,10 @@ class User extends CActiveRecord
 
     protected function beforeSave(){
         if ($this->isNewRecord)
+        {
             $this->password = md5($this->password);
+            mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
+        }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
             $image = CUploadedFile::getInstance($this,'newAvatar');
@@ -114,6 +117,22 @@ class User extends CActiveRecord
         return parent::beforeSave();
     }
 
+    public function getFiles($category = 'all')
+    {
+        $result = array();
+        $path = Yii::getPathOfAlias("webroot.media.".Yii::app()->user->id);
+        if ($handle = opendir($path)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file == "." || $file == "..") continue;
+                if ($category!='all' && array_search(pathinfo($file, PATHINFO_EXTENSION),Yii::app()->params[$category])===false )
+                    continue;
+                $temp = array("ext" => pathinfo($file, PATHINFO_EXTENSION), "name" => $file, "path" => $path.DIRECTORY_SEPARATOR.$file);
+                array_push($result,$temp);
+            }
+            closedir($handle);
+        }
+        return $result;
+    }
     /**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
