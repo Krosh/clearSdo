@@ -105,7 +105,6 @@ class User extends CActiveRecord
         if ($this->isNewRecord)
         {
             $this->password = md5($this->password);
-            mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
         }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
@@ -115,6 +114,11 @@ class User extends CActiveRecord
             $this->avatar = $name;
         }
         return parent::beforeSave();
+    }
+
+    protected function afterSave()
+    {
+        mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
     }
 
     public function getFiles($category = 'all')

@@ -20,6 +20,16 @@
 
                     <div>
                         <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+                        <div >
+                            <?php
+                            echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
+                            echo Chtml::fileField("filename");
+                            echo CHtml::hiddenField("idGroup",$model->id);
+                            echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()"));
+                            echo CHtml::endForm();
+                            ?>
+
+                        </div>
                         <?php $this->widget('zii.widgets.grid.CGridView', array(
                             'id'=>'group-grid',
                             'dataProvider'=>$model->searchAllStudents(),

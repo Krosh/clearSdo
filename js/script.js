@@ -1,3 +1,19 @@
+function loadStudentsFromExcel()
+{
+    var form = document.forms.loadStudentsFromExcelForm;
+    var formData = new FormData(form);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/group/loadStudentsFromExcel");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if(xhr.status == 200) {
+                $.fn.yiiGridView.update("group-grid");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
 function saveMark(idStudent,idControlMaterial,mark)
 {
     $.ajax({
