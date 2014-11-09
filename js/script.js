@@ -1,20 +1,3 @@
-function deleteMedia(name)
-{
-    $.ajax({
-        url: '/site/deleteMedia',
-        data: {name: name},
-        type: "GET",
-        success: function()
-        {
-            $.fn.yiiGridView.update('media-grid');
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
-    });
-}
-
 function saveMark(idStudent,idControlMaterial,mark)
 {
     $.ajax({
