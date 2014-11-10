@@ -27,18 +27,6 @@ $listeners = Course::getGroups($course->id);
 <div class="col-9">
 
 <div class="content">
-<div class="page-heading">
-    <div class="col-group">
-        <div class="col-4">
-            <div class="page-title">
-                Курс: <?php echo $course->title?>
-                Группа: <?php echo $group->Title;?>
-            </div>
-        </div>
-    </div>
-
-</div>
-
 <hr>
 
 <div class="col-group">
@@ -46,7 +34,9 @@ $listeners = Course::getGroups($course->id);
         <h2>Журнал</h2>
     </div>
 </div>
-    <?php $this->renderPartial("/journal/table", array("course" => $course, "group" => $group)); ?>
+    <div id = "journal_table">
+        <?php $this->renderPartial("/journal/table", array("idCourse" => $course->id, "group" => $group)); ?>
+    </div>
 </div>
 
 </div>

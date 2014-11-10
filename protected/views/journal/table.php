@@ -32,7 +32,13 @@ $controlMaterials = ControlMaterial::model()->findAll($criteria2);
         <th>
             <?php foreach ($controlMaterials as $material):?>
         <th style = "border: 1px solid black; padding: 5px">
-            <div onclick="showMarksOfMaterial(<?php echo $material->id; ?>)"><?php echo $material->title; ?></div>
+
+            <?php if ($material->is_autocalc):?>
+                <img src="../../../img/is_point.png" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>)">
+                <div><?php echo $material->title; ?></div>
+            <?php else: ?>
+                <div onclick="showMarksOfMaterial(<?php echo $material->id; ?>)"><?php echo $material->title; ?></div>
+            <?php endif; ?>
         </th>
         <?php endforeach; ?>
     </tr>
@@ -48,11 +54,19 @@ $controlMaterials = ControlMaterial::model()->findAll($criteria2);
             </td>
             <?php foreach ($controlMaterials as $material):?>
                 <?php if ($material->is_point):?>
-                    <td style = "border: 1px solid black; padding: 5px; background-color: #0080CC">
-                        <div data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
+                        <?php if ($material->is_autocalc): ?>
+                        <td style = "border: 1px solid black; padding: 5px;">
+                        <div>
                             <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                         </div>
-                        <input data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id); ?>" onChange = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" style = "display: none; width: 40px">
+                     <?php else: ?>
+                        <td style = "border: 1px solid black; padding: 5px; background-color: #0080CC">
+                        <div data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
+                                <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
+                            </div>
+                            <input data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id); ?>" onfocusout = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" style = "display: none; width: 40px">
+                        <?php endif; ?>
+
                     </td>
                 <?php else: ?>
                     <td style = "border: 1px solid black; padding: 5px">

@@ -29,6 +29,7 @@ define('CALC_LAUNCH',1);
  * @property integer $idAutor
  * @property integer $show_in_reports
  * @property string $weight
+ * @property string $calc_expression
  * @property integer $is_autocalc
  */
 class ControlMaterial extends CActiveRecord
@@ -54,7 +55,7 @@ class ControlMaterial extends CActiveRecord
 			array('access_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('weight,is_autocalc,show_in_reports','safe'),
+			array('calc_expression,weight,is_autocalc,show_in_reports','safe'),
             array(' id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
@@ -154,8 +155,8 @@ class ControlMaterial extends CActiveRecord
 			'access_date' => 'Дата доступа',
 			'show_answers' => 'Показать ответы после прохождения',
 			'is_point' => 'Является контрольной точкой',
-			'calc_mode' => 'Метод расчета',
-            'is_autocalc' => 'Рассчитывать автоматически',
+			'calc_mode' => 'Режим расчета',
+            'is_autocalc' => 'Рассчитывать по формуле',
             'weight' => 'Вес',
             'show_in_reports' => 'Включать в отчеты',
 			'idAutor' => 'Id Autor',

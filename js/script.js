@@ -1,3 +1,41 @@
+function changeWeights(idMaterial)
+{
+    var summ = 0;
+    var count = 0;
+    var totalSumm = 1;
+    var result = "";
+    $("input[data-idMaterial]").each(function()
+    {
+        summ += parseFloat($(this).val());
+        count++;
+    });
+    if (summ == 0)
+    {
+        alert("Сумма весов должна быть больше 0!");
+        return;
+    }
+    var i = 0;
+    $("input[data-idMaterial]").each(function()
+    {
+        if (++i == count)
+            $(this).val(totalSumm.toFixed(2));
+        else
+            $(this).val(($(this).val()/summ).toFixed(2));
+        totalSumm -=  parseFloat($(this).val());
+        result+=$(this).attr("data-idMaterial")+"="+$(this).val()+";";
+    });
+    $.ajax({
+        url: '/controlMaterial/saveWeights',
+        data: {idControlMaterial: idMaterial, calcExpression: result},
+        type: "POST",
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
+
+}
+
 function loadStudentsFromExcel()
 {
     var form = document.forms.loadStudentsFromExcelForm;
@@ -12,6 +50,33 @@ function loadStudentsFromExcel()
         }
     };
     xhr.send(formData);
+}
+
+function recalcMarks(idControlMaterial,idGroup)
+{
+    $.ajax({
+        url: '/controlMaterial/recalcMarks',
+        data: {idGroup: idGroup, idControlMaterial: idControlMaterial},
+        type: "POST",
+        success: function(data){
+            $.ajax({
+                url: '/site/journal',
+                data: {idGroup: idGroup, idCourse: window.idCourse},
+                type: "GET",
+                success: function(data){
+                    $("#journal_table").html(data);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert(errorThrown);
+                    console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        }
+    });
 }
 
 function saveMark(idStudent,idControlMaterial,mark)
@@ -48,7 +113,7 @@ function showMarkTextbox(idStudent,idControlMaterial)
     });
 }
 
-    function makeReport_marks()
+function makeReport_marks()
 {
     $.ajax({
         url: '/report/marksAjax',
@@ -579,7 +644,7 @@ $(document).ready(function(){
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages",
             relative_urls: false
         });
-       // $(".jsRedactor").redactor();
+        // $(".jsRedactor").redactor();
     }
 
     if ($('#timerSpan').length) {

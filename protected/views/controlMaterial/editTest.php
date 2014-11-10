@@ -6,7 +6,7 @@
  * Time: 16:08
  * To change this template use File | Settings | File Templates.
  */
-/* @var @model ControlMaterial */
+/* @var $model ControlMaterial */
 ?>
 
 
@@ -109,70 +109,32 @@ $this->renderPartial('/site/top');
                 </div>
             <?php else: ?>
                 <?php if ($model->is_autocalc): ?>
+                    <?php echo CHtml::form(); ?>
                     <?php
-                    $mas = array();
-
-                    $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
-                    foreach ($models as $item)
+                    $expression = $model->calc_expression;
+                    $expr_elements = explode(";",$expression);
+                    $weights = array();
+                    foreach ($expr_elements as $item)
                     {
-                        $mas[$item->id] = $item->Title;
+                        if (strlen(item) == 0)
+                            continue;
+                        $text = explode("=",$item);
+                        $weights[$text[0]] = $text[1];
                     }
-                    $this->widget('ext.combobox.EJuiComboBox', array(
-                        'name' => 'group',
-                        'data' => $mas,
-                        'options' => array(
-                            'onSelect' => '
-                     $.ajax({
-                        type: "POST",
-                        url: "/controlMaterial/calcAndGetGroupMarks",
-                        data: {groupName: item.value,idControlMaterial: '.$model->id.'},
-                        success: function(data)
-                        {
-                            $("#editTest-groupMarks").html(data);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert("error"+textStatus+errorThrown);
-                        }});',
-                            'allowText' => false,
-                        ),
-                        'htmlOptions' => array('size' => 30),
-                    ));
-                    ?>
-                    <div id = "editTest-groupMarks" style="margin-top:20px">
-                    </div>
-                <?php else: ?>
-
-                    <?php
-                    $mas = array();
-
-                    $models = Group::getGroupsByCourse(Yii::app()->session['currentCourse'],Yii::app()->session['currentCourse']);
-                    foreach ($models as $item)
+                    $arr = CoursesControlMaterial::getAllControlMaterials($idCourse);
+                    $res = array();
+                    foreach ($arr as $item)
                     {
-                        $mas[$item->id] = $item->Title;
+                        if (!$item->is_autocalc)
+                            array_push($res,$item);
                     }
-                    $this->widget('ext.combobox.EJuiComboBox', array(
-                        'name' => 'group',
-                        'data' => $mas,
-                        'options' => array(
-                            'onSelect' => '
-                     $.ajax({
-                        type: "POST",
-                        url: "/controlMaterial/getGroupMarks",
-                        data: {groupName: item.value,idControlMaterial: '.$model->id.'},
-                        success: function(data)
-                        {
-                            $("#editTest-groupMarks").html(data);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert("error"+textStatus+errorThrown);
-                        }});',
-                            'allowText' => false,
-                        ),
-                        'htmlOptions' => array('size' => 30),
-                    ));
                     ?>
-                    <div id = "editTest-groupMarks" style="margin-top:20px">
-                    </div>
+                    <?php foreach($res as $item): ?>
+                        <?php echo $item->title; ?> : <input data-idMaterial = <?php echo $item->id; ?> type = "number" value="<?php if ($weights[$item->id] != "") echo $weights[$item->id]; else echo "0";  ?>" min = "0" /><br>
+
+                    <?php endforeach; ?>
+                    <?php echo CHtml::button("Сохранить веса", array("onclick" => 'changeWeights('.$model->id.')')); ?>
+                    <?php echo CHtml::endForm(); ?>
                 <?php endif; ?>
 
             <?php endif; ?>

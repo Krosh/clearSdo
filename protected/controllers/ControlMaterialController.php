@@ -302,7 +302,6 @@ class ControlMaterialController extends CController
             $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
             $model->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
         );
-        $this->noNeedJquery = true;
         $accessModel = AccessControlMaterialGroup::model()->findAll("idControlMaterial = :idMaterial",array(":idMaterial" => $idMaterial));
         if (count($accessModel) == 0)
         {
@@ -328,7 +327,7 @@ class ControlMaterialController extends CController
         }
         if ($needRefresh)
             $this->refresh();
-        $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel));
+        $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel, 'idCourse' => $course->id));
     }
 
     public function actionCreate($idCourse,$isPoint)
@@ -346,19 +345,48 @@ class ControlMaterialController extends CController
         $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
     }
 
-    public function actionSetMark()
+    public function setMark($idControlMaterial,$idStudent,$mark)
     {
-        $idControlMaterial = $_POST['idControlMaterial'];
-        $idStudent = $_POST['idStudent'];
-        $mark = $_POST['mark'];
         UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
         $model = new UserControlMaterial();
         $model->dateStart = date("Y-m-d H:i:s");
         $model->dateEnd = $model->dateStart;
         $model->idControlMaterial = $idControlMaterial;
         $model->idUser = $idStudent;
-        $model->mark = $mark;
+        $model->mark = round($mark);
         $model->save();
+    }
+
+    public function actionSetMark()
+    {
+        $this->setMark($_POST["idControlMaterial"],$_POST["idStudent"],$_POST["mark"]);
+    }
+
+
+    public function actionRecalcMarks()
+    {
+        $controlMaterial = ControlMaterial::model()->findByPk($_POST["idControlMaterial"]);
+        $arr = explode(";",$controlMaterial->calc_expression);
+        $weights = array();
+        foreach ($arr as $item) {
+            if (strlen($item) == 0)
+                continue;
+            $mas = explode("=",$item);
+            $weights[$mas[0]] = $mas[1];
+        }
+        $group = Group::model()->findByPk($_POST["idGroup"]);
+        $result = array();
+        foreach ($group->students as $student)
+        {
+            $mark = 0;
+            foreach ($weights as $id => $coef)
+            {
+                $mark += ControlMaterial::getMark($student->id,$id)*$coef;
+            }
+            $this->setMark($controlMaterial->id,$student->id,$mark);
+            $result[$student->id] = round($mark);
+        }
+        echo json_encode($result);
     }
 
     public function actionGetGroupMarks()
@@ -404,6 +432,13 @@ class ControlMaterialController extends CController
             $model->save();
         }
         $this->renderPartial('groupMarks', array('group' => $group,'idControlMaterial' => $idControlMaterial));
+    }
+
+    public function actionSaveWeights()
+    {
+        $controlMaterial = ControlMaterial::model()->findByPk($_POST["idControlMaterial"]);
+        $controlMaterial->calc_expression = $_POST["calcExpression"];
+        $controlMaterial->save();
     }
 
 

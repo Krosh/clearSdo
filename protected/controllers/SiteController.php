@@ -25,7 +25,7 @@ class SiteController extends CController
         $this->redirect('/');
     }
 
-	public function actionIndex()
+    public function actionIndex()
     {
         // Проверка авторизации
         $auth = false;
@@ -105,7 +105,19 @@ class SiteController extends CController
         {
             throw new CHttpException(404,'Не ломайте стимул!!');
         }
-        $this->render("/journal/view", array("course" => $course, "group" => $group));
+
+        if(Yii::app()->request->isAjaxRequest)
+        {
+            $this->renderPartial("/journal/table", array("idCourse" => $idCourse, "group" => $group));
+        }
+        else
+        {
+            $this->breadcrumbs=array(
+                $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse))),
+                "Журнал ".$group->Title => array($this->createUrl("/site/journal",array("idCourse" => $idCourse, "idGroup" => $idGroup)))
+            );
+            $this->render("/journal/view", array("course" => $course, "group" => $group));
+        }
     }
 
     public function actionConfig()
