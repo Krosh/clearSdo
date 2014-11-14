@@ -24,24 +24,26 @@
         <?php echo $form->error($model,'title'); ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'category'); ?>
-        <?php $categories = array(1 => 'Файл', 2 => 'Ссылка', 3 => 'Торрент-файл', 4 => "Папка" )   ?>
-        <?php echo $form->dropDownList($model,'category',$categories, array('onchange' => 'changeDiv(this.value)')); ?>
-        <?php echo $form->error($model,'category'); ?>
+<!--    <div class="row">
+        <?php /*echo $form->labelEx($model,'category'); */?>
+        <?php /*$categories = array(1 => 'Файл', 2 => 'Ссылка', 3 => 'Торрент-файл', 4 => "Папка" )   */?>
+        <?php /*echo $form->dropDownList($model,'category',$categories, array('onchange' => 'changeDiv(this.value)')); */?>
+        <?php /*echo $form->error($model,'category'); */?>
     </div>
+-->
 
-	<div class="row" id = "fileDiv">
-		<?php echo $form->labelEx($model,'path'); ?>
-        <?php echo $form->fileField($model,'path',array('id' => "filePath"))?>
-		<?php echo $form->error($model,'path'); ?>
-	</div>
+        <div class="row" id = "fileDiv">
+            <!--TODO:: надо какую-то либу юзать, чтобы можно было выбирать файлы определенного типа, пока так-->
+            <?php echo $form->labelEx($model,'path'); ?>
+            <?php echo $form->fileField($model,'path',array('id' => "filePath"))?>
+            <?php echo $form->error($model,'path'); ?>
+        </div>
 
-    <div class="row" id = "linkDiv">
-        <?php echo $form->labelEx($model,'path'); ?>
-        <?php echo CHtml::textField("LinkPath",$model->path)?>
-        <?php echo $form->error($model,'path'); ?>
-    </div>
+        <div class="row" id = "linkDiv">
+            <?php echo $form->labelEx($model,'path'); ?>
+            <?php echo CHtml::textField("LinkPath",$model->path)?>
+            <?php echo $form->error($model,'path'); ?>
+        </div>
 
    <!---  Метод для вывода нужного в зависимости от категории */
     /* TODO: перенести процедуру в файл скриптов -->

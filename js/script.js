@@ -276,7 +276,7 @@ function addLearnMaterial(idCourse)
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
-                $("#editCourse-materialAdd").hide();
+//                $("#loadfile").hide();
                 updateLearnMaterials(idCourse);
             }
         }
