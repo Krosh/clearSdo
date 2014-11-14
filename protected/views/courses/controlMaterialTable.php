@@ -29,7 +29,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
     <?php foreach ($coursesMaterials as $curMaterial):?>
         <?php $item = ControlMaterial::model()->findByPk($curMaterial->idControlMaterial); ?>
         <?php if ($item->is_point): ?>
-            <tr id = "<?php echo $curMaterial->id?>" data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>">
+            <tr id = "<?php echo $curMaterial->id?>" <?php if ($item->is_autocalc):?>data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>" <?php endif; ?>>
                 <td><img class="file-icon" src="/img/is_point.png" alt="">
                 </td>
                 <td colspan="4"><?php echo $item->title ?></td>
