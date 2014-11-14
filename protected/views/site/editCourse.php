@@ -32,6 +32,7 @@ $listeners = Course::getGroups($model->id);
             <div class="page-title">
                 Курс: <?php echo $model->title?>
             </div>
+            <div id="editCourse-groups"></div>
         </div>
         <div class="col-8 right">
             <div style="vertical-align: middle">
@@ -126,13 +127,18 @@ $listeners = Course::getGroups($model->id);
                 </div>
                 <div class="modal-body">
                     <div class="modal-body">
-                        <strong>Слушатели курса:</strong>
-                        <div id="editCourse-groups"></div>
-                    </div>
-                    <hr>
-                    <div class="modal-body">
                         <strong>Добавить слушателя:</strong>
-                        <div id="editCourse-groupSelect" class="form modal-form">
+
+                        <select id='addGroupsSelect' multiple='multiple'>
+                            <?
+                            for($q = 1; $q<=100; $q++) {
+                                ?>
+                                <option value="<?=$q?>">Группа <?=$q?></option>
+                                <?
+                            }
+                            ?>
+                        </select>
+                        <!-- <div id="editCourse-groupSelect" class="form modal-form">
                             <?php
                             $mas = array();
                             $models = Group::model()->findAll();
@@ -174,7 +180,7 @@ $listeners = Course::getGroups($model->id);
                             ?>
                             <div style="display: inline-block" class="btn blue" onclick='addGroup($("#Group_Title").val(),$("#Term_title").val(),<?php echo $model->id; ?>);' >Добавить</div>
 
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

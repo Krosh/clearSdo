@@ -38,6 +38,8 @@ $cs->scriptMap=array(
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/tinymce/tinymce.min.js"></script>
 <!--<script src="../../js/redactor.min.js"></script>-->
+<script src="../../js/jquery.quicksearch.js"></script>
+<script src="../../js/jquery.multi-select.js"></script>
 <script src="../../js/plugins.js"></script>
 <script src="../../js/script.js"></script>
 <script src="//tdcdn.blob.core.windows.net/toolbar/assets/prod/td.js" data-trackduck-id="530191b3800d8ef64be289e5" async=""></script>
