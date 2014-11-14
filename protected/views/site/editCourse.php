@@ -35,9 +35,9 @@ $listeners = Course::getGroups($model->id);
             </div>
             <div class="col-8 right">
                 <div style="vertical-align: middle">
-                    <a href="#" class="btn white small" data-toggle="modal" data-target="#editCourseModal"><i class="fa fa-edit"></i> Информация</a>
-                    <a href="#" class="btn white small" data-toggle="modal" data-target="#editTeachersModal"><i class="fa fa-users"></i> Преподаватели</a>
-                    <a href="#" class="btn white small" data-toggle="modal" data-target="#editPeoplesModal"><i class="fa fa-graduation-cap"></i> Слушатели</a>
+                    <a href="#" class="btn icon-colored icon-blue" data-toggle="modal" data-target="#editCourseModal" title="Информация"><i class="fa fa-edit"></i></a>
+                    <a href="#" class="btn icon-colored icon-red" data-toggle="modal" data-target="#editTeachersModal" title="Преподаватели"><i class="fa fa-users"></i></a>
+                    <a href="#" class="btn icon-colored icon-violet" data-toggle="modal" data-target="#editPeoplesModal" title="Слушатели"><i class="fa fa-graduation-cap"></i></a>
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@ $listeners = Course::getGroups($model->id);
             <h2>Контрольные материалы</h2>
         </div>
         <div class="col-8 right">
-            <a href="#" class="btn white small" data-toggle="modal" data-target="#editCMModal"><i class="fa fa-check-square"></i> Редактировать</a>
+            <a href="#" class="btn blue small" data-toggle="modal" data-target="#editCMModal"><i class="fa fa-check-square"></i> Редактировать</a>
         </div>
     </div>
     
@@ -260,7 +260,84 @@ $listeners = Course::getGroups($model->id);
             <h2>Учебные материалы</h2>
         </div>
         <div class="col-8 right">
-            <a href="#" class="btn white small" data-toggle="modal" data-target="#editUMModal"><i class="fa fa-book"></i> Редактировать</a>
+            <!-- <a href="#" class="btn white small" data-toggle="modal" data-target="#editUMModal"><i class="fa fa-book"></i> Редактировать</a> -->
+            <a href="#" class="btn blue small" title="Загрузить файл">ЗФ</a>
+            <a href="#" class="btn blue small" data-toggle="modal" data-target="#addexist" title="Добавить файл из имеющихся">ДФ</a>
+            <a href="#" class="btn blue small" data-toggle="modal" data-target="#createfile" title="Создать файл">СФ</a>
+            <a href="#" class="btn blue small" title="Ссылка">С</a>
+            <a href="#" class="btn blue small" title="Торрент">Т</a>
+        </div>
+    </div>
+
+    <!-- добавление имеющихся -->
+    <div class="modal fade" id="addexist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i> Добавить файл из имеющихся</h4>
+                </div>
+                <div class="modal-body">
+    
+                    <div id = "editCourse-uchMaterialAddExist" class="form modal-form">
+                        <?php
+                        $mas = array();
+                        $models = ControlMaterial::model()->findAll("idAutor = ".Yii::app()->user->getId());
+                        foreach ($models as $item)
+                        {
+                            $mas[$item->id] = $item->id." ".$item->title;
+                        }
+                        $fakeModel = new ControlMaterial();
+                        $fakeModel->title = "";
+                        $this->widget('ext.combobox.EJuiComboBox', array(
+                            'model' => $fakeModel,
+                            'attribute' => 'title',
+                            'data' => $mas,
+                            'options' => array(
+                                'onSelect' => '
+                                     $.ajax({
+                                        type: "POST",
+                                        url: "/material/addExistMaterial",
+                                        data: {idMaterial: item.value.split(" ")[0], idCourse:'.$model->id.'},
+                                        success: function(data)
+                                        {
+                                            updateControlMaterials('.$model->id.')
+                                            /* $("#editCourse-uchMaterialAddExist").hide(); */
+                                        },
+                                        error: function(jqXHR, textStatus, errorThrown){
+                                            alert("error"+textStatus+errorThrown);
+                                        }});',
+                                'allowText' => false,
+                            ),
+                            'htmlOptions' => array('size' => 30, "placeholder" => "Название"),
+                        ));
+                        ?>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- создание файлов -->
+    <div class="modal fade" id="createfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i> Создать файл</h4>
+                </div>
+                <div class="modal-body">
+    
+                   <div id="editCourse-materialAdd">
+                        <?php
+                        $material = new LearnMaterial();
+                        $this->renderPartial('/learnMaterial/_form', array("idCourse" => $model->id, "model" => $material));
+                        ?>
+                    </div>
+    
+                </div>
+            </div>
         </div>
     </div>
     
