@@ -34,7 +34,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 </td>
                 <td colspan="4"><?php echo $item->title ?></td>
                 <td class="right">
-                    <a class="btn white small" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+                    <a class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         <?php else: ?>
@@ -53,7 +53,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 ?>
                 <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
                 <td class="right">
-                    <a class="btn white small" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+                    <a class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         <?php endif; ?>
