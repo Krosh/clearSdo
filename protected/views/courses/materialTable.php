@@ -44,7 +44,6 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
             if ($item->category==MATERIAL_FILE) {
                 $path = pathinfo($item->path, PATHINFO_EXTENSION);
             }
-            
             $f = "";
             
             switch ($path) {

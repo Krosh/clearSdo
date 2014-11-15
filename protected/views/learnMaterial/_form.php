@@ -32,6 +32,7 @@
     </div>
 -->
 
+        <?php echo $form->hiddenField($model,'category');?>
         <div class="row" id = "fileDiv">
             <!--TODO:: надо какую-то либу юзать, чтобы можно было выбирать файлы определенного типа, пока так-->
             <?php echo $form->labelEx($model,'path'); ?>
@@ -50,6 +51,7 @@
     <script>
         function changeDiv(n)
         {
+            $("#LearnMaterial_category").val(n);
             if (n == 2)
             {
                 $('#fileDiv').hide();
