@@ -214,7 +214,6 @@ function deleteTeacher(idCourse,idTeacher)
 
 function updateGroups(idCourse, idTerm)
 {
-    window.currentTermId = idTerm;
     $.ajax({
         url: '/courses/getGroups',
         data: {idCourse: idCourse, idTerm: idTerm},
@@ -222,29 +221,7 @@ function updateGroups(idCourse, idTerm)
         success: function(data)
         {
             $("#addGroupsSelect").empty().html(data);
-            $("#addGroupsSelect").multiSelect({
-                selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
-                selectionHeader: "<div style='margin-bottom:31px;'>Слушатели данного курса:</div>",
-                afterInit: function(ms){
-                    var that = this,
-                        $selectableSearch = that.$selectableUl.prev(),
-                        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)'
-
-                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                        .on('keydown', function(e){
-                            if (e.which === 40){
-                                that.$selectableUl.focus();
-                                return false;
-                            }
-                        });
-                },
-                afterSelect: function(values){
-                    addGroup(values,window.currentTermId,idCourse);
-                },
-                afterDeselect: function(values){
-                    deleteGroup(values,window.currentTermId,idCourse);
-                }
-            });
+            $("#addGroupsSelect").multiSelect('refresh');
             footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -256,7 +233,6 @@ function updateGroups(idCourse, idTerm)
 
 function deleteGroup(idGroup,idTerm,idCourse)
 {
-    alert(idGroup+" "+idTerm+" "+idCourse);
     $.ajax({
         url: '/courses/deleteGroup',
         data: {idGroup: idGroup, idTerm: idTerm, idCourse: idCourse},
@@ -274,7 +250,6 @@ function deleteGroup(idGroup,idTerm,idCourse)
 
 function addGroup(idGroup,idTerm,idCourse)
 {
-    alert(idGroup+" "+idTerm+" "+idCourse);
     $.ajax({
         type: "POST",
         url: "/courses/addGroupToCourse",
@@ -730,10 +705,10 @@ $(document).ready(function(){
                 });
             },
             afterSelect: function(values){
-                alert("Выбрали: "+values);
+                addGroup(values,idTerm,idCourse);
             },
             afterDeselect: function(values){
-                alert("Убрали: "+values);
+                deleteGroup(values,idTerm,idCourse);
             }
         });
     }
