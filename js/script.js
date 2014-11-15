@@ -212,15 +212,39 @@ function deleteTeacher(idCourse,idTeacher)
     });
 }
 
-function updateGroups(idCourse)
+function updateGroups(idCourse, idTerm)
 {
+    window.currentTermId = idTerm;
     $.ajax({
         url: '/courses/getGroups',
-        data: {idCourse: idCourse},
+        data: {idCourse: idCourse, idTerm: idTerm},
         type: "POST",
         success: function(data)
         {
-            $("#editCourse-groups").html(data);
+            $("#addGroupsSelect").empty().html(data);
+            $("#addGroupsSelect").multiSelect({
+                selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
+                selectionHeader: "<div style='margin-bottom:31px;'>Слушатели данного курса:</div>",
+                afterInit: function(ms){
+                    var that = this,
+                        $selectableSearch = that.$selectableUl.prev(),
+                        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)'
+
+                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                        .on('keydown', function(e){
+                            if (e.which === 40){
+                                that.$selectableUl.focus();
+                                return false;
+                            }
+                        });
+                },
+                afterSelect: function(values){
+                    addGroup(values,window.currentTermId,idCourse);
+                },
+                afterDeselect: function(values){
+                    deleteGroup(values,window.currentTermId,idCourse);
+                }
+            });
             footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -230,15 +254,16 @@ function updateGroups(idCourse)
     });
 }
 
-function deleteGroup(idCourse,idGroup)
+function deleteGroup(idGroup,idTerm,idCourse)
 {
+    alert(idGroup+" "+idTerm+" "+idCourse);
     $.ajax({
         url: '/courses/deleteGroup',
-        data: {idCourse: idCourse, idGroup: idGroup},
+        data: {idGroup: idGroup, idTerm: idTerm, idCourse: idCourse},
         type: "POST",
         success: function(data)
         {
-            updateGroups(idCourse);
+//            updateGroups(idCourse,idTerm);
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -247,18 +272,18 @@ function deleteGroup(idCourse,idGroup)
     });
 }
 
-function addGroup(groupTitle,termTitle,currentCourse)
+function addGroup(idGroup,idTerm,idCourse)
 {
+    alert(idGroup+" "+idTerm+" "+idCourse);
     $.ajax({
         type: "POST",
         url: "/courses/addGroupToCourse",
-        data: {groupTitle: groupTitle, termTitle : termTitle, idCourse:currentCourse},
+        data: {idGroup: idGroup, idTerm: idTerm, idCourse: idCourse},
         success: function(data)
         {
-            updateGroups(currentCourse);
+//            updateGroups(idCourse,idTerm);
             /* $("#editCourse-groupSelect").hide(); */
-            $("#Group_Title, #Term_title").val(" ");
-            footerUpdate();
+//            footerUpdate();
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert("error"+textStatus+errorThrown);
@@ -673,7 +698,7 @@ $(document).ready(function(){
     if ($("#editCourse-teachers").length)
     {
         updateTeachers(window.idCourse);
-        updateGroups(window.idCourse);
+        updateGroups(window.idCourse,window.idTerm);
         updateLearnMaterials(window.idCourse);
         updateControlMaterials(window.idCourse);
     }
@@ -687,29 +712,4 @@ $(document).ready(function(){
         updateAnswers(window.idQuestion);
     }
 
-    if ($("#addGroupsSelect").length) {
-        $("#addGroupsSelect").multiSelect({
-            selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
-            selectionHeader: "<div style='margin-bottom:31px;'>Слушатели данного курса:</div>",
-            afterInit: function(ms){
-                var that = this,
-                    $selectableSearch = that.$selectableUl.prev(),
-                    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)'
-
-                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                .on('keydown', function(e){
-                  if (e.which === 40){
-                    that.$selectableUl.focus();
-                    return false;
-                  }
-                });
-            },
-            afterSelect: function(values){
-                alert("Выбрали: "+values);
-            },
-            afterDeselect: function(values){
-                alert("Убрали: "+values);
-            }
-        });
-    }
 });

@@ -63,32 +63,33 @@ class CoursesController extends CController
 
     public function actionAddGroupToCourse()
     {
-        $groupTitle = $_POST["groupTitle"];
-        $termTitle = $_POST["termTitle"];
+        if (is_array($_POST["idGroup"]))
+            $idGroup = $_POST["idGroup"][0];
+        else
+            $idGroup = $_POST["idGroup"];
+        $idTerm = $_POST["idTerm"];
         $idCourse = $_POST["idCourse"];
-        $criteria = new CDbCriteria();
-        $criteria->addSearchCondition("Title",$groupTitle);
-        $group = Group::model()->findAll($criteria);
-        $criteria = new CDbCriteria();
-        $criteria->addSearchCondition("title",$termTitle);
-        $term = Term::model()->findAll($criteria);
         $model = new CoursesGroup();
-        $model->idTerm = $term[0]->id;
+        $model->idTerm = $idTerm;
         $model->idCourse = $idCourse;
-        $model->idGroup = $group[0]->id;
+        $model->idGroup = $idGroup;
         $model->save();
     }
 
     public function actionDeleteGroup()
     {
         $idCourse = $_POST["idCourse"];
-        $idGroup = $_POST["idGroup"];
-        CoursesGroup::model()->deleteAll("idCourse = :idCourse and idGroup = :idGroup",array(":idCourse" => $idCourse, ":idGroup" => $idGroup));
+        if (is_array($_POST["idGroup"]))
+            $idGroup = $_POST["idGroup"][0];
+        else
+            $idGroup = $_POST["idGroup"];
+        $idTerm = $_POST["idTerm"];
+        CoursesGroup::model()->deleteAll("idTerm = :idTerm AND idCourse = :idCourse and idGroup = :idGroup",array(":idCourse" => $idCourse, ":idGroup" => $idGroup, ':idTerm' => $idTerm));
     }
 
     public function actionGetGroups()
     {
-        $this->renderPartial('groups',array("idCourse" => $_POST["idCourse"]));
+        $this->renderPartial('groups',array("idCourse" => $_POST["idCourse"], "idTerm" => $_POST["idTerm"]));
     }
 
     public function actionCreate()

@@ -18,7 +18,8 @@ $this->renderPartial('top');
 $listeners = Course::getGroups($model->id);
 ?>
     <script>
-        window.idCourse = <?php echo $model->id; ?>
+        window.idCourse = <?php echo $model->id; ?>;
+        window.idTerm = <?php echo Yii::app()->session["currentTerm"]; ?>;
     </script>
 <div class="wrapper">
 <div class="container">
@@ -130,57 +131,17 @@ $listeners = Course::getGroups($model->id);
                         <strong>Добавить слушателя:</strong>
 
                         <select id='addGroupsSelect' multiple='multiple'>
-                            <?
-                            for($q = 1; $q<=100; $q++) {
-                                ?>
-                                <option value="<?=$q?>">Группа <?=$q?></option>
-                                <?
-                            }
-                            ?>
                         </select>
-                        <!-- <div id="editCourse-groupSelect" class="form modal-form">
-                            <?php
-                            $mas = array();
-                            $models = Group::model()->findAll();
-                            foreach ($models as $item)
+                        <?php
+                            $terms = Term::model()->findAll();
+                            $arr = array();
+                            foreach ($terms as $item)
                             {
-                                $mas[$item->id] = $item->Title;
+                                $arr[$item->id] = $item->title;
                             }
-                            $fakeModel = new Group;
-                            $fakeModel->Title = "";
-                            $this->widget('ext.combobox.EJuiComboBox', array(
-                                'model' => $fakeModel,
-                                'attribute' => 'Title',
-                                'data' => $mas,
-                                'options' => array(
-                                    'allowText' => false,
-                                ),
-                                'htmlOptions' => array('size' => 15, 'placeholder' => 'Группа'),
-                            ));
-                            ?>
+                            echo CHtml::dropDownList("termSelect",Yii::app()->session['currentTerm'],$arr, array("class" => "anyclass", "onchange" => 'updateGroups(window.idCourse,$(this).val())'));
+                        ?>
 
-                            <?php
-                            $mas = array();
-                            $models = Term::model()->findAll();
-                            foreach ($models as $item)
-                            {
-                                $mas[$item->id] = $item->title;
-                            }
-                            $fakeModel = new Term();
-                            $fakeModel->title = "";
-                            $this->widget('ext.combobox.EJuiComboBox', array(
-                                'model' => $fakeModel,
-                                'attribute' => 'title',
-                                'data' => $mas,
-                                'options' => array(
-                                    'allowText' => false,
-                                ),
-                                'htmlOptions' => array('size' => 15, 'placeholder' => 'Период'),
-                            ));
-                            ?>
-                            <div style="display: inline-block" class="btn blue" onclick='addGroup($("#Group_Title").val(),$("#Term_title").val(),<?php echo $model->id; ?>);' >Добавить</div>
-
-                        </div> -->
                     </div>
                 </div>
             </div>

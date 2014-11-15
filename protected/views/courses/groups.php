@@ -7,11 +7,14 @@
  * To change this template use File | Settings | File Templates.
  */?>
 <?php
-$groups = Course::getGroups($idCourse,Yii::app()->session['currentTerm']);
-$arGroups = array();
-foreach ($groups as $group){
-    array_push($arGroups, "<a href = ".$this->createUrl("/site/journal",array("idCourse" => $idCourse, "idGroup" => $group->id)).">".$group->Title."</a> <a onclick = 'deleteGroup(".$idCourse.",".$group->id."); return false'> <i class='fa fa-remove'></i></a>");
+$groups = Course::getGroups($idCourse,$idTerm);
+$allGroups = Group::model()->findAll();
+$res = "";
+foreach ($allGroups as $item)
+{
+    if (array_search($item,$groups) === false)
+        $res .= "<option value = '".$item->id."'>".$item->Title."</option>";
+    else
+        $res .= "<option value = '".$item->id."' selected>".$item->Title."</option>";
 }
-
-echo implode(', ', $arGroups);
-?>
+echo $res;
