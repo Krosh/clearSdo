@@ -36,9 +36,9 @@ $listeners = Course::getGroups($model->id);
         </div>
         <div class="col-8 right">
             <div style="vertical-align: middle">
-                <a href="#" class="btn icon-colored icon-blue" data-toggle="modal" data-target="#editCourseModal" title="Информация"><i class="fa fa-edit"></i></a>
-                <a href="#" class="btn icon-colored icon-red" data-toggle="modal" data-target="#editTeachersModal" title="Преподаватели"><i class="fa fa-users"></i></a>
-                <a href="#" class="btn icon-colored icon-violet" data-toggle="modal" data-target="#editPeoplesModal" title="Слушатели"><i class="fa fa-graduation-cap"></i></a>
+                <a href="#" class="btn icon-colored icon-blue has-tip" data-toggle="modal" data-target="#editCourseModal" data-original-title="Информация" title="Информация"><i class="fa fa-edit"></i></a>
+                <a href="#" class="btn icon-colored icon-red has-tip" data-toggle="modal" data-target="#editTeachersModal" data-original-title="Преподаватели" title="Преподаватели"><i class="fa fa-users"></i></a>
+                <a href="#" class="btn icon-colored icon-violet has-tip" data-toggle="modal" data-target="#editPeoplesModal" data-original-title="Слушатели" title="Слушатели"><i class="fa fa-graduation-cap"></i></a>
             </div>
         </div>
     </div>
@@ -196,12 +196,15 @@ $listeners = Course::getGroups($model->id);
         <h2>Контрольные материалы</h2>
     </div>
     <div class="col-8 right">
-        <a href="#" class="btn blue small" data-toggle="modal" data-target="#editCMModal"><i class="fa fa-check-square"></i> Редактировать</a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addCM1" data-original-title="Добавить из существующих" title="Добавить из существующих"><i class="fa fa-clipboard"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addCM2" data-original-title="Создать тест" title="Создать тест"><i class="fa fa-check-circle-o"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addCM3" data-original-title="Создать контрольную точку" title="Создать контрольную точку"><i class="fa fa-flag"></i></a>
     </div>
 </div>
 
-<!-- редактирование контр материалов -->
-<div class="modal fade" id="editCMModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+<div class="modal fade" id="addCM1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -209,15 +212,9 @@ $listeners = Course::getGroups($model->id);
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-check-square"></i> Контрольные материалы</h4>
             </div>
             <div class="modal-body">
-                <div>
-                    <i class="fa fa-plus-square-o"></i>
-                    <a href="#" onclick="$('#editCourse-controlMaterialAddExist').slideToggle(); return false;">Добавить из существующих</a><br>
-                    <i class="fa fa-plus-square"></i>
-                    <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => false)); ?>">Создать тест</a><br>
-                    <i class="fa fa-plus-square"></i>
-                    <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => true)); ?>">Создать контрольную точку</a><br>
-                </div>
-                <div style = "display: none" id = "editCourse-controlMaterialAddExist" class="form modal-form">
+                <strong>Добавить из существующих:</strong>
+
+                <div id = "editCourse-controlMaterialAddExist" class="form modal-form">
                     <?php
                     $mas = array();
                     $models = ControlMaterial::model()->findAll("idAutor = ".Yii::app()->user->getId());
@@ -267,12 +264,27 @@ $listeners = Course::getGroups($model->id);
     </div>
     <div class="col-8 right">
         <!-- <a href="#" class="btn white small" data-toggle="modal" data-target="#editUMModal"><i class="fa fa-book"></i> Редактировать</a> -->
-        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)">ЗФ</a>
+        
+        <!-- <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)">ЗФ</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#addexist" title="Добавить файл из имеющихся">ДФ</a>
         <a href="#" class="btn blue small" title="Создать файл">СФ</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)">Р</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)">С</a>
-        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)">Т</a>
+        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)">Т</a> -->
+        
+        <!-- <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)">Загрузить</a>
+        <a href="#" class="btn blue small" data-toggle="modal" data-target="#addexist" title="Добавить файл из имеющихся">Выбрать</a>
+        <a href="#" class="btn blue small" title="Создать файл">Создать</a>
+        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)">Раздел</a>
+        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)">Ссылка</a>
+        <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)">Торрент</a> -->
+
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Загрузить файл" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)"><i class="fa fa-upload"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addexist" data-original-title="Добавить файл из имеющихся" title="Добавить файл из имеющихся"><i class="fa fa-clipboard"></i></a>
+        <a href="#" class="btn small has-tip" data-original-title="Создать файл" title="Создать файл"><i class="fa fa-file-o"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Раздел" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)"><i class="fa fa-folder"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Ссылка" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)"><i class="fa fa-link"></i></a>
+        <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Торрент" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)"><i class="fa fa-magnet"></i></a>
     </div>
 </div>
 

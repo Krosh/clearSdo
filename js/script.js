@@ -712,4 +712,11 @@ $(document).ready(function(){
             }
         });
     }
+
+    if($('.has-tip').length) {
+        $('.has-tip').frosty();
+        $('.has-tip.tip-bottom').frosty({
+            position: 'bottom'
+        });
+    }
 });
