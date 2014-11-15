@@ -214,6 +214,7 @@ function deleteTeacher(idCourse,idTeacher)
 
 function updateGroups(idCourse, idTerm)
 {
+    window.idTerm = idTerm;
     $.ajax({
         url: '/courses/getGroups',
         data: {idCourse: idCourse, idTerm: idTerm},
@@ -235,7 +236,7 @@ function deleteGroup(idGroup,idTerm,idCourse)
 {
     $.ajax({
         url: '/courses/deleteGroup',
-        data: {idGroup: idGroup, idTerm: idTerm, idCourse: idCourse},
+        data: {idGroup: idGroup, idTerm: window.idTerm, idCourse: idCourse},
         type: "POST",
         success: function(data)
         {
@@ -253,7 +254,7 @@ function addGroup(idGroup,idTerm,idCourse)
     $.ajax({
         type: "POST",
         url: "/courses/addGroupToCourse",
-        data: {idGroup: idGroup, idTerm: idTerm, idCourse: idCourse},
+        data: {idGroup: idGroup, idTerm: window.idTerm, idCourse: idCourse},
         success: function(data)
         {
 //            updateGroups(idCourse,idTerm);
@@ -673,7 +674,7 @@ $(document).ready(function(){
     if ($("#editCourse-teachers").length)
     {
         updateTeachers(window.idCourse);
-        updateGroups(window.idCourse);
+        updateGroups(window.idCourse,window.idTerm);
         updateLearnMaterials(window.idCourse);
         updateControlMaterials(window.idCourse);
     }

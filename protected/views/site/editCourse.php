@@ -133,7 +133,9 @@ $listeners = Course::getGroups($model->id);
                         <select id='addGroupsSelect' multiple='multiple'>
                         </select>
                         <?php
-                            $terms = Term::model()->findAll();
+                            $criteria = new CDbCriteria();
+                            $criteria->order = "id DESC";
+                            $terms = Term::model()->findAll($criteria);
                             $arr = array();
                             foreach ($terms as $item)
                             {
