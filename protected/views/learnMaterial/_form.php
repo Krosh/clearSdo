@@ -71,7 +71,8 @@
 
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("class" => "btn blue", "onclick" => "addLearnMaterial($idCourse);return false")); ?>
+        <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("class" => "btn blue", "onclick" => "$('#learnMaterialLoader').show();addLearnMaterial($idCourse);return false")); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
