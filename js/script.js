@@ -279,6 +279,7 @@ function addLearnMaterial(idCourse)
             if(xhr.status == 200) {
 //                $("#loadfile").hide();
                 $("#learnMaterialLoader").hide();
+                $("#learnMaterialSubmitButton").show();
                 updateLearnMaterials(idCourse);
             }
         }
