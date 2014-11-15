@@ -698,7 +698,7 @@ $(document).ready(function(){
     if ($("#editCourse-teachers").length)
     {
         updateTeachers(window.idCourse);
-        updateGroups(window.idCourse,window.idTerm);
+        updateGroups(window.idCourse);
         updateLearnMaterials(window.idCourse);
         updateControlMaterials(window.idCourse);
     }
@@ -712,4 +712,36 @@ $(document).ready(function(){
         updateAnswers(window.idQuestion);
     }
 
+    if ($("#addGroupsSelect").length) {
+        $("#addGroupsSelect").multiSelect({
+            selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
+            selectionHeader: "<div style='margin-bottom:31px;'>Слушатели данного курса:</div>",
+            afterInit: function(ms){
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)'
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                .on('keydown', function(e){
+                  if (e.which === 40){
+                    that.$selectableUl.focus();
+                    return false;
+                  }
+                });
+            },
+            afterSelect: function(values){
+                alert("Выбрали: "+values);
+            },
+            afterDeselect: function(values){
+                alert("Убрали: "+values);
+            }
+        });
+    }
+
+    if($('.has-tip').length) {
+        $('.has-tip').frosty();
+        $('.has-tip.tip-bottom').frosty({
+            position: 'bottom'
+        });
+    }
 });
