@@ -43,7 +43,6 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
             $path = "";
             if ($item->category==MATERIAL_FILE) {
                 $path = pathinfo($item->path, PATHINFO_EXTENSION);
-                var_dump($item->path);
             }
             $f = "";
             

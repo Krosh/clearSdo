@@ -726,19 +726,16 @@ $(document).ready(function(){
         });
     }
 
-    if ($("#files").length)
-    {
-        fileLoaderWork();
-    }
-
     $("#XUploadForm-form").bind("fileuploadadd",function()
     {
+        $('body').showLoader();
         setTimeout(function(){
             $("#XUploadForm-form button[type=submit]").click();
         },100);
     });
     $("#XUploadForm-form").bind("fileuploaddone",function()
     {
+        $('body').hideLoader();
         updateLearnMaterials(window.idCourse);
     });
 
