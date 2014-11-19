@@ -731,10 +731,11 @@ $(document).ready(function(){
     {
         setTimeout(function(){
             $("#XUploadForm-form button[type=submit]").click();
-        },1000);
-        setTimeout(function(){
-            updateLearnMaterials(window.idCourse);
-        },5000);
+        },100);
+    });
+    $("#XUploadForm-form").bind("fileuploaddone",function()
+    {
+        updateLearnMaterials();
     });
 
 
