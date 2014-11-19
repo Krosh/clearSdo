@@ -6,10 +6,10 @@
 
 <body class="small-page">
 
-<div class="login">
+<div class="login" style="display: none">
     <div class="center">
         <div class="logo">
-            <img src="/img/logo-big.png" alt="">
+            <img src="/img/logo-big.png" width="66" height="66" alt="" data-retina>
             <span>Стимул</span>
         </div>
         <h2>Интерактивная Образовательная Среда</h2>

@@ -5,7 +5,9 @@
         var self = this;
         
         self.hide();
-        $("body").append('<div class="loader-center fadeIn"><img src="img/loader.gif" alt=""></div>');
+
+        var htmlLoader = '<div class="stml-logo"> <div class="rnd-1"> <div class="rnd-1-inner"></div></div><div class="rnd-2"> <div class="rnd-2-inner"></div></div><div class="rnd-3"> <div class="rnd-3-inner"></div></div><div class="rnd-4"> <div class="rnd-4-inner"> <div class="runner"></div></div></div></div>';
+        $("body").append('<div class="loader-center fadeIn">'+htmlLoader+'</div>');
         
         setTimeout(function(){
             $(".loader-center").fadeOut(200, function(){
@@ -19,6 +21,18 @@
                 
             });
         }, 1800);
+    };
+
+    $.fn.showLoader = function(callback) {
+        var htmlLoader = '<div class="stml-logo"> <div class="rnd-1"> <div class="rnd-1-inner"></div></div><div class="rnd-2"> <div class="rnd-2-inner"></div></div><div class="rnd-3"> <div class="rnd-3-inner"></div></div><div class="rnd-4"> <div class="rnd-4-inner"> <div class="runner"></div></div></div></div>';
+        $(this).append('<div class="loader-overflow fadeIn"><div class="loader-center fadeIn">'+htmlLoader+'</div></div>');
+    };
+
+    $.fn.hideLoader = function(callback) {
+        $(".loader-overflow").removeClass("fadeIn");
+        $(".loader-overflow").fadeOut(200, function(){
+            $(this).remove();
+        });  
     };
     
     
@@ -92,6 +106,13 @@
                 $(".logo .small").fadeIn(200);
             });
         });
+    };
+
+    // детектор ретины
+    $.fn.retinizr = function() {
+        if('devicePixelRatio' in window && window.devicePixelRatio == 2){
+            $(this).attr({"src": $(this).attr("src").substr(0, $(this).attr("src").length - 4) + "@2x" + $(this).attr("src").substr(-4)});
+        }
     };
 
 }( jQuery ));
