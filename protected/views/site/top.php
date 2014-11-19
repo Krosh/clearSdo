@@ -14,7 +14,7 @@
             <div class="col-7 col-mb-3">
                 <div class="logo">
                     <a href="/">
-                        <img src="/img/logo-small.png" alt="">
+                        <img src="/img/logo-small.png" height="40" width="40" alt="" data-retina>
                         <span>Стимул</span>
                     </a>
                 </div>

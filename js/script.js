@@ -575,7 +575,7 @@ $(document).ready(function(){
     });
 
     // Запуск лоадера, скрываем элемент
-    if($(".login").length > 0) {
+    if($(".login").length) {
         $(".login").loader();
     }
 
@@ -598,6 +598,11 @@ $(document).ready(function(){
 
     // Лого
     //$(".logo").logo();
+
+    // Ретина
+    if($("[data-retina]").length) {
+        $("[data-retina]").retinizr();
+    }
 
     // Календарь
 
