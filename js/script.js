@@ -295,7 +295,7 @@ function deleteLearnMaterial(idCourse,idMaterial)
         type: "POST",
         success: function(data)
         {
-            updateLearnMaterials(idCourse);
+            updateLearnMaterials(window.idCourse);
         },
         error: function(jqXHR, textStatus, errorThrown){
 //            alert(errorThrown);
@@ -735,7 +735,7 @@ $(document).ready(function(){
     });
     $("#XUploadForm-form").bind("fileuploaddone",function()
     {
-        updateLearnMaterials();
+        updateLearnMaterials(window.idCourse);
     });
 
 
