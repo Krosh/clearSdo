@@ -5,7 +5,7 @@
         var self = this;
         
         self.hide();
-        $("body").append('<div class="loader-center fadeIn"><img src="img/loader.gif" alt=""></div>');
+        $("body").append('<div class="loader-center fadeIn"><img src="/img/loader.gif" alt=""></div>');
         
         setTimeout(function(){
             $(".loader-center").fadeOut(200, function(){
@@ -19,6 +19,17 @@
                 
             });
         }, 1800);
+    };
+
+    $.fn.showLoader = function(callback) {
+        $(this).append('<div class="loader-overflow fadeIn"><div class="loader-center fadeIn"><img src="/img/loader.gif" alt=""></div></div>');
+    };
+
+    $.fn.hideLoader = function(callback) {
+        $(".loader-overflow").removeClass("fadeIn");
+        $(".loader-overflow").fadeOut(200, function(){
+            $(this).remove();
+        });  
     };
     
     

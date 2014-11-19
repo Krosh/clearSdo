@@ -722,7 +722,6 @@ $(document).ready(function(){
     }
 
     if ($("#files").length)
-    if ($("#files").length)
     {
         fileLoaderWork();
     }

@@ -1,0 +1,104 @@
+@-webkit-keyframes rotating {
+    from{
+        -webkit-transform: rotate(0deg);
+    }
+    to{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.stml-logo {
+    width: 90px;
+    height: 90px;
+    display: inline-block;
+    position: relative;
+    
+    .rnd-1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 90px;
+        width: 45px;
+        overflow: hidden;
+        
+        .rnd-1-inner {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid #444;
+        }
+    }
+    
+    .rnd-2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 45px;
+        width: 45px;
+        overflow: hidden;
+        
+        .rnd-2-inner {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid #444; 
+        }
+    }
+    
+    .rnd-3 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 40px;
+        width: 40px;
+        overflow: hidden;
+        
+        .rnd-3-inner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 5px solid #c0392b; 
+        }   
+    }
+    
+    .rnd-4 {
+        position: absolute;
+        width: 74px;
+        height: 74px;
+        top: 50%;
+        left: 50%;
+        margin-left: -37px;
+        margin-top: -37px;
+        
+        -webkit-animation: rotating 1.5s ease-in-out infinite;
+        -moz-animation: rotating 1.5s ease-in-out infinite;
+        -ms-animation: rotating 1.5s ease-in-out infinite;
+        -o-animation: rotating 1.5s ease-in-out infinite;
+        animation: rotating 1.5s ease-in-out infinite;
+        
+        .rnd-4-inner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 32px;
+            height: 74px;
+            overflow: hidden;
+            
+            .runner {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 74px;
+                height: 74px;
+                border-radius: 50%;
+                border: 5px solid #2980b9;
+            }
+        }
+    }
+}
