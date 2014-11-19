@@ -115,4 +115,33 @@
         }
     };
 
+    // всплывашка при драг'н'дропе
+    $.fn.uploaderInfo = function(action) {
+
+        var self = $(this),
+            textDefault = "Перетащите файл сюда, чтобы загрузить его",
+            textActive = "Отпустите файл для начала загрузки";
+
+        self.css({"position": "relative"});
+ 
+        if (action === "show") {
+            self.append('<div class="uploader-info"><span>'+textDefault+'</span></div>');
+        }
+ 
+        if (action === "hide") {
+            self.find(".uploader-info").remove();
+        }
+
+        if (action === "setActive") {
+            self.find(".uploader-info").addClass("active");
+            self.find(".uploader-info").find("span").text(textActive);
+        }
+
+        if (action === "unsetActive") {
+            self.find(".uploader-info").removeClass("active");
+            self.find(".uploader-info").find("span").text(textDefault);
+        }
+ 
+    };
+
 }( jQuery ));
