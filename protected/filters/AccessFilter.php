@@ -8,6 +8,8 @@
  */
 class AccessFilter extends CFilter {
     public function preFilter($filterChain) {
+//        Yii::app()->clientScript->registerCoreScript('jquery');
+//        Yii::app()->clientScript->registerCoreScript('jquery.ui');
         $reg = '/[a-zA-Z]*\?/';
         $matches = array();
         preg_match($reg,Yii::app()->request->requestUri."?",$matches);
@@ -15,7 +17,7 @@ class AccessFilter extends CFilter {
         $rules = array();
         $rules[ROLE_GUEST] = array("","noAccess");
         $rules[ROLE_STUDENT] = array("","noAccess","logout","viewCourse","startTest","question","endTest","nextQuestion","skipQuestion","endTest","viewTestResults","news","getCourses");
-        $rules[ROLE_TEACHER] = array_merge($rules[ROLE_STUDENT],array("saveWeights","loadStudentsFromExcel","deleteMedia","mediateka","recalcMarks","journal","editCourse","addTeacherToCourse","getTeachers","deleteTeacher","addGroupToCourse","getGroups","deleteGroup","addMaterial","getMaterials","addExistMaterial","deleteMaterial","orderMaterial","create","edit","getQuestions","orderQuestions","deleteQuestion","addAnswer","changeAnswer","marks","marksAjax","setMark","getGroupMarks","calcAndGetGroupMarks"));
+        $rules[ROLE_TEACHER] = array_merge($rules[ROLE_STUDENT],array("upload","saveWeights","loadStudentsFromExcel","deleteMedia","mediateka","recalcMarks","journal","editCourse","addTeacherToCourse","getTeachers","deleteTeacher","addGroupToCourse","getGroups","deleteGroup","addMaterial","getMaterials","addExistMaterial","deleteMaterial","orderMaterial","create","edit","getQuestions","orderQuestions","deleteQuestion","addAnswer","changeAnswer","marks","marksAjax","setMark","getGroupMarks","calcAndGetGroupMarks"));
         $rules[ROLE_ADMIN] = array_merge($rules[ROLE_TEACHER],array("admin","update","delete","addToGroup","deleteFromGroup"));
         if (Yii::app()->user->isGuest)
             $curRole = ROLE_GUEST;

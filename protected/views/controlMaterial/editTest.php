@@ -14,6 +14,10 @@
 $this->renderPartial('/site/top');
 ?>
     <script>
+        window.nameModal = "editTestModal";
+        <?php
+            if ($model->title == "")
+                echo "window.needModal = true;" ?>
         window.idTest = <?php echo $model->id; ?>
     </script>
 <div class="wrapper">

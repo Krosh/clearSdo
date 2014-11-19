@@ -18,6 +18,11 @@ $this->renderPartial('top');
 $listeners = Course::getGroups($model->id);
 ?>
     <script>
+        window.nameModal = "editCourseModal";
+        <?php
+            if ($model->title == "")
+                echo "window.needModal = true;"
+        ?>
         window.idCourse = <?php echo $model->id; ?>;
         window.idTerm = <?php echo Yii::app()->session["currentTerm"]; ?>;
     </script>
@@ -133,15 +138,15 @@ $listeners = Course::getGroups($model->id);
                         <select id='addGroupsSelect' multiple='multiple'>
                         </select>
                         <?php
-                            $criteria = new CDbCriteria();
-                            $criteria->order = "id DESC";
-                            $terms = Term::model()->findAll($criteria);
-                            $arr = array();
-                            foreach ($terms as $item)
-                            {
-                                $arr[$item->id] = $item->title;
-                            }
-                            echo CHtml::dropDownList("termSelect",Yii::app()->session['currentTerm'],$arr, array("class" => "anyclass", "onchange" => 'updateGroups(window.idCourse,$(this).val())'));
+                        $criteria = new CDbCriteria();
+                        $criteria->order = "id DESC";
+                        $terms = Term::model()->findAll($criteria);
+                        $arr = array();
+                        foreach ($terms as $item)
+                        {
+                            $arr[$item->id] = $item->title;
+                        }
+                        echo CHtml::dropDownList("termSelect",Yii::app()->session['currentTerm'],$arr, array("class" => "anyclass", "onchange" => 'updateGroups(window.idCourse,$(this).val())'));
                         ?>
 
                     </div>
@@ -226,15 +231,16 @@ $listeners = Course::getGroups($model->id);
         <h2>Учебные материалы</h2>
     </div>
     <div class="col-8 right">
+        <?php $this->renderPartial('/learnMaterial/fileLoader'); ?>
         <!-- <a href="#" class="btn white small" data-toggle="modal" data-target="#editUMModal"><i class="fa fa-book"></i> Редактировать</a> -->
-        
+
         <!-- <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)">ЗФ</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#addexist" title="Добавить файл из имеющихся">ДФ</a>
         <a href="#" class="btn blue small" title="Создать файл">СФ</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)">Р</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)">С</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)">Т</a> -->
-        
+
         <!-- <a href="#" class="btn blue small" data-toggle="modal" data-target="#loadfile" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)">Загрузить</a>
         <a href="#" class="btn blue small" data-toggle="modal" data-target="#addexist" title="Добавить файл из имеющихся">Выбрать</a>
         <a href="#" class="btn blue small" title="Создать файл">Создать</a>

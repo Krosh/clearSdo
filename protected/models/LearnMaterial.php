@@ -21,6 +21,8 @@ class LearnMaterial extends CActiveRecord
 		return 'tbl_learnmaterials';
 	}
 
+    public $fileAttribute = null;
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -135,8 +137,10 @@ class LearnMaterial extends CActiveRecord
     {
         if ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT)
         {
-
-            $doc = CUploadedFile::getInstance($this,'path');
+            if ($this->fileAttribute == null)
+                $doc = CUploadedFile::getInstance($this,'path');
+            else
+                $doc = $this->fileAttribute;
             $this->path = $doc;
             if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor))
             {

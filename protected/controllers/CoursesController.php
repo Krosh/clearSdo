@@ -95,7 +95,6 @@ class CoursesController extends CController
     public function actionCreate()
     {
         $model = new Course();
-        $model->title = "Новый курс";
         $model->save();
         $ca = new CoursesAutor();
         $ca->idAutor = Yii::app()->user->getId();

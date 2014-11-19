@@ -690,6 +690,11 @@ $(document).ready(function(){
         updateAnswers(window.idQuestion);
     }
 
+    if (window.needModal)
+    {
+        $("#"+window.nameModal).modal('show');
+    }
+
     if ($("#addGroupsSelect").length) {
         $("#addGroupsSelect").multiSelect({
             selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
@@ -715,6 +720,24 @@ $(document).ready(function(){
             }
         });
     }
+
+    if ($("#files").length)
+    if ($("#files").length)
+    {
+        fileLoaderWork();
+    }
+
+    $("#XUploadForm-form").bind("fileuploadadd",function()
+    {
+        setTimeout(function(){
+            $("#XUploadForm-form button[type=submit]").click();
+        },1000);
+        setTimeout(function(){
+            updateLearnMaterials(window.idCourse);
+        },5000);
+    });
+
+
 
     if($('.has-tip').length) {
         $('.has-tip').frosty();

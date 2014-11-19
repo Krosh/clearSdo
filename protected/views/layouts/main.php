@@ -25,8 +25,8 @@ $cs->scriptMap=array(
 </head>
 <?php echo $content;  ?>
 <?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
-<script src="../../js/jquery-2.1.1.min.js"></script>
-<script src="../../js/jquery-ui.js"></script>
+    <script src="../../js/jquery-2.1.1.min.js"></script>
+    <script src="../../js/jquery-ui.js"></script>
 <?php endif; ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
