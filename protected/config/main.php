@@ -25,9 +25,13 @@ return array(
         'application.components.*',
         'application.classes.*',
         'application.helpers.*',
+        'ext.xupload.*',
     ),
-	 
-	'components'=>array(
+    'aliases' => array(
+        //If you manually installed it
+        'xupload' => 'ext.xupload'
+    ),
+    'components'=>array(
 
 		'db'=>array(
             'class'=>'system.db.CDbConnection',
