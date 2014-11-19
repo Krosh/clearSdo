@@ -155,7 +155,7 @@ $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
 
         </td>
         <td class="right">
-            <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+            <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
         </td>
     <? endif; ?>
     </tr>

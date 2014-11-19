@@ -287,6 +287,7 @@ function addLearnMaterial(idCourse)
     xhr.send(formData);
 }
 
+
 function deleteLearnMaterial(idCourse,idMaterial)
 {
     $.ajax({
