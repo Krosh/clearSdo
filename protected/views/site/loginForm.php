@@ -6,7 +6,7 @@
 
 <body class="small-page">
 
-<div class="login">
+<div class="login" style="display: none">
     <div class="center">
         <div class="logo">
             <img src="/img/logo-big.png" alt="">
