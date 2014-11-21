@@ -111,6 +111,7 @@ class XUpload extends CJuiInputWidget {
 
         $this->options['url'] = $this->url;
         $this->options['autoUpload'] = $this -> autoUpload;
+        //$this->options["dropZone"] = 'js:$('#editCourse-materials")';
 
         if (!$this->multiple) {
             $this->options['maxNumberOfFiles'] = 1;

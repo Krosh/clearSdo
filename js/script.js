@@ -727,9 +727,44 @@ $(document).ready(function(){
         });
     }
 
-    $("#XUploadForm-form").bind("fileuploadadd",function()
+
+    $("#XUploadForm-form").bind("fileuploaddragover",function(e)
+    {
+        console.log(e);
+        var dropZone = $('#editCourse-materials'),
+            timeout = window.dropZoneTimeout;
+        if (!timeout) {
+            $("#editCourse-materials").uploaderInfo("show");
+        } else {
+            clearTimeout(timeout);
+        }
+        var found = false,
+            node = e.srcElement;
+        do {
+            if (node === dropZone[0]) {
+                found = true;
+                break;
+            }
+            node = node.parentNode;
+        } while (node != null);
+        if (found) {
+            $("#editCourse-materials").uploaderInfo("setActive");
+        } else {
+            $("#editCourse-materials").uploaderInfo("unsetActive");
+        }
+        window.dropZoneTimeout = setTimeout(function () {
+            $("#editCourse-materials").uploaderInfo("unsetActive");
+            $("#editCourse-materials").uploaderInfo("hide");
+            window.dropZoneTimeout = false;
+        }, 100);    });
+
+    $("#XUploadForm-form").bind("fileuploadstart",function()
     {
         $('body').showLoader();
+    });
+
+    $("#XUploadForm-form").bind("fileuploadadd",function()
+    {
         setTimeout(function(){
             $("#XUploadForm-form button[type=submit]").click();
         },100);
