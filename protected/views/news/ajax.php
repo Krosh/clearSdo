@@ -6,7 +6,6 @@
  * Time: 18:02
  * To change this template use File | Settings | File Templates.
  */
-return "";
 header('Access-Control-Allow-Origin: *');
 header('Content-type: text/html; charset=UTF-8');
 $MAX_NEWS_COUNT = 3;

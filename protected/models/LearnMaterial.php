@@ -169,4 +169,108 @@ class LearnMaterial extends CActiveRecord
             unlink($documentPath);
     }
 
+    public function getFileSize()
+    {
+        $size = filesize($this->getPathToMaterial());
+        $sizePrefixxes = array(" Б"," Кб", " Мб", " Гб");
+        $i = 0;
+        do
+        {
+            $sizeText = $size.$sizePrefixxes[$i];
+            $i++;
+            $size = floor($size/1024);
+        } while ($size>0);
+        return $sizeText;
+    }
+
+    public function getIconExtension()
+    {
+        $path = "";
+        if ($this->category==MATERIAL_FILE) {
+            $path = pathinfo($this->path, PATHINFO_EXTENSION);
+        }
+
+        switch ($path) {
+            case "docx":
+                $f = "file";
+                break;
+            case "txt":
+                $f = "file";
+                break;
+            case "rtf":
+                $f = "file";
+                break;
+            case "doc":
+                $f = "file";
+                break;
+            case "pdf":
+                $f = "pdf";
+                break;
+            case "xls":
+                $f = "excel";
+                break;
+            case "xlsx":
+                $f = "excel";
+                break;
+            case "csv":
+                $f = "excel";
+                break;
+            case "ppt":
+                $f = "presentation";
+                break;
+            case "pptx":
+                $f = "presentation";
+                break;
+            case "zip":
+                $f = "archive";
+                break;
+            case "rar":
+                $f = "archive";
+                break;
+            case "7z":
+                $f = "archive";
+                break;
+            case "tar":
+                $f = "archive";
+                break;
+            case "gz":
+                $f = "archive";
+                break;
+            case "jpg":
+                $f = "image";
+                break;
+            case "jpeg":
+                $f = "image";
+                break;
+            case "bmp":
+                $f = "image";
+                break;
+            case "png":
+                $f = "image";
+                break;
+            case "gif":
+                $f = "image";
+                break;
+            case "avi":
+                $f = "movie";
+                break;
+            case "mpg":
+                $f = "movie";
+                break;
+            case "mp4":
+                $f = "movie";
+                break;
+            case "mov":
+                $f = "movie";
+                break;
+            case "torrent":
+                $f = "torrent";
+                break;
+            default:
+                $f = "no";
+        }
+        return $f;
+
+    }
+
 }
