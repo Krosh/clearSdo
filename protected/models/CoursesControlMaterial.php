@@ -8,6 +8,8 @@
  * @property integer $idCourse
  * @property integer $idControlMaterial
  * @property integer $zindex
+ * @property string $dateAdd
+
  */
 class CoursesControlMaterial extends CActiveRecord
 {
@@ -30,7 +32,7 @@ class CoursesControlMaterial extends CActiveRecord
 			array('idCourse, idControlMaterial, zindex', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, idCourse, idControlMaterial, zindex', 'safe', 'on'=>'search'),
+			array('dateAdd, id, idCourse, idControlMaterial, zindex', 'safe', 'on'=>'search'),
 		);
 	}
 

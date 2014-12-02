@@ -329,7 +329,7 @@ class ControlMaterialController extends CController
             $this->refresh();
         $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel, 'idCourse' => $course->id));
     }
-
+    //TODO:: Этот метод нужно бы перенести в MaterialController, там методы по созданию/удалению материалов
     public function actionCreate($idCourse,$isPoint)
     {
         $model = new ControlMaterial();
@@ -341,9 +341,22 @@ class ControlMaterialController extends CController
         $ccm->idCourse = $idCourse;
         $ccm->idControlMaterial = $model->id;
         $ccm->zindex = CoursesControlMaterial::model()->count("idCourse = :idCourse", array("idCourse" => $idCourse))+1;
+        $ccm->dateAdd = date("Y-m-d H:i:s");
         $ccm->save();
         $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
     }
+
+    public function actions()
+    {
+        return array(
+            'upload'=>array(
+                'class'=>'xupload.actions.XUploadAction',
+                'path' =>Yii::app() -> getBasePath() . "/../uploads",
+                'publicPath' => Yii::app() -> getBaseUrl() . "/uploads",
+            ),
+        );
+    }
+
 
     public function setMark($idControlMaterial,$idStudent,$mark)
     {

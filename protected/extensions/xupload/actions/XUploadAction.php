@@ -247,6 +247,7 @@ class XUploadAction extends CAction {
         $courseLearnMaterial->idCourse = Yii::app()->session["currentCourse"];
         $courseLearnMaterial->idMaterial = $learnMaterial->id;
         $courseLearnMaterial->zindex = CoursesMaterial::model()->count("idCourse = ".Yii::app()->session["currentCourse"])+1;
+        $courseLearnMaterial->dateAdd = date("Y-m-d H:i:s");
         $courseLearnMaterial->save();
         return;
         if ($model->{$this->fileAttribute} !== null) {

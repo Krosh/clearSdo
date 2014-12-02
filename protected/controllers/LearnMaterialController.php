@@ -34,6 +34,16 @@ class LearnMaterialController extends CController
         }
     }
 
+    public function addCourseMaterial($idCourse,$idMaterial)
+    {
+        $courseMat = new CoursesMaterial();
+        $courseMat->idCourse = $idCourse;
+        $courseMat->idMaterial = $idMaterial;
+        $courseMat->zindex = CoursesMaterial::model()->count("idCourse = ".$idCourse)+1;
+        $courseMat->dateAdd = date("Y-m-d H:i:s");
+        $courseMat->save();
+    }
+
     public function actionAddMaterial()
     {
         $mat = new LearnMaterial();
@@ -42,20 +52,12 @@ class LearnMaterialController extends CController
         $mat->category = $_POST["LearnMaterial"]["category"];
         $mat->category == MATERIAL_LINK ? $mat->path = $_POST["LinkPath"]:$mat->path = $_FILES['filePath']['name'];
         $mat->save();
-        $courseMat = new CoursesMaterial();
-        $courseMat->idCourse = $_POST["idCourse"];
-        $courseMat->idMaterial = $mat->id;
-        $courseMat->zindex = CoursesMaterial::model()->count("idCourse = ".$_POST["idCourse"])+1;
-        $courseMat->save();
+        $this->addCourseMaterial($_POST['idCourse'],$mat->id);
     }
 
     public function actionAddExistMaterial()
     {
-        $courseMat = new CoursesMaterial();
-        $courseMat->idCourse = $_POST["idCourse"];
-        $courseMat->idMaterial = $_POST["idMaterial"];
-        $courseMat->zindex = CoursesMaterial::model()->count("idCourse = ".$_POST["idCourse"])+1;
-        $courseMat->save();
+        $this->addCourseMaterial($_POST['idCourse'],$_POST['idMaterial']);
     }
 
     public function actionOrderMaterial()
@@ -114,8 +116,7 @@ class LearnMaterialController extends CController
     {
         $mat = LearnMaterial::model()->findByPk($matId);
         $filename = $mat->getPathToMaterial();
-        $newname = $mat->path;
-
+        $newname = $mat->title;
         $newname = str_replace(",","",$newname);
         $newname = str_replace("#","",$newname);
         $newname = str_replace(" ","_",$newname);

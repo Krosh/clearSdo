@@ -10,6 +10,8 @@
  * @property string $fio
  * @property string $role
  * @property string $avatar
+ * @property string $lastVisit
+ * @property string $curVisit
  */
 class User extends CActiveRecord
 {
@@ -35,7 +37,9 @@ class User extends CActiveRecord
 			array('fio', 'length', 'max'=>100),
 			array('role', 'length', 'max'=>15),
 			array('avatar', 'length', 'max'=>20),
-			// The following rule is used by search().
+            array('lastVisit', 'length', 'max'=>20),
+            array('curVisit', 'length', 'max'=>20),
+            // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
@@ -118,7 +122,8 @@ class User extends CActiveRecord
 
     protected function afterSave()
     {
-        mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
+        if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))
+            mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
     }
 
     public function getFiles($category = 'all')

@@ -28,8 +28,11 @@ class UserIdentity extends CUserIdentity {
             // realName есть в нашей модели. У вас это может быть name, firstName
             // или что-либо ещё.
             $this->username = $user->fio;
-
             $this->errorCode = self::ERROR_NONE;
+
+            $user->lastVisit = $user->curVisit;
+            $user->curVisit = date("Y-m-d H:i:s");
+            $user->save();
         }
         return !$this->errorCode;
     }

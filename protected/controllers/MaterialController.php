@@ -40,12 +40,12 @@ class MaterialController extends CController
         $courseMat->idCourse = $_POST["idCourse"];
         $courseMat->idControlMaterial = $_POST["idMaterial"];
         $courseMat->zindex = CoursesControlMaterial::model()->count("idCourse = ".$_POST["idCourse"])+1;
+        $courseMat->dateAdd = date("Y-m-d H:i:s");
         $courseMat->save();
     }
 
     public function actionOrderMaterial()
     {
-
         $idMat = $_POST["idMat"];
         $idParentMat = $_POST["idParentMat"];
         $mat = CoursesControlMaterial::model()->findByPk($idMat);

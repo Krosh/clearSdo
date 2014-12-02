@@ -66,11 +66,17 @@
         <td>
             <div class="right">
                 <div class="course-icons">
+                    <?php
+                        $hasNewLearn = CoursesMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
+                        $hasNewControl = CoursesControlMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
+                        $learnMaterialCount = CoursesMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
+                        $controlMaterialCount = CoursesControlMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
+                    ?>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-file-text"></i></div> <a href="#"><strong>0</strong> файлов</a>
+                        <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="#"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?></strong> файлов</a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-check-square-o"></i></div> <a href="#"><strong>0</strong> тестов</a>
+                        <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="#"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?></strong> тестов</a>
                     </div>
                     <div class="course-icon">
                         <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5</strong> сообщений</a>

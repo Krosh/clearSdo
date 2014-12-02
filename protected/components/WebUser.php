@@ -48,6 +48,13 @@ class WebUser extends CWebUser {
         }
     }
 
+    function getLastVisit() {
+        if ($user = $this->getModel())
+        {
+            return $user->lastVisit;
+        }
+    }
+
     public function getModel(){
         if (!$this->isGuest && $this->_model === null){
             $this->_model = User::model()->findByPk($this->id);
