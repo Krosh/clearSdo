@@ -15,7 +15,28 @@
     <?php
     foreach ($courses as $item) {
         ?>
-
+        <?php
+        $hasNewLearn = CoursesMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
+        $hasNewControl = CoursesControlMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
+        $learnMaterialCount = CoursesMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
+        $controlMaterialCount = CoursesControlMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
+        if ($isStudent)
+        {
+            $maxProgress = $controlMaterialCount;
+            $valProgress = 0;
+            $tests = CoursesControlMaterial::model()->findAll("idCourse = :idCourse", array(":idCourse" => $item->id));
+            foreach ($tests as $testItem)
+            {
+                $curMark = ControlMaterial::getMark(Yii::app()->user->id,$testItem->idControlMaterial);
+                if ($curMark >= 25) // TODO:: Вынести в конфиг
+                $valProgress++;
+            }
+        } else
+        {
+            $maxProgress = 12;
+            $valProgress = 3;
+        }
+        ?>
         <?php if ($isStudent): ?>
             <tr data-href="/viewCourse?idCourse=<?=$item->id?>">
         <?php else: ?>
@@ -55,23 +76,16 @@
             <?php endif ?>
 
             <div class="progress-bar">
-                <div class="progress-bar-title">Прогресс курса: <span>0/12</span> выполнено</div>
+                <div class="progress-bar-title">Прогресс курса: <span><?php echo $valProgress; ?>/<?php echo $maxProgress; ?></span> выполнено</div>
 
                 <div class="progress-out">
-                    <div class="progress-in" style="width: 0%"></div>
+                    <div class="progress-in" style="width: <?php if ($maxProgress > 0) echo $valProgress*100/$maxProgress; else echo 0?>%"></div>
                 </div>
-
             </div>
         </td>
         <td>
             <div class="right">
                 <div class="course-icons">
-                    <?php
-                        $hasNewLearn = CoursesMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
-                        $hasNewControl = CoursesControlMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
-                        $learnMaterialCount = CoursesMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
-                        $controlMaterialCount = CoursesControlMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
-                    ?>
                     <div class="course-icon">
                         <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="#"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?></strong> файлов</a>
                     </div>

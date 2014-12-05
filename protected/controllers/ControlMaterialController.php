@@ -84,6 +84,8 @@ class ControlMaterialController extends CController
         $dateTime = new DateTime($currentTestGo->dateStart);
         $test = ControlMaterial::model()->findByPk($currentTestGo->idControlMaterial);
         $addTimeValue = $test->dotime;
+        if ($addTimeValue == "")
+            $addTimeValue = 0;
         $dateTime->modify("+$addTimeValue minute");
 
         // Так как у нас php<5.3 ТО передаем такой костыль
