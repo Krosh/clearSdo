@@ -19,19 +19,28 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($questionModel,'content'); ?>
-		<?php echo $form->textArea($questionModel,'content',array('rows'=>6, 'cols'=>30, 'class'=>'jsRedactor')); ?>
-		<?php echo $form->error($questionModel,'content'); ?>
-	</div>
-    <br>
-    
-    <div class="row radio-images">
-        <?php $categories = array(1 => '<img src="/img/q1.png" alt="Закрытый">', 2 => '<img src="/img/q2.png" alt="Закрытый с множественным выбором">', 3 => '<img src="/img/q3.png" alt="Числовой ответ">', 4 => '<img src="/img/q4.png" alt="Открытый тест">',5 => '<img src="/img/q5.png" alt="На соответствие">', 6 => '<img src="/img/q5.png" alt="Интерактивный">');   ?>
-        <?php echo $form->labelEx($questionModel,'type'); ?>
-		<?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
-		<?php echo $form->error($questionModel,'type'); ?>
-	</div>
+	<table width="100%">
+		<tr>
+			<td width="30%">
+				<?php echo $form->labelEx($questionModel,'content'); ?>
+			</td>
+			<td width="70%">
+				<?php echo $form->textArea($questionModel,'content',array('class'=>'jsRedactor', 'style' => 'width:100%')); ?>
+				<?php echo $form->error($questionModel,'content'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="30%">
+				<?php $categories = array(1 => '<img src="/img/q1.png" alt="Закрытый">', 2 => '<img src="/img/q2.png" alt="Закрытый с множественным выбором">', 3 => '<img src="/img/q3.png" alt="Числовой ответ">', 4 => '<img src="/img/q4.png" alt="Открытый тест">',5 => '<img src="/img/q5.png" alt="На соответствие">', 6 => '<img src="/img/q5.png" alt="Интерактивный">');   ?>
+        		<?php echo $form->labelEx($questionModel,'type'); ?>
+			</td>
+			<td width="70%">
+				<strong>TODO: убрать радио-батоны и сделать их в линию</strong>
+				<!-- <?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
+				<?php echo $form->error($questionModel,'type'); ?> -->
+			</td>
+		</tr>
+	</table>
     
 	<div class="row row-inline">
 		<?php echo $form->labelEx($questionModel,'fee'); ?>
@@ -58,8 +67,7 @@
     </div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
-		<a style="margin-left:15px" href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант</a>
+		<a style="margin-right:25px" class="btn blue" href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант</a> <?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

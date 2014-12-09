@@ -329,7 +329,15 @@ function updateLearnMaterials(idCourse)
                             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
                         }
                     });
-                }
+                },
+                helper: function(e, tr){
+                    var $originals = tr.children();
+                    var $helper = tr.clone();
+                    $helper.children().each(function(index) {
+                      $(this).width($originals.eq(index).width());
+                    });
+                    return $helper;
+                },
             });
 
             footerUpdate();
@@ -382,7 +390,15 @@ function updateControlMaterials(idCourse)
                             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
                         }
                     });
-                }
+                },
+                helper: function(e, tr){
+                    var $originals = tr.children();
+                    var $helper = tr.clone();
+                    $helper.children().each(function(index) {
+                      $(this).width($originals.eq(index).width());
+                    });
+                    return $helper;
+                },
             });
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -417,7 +433,15 @@ function updateQuestions(idTest)
                             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
                         }
                     });
-                }
+                },
+                helper: function(e, tr){
+                    var $originals = tr.children();
+                    var $helper = tr.clone();
+                    $helper.children().each(function(index) {
+                      $(this).width($originals.eq(index).width());
+                    });
+                    return $helper;
+                },
             });
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -661,22 +685,22 @@ $(document).ready(function(){
     }
 
     if ($('#news-content').length) {
-        $.ajax({
-            type: "POST",
-            url: "/news/news",
-            beforeSend: function() {
-                $("#news-content").hide();
-            },
-            success: function(data)
-            {
-                $("#news-content").html(data);
-                $("#news-content").fadeIn(200);
-            },
-            error: function()
-            {
-                alert("Ошибка при загрузке новостей");
-            }
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/news/news",
+        //     beforeSend: function() {
+        //         $("#news-content").hide();
+        //     },
+        //     success: function(data)
+        //     {
+        //         $("#news-content").html(data);
+        //         $("#news-content").fadeIn(200);
+        //     },
+        //     error: function()
+        //     {
+        //         alert("Ошибка при загрузке новостей");
+        //     }
+        // });
     }
 
     if ($("#editCourse-teachers").length)

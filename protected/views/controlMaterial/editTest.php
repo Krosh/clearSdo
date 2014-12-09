@@ -133,11 +133,20 @@ $this->renderPartial('/site/top');
                             array_push($res,$item);
                     }
                     ?>
-                    <?php foreach($res as $item): ?>
-                        <?php echo $item->title; ?> : <input data-idMaterial = <?php echo $item->id; ?> type = "number" value="<?php if ($weights[$item->id] != "") echo $weights[$item->id]; else echo "0";  ?>" min = "0" /><br>
-
-                    <?php endforeach; ?>
-                    <?php echo CHtml::button("Сохранить веса", array("onclick" => 'changeWeights('.$model->id.')')); ?>
+                    <table width="35%">
+                        <?php foreach($res as $item): ?>
+                            <tr>
+                                <td width="80%" style="padding-bottom: 10px;">
+                                    <?php echo $item->title; ?>
+                                </td>
+                                <td width="20%" style="padding-bottom: 10px;">
+                                    <input style="width:100%" data-idMaterial = <?php echo $item->id; ?> type = "number" value="<?php if ($weights[$item->id] != "") echo $weights[$item->id]; else echo "0";  ?>" min = "0" />
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                    <br>
+                    <?php echo CHtml::button("Сохранить", array("class" => "btn blue small", "onclick" => 'changeWeights('.$model->id.')')); ?>
                     <?php echo CHtml::endForm(); ?>
                 <?php endif; ?>
 
