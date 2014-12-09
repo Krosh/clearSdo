@@ -10,6 +10,8 @@ header('Access-Control-Allow-Origin: *');
 header('Content-type: text/html; charset=UTF-8');
 $MAX_NEWS_COUNT = 3;
 $url = 'http://www.altstu.ru/feeds/news/';
+$check_url = get_headers($url);
+if (!strpos($check_url[0],'200')) return;
 $xml = xml_parser_create();
 xml_parser_set_option($xml, XML_OPTION_SKIP_WHITE, 1);
 xml_parse_into_struct($xml, $this->getContent($url,array()), $element, $index);
