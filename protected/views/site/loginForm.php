@@ -35,6 +35,9 @@
 
     <button type="submit">Войти</button>
 
+    <?php if ($model->login != ""): ?>
+    <div id = "wrongPassword" class="center red">Неправильный логин или пароль</div>
+    <?php endif; ?>
     <div class="center"><a href="#">Забыли пароль?</a></div>
     <?php $this->endWidget(); ?>
 
