@@ -178,6 +178,9 @@ $listeners = Course::getGroups($model->id);
     </div>
 </div>
 
+<div id = "editCourse-materials" style="margin-top:20px">
+</div>
+
 <hr>
 
 <div class="col-group">
@@ -326,8 +329,6 @@ $listeners = Course::getGroups($model->id);
 <!--создание файлов -->
 
 
-<div id = "editCourse-materials" style="margin-top:20px">
-</div>
 </div>
 
 </div>

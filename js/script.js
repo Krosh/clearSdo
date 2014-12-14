@@ -755,15 +755,18 @@ $(document).ready(function(){
     $("#XUploadForm-form").bind("fileuploaddragover",function(e)
     {
         console.log(e);
-        var dropZone = $('#editCourse-materials'),
-            timeout = window.dropZoneTimeout;
+        var dropZone = $('#editCourse-materials');
+        var timeout = window.dropZoneTimeout;
         if (!timeout) {
             $("#editCourse-materials").uploaderInfo("show");
         } else {
             clearTimeout(timeout);
         }
-        var found = false,
-            node = e.srcElement;
+        var found = false;
+        if (e.srcElement)
+            var node = e.srcElement;
+        else
+            var node = e.target;
         do {
             if (node === dropZone[0]) {
                 found = true;
