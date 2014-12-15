@@ -33,8 +33,24 @@
             }
         } else
         {
-            $maxProgress = 12;
-            $valProgress = 3;
+            $maxProgress = 0;
+            $valProgress = 0;
+            foreach (Course::getGroups($item->id,$idTerm) as $group)
+            {
+                /* @var $group Group*/
+                foreach ($group->students as $student)
+                {
+                    $tests = CoursesControlMaterial::model()->findAll("idCourse = :idCourse", array(":idCourse" => $item->id));
+                    foreach ($tests as $testItem)
+                    {
+                        $curMark = ControlMaterial::getMark($student->id,$testItem->idControlMaterial);
+                        if ($curMark >= 25) // TODO:: Вынести в конфиг
+                        $valProgress++;
+                        $maxProgress++;
+                    }
+
+                }
+            }
         }
         ?>
         <?php if ($isStudent): ?>

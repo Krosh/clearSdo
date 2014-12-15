@@ -249,51 +249,7 @@ class XUploadAction extends CAction {
         $courseLearnMaterial->zindex = CoursesMaterial::model()->count("idCourse = ".Yii::app()->session["currentCourse"])+1;
         $courseLearnMaterial->dateAdd = date("Y-m-d H:i:s");
         $courseLearnMaterial->save();
-        return;
-        if ($model->{$this->fileAttribute} !== null) {
-            $model->{$this->mimeTypeAttribute} = $model->{$this->fileAttribute}->getType();
-            $model->{$this->sizeAttribute} = $model->{$this->fileAttribute}->getSize();
-            $model->{$this->displayNameAttribute} = $model->{$this->fileAttribute}->getName();
-            $model->{$this->fileNameAttribute} = $model->{$this->displayNameAttribute};
-
-            if ($model->validate()) {
-
-                $path = $this->getPath();
-
-                if (!is_dir($path)) {
-                    mkdir($path, 0777, true);
-                    chmod($path, 0777);
-                }
-
-                $model->{$this->fileAttribute}->saveAs($path . $model->{$this->fileNameAttribute});
-                chmod($path . $model->{$this->fileNameAttribute}, 0777);
-
-                $returnValue = $this->beforeReturn();
-                if ($returnValue === true) {
-                    echo json_encode(array(array(
-                        "name" => $model->{$this->displayNameAttribute},
-                        "type" => $model->{$this->mimeTypeAttribute},
-                        "size" => $model->{$this->sizeAttribute},
-                        "url" => $this->getFileUrl($model->{$this->fileNameAttribute}),
-                        "thumbnail_url" => $model->getThumbnailUrl($this->getPublicPath()),
-                        "delete_url" => $this->getController()->createUrl($this->getId(), array(
-                            "_method" => "delete",
-                            "file" => $model->{$this->fileNameAttribute},
-                        )),
-                        "delete_type" => "POST"
-                    )));
-                } else {
-                    echo json_encode(array(array("error" => $returnValue,)));
-                    Yii::log("XUploadAction: " . $returnValue, CLogger::LEVEL_ERROR, "xupload.actions.XUploadAction");
-                }
-            } else {
-                echo json_encode(array(array("error" => $model->getErrors($this->fileAttribute),)));
-                Yii::log("XUploadAction: " . CVarDumper::dumpAsString($model->getErrors()), CLogger::LEVEL_ERROR, "xupload.actions.XUploadAction");
-            }
-        } else {
-            throw new CHttpException(500, "Could not upload file");
-        }
-    }
+      }
 
     /**
      * We store info in session to make sure we only delete files we intended to

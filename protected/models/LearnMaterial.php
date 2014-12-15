@@ -183,6 +183,14 @@ class LearnMaterial extends CActiveRecord
         return $sizeText;
     }
 
+    public function getExtension()
+    {
+        if ($this->category==MATERIAL_FILE) {
+            return pathinfo($this->path, PATHINFO_EXTENSION);
+        }
+        return "";
+    }
+
     public function getIconExtension()
     {
         $path = "";
