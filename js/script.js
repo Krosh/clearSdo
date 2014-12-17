@@ -702,22 +702,22 @@ $(document).ready(function(){
     }
 
     if ($('#news-content').length) {
-        // $.ajax({
-        //     type: "POST",
-        //     url: "/news/news",
-        //     beforeSend: function() {
-        //         $("#news-content").hide();
-        //     },
-        //     success: function(data)
-        //     {
-        //         $("#news-content").html(data);
-        //         $("#news-content").fadeIn(200);
-        //     },
-        //     error: function()
-        //     {
-        //         alert("Ошибка при загрузке новостей");
-        //     }
-        // });
+        $.ajax({
+             type: "POST",
+             url: "/news/news",
+             beforeSend: function() {
+                 $("#news-content").hide();
+             },
+             success: function(data)
+             {
+                 $("#news-content").html(data);
+                 $("#news-content").fadeIn(200);
+             },
+             error: function()
+             {
+                 alert("Ошибка при загрузке новостей");
+             }
+        });
     }
 
     if ($("#editCourse-teachers").length)

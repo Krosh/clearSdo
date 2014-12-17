@@ -231,7 +231,6 @@ $listeners = Course::getGroups($model->id);
                                         success: function(data)
                                         {
                                             updateControlMaterials('.$model->id.')
-                                            $("#editCourse-controlMaterialAddExist").hide();
                                         },
                                         error: function(jqXHR, textStatus, errorThrown){
                                             alert("error"+textStatus+errorThrown);

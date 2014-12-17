@@ -299,6 +299,7 @@ class ControlMaterialController extends CController
 
     public function actionEdit($idMaterial)
     {
+        $this->noNeedJquery = true;
         $needRefresh = false;
         $model = $this->loadModel($idMaterial);
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
