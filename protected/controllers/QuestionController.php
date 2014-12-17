@@ -21,7 +21,7 @@ class QuestionController extends CController
         $idControlMaterial = $_POST["idControlMaterial"];
         $criteria = new CDbCriteria();
         $criteria->compare("idQuestion",$idQuestion);
-            $criteria->compare("idControlMaterial",$idControlMaterial);
+        $criteria->compare("idControlMaterial",$idControlMaterial);
         $model = QuestionsControlMaterial::model()->findAll($criteria);
         $z = $model[0]->zindex;
         QuestionsControlMaterial::model()->deleteAll($criteria);
