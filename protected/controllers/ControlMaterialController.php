@@ -17,7 +17,6 @@ class ControlMaterialController extends CController
 
     public function actionStartTest($idTest)
     {
-        // TODO:: Генерация последовательности вопросов в зависимости от настроек теста
         $testModel = $this->loadModel($idTest);
         $questionsFromDb = Question::getQuestionsByControlMaterial($idTest);
         // В сессию записываем два массива
@@ -52,17 +51,20 @@ class ControlMaterialController extends CController
             array_push($questions, $questionsFromDb[$item]->id);
             array_push($flags, true);
         }
-        Yii::app()->session['totalQuestions'] = $count;
-        Yii::app()->session['questions'] = $questions;
-        Yii::app()->session['flags'] = $flags;
-        Yii::app()->session['currentTest'] = $idTest;
+
         $model = new UserControlMaterial();
         $model->idControlMaterial = $idTest;
         $model->idUser = Yii::app()->user->getId();
         $model->dateStart = date("Y-m-d H:i:s");
         $model->save();
+
+        Yii::app()->session['totalQuestions'] = $count;
+        Yii::app()->session['questions'] = $questions;
+        Yii::app()->session['flags'] = $flags;
+        Yii::app()->session['currentTest'] = $idTest;
         Yii::app()->session['currentTestGo'] = $model->id;
         Yii::app()->session['currentQuestion'] = 0;
+
         $this->redirect('/controlMaterial/question');
     }
 
