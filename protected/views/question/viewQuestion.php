@@ -69,13 +69,64 @@ $this->renderPartial('/site/top');
                                         <input name = 'answer' type = 'text' > </input>
                                     </div>
                                 <? endif ?>
+                                <?php
+                                if ($question->type == QUESTION_MATCH)
+                                {
+                                    //TODO:: РїРѕРґСѓРјР°С‚СЊ, РєР°Рє РІС‹РЅРµСЃС‚Рё СЌС‚Сѓ Р»РѕРіРёРєСѓ РёР· РјРѕРґРµР»Рё
+                                    echo '<div class="radio-green">';
+                                    $leftAnswers = array();
+                                    $rightAnswers = array();
+                                    $shuffledId = array();
+                                    foreach ($answers as $item)
+                                    {
+                                        $t = explode("~",$item->content);
+                                        array_push($leftAnswers,$t[0]);
+                                        array_push($rightAnswers,$t[1]);
+                                        array_push($shuffledId, $item->id);
+                                    }
+                                    echo "<div id = 'leftAnswers'>";
+                                    foreach ($leftAnswers as $item)
+                                    {
+                                        if ($item == "") continue;
+                                        echo "<div class = 'leftAnswer'>".$item."</div>";
+                                    }
+                                    echo "</div>";
+
+                                    Yii::app()->session['rightShuffledId'] = $shuffledId;
+                                    for ($i = 0; $i<1000; $i++)
+                                    {
+                                        $r1 = rand(0,count($rightAnswers)-1);
+                                        $r2 = rand(0,count($rightAnswers)-1);
+                                        $t = $rightAnswers[$r1];
+                                        $rightAnswers[$r1] = $rightAnswers[$r2];
+                                        $rightAnswers[$r2] = $t;
+                                        $t = $shuffledId[$r1];
+                                        $shuffledId[$r1] = $shuffledId[$r2];
+                                        $shuffledId[$r2] = $t;
+                                    }
+
+                                    Yii::app()->session['shuffledId'] = $shuffledId;
+                                    echo "<div id = 'rightAnswers'>";
+                                    $i = 0;
+                                    foreach ($rightAnswers as $item)
+                                    {
+                                        if ($item == "") continue;
+                                        echo "<div class = 'rightAnswer' id = '$i'>".$item."</div>";
+                                        $i++;
+                                    }
+                                    echo "</div>";
+
+                                    echo "<input id = 'answer' name = 'answer' type = 'hidden' >";
+                                    echo "</div>";
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="test-submit">
-                    <button type="submit" class="btn blue">Ответить</button>
+                    <button type="submit" class="btn blue" onclick="checkSubmit(<?php echo $question->type; ?>)">Ответить</button>
                     <a href="/controlMaterial/skipQuestion" class="btn gray">Пропустить</a>
                 </div>
             </form>

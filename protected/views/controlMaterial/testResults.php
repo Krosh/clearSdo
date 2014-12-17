@@ -67,7 +67,6 @@ $this->renderPartial('/site/top');
                     </div>
 
                     <?php $i = 0; ?>
-                    <?php ?>
                     <?php foreach($questions as $item): ?>
                         <div class="text-block">
                             <div class="block-header">

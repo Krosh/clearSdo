@@ -98,7 +98,7 @@ class AnswerController extends CController
     {
         $idQuestion = $_POST['idQuestion'];
         $model = new Answer();
-        $model->content = "Новый ответ";
+        $model->content = "Новый ответ~Соответствующий вариант";
         $model->question = $idQuestion;
         $model->zindex = Answer::model()->count("question = ".$idQuestion)+1;
         $model->save();

@@ -6,7 +6,8 @@
 <div class="form wide">
 
 <?php $_SESSION['userCode'] = 2; ?>
-
+   <!-- ЧТО ЭТО??????????????????????????????
+-->
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'question-form',
 	'htmlOptions'=>array(
@@ -35,9 +36,9 @@
         		<?php echo $form->labelEx($questionModel,'type'); ?>
 			</td>
 			<td width="70%">
-				<strong>TODO: убрать радио-батоны и сделать их в линию</strong>
-				<!-- <?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
-				<?php echo $form->error($questionModel,'type'); ?> -->
+				<!--<strong>TODO: убрать радио-батоны и сделать их в линию</strong>
+				--><?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
+				<?php echo $form->error($questionModel,'type'); ?>
 			</td>
 		</tr>
 	</table>

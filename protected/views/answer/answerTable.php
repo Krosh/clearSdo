@@ -27,7 +27,7 @@
 
             <td >
                 <?php
-                    $this->renderPartial("/answer/_form", array("model" => $item));
+                    $this->renderPartial("/answer/_form", array("model" => $item, "needSecondAnswer" => Question::model()->findByPk($idQuestion)->type == QUESTION_MATCH));
                 ?>
             </td>
             <td class="right">

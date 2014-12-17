@@ -208,7 +208,7 @@ class Question extends CActiveRecord
             }
             $answerContent = $userAnswer->answer;
         }
-        if ($this->type == QUESTION_MATCH && false)
+        if ($this->type == QUESTION_MATCH)
         {
             $answerContent = "";
             $rightCount = 0;
@@ -218,8 +218,14 @@ class Question extends CActiveRecord
             {
                 if ($item == "") continue;
                 $t = explode('/',$item);
-                if ($t[0] == $t[1]) $rightCount++;
-                $allCount++;
+                {
+                    $answer = Answer::model()->findByPk($t[0]);
+                    if ($answer->right > 0)
+                    {
+                        $allCount++;
+                        if ($t[0] == $t[1]) $rightCount++;
+                    }
+                }
                 $leftAnswer = Answer::model()->findByPk($t[0]);
                 $rightAnswer = Answer::model()->findByPk($t[1]);
                 $m1 = explode("~",$leftAnswer->content);

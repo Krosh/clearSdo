@@ -1,3 +1,18 @@
+function checkSubmit(val)
+{
+    if (val == 5)
+    {
+        var elem = document.getElementById('answer');
+        var order = $("#rightAnswers").sortable("toArray");
+        var s = "";
+        for (var i = 0; i<order.length; i++)
+        {
+            s+=order[i]+"~";
+        }
+        elem.value = s;
+    }
+}
+
 function changeWeights(idMaterial)
 {
     var summ = 0;
@@ -334,7 +349,7 @@ function updateLearnMaterials(idCourse)
                     var $originals = tr.children();
                     var $helper = tr.clone();
                     $helper.children().each(function(index) {
-                      $(this).width($originals.eq(index).width());
+                        $(this).width($originals.eq(index).width());
                     });
                     return $helper;
                 },
@@ -395,7 +410,7 @@ function updateControlMaterials(idCourse)
                     var $originals = tr.children();
                     var $helper = tr.clone();
                     $helper.children().each(function(index) {
-                      $(this).width($originals.eq(index).width());
+                        $(this).width($originals.eq(index).width());
                     });
                     return $helper;
                 },
@@ -438,7 +453,7 @@ function updateQuestions(idTest)
                     var $originals = tr.children();
                     var $helper = tr.clone();
                     $helper.children().each(function(index) {
-                      $(this).width($originals.eq(index).width());
+                        $(this).width($originals.eq(index).width());
                     });
                     return $helper;
                 },
@@ -562,7 +577,9 @@ function changeAnswer(idAnswer,content,right)
 
 function isValidQuestion()
 {
-    var questionType = $("#Question_type").val();
+//    var questionType = $("#ytQuestion_type").val(); // Вот с этой фигней что-то придумать
+
+    var questionType = $("input[type=radio][checked=checked]").val();
     var answerCount = $(".answer").length;
     var rightAnswerCount = $(".answer input:checked").length;
     if (rightAnswerCount == 0)
@@ -570,7 +587,7 @@ function isValidQuestion()
         alert("Должен быть хотя бы один правильный ответ!");
         return false;
     }
-    if (questionType != 2 && rightAnswerCount>1)
+    if (questionType != 2 && questionType != 5 && rightAnswerCount>1)
     {
         alert("Должен быть один правильный ответ!");
         return false;
@@ -735,12 +752,12 @@ $(document).ready(function(){
                     selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)'
 
                 that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                .on('keydown', function(e){
-                  if (e.which === 40){
-                    that.$selectableUl.focus();
-                    return false;
-                  }
-                });
+                    .on('keydown', function(e){
+                        if (e.which === 40){
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
             },
             afterSelect: function(values){
                 addGroup(values,idTerm,idCourse);
@@ -802,6 +819,8 @@ $(document).ready(function(){
         updateLearnMaterials(window.idCourse);
     });
 
+    if ($("#rightAnswers").length)
+        $("#rightAnswers").sortable();
 
 
     if($('.has-tip').length) {

@@ -103,7 +103,7 @@ class Answer extends CActiveRecord
 
     public function beforeSave()
     {
-        $this->content = str_replace("~","",$this->content)."~";
+//        $this->content = str_replace("~","",$this->content)."~";
         return true;
     }
 }

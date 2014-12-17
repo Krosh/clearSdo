@@ -255,7 +255,7 @@ class ControlMaterialController extends CController
             } else
             {
                 $mark[] = 0;
-                $answerContent[] = "";
+                $answerContent[] = "Не отвечено";
             }
         }
         $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => max($summWeight,1)));
