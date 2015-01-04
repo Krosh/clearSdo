@@ -31,13 +31,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td width="30%">
+			<td width="30%" style="vertical-align: middle;">
 				<?php $categories = array(1 => '<img src="/img/q1.png" alt="Закрытый">', 2 => '<img src="/img/q2.png" alt="Закрытый с множественным выбором">', 3 => '<img src="/img/q3.png" alt="Числовой ответ">', 4 => '<img src="/img/q4.png" alt="Открытый тест">',5 => '<img src="/img/q5.png" alt="На соответствие">', 6 => '<img src="/img/q5.png" alt="Интерактивный">');   ?>
         		<?php echo $form->labelEx($questionModel,'type'); ?>
 			</td>
-			<td width="70%">
-				<!--<strong>TODO: убрать радио-батоны и сделать их в линию</strong>
-				--><?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
+			<td width="70%" class="horizontal-buttons-list clearfix">
+				<br><br>
+				<?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
 				<?php echo $form->error($questionModel,'type'); ?>
 			</td>
 		</tr>

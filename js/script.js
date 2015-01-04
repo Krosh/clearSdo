@@ -579,7 +579,7 @@ function isValidQuestion()
 {
 //    var questionType = $("#ytQuestion_type").val(); // Вот с этой фигней что-то придумать
 
-    var questionType = $("input[type=radio][checked=checked]").val();
+    var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
     var answerCount = $(".answer").length;
     var rightAnswerCount = $(".answer input:checked").length;
     if (rightAnswerCount == 0)
