@@ -1658,6 +1658,41 @@ i.fa-remove {
     }
 }
 
+.horizontal-buttons-list {
+    .picker.picker-radio {
+        float: left;
+        width: 30px;
+
+        img {
+            padding: 5px;
+        }
+
+        &.checked img {
+            background: #eee;
+        }
+    }
+
+    .picker-handle {
+        display: none !important;
+    }
+
+    br {
+        display: none !important;
+    }
+}
+
+#leftAnswers {
+    display: block;
+    float: left;
+    clear: left;
+    width: 300px;
+}
+#rightAnswers {
+    display: block;
+    float: right;
+    clear: right;
+}
+
 @media screen and (min-width: 1024px) {
     .login {
         position: absolute;
