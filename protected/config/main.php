@@ -12,21 +12,41 @@ define("ROLE_GUEST",-1);
 define("ROLE_STUDENT",0);
 define("ROLE_TEACHER",1);
 define("ROLE_ADMIN",2);
+$path = "protected/plugins";
+$result = array();
+
+if ($handle = opendir($path)) {
+    while (false !== ($file = readdir($handle))) {
+        if ($file == "." || $file == "..") continue;
+        if (is_dir($path.DIRECTORY_SEPARATOR.$file))
+        {
+            array_push($result,"application.plugins.".$file.".*");
+        }
+    }
+    closedir($handle);
+}
+
 
 return array(
-	'name'=>'SDO Stimul v 2.0',
-	//'defaultController'=>'site',
-	'params' => array(
+    'name'=>'SDO Stimul v 2.0',
+    'sourceLanguage'=>'ru',
+    'language'=>'ru',
+    //'defaultController'=>'site',
+    'params' => array(
+        'images' => array("png","bmp","jpg","jpeg","gif"),
         'timezone' => "Asia/Omsk",
         'roles' => array (ROLE_ADMIN => 'Администратор', ROLE_STUDENT => 'Студент', ROLE_TEACHER => 'Преподаватель'),
     ),
-    'import'=>array(
+
+    'import'=>array_merge(array(
         'application.models.*',
         'application.components.*',
         'application.classes.*',
         'application.helpers.*',
+        'application.plugins.*',
         'ext.xupload.*',
-    ),
+    ),$result),
+
     'aliases' => array(
         //If you manually installed it
         'xupload' => 'ext.xupload'
