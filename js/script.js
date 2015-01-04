@@ -715,7 +715,7 @@ $(document).ready(function(){
              },
              error: function()
              {
-                 alert("Ошибка при загрузке новостей");
+//                 alert("Ошибка при загрузке новостей");
              }
         });
     }

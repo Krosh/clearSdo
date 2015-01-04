@@ -1,10 +1,4 @@
 <?php
-/* @var $this QuestionController */
-/* @var $model Question */
-
-
-?>
-<?php
 /**
  * Created by JetBrains PhpStorm.
  * User: БОСС

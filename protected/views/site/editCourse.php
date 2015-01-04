@@ -192,7 +192,7 @@ $listeners = Course::getGroups($model->id);
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addCM1" data-original-title="Добавить из существующих" title="Добавить из существующих"><i class="fa fa-clipboard"></i></a>
             <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => false)); ?>" class="btn small has-tip" data-original-title="Создать тест" title="Создать тест"><i class="fa fa-check-circle-o"></i></a>
             <a href="<?php echo $this->createUrl("/controlMaterial/create",array("idCourse" => $model->id, "isPoint" => true)); ?>" class="btn small has-tip" data-original-title="Создать контрольную точку" title="Создать контрольную точку"><i class="fa fa-flag"></i></a>
-        </div>-
+        </div>
     </div>
 </div>
 
