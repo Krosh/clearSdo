@@ -161,7 +161,7 @@ $listeners = Course::getGroups($model->id);
 
 <div class="col-group">
     <div class="col-4">
-        <h2>Учебные материалы</h2>
+        <h2 id="files">Учебные материалы</h2>
     </div>
     <div class="col-8 right">
         <?php $this->renderPartial('/learnMaterial/fileLoader'); ?>
@@ -185,7 +185,7 @@ $listeners = Course::getGroups($model->id);
 
 <div class="col-group">
     <div class="col-4">
-        <h2>Контрольные материалы</h2>
+        <h2 id="learn">Контрольные материалы</h2>
     </div>
     <div class="col-8 right">
         <div class="small-btns">

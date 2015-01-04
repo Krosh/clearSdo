@@ -53,11 +53,13 @@
             }
         }
         ?>
-        <?php if ($isStudent): ?>
-            <tr data-href="/viewCourse?idCourse=<?=$item->id?>">
-        <?php else: ?>
-            <tr data-href="/editCourse?idCourse=<?=$item->id?>">
-        <?php endif; ?>
+        <?
+        $url = "/editCourse?idCourse=". $item->id;
+        if($isStudent) {
+            $url = "/viewCourse?idCourse=". $item->id;
+        }
+        ?>
+        <tr data-href="<?=$url?>">
         <td width="77%">
             <div class="page-title"><?=$item->title?></div>
             <?php if ($isStudent): ?>
@@ -103,10 +105,10 @@
             <div class="right">
                 <div class="course-icons">
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="#"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?></strong> файлов</a>
+                        <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="<?=$url?>#files"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?></strong> файлов</a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="#"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?></strong> тестов</a>
+                        <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="<?=$url?>#learn"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?></strong> тестов</a>
                     </div>
                     <div class="course-icon">
                         <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5</strong> сообщений</a>
