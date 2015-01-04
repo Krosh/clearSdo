@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */?>
 <body>
-
 <header>
     <div class="container">
         <div class="col-group">
@@ -29,13 +28,10 @@
                         <div class="link">
                             <a href="#">Общение</a>
                         </div>
-                        <div class="link">
+                      <!--  <div class="link">
                             <a href="#">Документы</a>
                         </div>
-                        <div class="link">
-                            <a href="#">Форум</a>
-                        </div>
-                        <?php if (Yii::app()->user->isAdmin()):?>
+                      -->  <?php if (Yii::app()->user->isAdmin()):?>
                             <div class="link more">
                                 <a href="#">Справочники</a>
                                 <div class="more-menu">
@@ -43,6 +39,20 @@
                                         <a href="<?php echo $this->createUrl("group/admin")?>">Группы</a>
                                         <a href="<?php echo $this->createUrl("user/admin")?>">Пользователи</a>
                                         <a href="<?php echo $this->createUrl("term/admin")?>">Периоды</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <? endif; ?>
+                        <?php if (isset(PluginController::$plugins)):?>
+                            <div class="link more">
+                                <a href="#">Плагины(<?php echo count(PluginController::$plugins)?>)</a>
+                                <div class="more-menu">
+                                    <div class="more-menu-links">
+                                        <?php $i = 0; ?>
+                                        <?php foreach (PluginController::$plugins as $item):?>
+                                            <a href = "<?php echo $item->getUrl(); ?>"><?php echo $item->name?></a>
+                                            <?php $i++; ?>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
                             </div>

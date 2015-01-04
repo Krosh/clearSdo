@@ -24,9 +24,10 @@ $this->renderPartial('top');
             </div>
             <div>
                 <?php
-                $filters = array("Изображения" => "images");
-                $data = Yii::app()->user->getModel()->getFiles("images");
-                $model = array("ext" => "", 'name' => "");
+                $criteria = new CDbCriteria();
+                $criteria->compare("idAutor", Yii::app()->user->getId());
+                $criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT));
+                $data = LearnMaterial::model()->findAll($criteria);
                 $dataProvider=new CArrayDataProvider($data, array(
                     'id'=>'name',
                     'sort'=>array(
@@ -38,24 +39,32 @@ $this->renderPartial('top');
                         'pageSize'=>10,
                     ),
                 ));
+
+
                 ?>
+
+
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                     'id'=>'media-grid',
                     'dataProvider'=>$dataProvider,
                     'columns'=>array(
                         array(
                             'header' => 'Название файла',
-                            'name' => 'name',
-                            'filter' => CHtml::dropDownList("sds","",$filters),
+                            'name' => 'title',
+//                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
-
-                        'ext',
+                        array(
+                            'header' => 'Расширение файла',
+                            'name' => 'ext',
+                            'value' => '$data->getExtension()',
+//                            'filter' => CHtml::dropDownList("sds","",$filters),
+                        ),
                         array(
                             'class'=>'CButtonColumn',
                             'template' => '{delete}',
                             'buttons' => array(
                                 'delete' => array(
-                                    'url' => '$this->grid->controller->createUrl("/site/deleteMedia", array("name"=>$data["name"]))',
+                                    'url' => '$this->grid->controller->createUrl("/site/deleteMedia", array("id"=>$data["id"]))',
                                 )
                             )
                         ),
