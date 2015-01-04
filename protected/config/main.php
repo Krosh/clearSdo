@@ -12,7 +12,7 @@ define("ROLE_GUEST",-1);
 define("ROLE_STUDENT",0);
 define("ROLE_TEACHER",1);
 define("ROLE_ADMIN",2);
-$path = "protected/plugins";
+$path = "/pub/home/mvtom/stml2/protected/plugins";
 $result = array();
 
 if ($handle = opendir($path)) {
@@ -25,7 +25,6 @@ if ($handle = opendir($path)) {
     }
     closedir($handle);
 }
-
 
 return array(
     'name'=>'SDO Stimul v 2.0',
