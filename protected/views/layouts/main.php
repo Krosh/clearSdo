@@ -16,8 +16,8 @@ $cs->scriptMap=array(
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="js/less-1.7.5.min.js"></script> -->
 
-    <link rel="shortcut icon" href="img/favicons/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="img/favicons/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="../../img/favicons/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="../../img/favicons/apple-touch-icon.png" />
     <link rel="apple-touch-icon" sizes="57x57" href="../../img/favicons/apple-touch-icon-57x57.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="../../img/favicons/apple-touch-icon-72x72.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="../../img/favicons/apple-touch-icon-114x114.png" />
