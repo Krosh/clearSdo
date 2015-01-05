@@ -22,7 +22,7 @@
                         <img src="/img/icon-menu.png" alt="">
                     </div>
                     <div class="big-nav">
-                        <div class="link active">
+                        <div class="link">
                             <a href="/">Главная</a>
                         </div>
                         <div class="link">

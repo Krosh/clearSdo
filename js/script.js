@@ -665,6 +665,27 @@ $(document).ready(function(){
         }
     });
 
+    // Активность в меню
+    $(".big-nav .active").removeClass("active");
+    $(".big-nav > .link").each(function() {
+        var self = $(this),
+            url = window.location.href.replace(window.location.protocol+"//"+window.location.hostname, ''),
+            href = self.find("a").attr("href");
+
+        if(href == url) {
+            self.addClass("active");
+        } else if(self.hasClass("more")) {
+            self.find(".more-menu-links a").each(function() {
+                var self = $(this),
+                    href = self.attr("href");
+
+                if(href == url) {
+                    self.addClass("active");
+                    self.closest(".link").addClass("active");
+                }
+            });
+        }
+    });
 
     // Переход у таблиц по data-href
     if (window.currentTerm !== undefined) {
