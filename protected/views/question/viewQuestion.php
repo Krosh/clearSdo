@@ -81,7 +81,8 @@ $this->renderPartial('/site/top');
                                 foreach ($answers as $item)
                                 {
                                     $t = explode("~",$item->content);
-                                    array_push($leftAnswers,$t[0]);
+                                    if ($item->right)
+                                        array_push($leftAnswers,$t[0]);
                                     array_push($rightAnswers,$t[1]);
                                     array_push($shuffledId, $item->id);
                                 }

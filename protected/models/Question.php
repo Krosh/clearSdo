@@ -19,40 +19,40 @@ define("QUESTION_MATCH", 5);
  */
 class Question extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'tbl_question';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'tbl_question';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
 //			array('type, content, fee, weight', 'required'),
-			array('type, fee, random_answer, weight', 'numerical', 'integerOnly'=>true),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, type, content, fee, random_answer, weight', 'safe', 'on'=>'search'),
-		);
-	}
+            array('type, fee, random_answer, weight', 'numerical', 'integerOnly'=>true),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, type, content, fee, random_answer, weight', 'safe', 'on'=>'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+        );
+    }
 
 
     public static function getQuestionsByControlMaterial($id)
@@ -95,34 +95,34 @@ class Question extends CActiveRecord
 
 
     /**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('type',$this->type);
-		$criteria->compare('content',$this->content,true);
-		$criteria->compare('fee',$this->fee);
-		$criteria->compare('random_answer',$this->random_answer);
-		$criteria->compare('weight',$this->weight);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('type',$this->type);
+        $criteria->compare('content',$this->content,true);
+        $criteria->compare('fee',$this->fee);
+        $criteria->compare('random_answer',$this->random_answer);
+        $criteria->compare('weight',$this->weight);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 
 
     public function actionChangeQuestionsZindex($id)
@@ -218,19 +218,17 @@ class Question extends CActiveRecord
             {
                 if ($item == "") continue;
                 $t = explode('/',$item);
+                $answer = Answer::model()->findByPk($t[0]);
+                if ($answer->right > 0)
                 {
-                    $answer = Answer::model()->findByPk($t[0]);
-                    if ($answer->right > 0)
-                    {
-                        $allCount++;
-                        if ($t[0] == $t[1]) $rightCount++;
-                    }
+                    $allCount++;
+                    if ($t[0] == $t[1]) $rightCount++;
                 }
                 $leftAnswer = Answer::model()->findByPk($t[0]);
                 $rightAnswer = Answer::model()->findByPk($t[1]);
                 $m1 = explode("~",$leftAnswer->content);
                 $m2 = explode("~",$rightAnswer->content);
-                if ($m1[0] != "")
+                if ($answer->right >0 && $m1[0] != "")
                     $answerContent.="<br>".$m1[0]." - ".$m2[1];
 
             }
@@ -245,14 +243,14 @@ class Question extends CActiveRecord
         return array('isRightAnswer' => $isRightAnswer, 'mark' => $mark, 'answerContent' => $answerContent);
     }
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Question the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Question the static model class
+     */
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 }
