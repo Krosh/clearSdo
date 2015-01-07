@@ -155,9 +155,6 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                 <?
                                 
                                 echo $item->title;
-                                if(strlen($path) > 0) {
-                                    echo "." . $path;
-                                }
                                 ?>
                             </td>
                             <td class="right">

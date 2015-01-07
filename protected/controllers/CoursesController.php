@@ -23,7 +23,6 @@ class CoursesController extends CController
             $resultCourses = array();
             foreach (Yii::app()->user->getModel()->groups as $group)
             {
-
                 $courses = Course::getCoursesByGroup($group->id,$idTerm);
                 $resultCourses = array_merge($resultCourses,$courses);
             }

@@ -150,7 +150,9 @@ class SiteController extends CController
         $params = $this->getActionParams();
         unset($params["id"]);
         if (Yii::app()->request->isAjaxRequest)
+        {
             PluginController::$plugins[$id]->render(array_merge($params,$_POST),$this);
+        }
         else
             $this->render("plugins", array("plugin" => PluginController::$plugins[$id], "params" => $params));
     }

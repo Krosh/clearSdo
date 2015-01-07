@@ -299,9 +299,9 @@ class ControlMaterialController extends CController
 
     public function actionEdit($idMaterial)
     {
-        $this->noNeedJquery = true;
         $needRefresh = false;
         $model = $this->loadModel($idMaterial);
+        $this->noNeedJquery = !$model->is_point;
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $this->breadcrumbs=array(
             $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
@@ -334,6 +334,7 @@ class ControlMaterialController extends CController
             $this->refresh();
         $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel, 'idCourse' => $course->id));
     }
+
     //TODO:: Этот метод нужно бы перенести в MaterialController, там методы по созданию/удалению материалов
     public function actionCreate($idCourse,$isPoint)
     {

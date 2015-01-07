@@ -54,7 +54,6 @@ class AnalyzeUserTestPlugin
             {
                 $val = 100;
                 $valText = "Мало данных для анализа";
-                continue;
             } else
             {
                 $xml =
@@ -104,7 +103,7 @@ class AnalyzeUserTestPlugin
                 } elseif ($val>0)
                 {
                     $color = "yellow";
-                    $valText = "Подозрительное прохождение";
+                    $valText = "Подо-зрительное прохождение";
                 }
                 else
                 {
@@ -123,45 +122,52 @@ class AnalyzeUserTestPlugin
             </div>
         <?php
         }
+        if (count($results) == 0)
+        {
+            ?>
+                <div>Этот тест еще никто не проходил</div>
+            <?php
+        }
 
-    }
 
-    public function render($params,$controller)
-    {
+        }
+
+        public function render($params,$controller)
+        {
         if ($params["action"] == "ajaxUpdate")
         {
-            $this->renderAjax($params,$controller);
-            return;
+        $this->renderAjax($params,$controller);
+        return;
         }
         $mas = array();
-        $models = ControlMaterial::model()->findAll("idAutor = ".Yii::app()->user->getId());
+        $models = ControlMaterial::model()->findAll("is_point = 0 AND idAutor = ".Yii::app()->user->getId());
         foreach ($models as $item)
         {
-            $mas[$item->id] = $item->id." ".$item->title;
+        $mas[$item->id] = $item->id." ".$item->title;
         }
         $fakeModel = new ControlMaterial();
         $fakeModel->title = "";
         echo "Выберите тест для анализа:";
         $controller->widget('ext.combobox.EJuiComboBox', array(
-            'model' => $fakeModel,
-            'attribute' => 'title',
-            'data' => $mas,
-            'options' => array(
-                'onSelect' => '
-                     $.ajax({
-                        type: "POST",
-                        url: "'.$this->getUrl(array("action" => "ajaxUpdate")).'",
-                        data: {idMaterial: item.value.split(" ")[0]},
-                        success: function(data)
-                        {
-                            $("#analyzeResult").html(data);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert("error"+textStatus+errorThrown);
-                        }});',
-                'allowText' => false,
-            ),
-            'htmlOptions' => array('size' => 30),
+        'model' => $fakeModel,
+        'attribute' => 'title',
+        'data' => $mas,
+        'options' => array(
+        'onSelect' => '
+        $.ajax({
+        type: "POST",
+        url: "'.$this->getUrl(array("action" => "ajaxUpdate")).'",
+        data: {idMaterial: item.value.split(" ")[0]},
+        success: function(data)
+        {
+        $("#analyzeResult").html(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+        alert("error"+textStatus+errorThrown);
+        }});',
+        'allowText' => false,
+        ),
+        'htmlOptions' => array('size' => 30),
         ));
         ?>
         <br>

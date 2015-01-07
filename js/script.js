@@ -521,7 +521,8 @@ function updateAnswers(idQuestion)
 
 function addAnswer(idQuestion)
 {
-    if ($("#Question_type").val() == 3 || $("#Question_type").val()==4)
+    var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
+    if (questionType == 3 ||questionType==4)
     {
         alert("У этого типа вопроса может быть только один вариант ответа!");
         return;
