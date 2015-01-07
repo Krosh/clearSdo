@@ -14,50 +14,71 @@
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
 )); ?>
-
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'short_title'); ?>
-		<?php echo $form->textField($model,'short_title',array('size'=>30,'maxlength'=>30)); ?>
-		<?php echo $form->error($model,'short_title'); ?>
-	</div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'weight'); ?>
-        <?php echo $form->textField($model,'weight'); ?>
-        <?php echo $form->error($model,'weight'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'show_in_reports'); ?>
-        <?php echo $form->checkBox($model,'show_in_reports'); ?>
-        <?php echo $form->error($model,'show_in_reports'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'is_autocalc'); ?>
-        <?php echo $form->checkBox($model,'is_autocalc'); ?>
-        <?php echo $form->error($model,'is_autocalc'); ?>
-    </div>
-
-	<div class="row">
-        <?php $categories = array(CALC_AUTO => 'Автоматически',CALC_LAUNCH => 'Вручную');?>
-<!--        TODO:: неправильно задаю метку
--->        <?php echo CHtml::label("Режим расчета ","ControlMaterial['calc_mode']"); ?>
-        <?php echo $form->dropDownList($model,'calc_mode',$categories); ?>
-        <?php echo $form->error($model,'calc_mode'); ?>
-	</div>
-
-
-    <div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
-	</div>
+	<table class="remove-width-labels">
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'title'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'title',array('size'=>30,'maxlength'=>30)); ?>
+				<?php echo $form->error($model,'title'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'short_title'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'short_title',array('size'=>30,'maxlength'=>30)); ?>
+				<?php echo $form->error($model,'short_title'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'weight'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'weight'); ?>
+        		<?php echo $form->error($model,'weight'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'show_in_reports'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->checkBox($model,'show_in_reports'); ?>
+        		<?php echo $form->error($model,'show_in_reports'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'is_autocalc'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->checkBox($model,'is_autocalc'); ?>
+        		<?php echo $form->error($model,'is_autocalc'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php $categories = array(CALC_AUTO => 'Автоматически',CALC_LAUNCH => 'Вручную');?>
+	<!--        TODO:: неправильно задаю метку
+	-->        <?php echo CHtml::label("Режим расчета ","ControlMaterial['calc_mode']"); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->dropDownList($model,'calc_mode',$categories); ?>
+        		<?php echo $form->error($model,'calc_mode'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="row buttons">
+					<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
+				</div>
+			</td>
+		</tr>
+	</table>
 
 <?php $this->endWidget(); ?>
 
