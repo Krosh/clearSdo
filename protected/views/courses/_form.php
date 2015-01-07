@@ -15,34 +15,51 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'discipline'); ?>
-		<?php echo $form->textField($model,'discipline',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'discipline'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'hours'); ?>
-		<?php echo $form->textField($model,'hours'); ?>
-		<?php echo $form->error($model,'hours'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
-	</div>
+	<table class="remove-width-labels">
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'title'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
+				<?php echo $form->error($model,'title'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'discipline'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'discipline',array('size'=>45,'maxlength'=>45)); ?>
+				<?php echo $form->error($model,'discipline'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'description'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+				<?php echo $form->error($model,'description'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="40%">
+				<?php echo $form->labelEx($model,'hours'); ?>
+			</td>
+			<td width="60%">
+				<?php echo $form->textField($model,'hours'); ?>
+				<?php echo $form->error($model,'hours'); ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<div class="row buttons">
+					<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
+				</div>
+			</td>
+		</tr>
+	</table>
 
 <?php $this->endWidget(); ?>
 
