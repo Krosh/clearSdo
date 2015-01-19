@@ -704,6 +704,15 @@ $(document).ready(function(){
         return false;
     });
 
+    $(document).on("click", "[data-href] .toggler", function(e) {
+        e.preventDefault();
+        
+        var checkbox = $(this).find("input");
+        checkbox.prop("checked", !checkbox.prop("checked"));
+
+        return false;
+    });
+
     if($(".jsRedactor").length) {
         tinymce.init({
             language : "ru",

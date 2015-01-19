@@ -34,7 +34,11 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 </td>
                 <td colspan="4"><?php echo $item->title ?></td>
                 <td class="right">
-                    <a class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+                    <label class="toggler">
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                    <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         <?php else: ?>
@@ -53,7 +57,11 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 ?>
                 <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
                 <td class="right">
-                    <a class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
+                    <label class="toggler">
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                    <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         <?php endif; ?>

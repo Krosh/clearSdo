@@ -1801,6 +1801,38 @@ i.fa-remove {
     min-width: 60%;
 }
 
+.toggler {
+    font-size: 26px;
+    vertical-align: middle;
+    display: inline-block;
+
+    * {
+        .transition();
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
+    }
+
+    span {
+        display: block;
+    }
+
+    input[type="checkbox"] + span:after {
+        content: '';
+        font-family: 'FontAwesome';
+        // color: @green;
+    }
+
+    input[type="checkbox"]:checked + span:after {
+        content: '';
+        font-family: 'FontAwesome';
+        color: @green;
+    }
+}
+
 @media screen and (min-width: 1024px) {
     .login {
         position: absolute;
