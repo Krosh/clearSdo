@@ -33,7 +33,6 @@ class AnalyzeUserTestPlugin
             $answers = UserAnswer::model()->findAll("idUserControlMaterial = :idMat", array(":idMat" => $userMaterial->id));
             foreach ($answers as $answer)
             {
-                echo $answer->idQuestion;
                 $question = Question::model()->findByPk($answer->idQuestion);
                 $mark = $question->getMark($answer);
                 if (!isset($results[$userMaterial->idUser]))
@@ -140,7 +139,7 @@ class AnalyzeUserTestPlugin
         return;
         }
         $mas = array();
-        $models = ControlMaterial::model()->findAll("is_point = 0 AND idAutor = ".Yii::app()->user->getId());
+        $models = ControlMaterial::model()->findAll("(is_point IS NULL OR is_point = 0)AND idAutor = ".Yii::app()->user->getId());
         foreach ($models as $item)
         {
         $mas[$item->id] = $item->id." ".$item->title;

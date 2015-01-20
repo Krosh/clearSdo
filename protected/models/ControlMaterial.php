@@ -19,7 +19,7 @@ define('CALC_LAUNCH',1);
  * @property integer $question_random
  * @property integer $question_show_count
  * @property integer $answer_random
- * @property integer $adaptive-
+ * @property integer $adaptive
  * @property integer $try_amount
  * @property integer $access
  * @property string $access_date

@@ -34,8 +34,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 </td>
                 <td colspan="4"><?php echo $item->title ?></td>
                 <td class="right">
-                    <label class="toggler">
-                        <input type="checkbox">
+                    <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
+                        <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
                         <span></span>
                     </label>
                     <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
@@ -57,8 +57,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 ?>
                 <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
                 <td class="right">
-                    <label class="toggler">
-                        <input type="checkbox">
+                        <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
+                            <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
                         <span></span>
                     </label>
                     <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>

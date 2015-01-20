@@ -48,6 +48,8 @@ class CoursesController extends CController
         $model->save();
     }
 
+
+
     public function actionDeleteTeacher()
     {
         $idCourse = $_POST["idCourse"];

@@ -26,7 +26,7 @@ class AnalyzeTestPlugin
 
     public function render($params,$controller)
     {
-        $tests = ControlMaterial::model()->findAll("idAutor = :idAutor AND is_point != 1", array(":idAutor" => Yii::app()->user->getId()));
+        $tests = ControlMaterial::model()->findAll("idAutor = :idAutor AND (is_point IS NULL OR is_point = 0)", array(":idAutor" => Yii::app()->user->getId()));
         foreach ($tests as $controlMaterial)
         {
             $valBad = 0;
@@ -93,7 +93,7 @@ class AnalyzeTestPlugin
                 $idBase = "_p11_13";
 
                 $client = new SoapClient($url);
-                $result = $client->GetDataTable(array("tableName" => "periods","secretKey" => $secretKey,"numConnectFile" => $idBase));
+          //      $result = $client->GetDataTable(array("tableName" => "periods","secretKey" => $secretKey,"numConnectFile" => $idBase));
 //        echo "[".$result->GetDataTableResult."]";
                 $result = $client->SetDocums(array("xmlDocumsStru" => $xml,"secretKey" => $secretKey,"numConnectFile" => $idBase));
 //        echo "[".$result->SetDocumsResult."]";

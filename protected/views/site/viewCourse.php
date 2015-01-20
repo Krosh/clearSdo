@@ -200,6 +200,9 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                 <tbody>
                 <?php $num = 0;?>
                 <?php foreach ($controlMaterials as $item):?>
+                    <?php
+                        if ($item->access == 2) continue;
+                    ?>
                     <tr
                         <?php if (ControlMaterial::hasAccess($item->id) && !$item->is_point): ?>
                             data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>"

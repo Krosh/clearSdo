@@ -704,11 +704,29 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on("click", "[data-href] .toggler", function(e) {
+    $(document).on("click", ".toggler", function(e) {
         e.preventDefault();
         
         var checkbox = $(this).find("input");
         checkbox.prop("checked", !checkbox.prop("checked"));
+        if (checkbox.prop("checked"))
+            var access = 1;
+        else
+            var access = 2;
+
+        $.ajax({
+            url: '/material/changeAccess',
+            data: {access: access, idMaterial:$(this).data("idmaterial")},
+            type: "POST",
+            success: function(data)
+            {
+                console.log("Changed access"+data);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+//            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+            }
+        });
 
         return false;
     });

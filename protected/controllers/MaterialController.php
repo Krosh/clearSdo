@@ -13,15 +13,27 @@ class MaterialController extends CController
         );
     }
 
+    public function actionChangeAccess()
+    {
+        $newAccess = $_POST["access"];
+        $idControlMaterial = $_POST["idMaterial"];
+        $material = ControlMaterial::model()->findByPk($idControlMaterial);
+        $material->access = $newAccess;
+        $material->save();
+        echo $material->id." ".$material->access;
+    }
+
+
     public function actionDeleteMaterial()
     {
         $idControlMaterial = $_POST["idMaterial"];
         $idCourse = $_POST["idCourse"];
+
         $criteria = new CDbCriteria();
         $criteria->compare("idControlMaterial",$idControlMaterial);
         $criteria->compare("idCourse",$idCourse);
-        $model = CoursesControlMaterial::model()->findAll($criteria);
-        $z = $model[0]->zindex;
+        $model = CoursesControlMaterial::model()->find($criteria);
+        $z = $model->zindex;
         CoursesControlMaterial::model()->deleteAll($criteria);
         $criteria = new CDbCriteria();
         $criteria->compare("idCourse",$idCourse);
