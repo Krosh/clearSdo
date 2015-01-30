@@ -13,6 +13,15 @@ function checkSubmit(val)
     }
 }
 
+function checkHasNewPassword()
+{
+    if ($("#haveNewPassword").prop("checked"))
+        $("#newPassword").prop("disabled", false);
+    else
+        $("#newPassword").prop("disabled", true);
+
+}
+
 function changeWeights(idMaterial)
 {
     var summ = 0;

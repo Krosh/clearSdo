@@ -28,17 +28,10 @@
         <?php echo CHTML::passwordField("newPassword","",array("disabled" => true)); ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'fio'); ?>
-        <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
-        <?php echo $form->error($model,'fio'); ?>
-    </div>
-
-
 	<div class="row">
-		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
-		<?php echo $form->error($model,'role'); ?>
+		<?php echo $form->labelEx($model,'fio'); ?>
+		<?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($model,'fio'); ?>
 	</div>
 
     <div class="row">
@@ -51,16 +44,13 @@
         <?php echo $form->fileField($model,'newAvatar'); ?>
         <?php echo $form->error($model,'avatar'); ?>
 
+        <?php if (!$model->isAvatarModerated):?>
+            <br>
+            Ваш аватар еще не прошел модерацию администратором и поэтому не виден пользователям
+        <?php endif;?>
     </div>
 
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
-        <?php echo $form->checkBox($model,'isAvatarModerated'); ?>
-    </div>
-
-
-    <div class="row buttons">
+	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
 	</div>
 

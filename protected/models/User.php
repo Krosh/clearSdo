@@ -12,6 +12,7 @@
  * @property string $avatar
  * @property string $lastVisit
  * @property string $curVisit
+ * @property bool $isAvatarModerated
  */
 class User extends CActiveRecord
 {
@@ -34,14 +35,15 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('login, password', 'length', 'max'=>45),
-			array('fio', 'length', 'max'=>100),
+            array('isAvatarModerated', 'length', 'max'=>100),
+            array('fio', 'length', 'max'=>100),
 			array('role', 'length', 'max'=>15),
 			array('avatar', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +69,7 @@ class User extends CActiveRecord
 			'fio' => 'ФИО',
 			'role' => 'Роль',
 			'avatar' => 'Изображение',
+            'isAvatarModerated' => 'Аватар проверен',
 		);
 	}
 
@@ -116,12 +119,18 @@ class User extends CActiveRecord
             $name = time().".".$image->extensionName;
             $image->saveAs(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name);
             $this->avatar = $name;
+            if (!Yii::app()->user->isAdmin())
+                $this->isAvatarModerated = false;
+            else
+                $this->isAvatarModerated = true;
         }
         return parent::beforeSave();
     }
 
     protected function afterSave()
     {
+        if ($this->avatar == "")
+            $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))
             mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
     }

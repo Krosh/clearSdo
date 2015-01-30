@@ -83,13 +83,17 @@ class UserController extends CController
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
+        if(isset($_POST['User']))
+        {
+            $model->attributes=$_POST['User'];
+            if ($_POST['haveNewPassword'])
+            {
+                $model->password = md5($_POST["newPassword"]);
+            }
             $model->newAvatar = $_POST['User']['newAvatar'];
-          	if($model->save())
+            if($model->save())
                 $this->redirect(array('admin'));
-		}
+        }
 
 		$this->render('update',array(
 			'model'=>$model,

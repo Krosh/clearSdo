@@ -101,7 +101,7 @@
                         ?>
                         <i class="caret"></i>
                         <div class="dropdown-container">
-                            <a href="#">Настройки</a>
+                            <a href="<?php echo $this->createUrl("userConfig");?>">Настройки</a>
                             <a href="/logout">Выход</a>
                         </div>
                     </div>

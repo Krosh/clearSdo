@@ -158,4 +158,30 @@ class SiteController extends CController
     }
 
 
+    public function actionUserConfig()
+    {
+        $model=User::model()->findByPk(Yii::app()->user->getId());
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        $changeAccepted = false;
+        if(isset($_POST['User']))
+        {
+            $model->attributes=$_POST['User'];
+            if ($_POST['haveNewPassword'])
+            {
+                $model->password = md5($_POST["newPassword"]);
+            }
+            $model->newAvatar = $_POST['User']['newAvatar'];
+            if($model->save())
+                $changeAccepted = true;
+        }
+
+        $this->render('userConfig/update',array(
+            'model'=>$model,
+        ));
+    }
+
+
 }
