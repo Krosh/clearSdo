@@ -14,7 +14,7 @@
         <div class="content">
             <div class="page-heading col-group">
                 <div class="col-6">
-                    <div class="page-title">Изменение пользователя <?php echo $model->fio; ?></div>
+                    <div class="page-title">Изменение пользователя<br><?php echo $model->fio; ?></div>
                 </div>
             </div>
 

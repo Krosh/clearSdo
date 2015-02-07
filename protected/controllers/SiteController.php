@@ -168,14 +168,35 @@ class SiteController extends CController
         $changeAccepted = false;
         if(isset($_POST['User']))
         {
+            $flag = true;
             $model->attributes=$_POST['User'];
             if ($_POST['haveNewPassword'])
             {
-                $model->password = md5($_POST["newPassword"]);
+                if ($model->password == md5($_POST["oldPassword"]))
+                {
+                    if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
+                    {
+                        $model->password = md5($_POST["newPassword"]);
+                        Yii::app()->user->setFlash("codeMessage","success");
+                        Yii::app()->user->setFlash("message","Пароль изменен");
+                        $flag = false;
+                    } else
+                    {
+                        Yii::app()->user->setFlash("codeMessage","error");
+                        Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
+                        $flag = false;
+                    }
+
+                } else
+                {
+                    Yii::app()->user->setFlash("codeMessage","error");
+                    Yii::app()->user->setFlash("message","Старый пароль введен неверно");
+                    $flag = false;
+                }
             }
             $model->newAvatar = $_POST['User']['newAvatar'];
-            if($model->save())
-                $changeAccepted = true;
+            $model->save();
+
         }
 
         $this->render('userConfig/update',array(

@@ -16,9 +16,9 @@ function checkSubmit(val)
 function checkHasNewPassword()
 {
     if ($("#haveNewPassword").prop("checked"))
-        $("#newPassword").prop("disabled", false);
+        $(".divNewPassword").show();
     else
-        $("#newPassword").prop("disabled", true);
+        $(".divNewPassword").hide();
 
 }
 

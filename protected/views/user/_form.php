@@ -4,28 +4,42 @@
 /* @var $form CActiveForm */
 ?>
 
+<?php
+$code = Yii::app()->user->getFlash("codeMessage");
+$message = Yii::app()->user->getFlash("message");
+?>
+<?php if ($code == "success"):?>
+    <div class = "success">
+        <?php echo $message; ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($code == "error"):?>
+    <div class = "error">
+        <?php echo $message; ?>
+    </div>
+<?php endif; ?>
+
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-    'htmlOptions' => array('enctype' => 'multipart/form-data'),
-    'id'=>'user-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
-)); ?>
+    <?php $form=$this->beginWidget('CActiveForm', array(
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+        'id'=>'user-form',
+        // Please note: When you enable ajax validation, make sure the corresponding
+        // controller action is handling ajax validation correctly.
+        // There is a call to performAjaxValidation() commented in generated controller code.
+        // See class documentation of CActiveForm for details on this.
+        'enableAjaxValidation'=>false,
+    )); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'login'); ?>
-		<?php echo $form->textField($model,'login',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'login'); ?>
-	</div>
-
-    <div class="row">
+    <div >
         <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
-        <?php echo CHTML::checkBox("haveNewPassword",false, array('onclick' => 'checkHasNewPassword()')); ?>
-        <?php echo CHTML::passwordField("newPassword","",array("disabled" => true)); ?>
+        <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
+        <div class  = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+            <?php echo CHTML::label("Старый пароль:","oldPassword")?><?php echo CHTML::passwordField("oldPassword",""); ?><br>
+            <?php echo CHTML::label("Новый пароль:","newPassword")?><?php echo CHTML::passwordField("newPassword",""); ?><br>
+            <?php echo CHTML::label("Подтвердите пароль:","newPassword")?><?php echo CHTML::passwordField("confirmNewPassword",""); ?>
+        </div>
     </div>
 
     <div class="row">
@@ -35,11 +49,11 @@
     </div>
 
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
-		<?php echo $form->error($model,'role'); ?>
-	</div>
+    <div class="row">
+        <?php echo $form->labelEx($model,'role'); ?>
+        <?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
+        <?php echo $form->error($model,'role'); ?>
+    </div>
 
     <div class="row">
         <?php echo $form->labelEx($model,'avatar'); ?>
@@ -61,9 +75,9 @@
 
 
     <div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
-	</div>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
+    </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- form -->
