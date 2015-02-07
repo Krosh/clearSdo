@@ -89,6 +89,7 @@ class UserController extends CController
             $model->attributes=$_POST['User'];
             if ($_POST['haveNewPassword'])
             {
+                // TODO::  эту логику в модель
                 if ($model->password == md5($_POST["oldPassword"]))
                 {
                     if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
