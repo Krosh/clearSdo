@@ -106,7 +106,15 @@
                         </div>
                     </div>
                     <div class="avatar">
-                        <img src="/img/avatar-default.png" alt="">
+                        <!-- <img src="/img/avatar-default.png" alt=""> -->
+                        <?
+                        $avatar = Yii::app()->user->getAvatar();
+                        if(!empty($avatar)) {
+                        ?> 
+                            <div class="the-avatar-box" style="background-image: url('/avatars/<?=$avatar?>')"></div>
+                        <? } else { ?>
+                            <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
+                        <? } ?>
                     </div>
                 </div>
             </div>

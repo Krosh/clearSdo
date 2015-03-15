@@ -394,10 +394,9 @@ span {
             display: inline-block;
             vertical-align: middle;
             
-            img {
+            .the-avatar-box {
                 width: 44px;
                 height: 44px;
-                border-radius: 50%;
             }
         }
     }
@@ -1832,6 +1831,47 @@ i.fa-remove {
         font-family: 'FontAwesome';
         color: @green;
     }
+}
+
+.the-avatar-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+    background-size: cover;
+    background-position: center center;
+}
+
+.NFI-wrapper {
+    cursor: pointer; 
+    display: block !important;
+    position: relative !important;
+
+    .NFI-button {
+        top: 0;
+        left: 0;
+        line-height: 29px;
+        border-right: 2px solid #bdc3c7;
+        padding: 0 5px;
+        height: 100%;
+        position: absolute !important;
+        background: #2980b9;
+        color: #fff;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        cursor: pointer;
+        .transition();
+
+        &:hover {
+            opacity: .8;   
+        }
+    }
+
+    .NFI-filename {
+        padding-left: 59px !important;
+        cursor: pointer;
+    }
+
 }
 
 @media screen and (min-width: 1024px) {

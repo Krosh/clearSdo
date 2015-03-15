@@ -76,11 +76,11 @@
             </td>
         </tr>
         <tr>
-            <td width="35%">
+            <td width="35%" style="vertical-align: middle;">
                 <?php if ($model->avatar != ""):?>
-                    <img src = "/avatars/<?php echo $model->avatar?>" class="profile-avatar">
+                    <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
                 <?php else: ?>
-                    <img src = "/img/avatar-default.png" class="profile-avatar">
+                    <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
                 <?php endif; ?>
                 <?php //echo $form->labelEx($model,'avatar'); ?>
                 <?php echo $form->error($model,'avatar'); ?>

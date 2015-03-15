@@ -48,6 +48,12 @@ class WebUser extends CWebUser {
         }
     }
 
+    function getAvatar() {
+        if ($user = $this->getModel()) {
+            return $user->avatar;
+        }
+    }
+
     function getLastVisit() {
         if ($user = $this->getModel())
         {

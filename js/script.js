@@ -626,6 +626,11 @@ $(document).ready(function(){
         footerUpdate();
     });
 
+    // вид инпута файлов
+    $("input[type=file]").nicefileinput({
+        label: "Обзор"
+    });
+
     // Запуск лоадера, скрываем элемент
     if($(".login").length) {
         $(".login").loader();
