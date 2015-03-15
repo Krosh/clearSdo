@@ -1,3 +1,26 @@
+function startChangeLearnMaterialTitle(obj,id)
+{
+    $(obj).hide();
+    $("#editTitle"+id).show().focus();
+}
+
+function ajaxChangeLearnMaterialTitle(obj,id)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/learnMaterial/changeTitle',
+        data: {idMaterial: id, title: $(obj).val()},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            $(obj).hide();
+            $("#labelTitle"+id).show().html($(obj).val());
+        }
+    });
+}
 function checkSubmit(val)
 {
     if (val == 5)

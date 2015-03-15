@@ -135,7 +135,7 @@ class LearnMaterial extends CActiveRecord
 
     public function beforeSave()
     {
-        if ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT)
+        if ($this->isNewRecord && ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT))
         {
             if ($this->fileAttribute == null)
                 $doc = CUploadedFile::getInstance($this,'path');

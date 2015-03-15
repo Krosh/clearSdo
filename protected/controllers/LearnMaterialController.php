@@ -44,6 +44,13 @@ class LearnMaterialController extends CController
         $courseMat->save();
     }
 
+    public function actionChangeTitle()
+    {
+        $material = LearnMaterial::model()->findByPk($_POST['idMaterial']);
+        $material->title = $_POST['title'];
+        $material->save();
+    }
+
     public function actionAddMaterial()
     {
         $mat = new LearnMaterial();
