@@ -32,50 +32,86 @@ $message = Yii::app()->user->getFlash("message");
         'enableAjaxValidation'=>false,
     )); ?>
 
-    <div >
-        <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
-        <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
-        <div class  = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-            <?php echo CHTML::label("Старый пароль:","oldPassword")?><?php echo CHTML::passwordField("oldPassword",""); ?><br>
-            <?php echo CHTML::label("Новый пароль:","newPassword")?><?php echo CHTML::passwordField("newPassword",""); ?><br>
-            <?php echo CHTML::label("Подтвердите пароль:","newPassword")?><?php echo CHTML::passwordField("confirmNewPassword",""); ?>
-        </div>
-    </div>
+    <style>
+        .input-full-width input {
+            width: 100%;
+        }
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'fio'); ?>
-        <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
-        <?php echo $form->error($model,'fio'); ?>
-    </div>
+        .profile-avatar {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+    </style>
 
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'role'); ?>
-        <?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
-        <?php echo $form->error($model,'role'); ?>
-    </div>
+    <table width="80%">
+        <tr>
+            <td width="35%">
+                <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
+                <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
+                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                    <?php echo CHTML::label("Старый пароль:","oldPassword")?>
+                    <?php echo CHTML::label("Новый пароль:","newPassword")?>
+                    <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
+                </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'avatar'); ?>
-        <?php if ($model->avatar != ""):?>
-            <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
-        <?php else: ?>
-            <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
-        <?php endif; ?>
-        <?php echo $form->fileField($model,'newAvatar'); ?>
-        <?php echo $form->error($model,'avatar'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <br>
+                <br>
+                <br>
+                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                    <?php echo CHTML::passwordField("oldPassword",""); ?>
+                    <?php echo CHTML::passwordField("newPassword",""); ?>
+                    <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'fio'); ?>
+                <?php echo $form->error($model,'fio'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
+            </td>
+        </tr>
 
-    </div>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'role'); ?>
+                <?php echo $form->error($model,'role'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
+            </td>
+        </tr>
 
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
-        <?php echo $form->checkBox($model,'isAvatarModerated'); ?>
-    </div>
+        <tr>
+            <td width="35%" style="vertical-align: middle;">
+                <?php if ($model->avatar != ""):?>
+                    <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
+                <?php else: ?>
+                    <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
+                <?php endif; ?>
+                <?php //echo $form->labelEx($model,'avatar'); ?>
+                <?php echo $form->error($model,'avatar'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->fileField($model,'newAvatar'); ?>
+                <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
+                <?php echo $form->checkBox($model,'isAvatarModerated'); ?>
+            </td>
+        </tr>
+
+
+        </table>
 
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
     </div>
 
     <?php $this->endWidget(); ?>
