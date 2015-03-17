@@ -9,9 +9,7 @@
 /* @var $model Course */
 ?>
 
-<?php
-$this->renderPartial('top');
-?>
+
 
 
 <?php
@@ -276,6 +274,3 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
         </div>
 
     </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

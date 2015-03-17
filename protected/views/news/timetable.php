@@ -12,6 +12,8 @@ $url = 'http://www.altstu.ru/main/schedule/';
 $group = Group::model()->findByPk(3);
 $text = $this->getContent($url,array("group" => $group->id_altstu));
 preg_match_all("-<div class=\"schedule\">(.*)<div id=\"aside\">-s",$text,$matches);
+echo $matches[1][0];
+return;
 $text = strip_tags($matches[1][0]);
 $days = array("Понедельник","Вторник","Среда","Четверг","Пятница","Суббота");
 $text = str_replace("\r\n","",$text);

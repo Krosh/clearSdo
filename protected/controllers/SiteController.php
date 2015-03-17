@@ -5,7 +5,7 @@
  */
 class SiteController extends CController
 {
-    public $layout = "/layouts/main";
+    public $layout = "/layouts/full";
     public $noNeedJquery = false;
     public $breadcrumbs;
 
@@ -57,7 +57,10 @@ class SiteController extends CController
         if ($auth)
             $this->render("mainPage");
         else
+        {
+            $this->layout = "/layouts/main";
             $this->render("loginForm",array('model' => $model));
+        }
     }
 
     public function actionViewCourse($idCourse)
@@ -203,6 +206,13 @@ class SiteController extends CController
             'model'=>$model,
         ));
     }
+
+    public function actionWebinar()
+    {
+        $this->render('/webinar/view',array(
+        ));
+    }
+
 
 
 }

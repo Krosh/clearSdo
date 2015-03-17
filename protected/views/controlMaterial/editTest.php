@@ -154,6 +154,3 @@ $this->renderPartial('/site/top');
 
         </div>
     </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

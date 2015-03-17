@@ -8,9 +8,7 @@
  */
 /* @var PluginController $plugin */
 ?>
-<?php
-$this->renderPartial('top');
-?>
+
 
 <div class="wrapper">
     <div class="container">
@@ -30,6 +28,3 @@ $this->renderPartial('top');
         </div>
 
     </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

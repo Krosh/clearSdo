@@ -40,6 +40,3 @@ $listeners = Course::getGroups($course->id);
 </div>
 
 </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

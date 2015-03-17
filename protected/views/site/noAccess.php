@@ -7,9 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<?php
-$this->renderPartial('top');
-?>
 
 <div class="wrapper">
     <div class="container">
@@ -25,6 +22,3 @@ $this->renderPartial('top');
                 </div>
 
             </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

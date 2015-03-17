@@ -9,10 +9,6 @@
 /* @var $model Course */
 ?>
 
-<?php
-$this->renderPartial('top');
-?>
-
 <div class="wrapper">
     <div class="container">
     <div class="col-group">
@@ -75,6 +71,3 @@ $this->renderPartial('top');
 
         </div>
     </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

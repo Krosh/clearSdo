@@ -10,11 +10,6 @@
 ?>
 
 <?php
-$this->renderPartial('top');
-?>
-
-
-<?php
 $listeners = Course::getGroups($model->id);
 ?>
     <script>
@@ -331,6 +326,3 @@ $listeners = Course::getGroups($model->id);
 </div>
 
 </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>
