@@ -68,6 +68,3 @@
                 </div>
 
             </div>
-<?php
-$this->renderPartial("/site/bottom");
-?>

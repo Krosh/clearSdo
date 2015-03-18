@@ -168,31 +168,9 @@ $cs->scriptMap=array(
         </div>
 
         <?php $this->renderPartial("/news/block") ?>
+        <?php $this->renderPartial("/news/timetable") ?>
 
 
-        <div class="sidebar-item">
-            <div class="sidebar-title">
-                Расписание
-            </div>
-            <div class="sidebar-content">
-                <div class="sidebar-small-item">
-                    <span>ФИЗИЧЕСКАЯ КУЛЬТУРА</span>
-                    <div class="description">09:55-11:25</div>
-                </div>
-                <div class="sidebar-small-item">
-                    <span>АНГЛИЙСКИЙ ЯЗЫК (пр., подгруппа А)</span>
-                    <div class="description">11:35-13:05, 537(7) ГК</div>
-                </div>
-                <div class="sidebar-small-item">
-                    <span>ФИЗИЧЕСКАЯ КУЛЬТУРА</span>
-                    <div class="description">09:55-11:25</div>
-                </div>
-                <div class="sidebar-small-item">
-                    <span>АНГЛИЙСКИЙ ЯЗЫК (пр., подгруппа А)</span>
-                    <div class="description">11:35-13:05, 537(7) ГК</div>
-                </div>
-            </div>
-        </div>
 
 
     </div>

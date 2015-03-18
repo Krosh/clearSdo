@@ -21,6 +21,24 @@ function ajaxChangeLearnMaterialTitle(obj,id)
         }
     });
 }
+
+function ajaxGetTimetable(idGroup)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/group/getTimetable',
+        data: {idGroup:idGroup},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            alert('Расписание успешно получено');
+        }
+    });
+}
+
 function checkSubmit(val)
 {
     if (val == 5)

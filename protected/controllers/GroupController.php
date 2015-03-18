@@ -178,6 +178,81 @@ class GroupController extends CController
         }
     }
 
+    function getContent($url, array $post){
+        $ecx = count($post);
+        while($ecx--){
+            @$post['fields'].=key($post).'='.array_shift($post).'&';
+        }
+        $post = rtrim($post['fields'], '&');
+        try {
+            $crl = curl_init($url);
+            curl_setopt_array($crl, array(
+                    CURLOPT_RETURNTRANSFER => 1,
+                    CURLOPT_POST => 1,
+                    CURLOPT_POSTFIELDS => $post,
+                    CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
+                    CURLOPT_FOLLOWLOCATION => 1
+                )
+            );
+            if(!($html = curl_exec($crl))) throw new Exception();
+            curl_close($crl);
+            return $html;
+
+        } catch(Exception $e){
+            return FALSE;
+        }
+    }
+
+    public function actionGetTimetable()
+    {
+        $this->layout = null;
+         $idGroup = $_POST['idGroup'];
+        $url = 'http://www.altstu.ru/main/schedule/';
+        $group = Group::model()->findByPk($idGroup);
+        $text = $this->getContent($url,array("group" => $group->id_altstu));
+        preg_match_all("-<div class=\"schedule\">(.*)<div id=\"aside\">-s",$text,$matches);
+        $text = $matches[1][0];
+
+        $DAYS_NAMES = array("Понедельник","Вторник","Среда","Четверг","Пятница","Суббота");
+        $WEEK_NAMES = array("1 неделя","2 неделя");
+        $weekPattern = '~(<h3[^>]*>([0-9А-Яа-я ]*)</h3>|Экзамены)~u';
+        $dayPattern = '#<th colspan="4" [^>]*>([А-Яа-я ]*)</th>#u';
+        $lessonPattern = '#<tr>[.|\s]*<td>.*</td>\s*<td>.*</td>\s*<td.*>.*</td>\s*<td>.*</td>\s*</tr>#u';
+        $lessonInfoPattern = '#<td[^>]*>(.*)</td>#u';
+        $weeks = preg_split($weekPattern,$text,null,PREG_SPLIT_DELIM_CAPTURE);
+        Timetable::model()->deleteAll("idGroup = ".$group->id);
+        for ($numWeek = 2; $numWeek<count($weeks)-1; $numWeek+=3)
+        {
+            $nameWeek = $weeks[$numWeek];
+            $textWeek = $weeks[$numWeek+1];
+            $days = preg_split($dayPattern,$textWeek,null,PREG_SPLIT_DELIM_CAPTURE);
+            for ($numDays = 1; $numDays<count($days); $numDays+=2)
+            {
+                $nameDay = $days[$numDays];
+                $textDay = $days[$numDays+1];
+                $lessonInfos = preg_split($lessonInfoPattern,$textDay,null,PREG_SPLIT_DELIM_CAPTURE);
+                for ($numLessonInfo = 0; $numLessonInfo<count($lessonInfos)-1; $numLessonInfo+=8)
+                {
+                    $time = $lessonInfos[$numLessonInfo+1];
+                    $name = strip_tags($lessonInfos[$numLessonInfo+3]);
+                    $room = strip_tags($lessonInfos[$numLessonInfo+5]);
+                    $teacher = strip_tags($lessonInfos[$numLessonInfo+7]);
+                    $timetable = new Timetable();
+                    $timetable->idGroup = $group->id;
+                    $timetable->day = array_search($nameDay,$DAYS_NAMES);
+                    $timetable->numWeek = array_search($nameWeek,$WEEK_NAMES);
+                    $timetable->time = $time;
+                    $timetable->name = $name;
+                    $timetable->room = $room;
+                    $timetable->teacher = $teacher;
+                    $timetable->save();
+                }
+
+            }
+        }
+        return;
+    }
+
 
 
     /**

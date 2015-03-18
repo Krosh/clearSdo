@@ -27,10 +27,10 @@ class Group extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Title', 'required'),
-			array('Title', 'length', 'max'=>20),
+			array('Title, id_altstu', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, Title', 'safe', 'on'=>'search'),
+			array('id, Title, id_altstu', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +52,7 @@ class Group extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'Title' => 'Название',
+            'id_altstu' => 'Код группы на сайте АЛТГТУ',
 		);
 	}
 

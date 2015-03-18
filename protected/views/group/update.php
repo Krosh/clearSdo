@@ -20,6 +20,7 @@
                     <div>
                         <?php $this->renderPartial('_form', array('model'=>$model)); ?>
                         <div >
+                            Добавить студентов из файла excel:
                             <?php
                             echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
                             echo Chtml::fileField("filename");

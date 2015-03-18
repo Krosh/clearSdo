@@ -109,6 +109,12 @@ class Term extends CActiveRecord
         $criteria = new CDbCriteria();
         $criteria->addInCondition("id",$ids);
         return Term::model()->findAll($criteria);
+    }
 
+    public function getNumOfWeek()
+    {
+        $dayDiff = (strtotime(date("Y-m-d"))-strtotime($this->start_date))/(24*60*60);
+        $dayDiff = $dayDiff % 14;
+        if ($dayDiff>=7) return 1; else return 0;
     }
 }

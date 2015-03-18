@@ -42,7 +42,7 @@ class NewsController extends CController
 
     public function actionNews()
     {
-        $this->renderPartial("timetable");
+    //    $this->renderPartial("timetable");
 //        return;
 //        $this->renderPartial('ajax');
     }

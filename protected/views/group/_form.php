@@ -23,6 +23,12 @@
 		<?php echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
 	</div>
 
+    <div class="row">
+        <?php echo CHtml::activeLabel($model,'id_altstu', array("style" => "display: inline")); ?>
+        <?php echo $form->textField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); ?>
+        <?php echo CHtml::button('Получить расписание для группы',array('class' => 'btn blue', 'onclick' => 'ajaxGetTimetable('.$model->id.')'))?>
+    </div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
 	</div>
