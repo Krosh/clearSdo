@@ -2,7 +2,7 @@
 
 class AnswerController extends CController
 {
-    public $layout = "/layouts/main";
+    public $layout='//layouts/full';
 
     public function filters()
     {

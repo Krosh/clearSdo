@@ -2,7 +2,7 @@
 
 class ReportController extends CController
 {
-	public $layout='//layouts/main';
+    public $layout='//layouts/full';
     public $noNeedJquery = false;
 
 	/**

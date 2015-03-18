@@ -3,7 +3,6 @@
 /* @var $model Term */
 ?>
 
-<?php $this->renderPartial('/site/top'); ?>
 
 <div class="wrapper">
     <div class="container">
@@ -45,4 +44,4 @@
                 </div>
 
             </div>
-            <?php $this->renderPartial("/site/bottom"); ?>
+            

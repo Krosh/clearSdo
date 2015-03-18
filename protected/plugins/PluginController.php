@@ -30,10 +30,6 @@ class PluginController {
             }
             closedir($handle);
         }
-
-
-
-
     }
 }
 

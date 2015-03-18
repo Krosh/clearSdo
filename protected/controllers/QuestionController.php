@@ -3,7 +3,7 @@
 class QuestionController extends CController
 {
     public $noNeedJquery = false;
-    public $layout = "/layouts/main";
+    public $layout='//layouts/full';
     public $breadcrumbs;
 
     public function filters()

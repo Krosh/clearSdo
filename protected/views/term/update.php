@@ -4,7 +4,6 @@
 ?>
 
 
-<?php $this->renderPartial('/site/top'); ?>
 
 <div class="wrapper">
     <div class="container">
@@ -26,6 +25,6 @@
 
     </div>
 
-<?php $this->renderPartial('/site/bottom'); ?>
+
 
 
