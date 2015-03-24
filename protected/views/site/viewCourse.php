@@ -152,7 +152,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                 <img class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
                                 <?
                                 
-                                echo $item->title;
+                                echo $item->getViewedTitle();
                                 ?>
                             </td>
                             <td class="right">

@@ -183,6 +183,11 @@ class LearnMaterial extends CActiveRecord
         return $sizeText;
     }
 
+    public function getViewedTitle()
+    {
+        return str_replace(".".$this->getExtension(),"",$this->title);
+    }
+
     public function getExtension()
     {
         if ($this->category==MATERIAL_FILE) {

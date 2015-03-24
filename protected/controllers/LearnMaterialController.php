@@ -47,7 +47,10 @@ class LearnMaterialController extends CController
     public function actionChangeTitle()
     {
         $material = LearnMaterial::model()->findByPk($_POST['idMaterial']);
-        $material->title = $_POST['title'];
+        if ($material->getExtension() != "")
+            $material->title = $_POST['title'].".".$material->getExtension();
+        else
+            $material->title = $_POST['title'];
         $material->save();
     }
 
