@@ -31,6 +31,7 @@ define('CALC_LAUNCH',1);
  * @property string $weight
  * @property string $calc_expression
  * @property integer $is_autocalc
+ * @property bool $get_files_from_students
  */
 class ControlMaterial extends CActiveRecord
 {
@@ -55,7 +56,7 @@ class ControlMaterial extends CActiveRecord
 			array('access_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('calc_expression,weight,is_autocalc,show_in_reports','safe'),
+			array('get_files_from_students,calc_expression,weight,is_autocalc,show_in_reports','safe'),
             array(' id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
@@ -160,6 +161,7 @@ class ControlMaterial extends CActiveRecord
             'weight' => 'Вес',
             'show_in_reports' => 'Включать в отчеты',
 			'idAutor' => 'Id Autor',
+            'get_files_from_students' => 'Позволять пользователям прикреплять файл',
 		);
 	}
 

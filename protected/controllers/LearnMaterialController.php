@@ -13,6 +13,17 @@ class LearnMaterialController extends CController
         );
     }
 
+    public function actions()
+    {
+        return array(
+            'upload'=>array(
+                'class'=>'xupload.actions.XUploadAction',
+                'path' =>Yii::app() -> getBasePath() . "/../uploads",
+                'publicPath' => Yii::app() -> getBaseUrl() . "/uploads",
+            ),
+        );
+    }
+
     public function actionDeleteMaterial()
     {
         $idMaterial = $_POST["idMaterial"];

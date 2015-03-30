@@ -9,6 +9,7 @@
  * @property string $title
  * @property integer $category
  * @property integer $idAutor
+ * @property string $dateAdd
  */
 class LearnMaterial extends CActiveRecord
 {
@@ -137,6 +138,7 @@ class LearnMaterial extends CActiveRecord
     {
         if ($this->isNewRecord && ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT))
         {
+
             if ($this->fileAttribute == null)
                 $doc = CUploadedFile::getInstance($this,'path');
             else
@@ -149,6 +151,7 @@ class LearnMaterial extends CActiveRecord
             $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
             $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name);
             $this->path = $name;
+            $this->dateAdd = date("Y-m-d H:i:s");
         }
         return true;
     }

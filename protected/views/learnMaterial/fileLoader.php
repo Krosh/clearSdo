@@ -10,7 +10,7 @@
 Yii::import( "xupload.models.XUploadForm" );
 $model = new XUploadForm();
 $this->widget('xupload.XUpload', array(
-    'url' => Yii::app()->createUrl("/controlMaterial/upload"),
+    'url' => Yii::app()->createUrl("/learnMaterial/upload"),
     'model' => $model,
     'attribute' => 'file',
     'multiple' => true,

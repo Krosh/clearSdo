@@ -352,17 +352,6 @@ class ControlMaterialController extends CController
         $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
     }
 
-    public function actions()
-    {
-        return array(
-            'upload'=>array(
-                'class'=>'xupload.actions.XUploadAction',
-                'path' =>Yii::app() -> getBasePath() . "/../uploads",
-                'publicPath' => Yii::app() -> getBaseUrl() . "/uploads",
-            ),
-        );
-    }
-
 
     public function setMark($idControlMaterial,$idStudent,$mark)
     {

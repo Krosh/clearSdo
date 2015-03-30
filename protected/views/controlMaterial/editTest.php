@@ -10,60 +10,57 @@
 ?>
 
 
-<?php
-$this->renderPartial('/site/top');
-?>
-    <script>
-        window.nameModal = "editTestModal";
-        <?php
-            if ($model->title == "")
-                echo "window.needModal = true;" ?>
-        window.idTest = <?php echo $model->id; ?>
-    </script>
+<script>
+    window.nameModal = "editTestModal";
+    <?php
+        if ($model->title == "")
+            echo "window.needModal = true;" ?>
+    window.idTest = <?php echo $model->id; ?>
+</script>
 <div class="wrapper">
     <div class="container">
-    <div class="col-group">
-    <div class="col-9">
-        <div class="content">
-            <div class="page-heading">
-                <div class="col-group">
-                    <div class="col-4">
-                        <div class="page-title">Тест: <?php echo $model->title?></div>
-                    </div>
-                    <div class="col-8 right">
-                        <a href="#" class="btn white small" data-toggle="modal" data-target="#editTestModal"><i class="fa fa-edit"></i> Информация</a>
-                    </div>
-                </div>
-
-
-                <!-- редактирование теста -->
-                <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
-                                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Редактирование информации о контрольном материале</h4>
+        <div class="col-group">
+            <div class="col-9">
+                <div class="content">
+                    <div class="page-heading">
+                        <div class="col-group">
+                            <div class="col-4">
+                                <div class="page-title">Тест: <?php echo $model->title?></div>
                             </div>
-                            <div class="modal-body">
-                                <div id="editTest-testProperties" class="form modal-form">
-                                    <?php if (!$model->is_point)
-                                        $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel));
-                                    else
-                                        $this->renderPartial("/controlMaterial/_form-point",array("model" => $model, "accessModel" => $accessModel));?>
+                            <div class="col-8 right">
+                                <a href="#" class="btn white small" data-toggle="modal" data-target="#editTestModal"><i class="fa fa-edit"></i> Информация</a>
+                            </div>
+                        </div>
+
+
+                        <!-- редактирование теста -->
+                        <div class="modal fade" id="editTestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Редактирование информации о контрольном материале</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="editTest-testProperties" class="form modal-form">
+                                            <?php if (!$model->is_point)
+                                                $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel));
+                                            else
+                                                $this->renderPartial("/controlMaterial/_form-point",array("model" => $model, "accessModel" => $accessModel));?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                </div>
+                    <?php if (!$model->is_point): ?>
+                        <hr>
 
-            </div>
-            <?php if (!$model->is_point): ?>
-                <hr>
-
-                <div class="right">
-                    <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
-                </div>
-                <!--
+                        <div class="right">
+                            <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
+                        </div>
+                        <!--
            <div>
                 <i class="fa fa-plus-square-o"></i>
                 <a href="#" onclick="$('#editTest-questionAddExist').slideToggle(); return false;">Добавить из существующих</a>
@@ -105,52 +102,52 @@ $this->renderPartial('/site/top');
 
 -->
 
-                <div id = "editTest-questions" style="margin-top:20px">
+                        <div id = "editTest-questions" style="margin-top:20px">
+                        </div>
+
+                        <div class="right">
+                            <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
+                        </div>
+                    <?php else: ?>
+                        <?php if ($model->is_autocalc): ?>
+                            <?php echo CHtml::form(); ?>
+                            <?php
+                            $expression = $model->calc_expression;
+                            $expr_elements = explode(";",$expression);
+                            $weights = array();
+                            foreach ($expr_elements as $item)
+                            {
+                                if (strlen(item) == 0)
+                                    continue;
+                                $text = explode("=",$item);
+                                $weights[$text[0]] = $text[1];
+                            }
+                            $arr = CoursesControlMaterial::getAllControlMaterials($idCourse);
+                            $res = array();
+                            foreach ($arr as $item)
+                            {
+                                if (!$item->is_autocalc)
+                                    array_push($res,$item);
+                            }
+                            ?>
+                            <table width="35%">
+                                <?php foreach($res as $item): ?>
+                                    <tr>
+                                        <td width="80%" style="padding-bottom: 10px;">
+                                            <?php echo $item->title; ?>
+                                        </td>
+                                        <td width="20%" style="padding-bottom: 10px;">
+                                            <input style="width:100%" data-idMaterial = <?php echo $item->id; ?> type = "number" value="<?php if ($weights[$item->id] != "") echo $weights[$item->id]; else echo "0";  ?>" min = "0" />
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                            <br>
+                            <?php echo CHtml::button("Сохранить", array("class" => "btn blue small", "onclick" => 'changeWeights('.$model->id.')')); ?>
+                            <?php echo CHtml::endForm(); ?>
+                        <?php endif; ?>
+
+                    <?php endif; ?>
+
                 </div>
-
-                <div class="right">
-                    <a class="btn white small" href="<?php echo $this->createUrl("/question/create", array("idMaterial" => $model->id)) ?>"><i class="fa fa-plus"></i> Добавить вопрос</a>
-                </div>
-            <?php else: ?>
-                <?php if ($model->is_autocalc): ?>
-                    <?php echo CHtml::form(); ?>
-                    <?php
-                    $expression = $model->calc_expression;
-                    $expr_elements = explode(";",$expression);
-                    $weights = array();
-                    foreach ($expr_elements as $item)
-                    {
-                        if (strlen(item) == 0)
-                            continue;
-                        $text = explode("=",$item);
-                        $weights[$text[0]] = $text[1];
-                    }
-                    $arr = CoursesControlMaterial::getAllControlMaterials($idCourse);
-                    $res = array();
-                    foreach ($arr as $item)
-                    {
-                        if (!$item->is_autocalc)
-                            array_push($res,$item);
-                    }
-                    ?>
-                    <table width="35%">
-                        <?php foreach($res as $item): ?>
-                            <tr>
-                                <td width="80%" style="padding-bottom: 10px;">
-                                    <?php echo $item->title; ?>
-                                </td>
-                                <td width="20%" style="padding-bottom: 10px;">
-                                    <input style="width:100%" data-idMaterial = <?php echo $item->id; ?> type = "number" value="<?php if ($weights[$item->id] != "") echo $weights[$item->id]; else echo "0";  ?>" min = "0" />
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                    <br>
-                    <?php echo CHtml::button("Сохранить", array("class" => "btn blue small", "onclick" => 'changeWeights('.$model->id.')')); ?>
-                    <?php echo CHtml::endForm(); ?>
-                <?php endif; ?>
-
-            <?php endif; ?>
-
-        </div>
-    </div>
+            </div>

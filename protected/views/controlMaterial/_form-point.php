@@ -71,6 +71,15 @@
         		<?php echo $form->error($model,'calc_mode'); ?>
 			</td>
 		</tr>
+        <tr>
+            <td width="40%">
+                <?php echo $form->labelEx($model,'get_files_from_students'); ?>
+            </td>
+            <td width="60%">
+                <?php echo $form->checkBox($model,'get_files_from_students'); ?>
+                <?php echo $form->error($model,'get_files_from_students'); ?>
+            </td>
+        </tr>
 		<tr>
 			<td colspan="2">
 				<div class="row buttons">
@@ -78,7 +87,7 @@
 				</div>
 			</td>
 		</tr>
-	</table>
+    </table>
 
 <?php $this->endWidget(); ?>
 
