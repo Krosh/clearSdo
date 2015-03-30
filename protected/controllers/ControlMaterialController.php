@@ -71,7 +71,7 @@ class ControlMaterialController extends CController
     // Рендер вопроса
     public function actionQuestion()
     {
-        $this->layout = "//layouts/main";
+        $this->layout = "//layouts/full";
         $i = Yii::app()->session['currentQuestion'];
         // Получениие информации о вопросе и вариантах ответа
         $idQuestion = Yii::app()->session['questions'][$i];
@@ -447,6 +447,18 @@ class ControlMaterialController extends CController
         $controlMaterial = ControlMaterial::model()->findByPk($_POST["idControlMaterial"]);
         $controlMaterial->calc_expression = $_POST["calcExpression"];
         $controlMaterial->save();
+    }
+
+    public function actionAddUserFileAnswer()
+    {
+        if (isset($_FILES['filename']))
+        {
+            $answer = new UserFileAnswer();
+            $answer->idUser = Yii::app()->user->id;
+            $answer->idControlMaterial = $_POST['idMaterial'];
+            $answer->filename = "filename";
+            $answer->save();
+        }
     }
 
 

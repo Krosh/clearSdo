@@ -16,9 +16,6 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
 ?>
 
 
-<?php
-$this->renderPartial('/site/top');
-?>
 <div class="wrapper">
     <div class="container">
         <div class="col-group">
@@ -113,6 +110,3 @@ $this->renderPartial('/site/top');
                     <? endforeach ?>
                 </div>
             </div>
-            <?php
-            $this->renderPartial('/site/bottom');
-            ?>

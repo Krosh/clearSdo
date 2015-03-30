@@ -6,11 +6,6 @@
  * Time: 18:50
  * To change this template use File | Settings | File Templates.
  */?>
-<?php
-$this->renderPartial('/site/top');
-?>
-
-
 <div class="wrapper">
     <div class="container">
     <div class="col-group">

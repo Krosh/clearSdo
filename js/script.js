@@ -1,3 +1,22 @@
+function ajaxSendUserFileAnswer(fileInput,idMaterial)
+{
+    //var form = $(fileInput).parent();
+    var form = document.forms.loadFile;
+    var formData = new FormData(form);
+    formData.append("idMaterial",idMaterial);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/controlMaterial/addUserFileAnswer");
+    xhr.onreadystatechange = function() {
+        console.log(xhr.responseText);
+        if (xhr.readyState == 4) {
+            if(xhr.status == 200) {
+                alert("ok");
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
 function startChangeLearnMaterialTitle(obj,id)
 {
     $(obj).hide();

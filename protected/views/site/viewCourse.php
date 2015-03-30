@@ -261,7 +261,13 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         }
                         } else
                         {
-                            echo "<td></td><td></td><td></td><td class='center'>".ControlMaterial::getMark(Yii::app()->user->id,$item->id)."</td>";
+                            if ($item->get_files_from_students)
+                            {
+                                $this->renderPartial("/controlMaterial/userFileAnswerForm", array("idMaterial" => $item->id));
+                            }
+                            else
+                                echo "<td colspan='3'></td>";
+                            echo "<td class='center'>".ControlMaterial::getMark(Yii::app()->user->id,$item->id)."</td>";
                             $accessText = "";
                         }
                         ?>
