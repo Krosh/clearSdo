@@ -10,7 +10,7 @@ function ajaxSendUserFileAnswer(fileInput,idMaterial)
         console.log(xhr.responseText);
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
-                alert("ok");
+                window.location = "";
             }
         }
     };

@@ -96,57 +96,57 @@ class ControlMaterialController extends CController
 
     public function actionNextQuestion()
     {
-      /*  $flag = false;
-        $flag = $flag || isset($_POST['answer']);
-        for ($i = 0; $i<10; $i++)
+        /*  $flag = false;
+          $flag = $flag || isset($_POST['answer']);
+          for ($i = 0; $i<10; $i++)
+          {
+              $flag = $flag || isset($_POST['answer'.$i]);
+          }
+          $flag = true;
+         */ if (true)
+    {
+        $questionType = Question::model()->findByPk(Yii::app()->session['questions'][Yii::app()->session['currentQuestion']])->type;
+        if ($questionType == QUESTION_RADIO || $questionType == QUESTION_NUMERIC || $questionType == QUESTION_TEXT)
         {
-            $flag = $flag || isset($_POST['answer'.$i]);
+            $answer = $_POST['answer'];
         }
-        $flag = true;
-       */ if (true)
+        if ($questionType == QUESTION_CHECKBOX)
         {
-            $questionType = Question::model()->findByPk(Yii::app()->session['questions'][Yii::app()->session['currentQuestion']])->type;
-            if ($questionType == QUESTION_RADIO || $questionType == QUESTION_NUMERIC || $questionType == QUESTION_TEXT)
+            $answer = "";
+            foreach ($_POST as $key => $value)
             {
-                $answer = $_POST['answer'];
+                $answer .=$value." ";
             }
-            if ($questionType == QUESTION_CHECKBOX)
+        }
+        if ($questionType == QUESTION_MATCH)
+        {
+            $array = explode("~",$_POST['answer']);
+            $rightShuffled = Yii::app()->session['rightShuffledId'];
+            $shuffled = Yii::app()->session['shuffledId'];
+            $answer = "";
+            $i = 0;
+            foreach ($array as $item)
             {
-                $answer = "";
-                foreach ($_POST as $key => $value)
-                {
-                    $answer .=$value." ";
-                }
+                if ($item == "") continue;
+                $answer.=$rightShuffled[$i]."/".$shuffled[$item]." ";
+                $i++;
             }
-            if ($questionType == QUESTION_MATCH)
-            {
-                $array = explode("~",$_POST['answer']);
-                $rightShuffled = Yii::app()->session['rightShuffledId'];
-                $shuffled = Yii::app()->session['shuffledId'];
-                $answer = "";
-                $i = 0;
-                foreach ($array as $item)
-                {
-                    if ($item == "") continue;
-                    $answer.=$rightShuffled[$i]."/".$shuffled[$item]." ";
-                    $i++;
-                }
-            }
+        }
 
-            // Сохраняем ответ
-            $userAnswer = new UserAnswer();
-            $userAnswer->idUserControlMaterial = Yii::app()->session['currentTestGo'];
-            $userAnswer->answer = $answer;
-            $userAnswer->answerTime = date("Y-m-d H:i:s");
-            $userAnswer->idQuestion = Yii::app()->session['questions'][Yii::app()->session['currentQuestion']];
-            if (!$userAnswer->save())
-            {
-                echo "Ошибка! Вопрос не сохранился!";
-                echo "<br>Ответ:".$answer;
-                echo "<br>Номер вопроса:".$userAnswer->idQuestion;
-                return;
-            };
-        }
+        // Сохраняем ответ
+        $userAnswer = new UserAnswer();
+        $userAnswer->idUserControlMaterial = Yii::app()->session['currentTestGo'];
+        $userAnswer->answer = $answer;
+        $userAnswer->answerTime = date("Y-m-d H:i:s");
+        $userAnswer->idQuestion = Yii::app()->session['questions'][Yii::app()->session['currentQuestion']];
+        if (!$userAnswer->save())
+        {
+            echo "Ошибка! Вопрос не сохранился!";
+            echo "<br>Ответ:".$answer;
+            echo "<br>Номер вопроса:".$userAnswer->idQuestion;
+            return;
+        };
+    }
         // Проверка на окончание времени
         $testModel = ControlMaterial::model()->findByPk(Yii::app()->session['currentTest']);
         $goModel = UserControlMaterial::model()->findByPk(Yii::app()->session['currentTestGo']);
@@ -265,37 +265,37 @@ class ControlMaterialController extends CController
     }
 
     /**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
+     * Deletes a particular model.
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionDelete($id)
+    {
+        $this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if(!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('ControlMaterial');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+    /**
+     * Lists all models.
+     */
+    public function actionIndex()
+    {
+        $dataProvider=new CActiveDataProvider('ControlMaterial');
+        $this->render('index',array(
+            'dataProvider'=>$dataProvider,
+        ));
+    }
 
-	public function loadModel($id)
-	{
-		$model=ControlMaterial::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
+    public function loadModel($id)
+    {
+        $model=ControlMaterial::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
+    }
 
     public function actionEdit($idMaterial)
     {
@@ -458,6 +458,35 @@ class ControlMaterialController extends CController
             $answer->idControlMaterial = $_POST['idMaterial'];
             $answer->filename = "filename";
             $answer->save();
+        }
+    }
+
+    public function actionGetUserAnswers($idControlMaterial)
+    {
+        if(extension_loaded('zip'))
+        {
+            $labName = ControlMaterial::model()->findByPk($idControlMaterial)->title;
+            $zip = new ZipArchive(); // подгружаем библиотеку zip
+            $zip_name = $labName.".zip"; // имя файла
+            if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+            {
+                return;
+            }
+            $answers = UserFileAnswer::model()->findAll("idControlMaterial = :id",array(':id' => $idControlMaterial));
+            foreach ($answers as $item)
+            {
+                $userName = StringHelper::translitText($item->User->fio);
+                $fileName = $userName.".".strtolower(pathinfo($item->filename, PATHINFO_EXTENSION));
+                $zip->addFile($item->getFullPath(),$fileName); // добавляем файлы в zip архив
+            }
+            $zip->close();
+            if(file_exists($zip_name))
+            {
+                header('Content-type: application/zip');
+                header('Content-Disposition: attachment; filename="'.$zip_name.'"');
+                readfile($zip_name);
+                unlink($zip_name);
+            }
         }
     }
 

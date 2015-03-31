@@ -11,12 +11,12 @@ $userAnswer = UserFileAnswer::model()->find("idUser = :idUser AND idControlMater
 if ($userAnswer != null)
 {
     ?>
-    <td colspan='3'>Файл уже отправлен!</td>
+    <td colspan='3' style="text-align: center">Файл уже отправлен!</td>
 <?php
 } else
 {
     ?>
-    <td colspan='3'>
+    <td colspan='3' style="text-align: center">
     <form id = 'loadFile'method="POST" enctype="multipart/form-data">
         <input type='file' name = 'filename' onchange="ajaxSendUserFileAnswer(this,<?php echo $idMaterial; ?>)">
     </form>

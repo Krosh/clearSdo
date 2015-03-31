@@ -32,7 +32,12 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
             <tr id = "<?php echo $curMaterial->id?>" data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>">
                 <td><img class="file-icon" src="/img/is_point.png" alt="">
                 </td>
-                <td colspan="4"><?php echo $item->title ?></td>
+                <td><?php echo $item->title ?></td>
+                <td colspan="3" style="text-align: center">
+                    <?php if ($item->get_files_from_students): ?>
+                        <a href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswers', array('idControlMaterial' => $item->id)); ?>' target="_blank">Получить архив с работами</a>
+                    <?php endif; ?>
+                </td>
                 <td class="right">
                     <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
                         <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
@@ -57,8 +62,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 ?>
                 <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
                 <td class="right">
-                        <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
-                            <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
+                    <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
+                        <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
                         <span></span>
                     </label>
                     <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>

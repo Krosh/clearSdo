@@ -137,9 +137,14 @@ class UserFileAnswer extends CActiveRecord
 
     public function deleteDocument()
     {
-        $documentPath=Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idUser.DIRECTORY_SEPARATOR.$this->filename;
+        $documentPath=$this->getFullPath();
         if(is_file($documentPath))
             unlink($documentPath);
+    }
+
+    public function getFullPath()
+    {
+        return Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idUser.DIRECTORY_SEPARATOR.$this->filename;
     }
 
 	/**
