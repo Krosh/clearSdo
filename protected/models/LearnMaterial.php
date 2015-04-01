@@ -168,7 +168,7 @@ class LearnMaterial extends CActiveRecord
 
     public function deleteDocument()
     {
-        $documentPath=Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$this->path;
+        $documentPath=$this->getPathToMaterial();
         if(is_file($documentPath))
             unlink($documentPath);
     }
@@ -198,6 +198,21 @@ class LearnMaterial extends CActiveRecord
             return pathinfo($this->path, PATHINFO_EXTENSION);
         }
         return "";
+    }
+
+    public function getCourses()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idMaterial',$this->id);
+        $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
+        $result = "";
+        foreach ($coursesMaterials as $item)
+        {
+            if ($result != "")
+                $result.=", ";
+            $result .= Course::model()->findByPk($item->idCourse)->title;
+        }
+        return $result;
     }
 
     public function getIconExtension()

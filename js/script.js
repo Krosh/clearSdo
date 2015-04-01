@@ -1,3 +1,18 @@
+function ajaxDeleteAllNonUsedMaterials()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/learnMaterial/deleteAllNonUsedMaterials',
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            $.fn.yiiGridView.update("media-grid");
+        }
+    });
+}
 function ajaxSendUserFileAnswer(fileInput,idMaterial)
 {
     //var form = $(fileInput).parent();

@@ -181,5 +181,28 @@ class LearnMaterialController extends CController
         readfile("$filename");
     }
 
+    public function actionFullDeleteMaterial($id)
+    {
+        $mat = LearnMaterial::model()->findByPk($id);
+        // Проверка, является ли пользователь автором материала
+        if ($mat->idAutor != Yii::app()->user->getId())
+            return false;
+        $mat->delete();
+    }
+
+    public function actionDeleteAllNonUsedMaterials()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare("idAutor", Yii::app()->user->getId());
+        $criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT));
+        $data = LearnMaterial::model()->findAll($criteria);
+        foreach ($data as $item)
+        {
+            if ($item->getCourses() == "")
+                $item->delete();
+        }
+
+    }
+
 
 }

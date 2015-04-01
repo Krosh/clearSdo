@@ -140,15 +140,6 @@ class SiteController extends CController
         $this->render("mediateka");
     }
 
-    public function actionDeleteMedia($id)
-    {
-        $mat = LearnMaterial::model()->findByPk($id);
-        $mat->delete();
-//        $path = Yii::getPathOfAlias("webroot.media.".Yii::app()->user->id).DIRECTORY_SEPARATOR.$name;
-//        if (is_file($path))
-//            unlink($path);
-    }
-
     public function actionPlugin($id)
     {
         $this->noNeedJquery = true;

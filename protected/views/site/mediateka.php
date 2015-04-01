@@ -18,6 +18,7 @@
             <div class="page-heading">
                 <div class="page-title">Медиатека</div>
             </div>
+            <a href = "#" onclick="ajaxDeleteAllNonUsedMaterials()">Удалить все неиспользуемые материалы</a>
             <div>
                 <?php
                 $criteria = new CDbCriteria();
@@ -47,6 +48,7 @@
                         array(
                             'header' => 'Название файла',
                             'name' => 'title',
+                            'value' => '$data->getViewedTitle()',
 //                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
                         array(
@@ -56,11 +58,17 @@
 //                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
                         array(
+                            'header' => 'Используется в курсах',
+                            'name' => 'courses',
+                            'value' => '$data->getCourses()',
+//                            'filter' => CHtml::dropDownList("sds","",$filters),
+                        ),
+                        array(
                             'class'=>'CButtonColumn',
                             'template' => '{delete}',
                             'buttons' => array(
                                 'delete' => array(
-                                    'url' => '$this->grid->controller->createUrl("/site/deleteMedia", array("id"=>$data["id"]))',
+                                    'url' => '$this->grid->controller->createUrl("/learnMaterial/fullDeleteMaterial", array("id"=>$data["id"]))',
                                 )
                             )
                         ),
