@@ -18,8 +18,16 @@
         <?php
         $hasNewLearn = CoursesMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
         $hasNewControl = CoursesControlMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
-        $learnMaterialCount = CoursesMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
-        $controlMaterialCount = CoursesControlMaterial::model()->count("idCourse = :idCourse", array(":idCourse" => $item->id));
+        $sql = "SELECT COUNT(materials.id) FROM tbl_controlmaterials materials INNER JOIN tbl_coursescontrolmaterials ccm ON materials.id = ccm.idControlMaterial WHERE materials.access <> 2 AND ccm.idCourse = ".$item->id;
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $controlMaterialCount = $command->queryScalar();
+
+        $sql = "SELECT COUNT(materials.id) FROM tbl_learnmaterials materials INNER JOIN tbl_coursesmaterials cm ON materials.id = cm.idMaterial WHERE materials.category <> ".MATERIAL_TITLE." AND cm.idCourse = ".$item->id;
+        $connection = Yii::app()->db;
+        $command = $connection->createCommand($sql);
+        $learnMaterialCount = $command->queryScalar();
+
         if ($isStudent)
         {
             $maxProgress = $controlMaterialCount;
@@ -54,9 +62,11 @@
         }
         ?>
         <?
-        $url = "/editCourse?idCourse=". $item->id;
         if($isStudent) {
             $url = "/viewCourse?idCourse=". $item->id;
+        } else
+        {
+            $url = "/editCourse?idCourse=". $item->id;
         }
         ?>
         <tr data-href="<?=$url?>">
@@ -105,13 +115,13 @@
             <div class="right">
                 <div class="course-icons">
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="<?=$url?>#files"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?></strong> файлов</a>
+                        <div class="ci"><i class="fa fa-file-text <?php if ($hasNewLearn) echo "red"; ?>"></i></div> <a href="<?=$url?>#files"><strong <?php if ($hasNewLearn) echo "class = 'red'"; ?> > <?php echo $learnMaterialCount; ?> файлов</strong></a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="<?=$url?>#learn"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?></strong> тестов</a>
+                        <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="<?=$url?>#learn"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?> тестов</strong></a>
                     </div>
                     <div class="course-icon">
-                        <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5</strong> сообщений</a>
+                        <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5 сообщений</strong> </a>
                     </div>
                 </div>
             </div>
