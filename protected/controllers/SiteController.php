@@ -140,11 +140,13 @@ class SiteController extends CController
         $this->render("mediateka");
     }
 
-    public function actionDeleteMedia($name)
+    public function actionDeleteMedia($id)
     {
-        $path = Yii::getPathOfAlias("webroot.media.".Yii::app()->user->id).DIRECTORY_SEPARATOR.$name;
-        if (is_file($path))
-            unlink($path);
+        $mat = LearnMaterial::model()->findByPk($id);
+        $mat->delete();
+//        $path = Yii::getPathOfAlias("webroot.media.".Yii::app()->user->id).DIRECTORY_SEPARATOR.$name;
+//        if (is_file($path))
+//            unlink($path);
     }
 
     public function actionPlugin($id)
@@ -211,6 +213,11 @@ class SiteController extends CController
     {
         $this->render('/webinar/view',array(
         ));
+    }
+
+    public function actionSearch($query)
+    {
+    //    $this->render('/site/searchResults');
     }
 
 

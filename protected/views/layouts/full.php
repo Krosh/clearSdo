@@ -92,8 +92,8 @@ $cs->scriptMap=array(
             </div>
             <div class="col-5 col-mb-9 right">
                 <div class="search">
-                    <form>
-                        <input type="text" placeholder="Поиск">
+                    <form action="/search" method="GET">
+                        <input type="text" name = "query" placeholder="Поиск">
                         <button type="submit"><i></i></button>
                     </form>
                 </div>

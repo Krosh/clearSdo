@@ -158,11 +158,12 @@ class LearnMaterial extends CActiveRecord
 
     public function beforeDelete()
     {
-        if ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT)
+        if ($this->category == MATERIAL_FILE || $this->category == MATERIAL_TORRENT)
         {
             $this->deleteDocument();
         }
         CoursesMaterial::model()->deleteAll("idMaterial = :id",array("id" => $this->id));
+        return parent::beforeDelete() ;
     }
 
     public function deleteDocument()
