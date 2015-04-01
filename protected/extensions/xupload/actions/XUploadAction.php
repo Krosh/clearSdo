@@ -242,13 +242,18 @@ class XUploadAction extends CAction {
         $learnMaterial->fileAttribute = CUploadedFile::getInstance($model, $this->fileAttribute);
         $learnMaterial->title = $learnMaterial->fileAttribute->getName();
         $learnMaterial->idAutor = Yii::app()->user->getId();
-        $learnMaterial->save();
-        $courseLearnMaterial = new CoursesMaterial();
-        $courseLearnMaterial->idCourse = Yii::app()->session["currentCourse"];
-        $courseLearnMaterial->idMaterial = $learnMaterial->id;
-        $courseLearnMaterial->zindex = CoursesMaterial::model()->count("idCourse = ".Yii::app()->session["currentCourse"])+1;
-        $courseLearnMaterial->dateAdd = date("Y-m-d H:i:s");
-        $courseLearnMaterial->save();
+        if ($learnMaterial->save())
+        {
+            $courseLearnMaterial = new CoursesMaterial();
+            $courseLearnMaterial->idCourse = Yii::app()->session["currentCourse"];
+            $courseLearnMaterial->idMaterial = $learnMaterial->id;
+            $courseLearnMaterial->zindex = CoursesMaterial::model()->count("idCourse = ".Yii::app()->session["currentCourse"])+1;
+            $courseLearnMaterial->dateAdd = date("Y-m-d H:i:s");
+            $courseLearnMaterial->save();
+        } else
+        {
+            throw new CHttpException(-1,"Слишком большой файл");
+        }
       }
 
     /**

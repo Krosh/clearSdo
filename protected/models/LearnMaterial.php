@@ -151,6 +151,10 @@ class LearnMaterial extends CActiveRecord
             $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
             $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name);
             $this->path = $name;
+            if (!is_file(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name))
+            {
+                return false;
+            }
             $this->dateAdd = date("Y-m-d H:i:s");
         }
         return true;

@@ -909,7 +909,6 @@ $(document).ready(function(){
 
     $("#XUploadForm-form").bind("fileuploaddragover",function(e)
     {
-        console.log(e);
         var dropZone = $('#editCourse-materials');
         var timeout = window.dropZoneTimeout;
         if (!timeout) {
@@ -955,6 +954,11 @@ $(document).ready(function(){
     {
         $('body').hideLoader();
         updateLearnMaterials(window.idCourse);
+    });
+    $("#XUploadForm-form").bind('fileuploadfail',function()
+    {
+        $('body').hideLoader();
+        alert("Произошла ошибка при загрузке файла");
     });
 
     if ($("#rightAnswers").length)
