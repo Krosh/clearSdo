@@ -12,6 +12,7 @@
  * @property string $avatar
  * @property string $lastVisit
  * @property string $curVisit
+ * @property string $info
  * @property bool $isAvatarModerated
  */
 class User extends CActiveRecord
@@ -36,6 +37,7 @@ class User extends CActiveRecord
 		return array(
 			array('login, password', 'length', 'max'=>45),
             array('isAvatarModerated', 'length', 'max'=>100),
+            array('info', 'length', 'max'=>200),
             array('fio', 'length', 'max'=>100),
 			array('role', 'length', 'max'=>15),
 			array('avatar', 'length', 'max'=>20),
@@ -69,6 +71,7 @@ class User extends CActiveRecord
 			'fio' => 'ФИО',
 			'role' => 'Роль',
 			'avatar' => 'Изображение',
+            'info' => 'Информация',
             'isAvatarModerated' => 'Аватар проверен',
 		);
 	}

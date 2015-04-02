@@ -466,8 +466,8 @@ class ControlMaterialController extends CController
         if(extension_loaded('zip'))
         {
             $labName = ControlMaterial::model()->findByPk($idControlMaterial)->title;
-            $zip = new ZipArchive(); // подгружаем библиотеку zip
-            $zip_name = $labName.".zip"; // имя файла
+            $zip = new ZipArchive();
+            $zip_name = $labName.".zip";
             if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
             {
                 return;

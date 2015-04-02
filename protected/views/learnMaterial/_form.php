@@ -72,7 +72,7 @@
     </script>
 
 
-	<div class="row buttons">
+	<div class="row buttons" style="float: right; margin-top: -30px; margin-right: 20px">
         <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue", "onclick" => "$(this).hide(); $('#learnMaterialLoader').show();addLearnMaterial($idCourse);return false")); ?>
 	</div>

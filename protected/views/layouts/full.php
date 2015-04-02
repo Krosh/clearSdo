@@ -93,7 +93,7 @@ $cs->scriptMap=array(
             <div class="col-5 col-mb-9 right">
                 <div class="search">
                     <form action="/search" method="GET">
-                        <input type="text" name = "query" placeholder="Поиск">
+                        <input type="text" name = "query" placeholder="Поиск" value="<?php echo $_GET['query']; ?>">
                         <button type="submit"><i></i></button>
                     </form>
                 </div>

@@ -206,9 +206,25 @@ class SiteController extends CController
         ));
     }
 
+    public function actionProfile($idUser)
+    {
+        $user = User::model()->findByPk($idUser);
+        if ($user == null)
+            // Перейти по ошибке
+            return;
+        $this->render('/site/profile', array('model' => $user));
+
+    }
+
     public function actionSearch($query)
     {
-    //    $this->render('/site/searchResults');
+        // Поиск по людям
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition('fio',$query);
+        $users = User::model()->findAll($criteria);
+
+
+        $this->render('/site/search', array('query' => $query, 'users' => $users));
     }
 
 

@@ -76,6 +76,15 @@
             </td>
         </tr>
         <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'info'); ?>
+                <?php echo $form->error($model,'info'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textArea($model,'info',array('cols'=>65,'maxlength'=>100)); ?>
+            </td>
+        </tr>
+        <tr>
             <td width="35%" style="vertical-align: middle;">
                 <?php if ($model->avatar != ""):?>
                     <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>

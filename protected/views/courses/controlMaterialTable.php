@@ -34,7 +34,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                 </td>
                 <td><?php echo $item->title ?></td>
                 <td colspan="3" style="text-align: center">
-                    <?php if ($item->get_files_from_students): ?>
+                    <?php if ($item->get_files_from_students && UserFileAnswer::model()->count("idControlMaterial = :id",array(':id' => $item->id))>0): ?>
                         <a href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswers', array('idControlMaterial' => $item->id)); ?>' target="_blank">Получить архив с работами</a>
                     <?php endif; ?>
                 </td>
