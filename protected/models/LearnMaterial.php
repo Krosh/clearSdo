@@ -14,6 +14,9 @@
 class LearnMaterial extends CActiveRecord
 {
 
+    public $ext = "";
+    public $courses = "";
+    public $showOnlyNoUsed = false;
     /**
 	 * @return string the associated database table name
 	 */
@@ -34,10 +37,10 @@ class LearnMaterial extends CActiveRecord
 		return array(
 			array('category, idAutor', 'numerical', 'integerOnly'=>true),
 			array('path', 'length', 'max'=>200),
-			array('title', 'length', 'max'=>45),
+			array('ext, courses, title', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, path, title, category, idAutor', 'safe', 'on'=>'search'),
+			array('showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,7 +52,8 @@ class LearnMaterial extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
         return array(
-//            'courses'=>array(self::MANY_MANY, 'Course', 'tbl_coursesmaterials(idMaterial,idCourse)'),
+            'courses'=>array(self::MANY_MANY, 'Course', 'tbl_coursesmaterials(idMaterial,idCourse)'),
+            'coursesMaterials'=>array(self::HAS_MANY, 'CoursesMaterial', 'idMaterial'),
             // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
         );
 	}
@@ -65,6 +69,7 @@ class LearnMaterial extends CActiveRecord
 			'title' => 'Заголовок',
 			'category' => 'Категория',
 			'idAutor' => 'Код автора',
+            'showOnlyNoUsed' => 'Показать только неиспользуемые',
 		);
 	}
 
@@ -89,8 +94,18 @@ class LearnMaterial extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('path',$this->path,true);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('category',$this->category);
-		$criteria->compare('idAutor',$this->idAutor);
+		$criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT));
+		$criteria->compare('idAutor',Yii::app()->user->getId());
+        if ($this->showOnlyNoUsed)
+        {
+            $criteria->with = array(
+                'coursesMaterials' => array(
+                    'joinType' => 'LEFT JOIN',
+                    'together' => true,
+                ),
+            );
+            $criteria->addCondition('coursesMaterials.idCourse IS NULL');
+        }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -20,36 +20,22 @@
             </div>
             <a href = "#" onclick="ajaxDeleteAllNonUsedMaterials()">Удалить все неиспользуемые материалы</a>
             <div>
-                <?php
-                $criteria = new CDbCriteria();
-                $criteria->compare("idAutor", Yii::app()->user->getId());
-                $criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT));
-                $data = LearnMaterial::model()->findAll($criteria);
-                $dataProvider=new CArrayDataProvider($data, array(
-                    'id'=>'name',
-                    'sort'=>array(
-                        'attributes'=>array(
-                            'name', 'ext',
-                        ),
-                    ),
-                    'pagination'=>array(
-                        'pageSize'=>10,
-                    ),
-                ));
-
-
-                ?>
+                <div class="search-form">
+                    <?php $this->renderPartial('/learnMaterial/_search',array(
+                        'model'=>$model,
+                    )); ?>
+                </div>
 
 
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                     'id'=>'media-grid',
-                    'dataProvider'=>$dataProvider,
+                    'dataProvider'=>$model->search(),
+                    'filter' => $model,
                     'columns'=>array(
                         array(
                             'header' => 'Название файла',
                             'name' => 'title',
                             'value' => '$data->getViewedTitle()',
-//                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
                         array(
                             'header' => 'Расширение файла',
@@ -61,7 +47,6 @@
                             'header' => 'Используется в курсах',
                             'name' => 'courses',
                             'value' => '$data->getCourses()',
-//                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
                         array(
                             'class'=>'CButtonColumn',

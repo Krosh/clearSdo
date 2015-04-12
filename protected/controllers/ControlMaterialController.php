@@ -490,5 +490,33 @@ class ControlMaterialController extends CController
         }
     }
 
+    public function actionGetUserAnswer($idControlMaterial, $idUser)
+    {
+        if(extension_loaded('zip'))
+        {
+            $labName = ControlMaterial::model()->findByPk($idControlMaterial)->title;
+            $zip = new ZipArchive();
+            $zip_name = $labName.".zip";
+            if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+            {
+                return;
+            }
+            $answers = UserFileAnswer::model()->findAll("idControlMaterial = :id AND idUser = :idUser",array(':id' => $idControlMaterial, ':idUser' => $idUser));
+            foreach ($answers as $item)
+            {
+                $userName = StringHelper::translitText($item->User->fio);
+                $fileName = $userName.".".strtolower(pathinfo($item->filename, PATHINFO_EXTENSION));
+                $zip->addFile($item->getFullPath(),$fileName); // добавляем файлы в zip архив
+            }
+            $zip->close();
+            if(file_exists($zip_name))
+            {
+                header('Content-type: application/zip');
+                header('Content-Disposition: attachment; filename="'.$zip_name.'"');
+                readfile($zip_name);
+                unlink($zip_name);
+            }
+        }
+    }
 
 }

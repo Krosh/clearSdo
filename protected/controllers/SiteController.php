@@ -137,7 +137,29 @@ class SiteController extends CController
     public function actionMediateka()
     {
         $this->noNeedJquery = true;
-        $this->render("mediateka");
+        $model=new LearnMaterial('search');
+        $model->unsetAttributes();  // clear any default values
+        if (Yii::app()->user->getState('mediaSearchParams') == null)
+        {
+            Yii::app()->user->setState('mediaSearchParams', array());
+        }
+        if(isset($_GET['LearnMaterial']))
+        {
+            Yii::app()->user->setState('mediaSearchParams', array_merge(Yii::app()->user->getState('mediaSearchParams'),$_GET['LearnMaterial']));
+            $model->attributes=Yii::app()->user->getState('mediaSearchParams');
+        }
+        else
+        {
+            $searchParams = Yii::app()->user->getState('mediaSearchParams');
+            if (isset($searchParams))
+            {
+                $model->attributes = $searchParams;
+            }
+        }
+
+        $this->render('mediateka',array(
+            'model'=>$model,
+        ));
     }
 
     public function actionPlugin($id)

@@ -33,6 +33,10 @@ $controlMaterials = ControlMaterial::model()->findAll($criteria2);
             <?php foreach ($controlMaterials as $material):?>
         <th style = "border: 1px solid black; padding: 5px">
 
+            <?php if ($material->get_files_from_students && UserFileAnswer::model()->count("idControlMaterial = :id",array(':id' => $material->id))>0): ?>
+                <a href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswers', array('idControlMaterial' => $material->id)); ?>' target="_blank">Получить архив с работами</a>
+            <?php endif; ?>
+
             <?php if ($material->is_autocalc):?>
                 <img src="../../../img/is_point.png" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>)">
                 <div><?php echo $material->title; ?></div>
@@ -54,18 +58,25 @@ $controlMaterials = ControlMaterial::model()->findAll($criteria2);
             </td>
             <?php foreach ($controlMaterials as $material):?>
                 <?php if ($material->is_point):?>
-                        <?php if ($material->is_autocalc): ?>
+                    <?php if ($material->is_autocalc): ?>
                         <td style = "border: 1px solid black; padding: 5px;">
                         <div>
                             <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                         </div>
-                     <?php else: ?>
+                    <?php else: ?>
                         <td style = "border: 1px solid black; padding: 5px; background-color: #0080CC">
-                        <div data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
-                                <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
-                            </div>
-                            <input data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id); ?>" onfocusout = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" style = "display: none; width: 40px">
+                        <?php
+                        $userFileAnswer = UserFileAnswer::model()->find("idUser = :idUser AND idControlMaterial = :idMaterial", array(':idUser' => $student->id, ':idMaterial' => $material->id));
+                        ?>
+                        <?php if ($userFileAnswer != null): ?>
+                            <a href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><img src = '/img/icon-mail.png'></a>
                         <?php endif; ?>
+
+                        <div data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
+                            <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
+                        </div>
+                        <input data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id); ?>" onfocusout = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" style = "display: none; width: 40px">
+                    <?php endif; ?>
 
                     </td>
                 <?php else: ?>

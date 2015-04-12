@@ -19,6 +19,7 @@ class User extends CActiveRecord
 {
 
     public $newAvatar = "";
+    public $showOnlyNoModerated = false;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -45,7 +46,7 @@ class User extends CActiveRecord
             array('curVisit', 'length', 'max'=>20),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,6 +74,7 @@ class User extends CActiveRecord
 			'avatar' => 'Изображение',
             'info' => 'Информация',
             'isAvatarModerated' => 'Аватар проверен',
+            'showOnlyNoModerated' => 'Показывать только с немодерированными аватарами',
 		);
 	}
 
@@ -104,6 +106,8 @@ class User extends CActiveRecord
 		$criteria->compare('fio',$this->fio,true);
 		$criteria->compare('role',$this->role,true);
 		$criteria->compare('avatar',$this->avatar,true);
+        if ($this->showOnlyNoModerated)
+            $criteria->compare('isAvatarModerated',0);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

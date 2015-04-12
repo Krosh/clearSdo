@@ -11,11 +11,6 @@
 ?>
 
 <?php
-$this->renderPartial('/site/top');
-?>
-
-
-<?php
 $listeners = Course::getGroups($course->id);
 ?>
     <script>

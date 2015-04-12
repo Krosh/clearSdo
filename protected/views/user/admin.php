@@ -17,6 +17,11 @@
             </div>
 
             <div>
+                <div class="search-form">
+                    <?php $this->renderPartial('_search',array(
+                        'model'=>$model,
+                    )); ?>
+                </div>
 
 
                 <?php $this->widget('zii.widgets.grid.CGridView', array(

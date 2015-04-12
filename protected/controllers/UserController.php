@@ -144,8 +144,24 @@ class UserController extends CController
         $this->noNeedJquery = true;
 		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
+        if (Yii::app()->user->getState('userSearchParams') == null)
+        {
+            Yii::app()->user->setState('userSearchParams', array());
+        }
+
+        if(isset($_GET['User']))
+        {
+            Yii::app()->user->setState('userSearchParams', array_merge(Yii::app()->user->getState('userSearchParams'),$_GET['User']));
+            $model->attributes=Yii::app()->user->getState('userSearchParams');
+        }
+        else
+        {
+            $searchParams = Yii::app()->user->getState('userSearchParams');
+            if (isset($searchParams))
+            {
+                $model->attributes = $searchParams;
+            }
+        }
 
 		$this->render('admin',array(
 			'model'=>$model,
