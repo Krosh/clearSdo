@@ -88,21 +88,25 @@ $message = Yii::app()->user->getFlash("message");
             </td>
         </tr>
 
-
         <tr>
-            <td width="35%" style="vertical-align: middle;">
+            <td colspan="2">
                 <?php if ($model->avatar != ""):?>
                     <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
                 <?php else: ?>
                     <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
                 <?php endif; ?>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td width="35%" style="vertical-align: middle;">
                 <?php //echo $form->labelEx($model,'avatar'); ?>
-                <?php echo $form->error($model,'avatar'); ?>
+                <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->fileField($model,'newAvatar'); ?>
-                <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
-                <?php echo $form->checkBox($model,'isAvatarModerated'); ?>
+<!--                --><?php /*echo $form->fileField($model,'newAvatar'); */?>
+                <?php echo $form->dropDownList($model,'isAvatarModerated',Yii::app()->params['avatarStatuses']); ?>
             </td>
         </tr>
 

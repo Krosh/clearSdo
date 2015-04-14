@@ -22,6 +22,10 @@
                             'id'=>'term-grid',
                             'dataProvider'=>$model->search(),
                             'filter'=>$model,
+                            'htmlOptions' => array(
+                                'class' => 'table green',
+                                'style' => 'width: 100%',
+                            ),
                             'columns'=>array(
                                 'title',
                                 array(

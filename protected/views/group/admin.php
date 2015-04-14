@@ -25,6 +25,10 @@
                     'id'=>'group-grid',
                     'dataProvider'=>$model->search(),
                     'filter'=>$model,
+                    'htmlOptions' => array(
+                        'class' => 'table green',
+                        'style' => 'width: 100%',
+                    ),
                     'columns'=>array(
                         'Title',
                         array(

@@ -24,10 +24,28 @@
                 </div>
 
 
+                <!--TODO :: Перенести эти стили в css-->
+                <style>
+                    .table .items
+                    {
+                        width: 100%;
+                        text-align: center;
+                    }
+                    .table .filters
+                    {
+                        background-color: #ECF0F1;
+                    }
+                </style>
+
+
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                     'id'=>'user-grid',
                     'dataProvider'=>$model->search(),
                     'filter'=>$model,
+                    'htmlOptions' => array(
+                        'class' => 'table green',
+                        'style' => 'width: 100%',
+                    ),
                     'columns'=>array(
                         'fio',
                         array(
@@ -35,7 +53,6 @@
                             'value' => '$data->getRussianRole()',
                             'filter' => Yii::app()->params['roles'],
                         ),
-                        'avatar',
                         'login',
                         array(
                             'class'=>'CButtonColumn',

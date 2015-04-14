@@ -73,7 +73,7 @@ class User extends CActiveRecord
 			'role' => 'Роль',
 			'avatar' => 'Изображение',
             'info' => 'Информация',
-            'isAvatarModerated' => 'Аватар проверен',
+            'isAvatarModerated' => 'Статус проверки аватара',
             'showOnlyNoModerated' => 'Показывать только с немодерированными аватарами',
 		);
 	}

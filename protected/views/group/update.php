@@ -44,7 +44,7 @@
                                     'deleteConfirmation' => false,
                                     'buttons' => array(
                                         'update' => array(
-                                            'url' => 'Yii::app()->createUrl("/user/update?id=$data->id")',
+                                            'url' => 'Yii::app()->createUrl("/user/update?id=$data->id&goToGroup='.$model->id.'")',
                                         ),
                                         'delete' => array(
                                             'url' => 'Yii::app()->createUrl("/group/deleteFromGroup?idStudent=$data->id&idGroup='.$model->id.'")',
