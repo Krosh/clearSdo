@@ -1,0 +1,262 @@
+@import url("bootstrap.min.css");
+@import url("http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=cyrillic-ext,latin-ext,latin,cyrillic");
+@import url("/css/fonts/fonts.css");
+
+@func: cubic-bezier(0.250, 0.100, 0.250, 1.000);
+.transition(@time: .3s) {
+	-webkit-transition: all @time @func;
+	-moz-transition: all @time @func;
+	-o-transition: all @time @func;
+	transition: all @time @func;
+}
+
+@din: 'pf_dindisplay_probold', sans-serif;
+@pt: 'PT Sans', sans-serif;
+
+@lightblue: #ecf0f1;
+@lightbluehover: #434e54;
+@blue: #2c3e50;
+@red: #e74c3c;
+@gray: #959595;
+@green: #00b16a;
+
+@ahover: lighten(@blue, 35%);
+
+// миксины
+.din {
+    font-family: @din;
+    font-weight: bold;
+}
+
+.dinUp {
+    .din;
+    text-transform: uppercase;
+}
+
+.pt {
+    font-family: @pt;
+}
+
+body {
+	.pt;
+	font-size: 14px;
+	background: #e1e7ea url("../img/bg-small-page.jpg") no-repeat center center;
+}
+
+body, html {
+	min-height: 100%;
+	width: 100%;
+}
+
+.messages-wrapper {
+	display: table;
+	width: 100%;
+	height: 100vh;
+
+	.outer {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	.inner {
+		width: 100%;
+		height: 90vh;
+	}
+}
+
+header {
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+
+	.logo {
+	    display: inline-block;
+	    padding: 25px 0;
+	    
+	    img {
+	        display: inline-block;
+	        vertical-align: middle;
+	    }
+
+	    span {
+	        .dinUp;
+	        color: @blue;
+	        font-size: 26px;
+	        margin-left: 7px;
+	        line-height: 13px;
+	        display: inline-block;
+	        vertical-align: middle;
+	    }
+	    
+	    a {
+	        text-decoration: none;
+	    }
+	}
+}
+
+.mrkp-tbl {
+	width: 100%;
+	height: 100%;
+	border-radius: 2px;
+	box-shadow: 0 0 15px 2px #dadee1;
+
+	.leftside {
+		width: 25%;
+		vertical-align: top;
+		border-right: 1px solid #e5e5e5;
+		background: #f2f2f2;
+		position: relative;
+	}
+
+	.rightside {
+		width: 75%;
+		height: 100%;
+		vertical-align: top;
+		background: #f7f6f5;
+		position: relative;
+	}
+
+	.bottomform {
+		background: #f2f2f2;
+		border-top: 1px solid #e5e5e5;
+		position: relative;
+		padding: 30px;
+
+		form {
+			textarea {
+				width: 100%;
+				min-height: 100px;
+				display: block;
+				border: 1px solid #e8e8e7;
+				border-radius: 2px;
+				resize: none;
+			}
+		}
+	}
+}
+
+#dialogs {
+	width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-bottom: 70px;
+	max-height: 75% !important;
+
+	.dialog {
+		padding: 18px 12px 18px 12px;
+		border-bottom: 1px solid #e5e5e5;
+		border-left: 3px solid transparent;
+
+		.transition();
+
+		a.avatar {
+			width: 50px;
+			height: 50px;
+			background-size: cover;
+			border-radius: 50%;
+			background-repeat: no-repeat;
+			background-position: center center;
+			display: block;
+		}
+
+		a {
+			color: #000;
+			font-style: 14px;
+			font-weight: bold;
+		}
+
+		p {
+			color: #5d5c5c;
+		}
+
+		&.active {
+			border-left-color: #2980b9;
+			background: #f7f6f5;
+		}
+	}
+}
+
+.actions {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	z-index: 1;
+
+	padding-bottom: 15px;
+}
+
+.outline-btn {
+	padding: 4px 15px;
+	color: #2980b9;
+	border: 2px solid #2980b9;
+	border-radius: 5px;
+	display: inline-block;
+	text-transform: uppercase;
+	.din;
+	.transition(.1s);
+
+	&:hover {
+		color: #fff;
+		background: #2980b9;
+		text-decoration: none;
+	}
+}
+
+.btn {
+	padding: 4px 15px;
+	background: #2980b9;
+	color: #fff;
+	border: 2px solid #2980b9;
+	border-radius: 5px;
+	display: inline-block;
+	text-transform: uppercase;
+	.din;
+	.transition(.1s);
+
+	&:hover {
+		color: #2980b9;
+		background: #fff;
+		text-decoration: none;
+	}
+}
+
+#messages {
+	width: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 100% !important;
+
+	.message {
+		padding: 15px;
+
+		a.avatar {
+			width: 50px;
+			height: 50px;
+			background-size: cover;
+			border-radius: 50%;
+			background-repeat: no-repeat;
+			background-position: center center;
+			display: block;
+		}
+
+		.link {
+			font-size: 15px;
+			color: #000;
+			font-weight: bold;
+		}
+
+		.date {
+			color: #8a8a8a;
+			padding-left: 15px;
+		}
+
+		.text {
+			color: #272626;
+		}
+	}
+}
+
+.right {
+	text-align: right;
+	margin-top: 10px;
+}
