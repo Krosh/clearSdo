@@ -22,4 +22,21 @@ class DateHelper {
         return mktime($timeArray[0],$timeArray[1],$timeArray[2],$dayArray[1],$dayArray[2],$dayArray[0]);
     }
 
+    public static function getDifference($date1, $date2)
+    {
+        $time1 = strtotime($date1);
+        $time2 = strtotime($date2);
+        $difference = $time2-$time1;
+        if ($difference<60)
+            return "Только что";
+        if ($difference < 120)
+            return "Минуту назад";
+        if ($difference < 3600)
+            return (floor($difference/60))." минут(ы) назад";
+        if ($difference < 7200)
+            return "Час назад";
+//        if ($difference< 60*60*24)
+            return (floor($difference/3600))." час(ов) назад";
+    }
+
 }

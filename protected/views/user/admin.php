@@ -26,6 +26,10 @@
 
                 <!--TODO :: Перенести эти стили в css-->
                 <style>
+                    .table .summary
+                    {
+                        display: none;
+                    }
                     .table .items
                     {
                         width: 100%;

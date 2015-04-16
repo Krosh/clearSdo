@@ -50,7 +50,7 @@ class WebUser extends CWebUser {
 
     function getAvatar() {
         if ($user = $this->getModel()) {
-            return $user->avatar;
+            return $user->getAvatarPath();
         }
     }
 

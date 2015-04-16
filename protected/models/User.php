@@ -82,6 +82,13 @@ class User extends CActiveRecord
     {
         return Yii::app()->params["roles"][$this->role];
     }
+
+    public function getShortFio()
+    {
+        $names = explode(" ",$this->fio);
+        return $names[0]." ".substr($names[1],0,2).". ".substr($names[2],0,2).".";
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -113,6 +120,15 @@ class User extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getAvatarPath()
+    {
+        $defaultAvatarPath = "/img/avatar-default.png";
+        if ($this->isAvatarModerated == 1)
+            return "/avatars/".$this->avatar;
+        else
+            return $defaultAvatarPath;
+    }
 
 
     protected function beforeSave(){

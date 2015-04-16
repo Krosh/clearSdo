@@ -1,23 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "tbl_answers".
+ * This is the model class for table "tbl_messages".
  *
- * The followings are the available columns in table 'tbl_answers':
+ * The followings are the available columns in table 'tbl_messages':
  * @property integer $id
- * @property string $content
- * @property integer $right
- * @property integer $zindex
- * @property integer $question
+ * @property integer $idAutor
+ * @property integer $idRecepient
+ * @property string $dateSend
+ * @property integer $status
+ * @property string $text
  */
-class Answer extends CActiveRecord
+class Message extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_answers';
+		return 'tbl_messages';
 	}
 
 	/**
@@ -28,11 +29,11 @@ class Answer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-//			array('content, right', 'required'),
-			array('right, zindex, question', 'numerical', 'integerOnly'=>true),
+			array('idAutor, idRecepient, status', 'numerical', 'integerOnly'=>true),
+			array('text, dateSend', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, content, right, zindex, question', 'safe', 'on'=>'search'),
+			array('id, idAutor, idRecepient, dateSend, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,10 +55,10 @@ class Answer extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'content' => 'Текст ответа',
-			'right' => 'Правильность',
-			'zindex' => 'Zindex',
-			'question' => 'Question',
+			'idAutor' => 'Id Autor',
+			'idRecepient' => 'Id Recepient',
+			'dateSend' => 'Date Send',
+			'status' => 'Status',
 		);
 	}
 
@@ -80,30 +81,30 @@ class Answer extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('content',$this->content,true);
-		$criteria->compare('right',$this->right);
-		$criteria->compare('zindex',$this->zindex);
-		$criteria->compare('question',$this->question);
+		$criteria->compare('idAutor',$this->idAutor);
+		$criteria->compare('idRecepient',$this->idRecepient);
+		$criteria->compare('dateSend',$this->dateSend,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
+    public function beforeSave()
+    {
+        $this->dateSend = date("Y-m-d H:i:s");
+        return parent::beforeSave();
+    }
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Answer the static model class
+	 * @return Message the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-//    public function beforeSave()
-//    {
-//        $this->content = str_replace("~","",$this->content)."~";
-//        return true;
-//    }
 }
