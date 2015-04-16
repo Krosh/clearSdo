@@ -11,7 +11,7 @@
 <div class="bottomform clearfix">
 <form action="sendMessage"  METHOD = "POST" id="sendmessage" onsubmit="sendMessage(); return false">
     <input type="hidden" name = "idUser">
-    <textarea name="text" placeholder="Введите сообщение..."></textarea>
+    <textarea id = "messageTextArea" name="text" placeholder="Введите сообщение..."></textarea>
     <div class="right"><button type="submit" class="btn"> Отправить</button></div>
 </form>
 </div>

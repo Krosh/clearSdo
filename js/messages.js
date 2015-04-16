@@ -56,6 +56,7 @@ function sendMessage()
         },
         success: function(data)
         {
+            $("#messageTextArea").val("");
             getDialogWithUser($("input[name=idUser]").val());
         }
     });
