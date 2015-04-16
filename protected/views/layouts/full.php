@@ -108,9 +108,15 @@ $cs->scriptMap=array(
                             <a href="#"><i class="lang-cn"></i></a>
                         </div>
                     </div>
-                    <a href="#" class="mails">
+                    <a href="/message/index" class="mails">
                         <i class="mail"></i>
-                        <span>2</span>
+                        <span>
+                            <?php
+                                $sql = "SELECT COUNT(id) FROM `tbl_messages` WHERE STATUS = 0 AND idRecepient = ".Yii::app()->user->id;
+                                $command = Yii::app()->db->createCommand($sql);
+                                echo $command->queryScalar();
+                            ?>
+                        </span>
                     </a>
                     <div class="profile dropdown">
                         <?php

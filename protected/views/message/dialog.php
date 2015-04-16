@@ -1,5 +1,5 @@
 <?php foreach ($messages as $item):?>
-<div class="message">
+    <div class="message <?php if ($item->status == 0) echo "unread"?>">
     <?php
         if ($item->idAutor == Yii::app()->user->getId())
             $autor = Yii::app()->user->getModel();
@@ -16,4 +16,11 @@
         </div>
     </div>
 </div>
+    <?php
+        if ($item->idRecepient == Yii::app()->user->id && $item->status == 0)
+        {
+            $item->status = 1;
+            $item->save();
+        }
+    ?>
 <?php endforeach; ?>

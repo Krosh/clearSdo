@@ -152,10 +152,10 @@ header {
   max-height: 500px !important;
 
   .dialog {
+    cursor: pointer;
     padding: 18px 12px 18px 12px;
     border-bottom: 1px solid #e5e5e5;
     border-left: 3px solid transparent;
-    cursor: pointer;
 
     .transition();
 
@@ -167,6 +167,7 @@ header {
       background-repeat: no-repeat;
       background-position: center center;
       display: block;
+      border: 2px solid transparent;
     }
 
     a {
@@ -182,6 +183,29 @@ header {
     &.active {
       border-left-color: #2980b9;
       background: #f7f6f5;
+    }
+
+    .new {
+      display: none;
+    }
+
+    &.unread {
+      font-weight: bold;
+
+      a.avatar {
+        border-color: @red;
+      }
+
+      .new {
+        display: inline-block;
+        border-radius: 3px;
+        padding: 2px 5px;
+        background: @red;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 100;
+        margin-top: 6px;
+      }
     }
   }
 }
@@ -264,9 +288,12 @@ header {
     .text {
       color: #272626;
     }
+
+    &.unread {
+      background: #eee;
+    }
   }
 }
-
 
 .right {
   text-align: right;

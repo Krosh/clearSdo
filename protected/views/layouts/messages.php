@@ -9,15 +9,23 @@
 <body>
 
 <div class="container">
-<div class="messages-wrapper">
-<div class="outer">
-<?php echo $content; ?>
-</div>
-</div>
-</div>
 
-<script src="../../js/jquery-2.1.1.min.js"></script>
-<script src="../../js/jquery-ui.js"></script>
-<script src="../../js/messages.js"></script>
+    <div class="mrkp-tbl">
+        <div class="leftside clearfix">
+            <header>
+                <div class="logo">
+                    <a href="/">
+                        <img src="../../img/logo-small@2x.png" height="40" width="40" alt="" data-retina="">
+                        <span>Стимул</span>
+                    </a>
+                </div>
+            </header>
+       <?php echo $content;?>
+    </div>
+
+</div>
+    <script src="../../js/jquery-2.1.1.min.js"></script>
+    <script src="../../js/jquery-ui.js"></script>
+    <script src="../../js/messages.js"></script>
 </body>
 </html>

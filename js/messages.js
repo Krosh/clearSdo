@@ -13,15 +13,17 @@ function getDialogWithUser(idUser)
         type: 'POST',
         url: '/message/getDialogWithUser',
         data: {idUser: idUser},
+        dataType:'json',
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         },
         success: function(data)
         {
-            $("#messages").html(data);
+            $("#messages").html(data.text);
             var block = document.getElementById("messages");
             block.scrollTop = block.scrollHeight;
+            $("input[name=idUser]").val(idUser);
         }
     });
 }
@@ -38,7 +40,8 @@ function updateDialogs()
         success: function(data)
         {
             $("#dialogs").html(data);
-            getDialogWithUser($("input[name=idUser]").val());
+            if ($("input[name=idUser]").val()>0)
+                getDialogWithUser($("input[name=idUser]").val());
         }
     });
 }
