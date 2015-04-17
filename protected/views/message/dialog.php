@@ -11,7 +11,9 @@
             <a href="#" class="avatar" style="background-image: url(<?php echo $autor->getAvatarPath(); ?>)"></a>
         </div>
         <div class="col-xs-11">
-            <a href="#" class="link"><?php echo $autor->getShortFio(); ?></a> <span class="date"><?php echo DateHelper::getDifference($item->dateSend,date("Y-m-d H:i:s")); ?></span>
+            <a href="#" class="link"><?php echo $autor->getShortFio(); ?></a> <span class="date">
+                <?php echo DateHelper::getDifference($item->dateSend,date("Y-m-d H:i:s")); ?>
+            </span>
             <p class="text"><?php echo $item->text?></p>
         </div>
     </div>

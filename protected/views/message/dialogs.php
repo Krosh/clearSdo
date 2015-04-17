@@ -19,7 +19,7 @@
                 <p>
                     <span class="preview"><?php echo $item["message"]->text; ?></span>
                     <br>
-                    <span class="date"><?php echo DateHelper::getDifference($item["message"]->dateSend,date("Y-m-d H:i:s")); ?></span>
+                    <span class="date"><?php if ($item["message"] != null) echo DateHelper::getDifference($item["message"]->dateSend,date("Y-m-d H:i:s")); ?></span>
                 </p>
             </div>
         </div>
