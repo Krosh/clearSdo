@@ -33,6 +33,8 @@ class MessageController extends CController
 
     public function actionGetDialogs()
     {
+
+        $startDialog = $_POST["startDialog"];
         $sql = "SELECT DISTINCT idRecepient as 'id' FROM `tbl_messages` WHERE idAutor = ".Yii::app()->user->getId()."
                 UNION
                 SELECT DISTINCT idAutor as 'id' FROM `tbl_messages` WHERE idRecepient = ".Yii::app()->user->getId();
@@ -56,15 +58,34 @@ class MessageController extends CController
         for ($i = 0; $i<count($items); $i++)
             for ($j = $i+1; $j<count($items); $j++)
             {
-                if (strtotime($items[$i]["message"]->dateSend) < strtotime($items[$j]["message"]->dateSend))
+                if ((strtotime($items[$i]["message"]->dateSend) < strtotime($items[$j]["message"]->dateSend) && $items[$i]["user"]->id != $startDialog) || ($startDialog!= -1 && $items[$j]["user"]->id == $startDialog))
                 {
                     $t = $items[$i];
                     $items[$i] = $items[$j];
                     $items[$j] = $t;
                 }
             }
-
-        $this->renderPartial("dialogs", array("items" => $items));
+        if ($startDialog>-1 && (count($items) == 0 || $items[0]["user"]->id != $startDialog))
+        {
+            $user = User::model()->findByPk($startDialog);
+            $criteria = new CDbCriteria();
+            $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$idUser,'OR');
+            $criteria->addCondition("idAutor = ".$idUser." AND idRecepient = ".Yii::app()->user->getId(),'OR');
+            $criteria->order = "dateSend DESC";
+            $criteria->limit = 1;
+            $lastMessage = Message::model()->find($criteria);
+            $criteria = new CDbCriteria();
+            $criteria->addCondition("(idAutor = $idUser) AND (status = 0)");
+            $count = Message::model()->count($criteria);
+            $item = array("user" => $user, "message" => $lastMessage, "hasNonReadable" => $count>0);
+            $items = array_merge(array($item),$items);
+        }
+        if (count($items)>0)
+            $idStartDialog = $items[0]["user"]->id;
+        else
+            $idStartDialog = -1;
+        $text = $this->renderPartial("dialogs", array("items" => $items),true);
+        echo json_encode(array("text" => $text, "idDialog" => $idStartDialog));
 
     }
 
@@ -106,9 +127,9 @@ class MessageController extends CController
         }
     }
 
-    public function actionIndex()
+    public function actionIndex($startDialog = -1)
     {
-        $this->render('view');
+        $this->render('view', array("startDialog" => $startDialog));
 
     }
 

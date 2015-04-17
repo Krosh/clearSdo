@@ -79,7 +79,7 @@
 
                     $arTeachers = array();
                     foreach ($teachers as $teacher){
-                        array_push($arTeachers, "<a href = '#'>".$teacher->fio."</a>");
+                        array_push($arTeachers, "<a href = '".$this->createUrl("/message/index", array("startDialog" => $teacher->id))."'>".$teacher->fio."</a>");
                     }
 
                     echo implode(', ', $arTeachers);

@@ -9,6 +9,7 @@ function getDialogWithUser(idUser)
 {
     $(".dialog.active").removeClass("active");
     $(".dialog[data-idUser="+idUser+"]").addClass("active");
+    $(".dialog[data-idUser="+idUser+"]").removeClass("noread");
     $.ajax({
         type: 'POST',
         url: '/message/getDialogWithUser',
@@ -33,15 +34,18 @@ function updateDialogs()
     $.ajax({
         type: 'POST',
         url: '/message/getDialogs',
+        data: {startDialog: $("input[name=startDialog]").val()},
+        dataType: 'json',
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         },
         success: function(data)
         {
-            $("#dialogs").html(data);
-            if ($("input[name=idUser]").val()>0)
-                getDialogWithUser($("input[name=idUser]").val());
+            $("input[name=startDialog]").val(-1);
+            $("#dialogs").html(data.text);
+            if (data.idDialog>0)
+                getDialogWithUser(data.idDialog);
         }
     });
 }
