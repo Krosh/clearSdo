@@ -9,10 +9,6 @@
 /* @var $model Course */
 ?>
 
-<?php
-$this->renderPartial('/site/top');
-?>
-
 
 <?php
 $listeners = Course::getGroups($model->id);
@@ -30,10 +26,7 @@ $listeners = Course::getGroups($model->id);
                     <?php $this->renderPartial("/question/_form",array("questionModel" => $model)); ?>
 
                 </div>
-                </div>
-                <?php
-                $this->renderPartial("/site/bottom");
-                ?>
+            </div>
             <div style="display: none">
                 <?php
                 $mas = array();
@@ -67,5 +60,5 @@ $listeners = Course::getGroups($model->id);
                     'htmlOptions' => array('size' => 30),
                 ));
                 ?>
-                </div>
+            </div>
 

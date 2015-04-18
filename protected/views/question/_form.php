@@ -37,7 +37,7 @@
 			</td>
 			<td width="70%" class="horizontal-buttons-list clearfix">
 				<br><br>
-				<?php echo $form->radioButtonList($questionModel,'type',$categories); ?>
+				<?php echo $form->radioButtonList($questionModel,'type',$categories, array('onchange' => 'updateAnswers(window.idQuestion)')); ?>
 				<?php echo $form->error($questionModel,'type'); ?>
 			</td>
 		</tr>

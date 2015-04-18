@@ -79,7 +79,8 @@ class AnswerController extends CController
     public function actionGetMaterials()
     {
         $idQuestion = $_POST["idQuestion"];
-        $this->renderPartial("/answer/answerTable", array("idQuestion" => $idQuestion));
+        $questionType = $_POST["questionType"];
+        $this->renderPartial("/answer/answerTable", array("idQuestion" => $idQuestion, "questionType" => $questionType));
     }
 
     public function actionChangeAnswer()

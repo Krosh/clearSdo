@@ -34,6 +34,7 @@ return array(
     'params' => array(
         'images' => array("png","bmp","jpg","jpeg","gif"),
         'timezone' => "Asia/Omsk",
+        'avatarStatuses' => array('Проходит модерацию', 'Одобрен модератором', 'Заблокирован модератором'),
         'roles' => array (ROLE_ADMIN => 'Администратор', ROLE_STUDENT => 'Студент', ROLE_TEACHER => 'Преподаватель'),
     ),
 

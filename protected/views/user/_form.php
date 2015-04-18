@@ -47,52 +47,27 @@ $message = Yii::app()->user->getFlash("message");
 
     <table width="80%">
         <tr>
-            <td width="35%" style="vertical-align: middle;">
-                <?php echo $form->labelEx($model,'login'); ?>
+            <td width="35%">
+                <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
+                <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
+                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                    <?php echo CHTML::label("Старый пароль:","oldPassword")?>
+                    <?php echo CHTML::label("Новый пароль:","newPassword")?>
+                    <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
+                </div>
+
             </td>
             <td width="65%" class="input-full-width">
-                <?php if ($model->isNewRecord):?>
-                    <?php echo $form->textField($model,'login'); ?>
-                <?php else: ?>
-                    <?php echo $model->login; ?>
-                <?php endif; ?>
+                <br>
+                <br>
+                <br>
+                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                    <?php echo CHTML::passwordField("oldPassword",""); ?>
+                    <?php echo CHTML::passwordField("newPassword",""); ?>
+                    <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
+                </div>
             </td>
         </tr>
-
-
-        <?php if ($model->isNewRecord):?>
-            <tr>
-                <td width="35%">
-                    <?php echo $form->labelEx($model,'password'); ?>
-                </td>
-                <td width="65%" class="input-full-width">
-                    <?php echo $form->textField($model,'password'); ?>
-                </td>
-            </tr>
-        <?php else: ?>
-            <tr>
-                <td width="35%">
-                    <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
-                    <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
-                    <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                        <?php echo CHTML::label("Старый пароль:","oldPassword")?>
-                        <?php echo CHTML::label("Новый пароль:","newPassword")?>
-                        <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
-                    </div>
-
-                </td>
-                <td width="65%" class="input-full-width">
-                    <br>
-                    <br>
-                    <br>
-                    <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                        <?php echo CHTML::passwordField("oldPassword",""); ?>
-                        <?php echo CHTML::passwordField("newPassword",""); ?>
-                        <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
-                    </div>
-                </td>
-            </tr>
-        <?php endif; ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'fio'); ?>
@@ -130,13 +105,13 @@ $message = Yii::app()->user->getFlash("message");
                 <?php echo $form->labelEx($model,'isAvatarModerated'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <!--                --><?php /*echo $form->fileField($model,'newAvatar'); */?>
+<!--                --><?php /*echo $form->fileField($model,'newAvatar'); */?>
                 <?php echo $form->dropDownList($model,'isAvatarModerated',Yii::app()->params['avatarStatuses']); ?>
             </td>
         </tr>
 
 
-    </table>
+        </table>
 
 
     <div class="row buttons">

@@ -33,7 +33,6 @@ class MessageController extends CController
 
     public function actionGetDialogs()
     {
-
         $startDialog = $_POST["startDialog"];
         $sql = "SELECT DISTINCT idRecepient as 'id' FROM `tbl_messages` WHERE idAutor = ".Yii::app()->user->getId()."
                 UNION
@@ -51,7 +50,7 @@ class MessageController extends CController
             $criteria->limit = 1;
             $lastMessage = Message::model()->find($criteria);
             $criteria = new CDbCriteria();
-            $criteria->addCondition("(idAutor = $idUser) AND (status = 0)");
+            $criteria->addCondition("idRecepient = ".Yii::app()->user->id." AND idAutor = $idUser AND status = 0");
             $count = Message::model()->count($criteria);
             $items[] = array("user" => $user, "message" => $lastMessage, "hasNonReadable" => $count>0);
         }
@@ -107,11 +106,12 @@ class MessageController extends CController
     {
         $criteria = new CDbCriteria();
         $idUser = $_POST["idUser"];
-        $criteria->addCondition("idAutor = $idUser OR idRecepient = $idUser");
+        $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$idUser,'OR');
+        $criteria->addCondition("idAutor = ".$idUser." AND idRecepient = ".Yii::app()->user->getId(),'OR');
         $criteria->order = "dateSend DESC";
         $criteria->limit = 1;
         $message = Message::model()->find($criteria);
-        if ($message->idRecepient == $idUser)
+        if ($message != null && $message->idRecepient == $idUser)
         {
             $message->status = 0;
             $message->text.= "<br>".$_POST["text"];

@@ -571,9 +571,10 @@ function deleteQuestion(idQuestion,idControlMaterial)
 function updateAnswers(idQuestion)
 {
     // Обновляем окно
+    var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
     $.ajax({
         url: '/answer/getMaterials',
-        data: {idQuestion: idQuestion},
+        data: {idQuestion: idQuestion, questionType: questionType},
         type: "POST",
         success: function(data)
         {
