@@ -6,7 +6,7 @@ class MessageController extends CController
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/messages';
+    public $layout='//layouts/standart_with_messages';
     public $noNeedJquery = false;
 
     /**
