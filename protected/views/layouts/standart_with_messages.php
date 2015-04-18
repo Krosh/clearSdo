@@ -13,7 +13,7 @@ $cs->scriptMap=array(
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Стимул</title>
-    <link rel="stylesheet/less" type="text/css" href="../../css/messages.less" />
+    <link rel="stylesheet/less" type="text/css" href="/css/messages.less" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script src="//cdn.jsdelivr.net/less/1.7.3/less.min.js"></script>
     <!-- <script src="js/less-1.7.5.min.js"></script> -->
@@ -26,8 +26,8 @@ $cs->scriptMap=array(
     <link rel="apple-touch-icon" sizes="144x144" href="../../img/favicons/apple-touch-icon-144x144.png" />
 </head>
 <body>
-<header style="margin-top:-10px; height: 70px">
-    <div class="container">
+<header >
+    <div class="container" style="width: 100%">
         <div class="col-group">
             <div class="col-7 col-mb-3">
                 <div class="logo">
@@ -92,7 +92,7 @@ $cs->scriptMap=array(
                     </div>
                 </div>
             </div>
-            <div class="col-5 col-mb-9 right">
+            <div class="col-5 col-mb-9 right" style="margin-top: -3px">
                 <div class="search">
                     <form action="/search" method="GET">
                         <input type="text" name = "query" placeholder="Поиск" value="<?php echo $_GET['query']; ?>">
