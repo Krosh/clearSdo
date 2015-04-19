@@ -199,7 +199,7 @@ class ControlMaterial extends CActiveRecord
 		$criteria->compare('access',$this->access);
 		$criteria->compare('access_date',$this->access_date,true);
 		$criteria->compare('show_answers',$this->show_answers);
-		$criteria->compare('is_point',$this->is_point);
+		$criteria->compare('is_point',0);
 		$criteria->compare('calc_mode',$this->calc_mode);
 		$criteria->compare('idAutor',Yii::app()->user->getId());
 

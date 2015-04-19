@@ -62,7 +62,7 @@
                     <div class="more-menu-links">
                         <a href="<?php echo $this->createUrl("/resources/learnMaterials"); ?>">Обучающие материалы</a>
                         <a href="<?php echo $this->createUrl("/resources/courses")?>"><span>Курсы</span></a>
-                        <a href="<?php echo $this->createUrl("/resources/controlMaterials")?>"><span>Периоды</span></a>
+                        <a href="<?php echo $this->createUrl("/resources/controlMaterials")?>"><span>Контрольные материалы</span></a>
                     </div>
                 </div>
             </div>
