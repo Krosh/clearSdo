@@ -27,12 +27,17 @@
                                 'style' => 'width: 100%',
                             ),
                             'columns'=>array(
-                                'title',
                                 array(
+                                    'name' => 'title',
+                                    'filter' => CHtml::activeTextField($model,"title", array("placeholder" => "Название")),
+                                ),
+                                array(
+                                    'filter' => '',
                                     'name' => 'start_date',
                                     'value' => 'DateHelper::getRussianDateFromDatabase($data->start_date)',
                                 ),
                                 array(
+                                    'filter' => '',
                                     'name' => 'end_date',
                                     'value' => 'DateHelper::getRussianDateFromDatabase($data->end_date)',
                                 ),

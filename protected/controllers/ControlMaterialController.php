@@ -297,6 +297,19 @@ class ControlMaterialController extends CController
         return $model;
     }
 
+    public function actionFullDeleteMaterial($id)
+    {
+        $mat = ControlMaterial::model()->findByPk($id);
+        if ($mat->idAutor != Yii::app()->user->getId())
+            return;
+        $criteria = new CDbCriteria();
+        $criteria->compare("idControlMaterial",$id);
+        CoursesControlMaterial::model()->deleteAll($criteria);
+        QuestionsControlMaterial::model()->deleteAll($criteria);
+        UserControlMaterial::model()->deleteAll($criteria);
+        ControlMaterial::model()->deleteByPk($id);
+    }
+
     public function actionEdit($idMaterial)
     {
         $needRefresh = false;

@@ -16,7 +16,7 @@
 
         <div class="content">
             <div class="page-heading">
-                <div class="page-title">Медиатека</div>
+                <div class="page-title">Учебные материалы</div>
             </div>
             <a href = "#" onclick="ajaxDeleteAllNonUsedMaterials()">Удалить все неиспользуемые материалы</a>
             <div>
@@ -31,21 +31,28 @@
                     'id'=>'media-grid',
                     'dataProvider'=>$model->search(),
                     'filter' => $model,
+                    'htmlOptions' => array(
+                        'class' => 'table green',
+                    ),
                     'columns'=>array(
                         array(
                             'header' => 'Название файла',
                             'name' => 'title',
                             'value' => '$data->getViewedTitle()',
+                            'filter' => CHtml::activeTextField($model,"title", array("placeholder" => "Название")),
+                            'htmlOptions' => array('style' => 'width:60%'),
                         ),
                         array(
                             'header' => 'Расширение файла',
                             'name' => 'ext',
                             'value' => '$data->getExtension()',
+                            'filter' => '',
 //                            'filter' => CHtml::dropDownList("sds","",$filters),
                         ),
                         array(
                             'header' => 'Используется в курсах',
                             'name' => 'courses',
+                            'filter' => '',
                             'value' => '$data->getCourses()',
                         ),
                         array(

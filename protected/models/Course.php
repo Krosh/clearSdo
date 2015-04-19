@@ -12,7 +12,9 @@
  */
 class Course extends CActiveRecord
 {
-	/**
+    public $showOnlyNoUsed = false;
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -33,7 +35,7 @@ class Course extends CActiveRecord
 			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, discipline, description, hours', 'safe', 'on'=>'search'),
+			array('showOnlyNoUsed, id, title, discipline, description, hours', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +47,8 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
         return array(
-      //      'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesmaterials(idCourse,idMaterial)'),
+            'coursesGroups'=>array(self::HAS_MANY, 'CoursesGroup', 'idCourse'),
+            //      'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesmaterials(idCourse,idMaterial)'),
       // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
       //      'groups' => array(self::MANY_MANY, 'Group', 'tbl_coursesgroups(idCourse,idGroup)'),
       // Для вывода групп использовать Course::getGroups
@@ -63,6 +66,7 @@ class Course extends CActiveRecord
 			'discipline' => 'Дисциплина',
 			'description' => 'Описание',
 			'hours' => 'Кол-во часов',
+            'showOnlyNoUsed' => 'Показывать только неиспользуемые',
 		);
 	}
 
@@ -80,15 +84,34 @@ class Course extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+        $models = CoursesAutor::model()->findAll('idAutor = :idAutor', array(':idAutor' => Yii::app()->user->getId()));
+        $ids = array();
+        foreach ($models as $item)
+        {
+            $ids[] = $item->idCourse;
+        }
+
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->addInCondition('id',$ids);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('discipline',$this->discipline,true);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('hours',$this->hours);
+
+
+        if ($this->showOnlyNoUsed)
+        {
+            $criteria->with = array(
+                'coursesGroups' => array(
+                    'joinType' => 'LEFT JOIN',
+                    'together' => true,
+                ),
+            );
+            $criteria->addCondition('coursesGroups.idGroup IS NULL');
+        }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -137,6 +160,19 @@ class Course extends CActiveRecord
         $criteria = new CDbCriteria();
         $criteria->addInCondition('id',$ids);
         return Group::model()->findAll($criteria);
+    }
+
+    public function getNameGroups()
+    {
+        $arr = Course::getGroups($this->id,-1);
+        $result = "";
+        foreach ($arr as $item)
+        {
+            if ($result != "")
+                $result.=", ";
+            $result .= $item->Title;
+        }
+        return $result;
     }
 
     static public function getCoursesByGroup($idGroup,$idTerm)

@@ -38,6 +38,8 @@ class ControlMaterial extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+    public $showOnlyNoUsed = false;
+
 	public function tableName()
 	{
 		return 'tbl_controlmaterials';
@@ -57,7 +59,7 @@ class ControlMaterial extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('get_files_from_students,calc_expression,weight,is_autocalc,show_in_reports','safe'),
-            array(' id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
+            array('showOnlyNoUsed, id, title, short_title,  dotime, question_random, question_show_count, answer_random, adaptive, try_amount, access, access_date, show_answers, is_point, calc_mode, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,7 +71,8 @@ class ControlMaterial extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-		);
+            'coursesControlMaterials'=>array(self::HAS_MANY, 'CoursesControlMaterial', 'idControlMaterial'),
+        );
 	}
 
     public static function getMark($idStudent,$idControlMaterial)
@@ -162,6 +165,7 @@ class ControlMaterial extends CActiveRecord
             'show_in_reports' => 'Включать в отчеты',
 			'idAutor' => 'Id Autor',
             'get_files_from_students' => 'Позволять пользователям прикреплять файл',
+            'showOnlyNoUsed' => 'Показать только неиспользуемые',
 		);
 	}
 
@@ -186,7 +190,6 @@ class ControlMaterial extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('short_title',$this->short_title,true);
-		$criteria->compare('zindex',$this->zindex);
 		$criteria->compare('dotime',$this->dotime);
 		$criteria->compare('question_random',$this->question_random);
 		$criteria->compare('question_show_count',$this->question_show_count);
@@ -198,12 +201,39 @@ class ControlMaterial extends CActiveRecord
 		$criteria->compare('show_answers',$this->show_answers);
 		$criteria->compare('is_point',$this->is_point);
 		$criteria->compare('calc_mode',$this->calc_mode);
-		$criteria->compare('idAutor',$this->idAutor);
+		$criteria->compare('idAutor',Yii::app()->user->getId());
+
+        if ($this->showOnlyNoUsed)
+        {
+            $criteria->with = array(
+                'coursesControlMaterials' => array(
+                    'joinType' => 'LEFT JOIN',
+                    'together' => true,
+                ),
+            );
+            $criteria->addCondition('coursesControlMaterials.idCourse IS NULL');
+        }
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getCourses()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idControlMaterial',$this->id);
+        $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
+        $result = "";
+        foreach ($coursesMaterials as $item)
+        {
+            if ($result != "")
+                $result.=", ";
+            $result .= Course::model()->findByPk($item->idCourse)->title;
+        }
+        return $result;
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

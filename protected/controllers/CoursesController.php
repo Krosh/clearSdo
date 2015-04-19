@@ -109,4 +109,20 @@ class CoursesController extends CController
         $this->redirect($this->createUrl("/editCourse?idCourse=".$model->id));
     }
 
+    public function actionFullDeleteCourse($id)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse',$id);
+        $criteria->compare('idAutor', Yii::app()->user->getId());
+        if (CoursesAutor::model()->count($criteria) == 0)
+            return;
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse',$id);
+        CoursesAutor::model()->deleteAll($criteria);
+        CoursesControlMaterial::model()->deleteAll($criteria);
+        CoursesGroup::model()->deleteAll($criteria);
+        CoursesMaterial::model()->deleteAll($criteria);
+        Course::model()->deleteByPk($id);
+    }
+
 }

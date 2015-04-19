@@ -24,24 +24,6 @@
                 </div>
 
 
-                <!--TODO :: Перенести эти стили в css-->
-                <style>
-                    .table .summary
-                    {
-                        display: none;
-                    }
-                    .table .items
-                    {
-                        width: 100%;
-                        text-align: center;
-                    }
-                    .table .filters
-                    {
-                        background-color: #ECF0F1;
-                    }
-                </style>
-
-
                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                     'id'=>'user-grid',
                     'dataProvider'=>$model->search(),
@@ -51,13 +33,19 @@
                         'style' => 'width: 100%',
                     ),
                     'columns'=>array(
-                        'fio',
+                        array(
+                            'name' => 'fio',
+                            'filter' => CHtml::activeTextField($model,"fio", array("placeholder" => "ФИО")),
+                        ),
                         array(
                             'name' => 'role',
                             'value' => '$data->getRussianRole()',
                             'filter' => Yii::app()->params['roles'],
                         ),
-                        'login',
+                        array(
+                            'name' => 'login',
+                            'filter' => CHtml::activeTextField($model,"login", array("placeholder" => "Логин")),
+                        ),
                         array(
                             'class'=>'CButtonColumn',
                             'template' => '{update} {delete}',

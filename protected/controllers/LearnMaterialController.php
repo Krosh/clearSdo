@@ -187,6 +187,9 @@ class LearnMaterialController extends CController
         // Проверка, является ли пользователь автором материала
         if ($mat->idAutor != Yii::app()->user->getId())
             return false;
+        $criteria = new CDbCriteria();
+        $criteria->compare("idMaterial", $id);
+        CoursesMaterial::model()->deleteAll($criteria);
         $mat->delete();
     }
 

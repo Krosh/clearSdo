@@ -30,7 +30,10 @@
                         'style' => 'width: 100%',
                     ),
                     'columns'=>array(
-                        'Title',
+                        array(
+                            'name' => 'Title',
+                            'filter' => CHtml::activeTextField($model,"Title", array("placeholder" => "Название")),
+                        ),
                         array(
                             'class'=>'CButtonColumn',
                             'template' => '{update} {delete}',
