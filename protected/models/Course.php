@@ -95,7 +95,7 @@ class Course extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->addInCondition('id',$ids);
+		$criteria->addInCondition('t.id',$ids);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('discipline',$this->discipline,true);
 		$criteria->compare('description',$this->description,true);
