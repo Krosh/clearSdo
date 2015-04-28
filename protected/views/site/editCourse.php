@@ -150,6 +150,34 @@ $listeners = Course::getGroups($model->id);
         </div>
     </div>
 
+    <!-- редактирование доступа -->
+    <div class="modal fade" id="editAccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-lock"></i>Настройки доступа</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="editCourse-access" class="form modal-form">
+                        <?php
+                            // Необходимо вывести виджет, чтобы прогрузились файлы
+                            $arr = AccessControlMaterial::model()->findAll();
+                            if (count($arr) > 0)
+                            {
+                                $this->widget('ext.YiiDateTimePicker.jqueryDateTime',array(
+                                    'model'=>$arr[0], //Model object
+                                    'attribute'=>'endDate', //attribute name
+                                    'htmlOptions'=>array('onchange' => 'ajaxUpdateAccess(this);'), // jquery plugin options
+                                ));
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <hr>

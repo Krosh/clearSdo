@@ -44,9 +44,9 @@
                                     <div class="modal-body">
                                         <div id="editTest-testProperties" class="form modal-form">
                                             <?php if (!$model->is_point)
-                                                $this->renderPartial("/controlMaterial/_form",array("model" => $model, "accessModel" => $accessModel));
+                                                $this->renderPartial("/controlMaterial/_form",array("model" => $model));
                                             else
-                                                $this->renderPartial("/controlMaterial/_form-point",array("model" => $model, "accessModel" => $accessModel));?>
+                                                $this->renderPartial("/controlMaterial/_form-point",array("model" => $model));?>
                                         </div>
                                     </div>
                                 </div>

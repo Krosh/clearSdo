@@ -1,3 +1,80 @@
+function ajaxUpdateAccess(elem)
+{
+     $.ajax({
+        type: 'POST',
+        url: '/controlMaterial/updateAccessInfo',
+        data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val(),
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+        }
+    });
+}
+
+function ajaxDeleteAccess(idAccess, idCourse, idMaterial)
+{
+    $("#accessForm"+idAccess).remove();
+    $.ajax({
+        type: 'POST',
+        url: '/controlMaterial/deleteAccessInfo',
+        data: {id: idAccess},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+//            ajaxGetAccess(idCourse, idMaterial);
+        }
+    });
+}
+
+function ajaxAddAccess(idCourse, idMaterial, typeRelation)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/controlMaterial/addAccessInfo',
+        data: {idCourse:idCourse, idMaterial: idMaterial, typeRelation: typeRelation},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            ajaxGetAccess(idCourse, idMaterial);
+        }
+    });
+}
+
+
+function ajaxGetAccess(idCourse, idMaterial)
+{
+    window.currentCourse = idCourse;
+    window.currentMaterial = idMaterial;
+    $.ajax({
+        type: 'POST',
+        url: '/controlMaterial/getAccessInfo',
+        data: {idCourse: idCourse, idMaterial: idMaterial},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            $("#editCourse-access").html(data);
+            $('.dateTimePicker').datetimepicker({ format:'d.m.Y H:i'});
+            $('.combobox').combobox({allowText:false, onSelect:"ajaxUpdateAccess(this);"});
+            $('.accessForm').each(function()
+            {
+                updateAccessDivs(this);
+            });
+        }
+    });
+}
+
 function ajaxDeleteAllNonUsedMaterials()
 {
     $.ajax({
@@ -230,18 +307,18 @@ function makeReport_marks()
     });
 }
 
-function updateAccessDivs()
+function updateAccessDivs(form)
 {
-    accessVal = $("#Access_access").val();
-    $('.dateAccess').hide();
-    $('.beforeAccess').hide();
+    accessVal = $(".accessTypeList",form).val();
+    $('.dateAccess',form).hide();
+    $('.beforeAccess',form).hide();
     if (accessVal == 3)
     {
-        $('.dateAccess').show();
+        $('.dateAccess',form).show();
     }
     if (accessVal == 4)
     {
-        $('.beforeAccess').show();
+        $('.beforeAccess',form).show();
     }
 }
 

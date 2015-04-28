@@ -246,6 +246,26 @@ class ControlMaterial extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function addToCourse($idCourse)
+    {
+        $ccm = new CoursesControlMaterial();
+        $ccm->idCourse = $idCourse;
+        $ccm->idControlMaterial = $this->id;
+        $ccm->zindex = CoursesControlMaterial::model()->count("idCourse = :idCourse", array("idCourse" => $idCourse))+1;
+        $ccm->dateAdd = date("Y-m-d H:i:s");
+        $ccm->save();
+    }
+
+    public function addCommonAccess($idCourse)
+    {
+        $access = new AccessControlMaterial();
+        $access->idControlMaterial = $this->id;
+        $access->idCourse = $idCourse;
+        $access->type_relation = ACCESS_RELATION_COMMON;
+        $access->accessType = 1;
+        $access->save();
+    }
+
 
 
 }

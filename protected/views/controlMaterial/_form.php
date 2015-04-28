@@ -127,9 +127,6 @@
 					width: 59.5% !important;
 				}
 				</style>
-				<?php
-				$this->renderPartial('/accessControlMaterialGroup/_form', array('model' => $accessModel,'idControlMaterial' => $model->id));
-				?>
 			</td>
 		</tr>
 		<tr>

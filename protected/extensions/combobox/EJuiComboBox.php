@@ -19,6 +19,8 @@ Yii::import('zii.widgets.jui.CJuiInputWidget');
  */
 class EJuiComboBox extends CJuiInputWidget
 {
+
+    public $selectedId;
 	/**
 	 * @var array the entries that the autocomplete should choose from.
 	 */
@@ -71,7 +73,8 @@ class EJuiComboBox extends CJuiInputWidget
 		else
 			$data = array();
 
-		echo CHtml::dropDownList(null, null, $data, array('id' => $id . '_select'));
+        echo CHtml::dropDownList(null, null, $this->data, array('id' => $id . '_select', 'options' => array($this->selectedId => array('selected' => true))));
+
 
 		if ($this->hasModel())
 			echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);

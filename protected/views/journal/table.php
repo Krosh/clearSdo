@@ -15,14 +15,11 @@ $criteria = new CDbCriteria();
 $criteria->compare('idCourse',$idCourse);
 $criteria->order = "zindex";
 $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
-$ids = array();
+$controlMaterials = array();
 foreach ($coursesMaterials as $item)
 {
-    array_push($ids,$item->idControlMaterial);
+    $controlMaterials[] = ControlMaterial::model()->findByPk($item->idControlMaterial);
 }
-$criteria2 = new CDbCriteria();
-$criteria2->addInCondition('id',$ids);
-$controlMaterials = ControlMaterial::model()->findAll($criteria2);
 ?>
 <table style="border: 1px solid black">
     <thead>

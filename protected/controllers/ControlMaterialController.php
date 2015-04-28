@@ -1,5 +1,4 @@
 <?php
-
 class ControlMaterialController extends CController
 {
     public $layout='//layouts/full';
@@ -320,23 +319,6 @@ class ControlMaterialController extends CController
             $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
             $model->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
         );
-        $accessModel = AccessControlMaterialGroup::model()->findAll("idControlMaterial = :idMaterial",array(":idMaterial" => $idMaterial));
-        if (count($accessModel) == 0)
-        {
-            $accessModel = new AccessControlMaterialGroup();
-            $accessModel->idControlMaterial = $idMaterial;
-            $accessModel->save();
-        } else
-        {
-            // TODO:: вот это ненормальнно
-            $accessModel = $accessModel[0];
-        }
-        if (isset($_POST['Access']))
-        {
-            $accessModel->attributes=$_POST['Access'];
-            if ($accessModel->save())
-                $needRefresh = true;
-        }
         if (isset($_POST['ControlMaterial']))
         {
             $model->attributes=$_POST['ControlMaterial'];
@@ -345,7 +327,7 @@ class ControlMaterialController extends CController
         }
         if ($needRefresh)
             $this->refresh();
-        $this->render("editTest",array("model" => $model, 'accessModel' => $accessModel, 'idCourse' => $course->id));
+        $this->render("editTest",array("model" => $model, 'idCourse' => $course->id));
     }
 
     //TODO:: Этот метод нужно бы перенести в MaterialController, там методы по созданию/удалению материалов
@@ -356,12 +338,8 @@ class ControlMaterialController extends CController
         $model->weight = 1;
         $model->is_point = $isPoint;
         $model->save();
-        $ccm = new CoursesControlMaterial();
-        $ccm->idCourse = $idCourse;
-        $ccm->idControlMaterial = $model->id;
-        $ccm->zindex = CoursesControlMaterial::model()->count("idCourse = :idCourse", array("idCourse" => $idCourse))+1;
-        $ccm->dateAdd = date("Y-m-d H:i:s");
-        $ccm->save();
+        $model->addToCourse($idCourse);
+        $model->addCommonAccess($idCourse);
         $this->redirect($this->createUrl("/controlMaterial/edit", array("idMaterial" => $model->id)));
     }
 
@@ -532,4 +510,35 @@ class ControlMaterialController extends CController
         }
     }
 
+    public function actionGetAccessInfo()
+    {
+        $idControlMaterial = $_POST['idMaterial'];
+        $idCourse = $_POST['idCourse'];
+        $this->renderPartial("/accessControlMaterialGroup/configAccessForm", array("idControlMaterial" => $idControlMaterial, "idCourse" => $idCourse));
+
+    }
+
+    public function actionUpdateAccessInfo()
+    {
+        $accessModel = AccessControlMaterial::model()->findByPk($_POST['AccessControlMaterial']['id']);
+        $accessModel->attributes = $_POST['AccessControlMaterial'];
+        $accessModel->save();
+    }
+
+    public function actionAddAccessInfo()
+    {
+        $idControlMaterial = $_POST['idMaterial'];
+        $idCourse = $_POST['idCourse'];
+        $typeRelation = $_POST['typeRelation'];
+        $access = new AccessControlMaterial();
+        $access->type_relation = $typeRelation;
+        $access->idControlMaterial = $idControlMaterial;
+        $access->idCourse = $idCourse;
+        $access->save();
+    }
+
+    public function actionDeleteAccessInfo()
+    {
+        AccessControlMaterial::model()->deleteByPk($_POST['id']);
+    }
 }

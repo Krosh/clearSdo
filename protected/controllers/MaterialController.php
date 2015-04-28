@@ -35,6 +35,7 @@ class MaterialController extends CController
         $model = CoursesControlMaterial::model()->find($criteria);
         $z = $model->zindex;
         CoursesControlMaterial::model()->deleteAll($criteria);
+        AccessControlMaterial::model()->deleteAll($criteria);
         $criteria = new CDbCriteria();
         $criteria->compare("idCourse",$idCourse);
         $criteria->addCondition("zindex > ".$z);
@@ -48,12 +49,9 @@ class MaterialController extends CController
 
     public function actionAddExistMaterial()
     {
-        $courseMat = new CoursesControlMaterial();
-        $courseMat->idCourse = $_POST["idCourse"];
-        $courseMat->idControlMaterial = $_POST["idMaterial"];
-        $courseMat->zindex = CoursesControlMaterial::model()->count("idCourse = ".$_POST["idCourse"])+1;
-        $courseMat->dateAdd = date("Y-m-d H:i:s");
-        $courseMat->save();
+        $material = ControlMaterial::model()->findByPk($_POST["idMaterial"]);
+        $material->addToCourse($_POST["idCourse"]);
+        $material->addCommonAccess($_POST["idCourse"]);
     }
 
     public function actionOrderMaterial()

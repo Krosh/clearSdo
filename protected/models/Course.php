@@ -159,7 +159,34 @@ class Course extends CActiveRecord
         }
         $criteria = new CDbCriteria();
         $criteria->addInCondition('id',$ids);
+        $criteria->order = "Title";
         return Group::model()->findAll($criteria);
+    }
+
+    static public function getUsers($idCourse, $idTerm = -1)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse', $idCourse);
+        if ($idTerm != -1)
+            $criteria->compare('idTerm', $idTerm);
+        $models = CoursesGroup::model()->findAll($criteria);
+        $ids = array();
+        foreach ($models as  $item)
+        {
+            $ids[] = $item->idGroup;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('idGroup',$ids);
+        $models = StudentGroup::model()->findAll($criteria);
+        $ids = array();
+        foreach ($models as $item)
+        {
+            $ids[] = $item->idStudent;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition('id',$ids);
+        $criteria->order = "fio";
+        return User::model()->findAll($criteria);
     }
 
     public function getNameGroups()
