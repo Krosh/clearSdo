@@ -18,7 +18,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
+    <div class="row clearfix">
         <?php echo $form->labelEx($model,'title'); ?>
         <?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
         <?php echo $form->error($model,'title'); ?>
@@ -72,7 +72,7 @@
     </script>
 
 
-	<div class="row buttons" style="float: right; margin-top: -30px; margin-right: 20px">
+	<div class="row buttons" style="text-align:right; margin-top: 15px;">
         <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue", "onclick" => "$(this).hide(); $('#learnMaterialLoader').show();addLearnMaterial($idCourse);return false")); ?>
 	</div>
