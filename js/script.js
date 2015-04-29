@@ -786,7 +786,7 @@ $(document).ready(function(){
     });
 
     // Запуск лоадера, скрываем элемент
-    if($(".login").length) {
+    if($(".login").length && !$(".login").hasClass("disable-loader")) {
         $(".login").loader();
     }
 
