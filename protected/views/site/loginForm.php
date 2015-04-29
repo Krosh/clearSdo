@@ -6,7 +6,7 @@
 
 <body class="small-page">
 
-<div class="login" style="display: none">
+<div class="login <?=$model->login != "" ? "disable-loader" : ""?>" style="<?=$model->login != "" ? "" : "display: none"?>">
     <div class="center">
         <div class="logo">
             <img src="/img/logo-big.png" width="66" height="66" alt="" data-retina>
