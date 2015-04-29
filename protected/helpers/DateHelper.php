@@ -8,10 +8,34 @@
  */
 
 class DateHelper {
-    public static function getRussianDateFromDatabase($date)
+    public static function getRussianDateFromDatabase($date,$isDateTime = false)
     {
-        $mas = explode("-",$date);
-        return $mas[2].".".$mas[1].".".$mas[0];
+        if ($isDateTime)
+        {
+            $startDate = $date;
+            $mas = explode(" ",$startDate);
+            $date = explode("-",$mas[0]);
+            return $date[2].".".$date[1].".".$date[0]." ".$mas[1];
+        } else
+        {
+            $mas = explode("-",$date);
+            return $mas[2].".".$mas[1].".".$mas[0];
+        }
+    }
+
+    public static function getDatabaseDateFromRussian($date,$isDateTime = false)
+    {
+        if ($isDateTime)
+        {
+            $startDate = $date;
+            $mas = explode(" ",$startDate);
+            $date = explode(".",$mas[0]);
+            return $date[2]."-".$date[1]."-".$date[0]." ".$mas[1];
+        } else
+        {
+            $mas = explode(".",$date);
+            return $mas[2]."-".$mas[1]."-".$mas[0];
+        }
     }
 
     public static function getTimestampFromDateTime($dateTime)

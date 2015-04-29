@@ -1,5 +1,6 @@
 function ajaxUpdateAccess(elem)
 {
+    console.log($(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val());
      $.ajax({
         type: 'POST',
         url: '/controlMaterial/updateAccessInfo',
@@ -65,7 +66,7 @@ function ajaxGetAccess(idCourse, idMaterial)
         success: function(data)
         {
             $("#editCourse-access").html(data);
-            $('.dateTimePicker').datetimepicker({ format:'d.m.Y H:i'});
+            $('.dateTimePicker').datetimepicker({ format:'d.m.Y H:i', onChange: function() {ajaxUpdateAccess(this);}});
             $('.combobox').combobox({allowText:false, onSelect:"ajaxUpdateAccess(this);"});
             $('.accessForm').each(function()
             {

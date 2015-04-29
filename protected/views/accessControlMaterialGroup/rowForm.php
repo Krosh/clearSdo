@@ -57,10 +57,10 @@
             <?php echo CHtml::activeDropDownList($model,'accessType',$categories, array('class' => 'accessTypeList', 'onchange' => 'ajaxUpdateAccess(this); updateAccessDivs($(this.form))')); ?>
             <div class = "dateAccess" data-id ="<?php echo $model->id?>" style="display: inline">
                 <?php echo CHtml::label('Дата начала',null); ?>
-                <?php echo CHtml::activeTextField($model,'startDate',array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
+                <?php echo CHtml::textField('AccessControlMaterial[startDate]',DateHelper::getRussianDateFromDatabase($model->startDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
                 <div class = "endDateDiv" style="display: inline">
                     <?php echo CHtml::label('Дата окончания',null); ?>
-                    <?php echo CHtml::activeTextField($model,'endDate',array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
+                    <?php echo CHtml::textField('AccessControlMaterial[endDate]',DateHelper::getRussianDateFromDatabase($model->endDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
                     <!--      TODO:: добавить кнопку для очистки даты закрытия
                     -->
                 </div>
