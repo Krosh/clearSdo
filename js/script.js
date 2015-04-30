@@ -1,6 +1,28 @@
+function ajaxCheckOnAuthenticate()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/user/checkOnAuthenticate',
+        data: $("#loginForm").serialize(),
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            if (data == "1")
+            {
+                // Авторизовались
+            } else
+            {
+                // неудача
+            }
+        }
+    });
+}
+
 function ajaxUpdateAccess(elem)
 {
-    console.log($(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val());
      $.ajax({
         type: 'POST',
         url: '/controlMaterial/updateAccessInfo',
@@ -8,9 +30,6 @@ function ajaxUpdateAccess(elem)
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
-        success: function(data)
-        {
         }
     });
 }
@@ -25,10 +44,6 @@ function ajaxDeleteAccess(idAccess, idCourse, idMaterial)
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
-        success: function(data)
-        {
-//            ajaxGetAccess(idCourse, idMaterial);
         }
     });
 }

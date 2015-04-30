@@ -198,4 +198,17 @@ class UserController extends CController
             Yii::app()->end();
         }
     }
+
+    public function actionCheckOnAuthenticate()
+    {
+        $model = new User();
+        $model->attributes = $_POST['User'];
+        $identity=new UserIdentity($model->login,$model->password);
+        if ($identity->authenticate())
+            echo "1";
+        else
+            echo "0";
+     }
+
+
 }
