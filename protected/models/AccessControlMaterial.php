@@ -4,6 +4,10 @@ define("ACCESS_RELATION_COMMON",1);
 define("ACCESS_RELATION_GROUP",2);
 define("ACCESS_RELATION_PERSONAL",3);
 
+define("ACCESS_ALWAYS",1);
+define("ACCESS_NO",2);
+define("ACCESS_TIME",3);
+define("ACCESS_AFTER",4);
 
 
 /**
@@ -24,6 +28,10 @@ define("ACCESS_RELATION_PERSONAL",3);
  */
 class AccessControlMaterial extends CActiveRecord
 {
+
+    public $isCalced = false;
+    public $hasAccess = false;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -112,6 +120,34 @@ class AccessControlMaterial extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function checkAccess($user)
+    {
+        if ($this->accessType == 1)
+        {
+            $this->isCalced = true;
+            $this->hasAccess = true;
+            return true;
+        }
+        if ($this->accessType == 2)
+        {
+            $this->isCalced = true;
+            $this->hasAccess = false;
+            return $this->hasAccess;
+        }
+        if ($this->accessType == 3)
+        {
+            $this->isCalced = true;
+            $this->hasAccess = DateHelper::getTimestampFromDateTime($this->startDate)<DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) && (DateHelper::getTimestampFromDateTime($this->endDate)>DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) || $this->endDate = "0000-00-00 00:00:00");
+            return $this->hasAccess;
+        }
+        if ($this->accessType == 4)
+        {
+            $this->isCalced = true;
+            $this->hasAccess = ControlMaterial::model()->getMark($user->id,$this->idBeforeMaterial)>=$this->minMark;
+            return $this->hasAccess;
+        }
+    }
 
 	/**
 	 * Returns the static model of the specified AR class.

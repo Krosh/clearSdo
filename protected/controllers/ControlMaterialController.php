@@ -17,6 +17,8 @@ class ControlMaterialController extends CController
     public function actionStartTest($idTest)
     {
         $testModel = $this->loadModel($idTest);
+        if (!$testModel->hasAccess(Yii::app()->session['currentCourse']))
+            $this->redirect("/");
         $questionsFromDb = Question::getQuestionsByControlMaterial($idTest);
         // В сессию записываем два массива
         // $questionsId - массив с номерами вопросов
@@ -306,6 +308,7 @@ class ControlMaterialController extends CController
         CoursesControlMaterial::model()->deleteAll($criteria);
         QuestionsControlMaterial::model()->deleteAll($criteria);
         UserControlMaterial::model()->deleteAll($criteria);
+        AccessControlMaterial::model()->deleteAll($criteria);
         ControlMaterial::model()->deleteByPk($id);
     }
 
@@ -514,7 +517,7 @@ class ControlMaterialController extends CController
     {
         $idControlMaterial = $_POST['idMaterial'];
         $idCourse = $_POST['idCourse'];
-        $this->renderPartial("/accessControlMaterialGroup/configAccessForm", array("idControlMaterial" => $idControlMaterial, "idCourse" => $idCourse));
+        $this->renderPartial("/accessControlMaterial/configAccessForm", array("idControlMaterial" => $idControlMaterial, "idCourse" => $idCourse));
 
     }
 

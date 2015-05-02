@@ -39,11 +39,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                     <?php endif; ?>
                 </td>
                 <td class="right">
-                    <label class="toggler" data-idMaterial = "<?php echo $item->id; ?>">
-                        <input type="checkbox" <?php if ($item->access == 1) echo "checked"?>>
-                        <span></span>
-                    </label>
-                    <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove+"></i></a>
+                    <a style="" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-lock fa-2x"></i></a>
+                    <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         <?php else: ?>
@@ -66,7 +63,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
                         <input type="checkbox" <?php /*if ($item->access == 1) echo "checked"*/?>>
                         <span></span>
                     </label>-->
-                    <a style="" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-lock fa-2x"></i>sd</a>
+                    <a style="" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-lock fa-2x"></i></a>
                     <a style="padding-left:10px" class="btn red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>

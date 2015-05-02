@@ -23,7 +23,7 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
 
                 <div class="content">
                     <div class="page-heading">
-                        <div class="page-title"><?php echo $controlMaterial->title; ?></div>
+                        <div class="page-title"><?php echo $controlMaterial->title; ?></div><a href = "<?php echo $this->createUrl("/site/viewCourse", array("idCourse" => Yii::app()->session['currentCourse'])); ?>"><div>Вернуться к курсу</div></a>
 
                         <br>
                         <dl class="test-info clearfix">

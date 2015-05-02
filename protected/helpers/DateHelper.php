@@ -59,8 +59,17 @@ class DateHelper {
             return (floor($difference/60))." минут(ы) назад";
         if ($difference < 7200)
             return "Час назад";
-//        if ($difference< 60*60*24)
+        if ($difference< 60*60*24)
             return (floor($difference/3600))." час(ов) назад";
+        if ($difference< 60*60*24*30)
+            return (floor($difference/3600/24))." дней назад";
+        if ($difference< 60*60*24*30*12)
+            return (floor($difference/3600/24))." месяцев назад";
+        if ($difference< 60*60*24*30*12*2)
+            return "год назад";
+//        if ($difference< 60*60*24*30*12)
+            return (floor($difference/3600/24/30/12))." лет назад";
+
     }
 
 }

@@ -33,6 +33,10 @@
                         <?php $this->widget('zii.widgets.grid.CGridView', array(
                             'id'=>'group-grid',
                             'dataProvider'=>$model->searchAllStudents(),
+                            'htmlOptions' => array(
+                                'class' => 'table green',
+                                'style' => 'width: 100%',
+                            ),
                             'filter'=>$model,
                             'columns'=>array(
                                 array(

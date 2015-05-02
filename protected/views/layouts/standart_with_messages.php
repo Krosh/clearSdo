@@ -113,6 +113,23 @@ $cs->scriptMap=array(
     <script src="../../js/jquery-2.1.1.min.js"></script>
     <script src="../../js/jquery-ui.js"></script>
 <?php endif; ?>
+<script src="../../js/jquery.fs.picker.min.js"></script>
+<script src="../../js/jquery.fs.tabber.min.js"></script>
+<script src="../../js/jquery.easing.1.3.js"></script>
+<script src="../../js/underscore-min.js"></script>
+<script src="../../js/moment-with-locales.min.js"></script>
+<script src="../../js/clndr.js"></script>
+<script src="../../js/timer.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/tinymce/tinymce.min.js"></script>
+<!--<script src="../../js/redactor.min.js"></script>-->
+<script src="../../js/jquery.quicksearch.js"></script>
+<script src="../../js/jquery.multi-select.js"></script>
+<script src="../../js/frosty.min.js"></script>
+<script src="../../js/plugins.js"></script>
+<script src="../../js/jquery.nicefileinput.min.js"></script>
+<script src="../../js/script.js"></script>
 <script src="../../js/messages.js"></script>
+
 </body>
 </html>

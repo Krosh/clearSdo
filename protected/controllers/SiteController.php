@@ -65,12 +65,12 @@ class SiteController extends CController
 
     public function actionViewCourse($idCourse)
     {
-
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
         {
             // Бросить ошибку
         }
+        Yii::app()->session['currentCourse'] = $idCourse;
         $this->render('viewCourse', array('model' => $course));
     }
 

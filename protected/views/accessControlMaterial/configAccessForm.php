@@ -28,7 +28,7 @@ $commonAccess = AccessControlMaterial::model()->find($criteria);
     </style>
     По умолчанию: <br>
 <?php
-$this->renderPartial("/accessControlMaterialGroup/rowForm", array("model" => $commonAccess));
+$this->renderPartial("/accessControlMaterial/rowForm", array("model" => $commonAccess));
 ?>
     <br><hr>
     Особые настройки доступа для групп:<br>
@@ -40,7 +40,7 @@ $criteria->compare("type_relation",2);
 $access = AccessControlMaterial::model()->findAll($criteria);
 foreach ($access as $item)
 {
-    $this->renderPartial("/accessControlMaterialGroup/rowForm", array("model" => $item, "idCourse" => $idCourse, "idMaterial" => $idControlMaterial));
+    $this->renderPartial("/accessControlMaterial/rowForm", array("model" => $item, "idCourse" => $idCourse, "idMaterial" => $idControlMaterial));
 }
 echo "<a href = '#' onclick='ajaxAddAccess(".$idCourse.",".$idControlMaterial.",2)'>Добавить особый доступ</a>";
 ?>
@@ -54,7 +54,7 @@ $criteria->compare("type_relation",3);
 $access = AccessControlMaterial::model()->findAll($criteria);
 foreach ($access as $item)
 {
-    $this->renderPartial("/accessControlMaterialGroup/rowForm", array("model" => $item, "idCourse" => $idCourse, "idMaterial" => $idControlMaterial));
+    $this->renderPartial("/accessControlMaterial/rowForm", array("model" => $item, "idCourse" => $idCourse, "idMaterial" => $idControlMaterial));
 }
 echo "<a href = '#' onclick='ajaxAddAccess(".$idCourse.",".$idControlMaterial.",3)'>Добавить особый доступ</a>";
 ?>
