@@ -130,6 +130,13 @@ $listeners = Course::getGroups($model->id);
                     <div class="modal-body">
                         <strong>Добавить слушателя:</strong>
 
+                        <style>
+                            .invisible
+                            {
+                                display: none !important;
+                            }
+                        </style>
+
                         <select id='addGroupsSelect' multiple='multiple'>
                         </select>
                         <?php

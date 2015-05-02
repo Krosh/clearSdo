@@ -1,3 +1,24 @@
+function updateSelectListeners(obj)
+{
+    console.log("text:"+$(obj).val());
+    $(".ms-selectable .ms-list").find("span").each(
+        function()
+        {
+            text = $(this).html();
+            console.log(text);
+            if (text.indexOf($(obj).val())<0)
+            {
+                $(this).parent().addClass("invisible");
+            } else
+            {
+                $(this).parent().removeClass("invisible");
+            }
+        }
+    );
+
+}
+
+
 function ajaxCheckOnAuthenticate()
 {
     $.ajax({
@@ -976,7 +997,7 @@ $(document).ready(function(){
 
     if ($("#addGroupsSelect").length) {
         $("#addGroupsSelect").multiSelect({
-            selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей'>",
+            selectableHeader: "<input style='margin-bottom:20px;' type='text' class='search-input' autocomplete='off' placeholder='Поиск слушателей' onchange='updateSelectListeners(this)'>",
             selectionHeader: "<div style='margin-bottom:31px;'>Слушатели данного курса:</div>",
             afterInit: function(ms){
                 var that = this,
