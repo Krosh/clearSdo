@@ -16,30 +16,6 @@ function updateSelectListeners(obj)
 
 }
 
-
-function ajaxCheckOnAuthenticate()
-{
-    $.ajax({
-        type: 'POST',
-        url: '/user/checkOnAuthenticate',
-        data: $("#loginForm").serialize(),
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
-        success: function(data)
-        {
-            if (data == "1")
-            {
-                // Авторизовались
-            } else
-            {
-                // неудача
-            }
-        }
-    });
-}
-
 function ajaxUpdateAccess(elem)
 {
      $.ajax({
@@ -1084,4 +1060,37 @@ $(document).ready(function(){
             position: 'bottom'
         });
     }
+
+    $("#loginForm").submit(function(e) {
+        e.preventDefault();
+        
+        var self = this;
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/checkOnAuthenticate',
+            data: $("#loginForm").serialize(),
+            error: function(jqXHR, textStatus, errorThrown){
+                alert(errorThrown);
+                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+            },
+            success: function(data)
+            {
+                if (data == "1") {
+                    $("#wrongPassword").fadeOut(100);
+
+                    self.submit();
+                } else {
+                    $("#loginForm").addClass("shakeIt");
+                    if(!$("#wrongPassword").length) {
+                        $("#loginForm button[type='submit']").after('<div id="wrongPassword" class="center red" style="display:none">Неправильный логин или пароль</div>');
+                        $("#wrongPassword").fadeIn(100);
+                    }
+                    setTimeout(function() {
+                        $("#loginForm").removeClass("shakeIt");
+                    }, 1000);
+                }
+            }
+        });
+    });
 });
