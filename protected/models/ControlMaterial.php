@@ -257,6 +257,7 @@ class ControlMaterial extends CActiveRecord
         $criteria->compare("idControlMaterial",$this->id);
         $criteria->compare("idCourse",$idCourse);
         $accessInfo = AccessControlMaterial::model()->find($criteria);
+        $accessInfo->checkAccess(Yii::app()->user->getModel());
         if ($accessInfo != null)
             return $accessInfo;
         return null;

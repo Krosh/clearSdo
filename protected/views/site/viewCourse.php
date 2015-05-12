@@ -179,6 +179,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                         $accessText.="Мин. оценка - ".$access->minMark;
                                     }
                                 }
+
                                 ?>
                                 <td class="right"><?php echo $accessText ?></td>
                             </tr>

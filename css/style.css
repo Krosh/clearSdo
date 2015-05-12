@@ -2535,6 +2535,6 @@ i.fa-remove:hover {
 .table .filters {
   background-color: #ECF0F1;
 }
-.table thead tr:first-child {
+.infobook thead tr:first-child {
   display: none;
 }
