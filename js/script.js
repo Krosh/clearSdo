@@ -1,11 +1,9 @@
 function updateSelectListeners(obj)
 {
-    console.log("text:"+$(obj).val());
     $(".ms-selectable .ms-list").find("span").each(
         function()
         {
             text = $(this).html();
-            console.log(text);
             if (text.indexOf($(obj).val())<0)
             {
                 $(this).parent().addClass("invisible");

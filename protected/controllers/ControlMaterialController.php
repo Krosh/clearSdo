@@ -525,6 +525,8 @@ class ControlMaterialController extends CController
     {
         $accessModel = AccessControlMaterial::model()->findByPk($_POST['AccessControlMaterial']['id']);
         $accessModel->attributes = $_POST['AccessControlMaterial'];
+        if ($accessModel->idRecord * 1 == 0)
+            $accessModel->idRecord = 1;
         $accessModel->startDate = DateHelper::getDatabaseDateFromRussian($_POST['AccessControlMaterial']['startDate'],true);
         $accessModel->endDate = DateHelper::getDatabaseDateFromRussian($_POST['AccessControlMaterial']['endDate'],true);
         $accessModel->save();
