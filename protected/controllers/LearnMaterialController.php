@@ -72,8 +72,14 @@ class LearnMaterialController extends CController
         $mat->title = $_POST["LearnMaterial"]["title"];
         $mat->category = $_POST["LearnMaterial"]["category"];
         $mat->category == MATERIAL_LINK ? $mat->path = $_POST["LinkPath"]:$mat->path = $_FILES['filePath']['name'];
-        $mat->save();
-        $this->addCourseMaterial($_POST['idCourse'],$mat->id);
+        if ($mat->save())
+        {
+            $this->addCourseMaterial($_POST['idCourse'],$mat->id);
+            echo "success";
+        } else
+        {
+            echo "error";
+        }
     }
 
     public function actionAddExistMaterial()
@@ -123,6 +129,20 @@ class LearnMaterialController extends CController
                 $item->save();
             }
             $mat->zindex = $needZIndex;
+            $mat->save();
+        }
+    }
+
+    public function actionFullOrderMaterial()
+    {
+        $order = $_POST["newOrder"];
+        $order = explode(",",$order);
+        $i = 1;
+        foreach ($order as $item)
+        {
+            if ($item<=0) return;
+            $mat = CoursesMaterial::model()->findByPk($item);
+            $mat->zindex = $i++;
             $mat->save();
         }
     }

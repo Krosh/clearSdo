@@ -18,7 +18,7 @@ function updateSelectListeners(obj)
 
 function ajaxUpdateAccess(elem)
 {
-     $.ajax({
+    $.ajax({
         type: 'POST',
         url: '/controlMaterial/updateAccessInfo',
         data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val(),
@@ -113,7 +113,13 @@ function ajaxSendUserFileAnswer(fileInput,idMaterial)
         console.log(xhr.responseText);
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
-                window.location = "";
+                if (xhr.responseText == "success")
+                {
+                    window.location = "";
+                } else
+                {
+                    alert("Ошибка при загрузке файла");
+                }
             }
         }
     };
@@ -467,7 +473,13 @@ function addLearnMaterial(idCourse)
 //                $("#loadfile").hide();
                 $("#learnMaterialLoader").hide();
                 $("#learnMaterialSubmitButton").show();
-                updateLearnMaterials(idCourse);
+                if (xhr.responseText == "success")
+                {
+                    updateLearnMaterials(idCourse);
+                } else
+                {
+                    alert("Ошибка при загрузке файла");
+                }
             }
         }
     };
@@ -502,11 +514,53 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
+            window.isDragged = false;
+            selector  = "#learnMaterialTable tbody ";
 
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
+                start: function (event, ui) {
+//                    if ($(ui.item).hasClass("titleRow") && !window.isDragged)
+//                    {
+//                        idGroup1 = $(ui.item).attr('id');
+//                        $(selector+"[data-idHeader="+idGroup1+"]").attr("height",20);
+//                    }
+//                    window.isDragged = true;
+                },
                 update: function(event, ui ) {
+//                    window.isDragged = false;
+                    if ($(ui.item).hasClass("titleRow"))
+                    {
+                        idGroup1 = $(ui.item).attr('id');
+                        idGroup2 = $(ui.item).prev().attr("data-idHeader") || 0;
+                        if (idGroup2 == 0)
+                            idGroup2 = $(ui.item).prev().attr('id');
+                        $(selector+"#"+idGroup2).insertAfter($(selector+"#"+idGroup1));
+                        $(selector+"[data-idHeader="+idGroup1+"]").insertAfter($(selector+"#"+idGroup1));
+                        $(selector+"[data-idHeader="+idGroup2+"]").insertAfter($(selector+"#"+idGroup2));
+                        s = "";
+                        $(selector+" tr").each(function()
+                        {
+                            s += $(this).attr('id')+",";
+                        });
+//                        alert(s);
+//                        return;
+                        $.ajax({
+                            url: '/learnMaterial/fullOrderMaterial',
+                            data: {newOrder: s},
+                            type: "POST",
+                            error: function(jqXHR, textStatus, errorThrown){
+                                alert(errorThrown);
+                                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                            }
+                        });
+                        return;
+                    }
                     var itemId = $(ui.item).prev().attr('id') || 0;
+                    idGroup2 = $(ui.item).prev().attr("data-idHeader") || 0;
+                    if (idGroup2 == 0)
+                        idGroup2 = $(ui.item).prev().attr('id');
+                    $(ui.item).attr('data-idHeader',idGroup2);
                     $.ajax({
                         url: '/learnMaterial/orderMaterial',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
@@ -884,7 +938,7 @@ $(document).ready(function(){
 
     $(document).on("click", ".toggler", function(e) {
         e.preventDefault();
-        
+
         var checkbox = $(this).find("input");
         checkbox.prop("checked", !checkbox.prop("checked"));
         if (checkbox.prop("checked"))
@@ -902,7 +956,7 @@ $(document).ready(function(){
             },
             error: function(jqXHR, textStatus, errorThrown){
 //            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
             }
         });
 
@@ -930,20 +984,20 @@ $(document).ready(function(){
 
     if ($('#news-content').length) {
         $.ajax({
-             type: "POST",
-             url: "/news/news",
-             beforeSend: function() {
-                 $("#news-content").hide();
-             },
-             success: function(data)
-             {
-                 $("#news-content").html(data);
-                 $("#news-content").fadeIn(200);
-             },
-             error: function()
-             {
+            type: "POST",
+            url: "/news/news",
+            beforeSend: function() {
+                $("#news-content").hide();
+            },
+            success: function(data)
+            {
+                $("#news-content").html(data);
+                $("#news-content").fadeIn(200);
+            },
+            error: function()
+            {
 //                 alert("Ошибка при загрузке новостей");
-             }
+            }
         });
     }
 
@@ -1063,7 +1117,7 @@ $(document).ready(function(){
 
     $("#loginForm").submit(function(e) {
         e.preventDefault();
-        
+
         var self = this;
 
         $.ajax({

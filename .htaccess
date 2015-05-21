@@ -3,3 +3,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [L,QSA]
 AddDefaultCharset utf-8
+<ifModule mod_headers.c>
+  Header unset Cache-Control
+</ifModule>

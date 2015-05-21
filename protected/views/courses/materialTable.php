@@ -20,13 +20,15 @@
     $criteria->order = "zindex";
     $coursesMaterials = CoursesMaterial::model()->findAll($criteria);
 
+    $idCurrentHeader = -1;
     ?>
     <?php foreach ($coursesMaterials as $currentCourseMaterial):?>
         <?php $item = LearnMaterial::model()->findByPk($currentCourseMaterial->idMaterial); ?>
         <? if($item->category != MATERIAL_TITLE) { ?>
-            <tr id = "<?php echo $currentCourseMaterial->id; ?>"<!--data-href="--><?php /*echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) */?>">
+            <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>" data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
     <? } else { ?>
-            <tr id = "<?php echo $currentCourseMaterial->id; ?>">
+            <?php $idCurrentHeader = $currentCourseMaterial->id; ?>
+            <tr id = "<?php echo $currentCourseMaterial->id; ?>" class="titleRow">
         <? } ?>
 
         <?php if ($item->category == MATERIAL_TITLE):?>
