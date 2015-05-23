@@ -529,8 +529,11 @@ function updateLearnMaterials(idCourse)
                     }
                     window.isDragged = true;
                 },
-                update: function(event, ui ) {
+                stop: function(event, ui) {
                     window.isDragged = false;
+                    $(selector+"tr").show();
+                },
+                update: function(event, ui ) {
                     if ($(ui.item).hasClass("titleRow"))
                     {
                         idGroup1 = $(ui.item).attr('id');
