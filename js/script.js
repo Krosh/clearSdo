@@ -520,22 +520,25 @@ function updateLearnMaterials(idCourse)
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
                 start: function (event, ui) {
-//                    if ($(ui.item).hasClass("titleRow") && !window.isDragged)
-//                    {
-//                        idGroup1 = $(ui.item).attr('id');
-//                        $(selector+"[data-idHeader="+idGroup1+"]").attr("height",20);
-//                    }
-//                    window.isDragged = true;
+                    if ($(ui.item).hasClass("titleRow") && !window.isDragged)
+                    {
+                        idGroup1 = $(ui.item).attr('id');
+                        $(selector+"tr").hide();
+                        $(selector+".titleRow").show();
+                        $(ui.item).hide();
+                    }
+                    window.isDragged = true;
                 },
                 update: function(event, ui ) {
-//                    window.isDragged = false;
+                    window.isDragged = false;
                     if ($(ui.item).hasClass("titleRow"))
                     {
                         idGroup1 = $(ui.item).attr('id');
                         idGroup2 = $(ui.item).prev().attr("data-idHeader") || 0;
                         if (idGroup2 == 0)
                             idGroup2 = $(ui.item).prev().attr('id');
-                        $(selector+"#"+idGroup2).insertAfter($(selector+"#"+idGroup1));
+                        $(selector+"tr").show();
+                        $(selector+"#"+idGroup2).insertBefore($(selector+"#"+idGroup1));
                         $(selector+"[data-idHeader="+idGroup1+"]").insertAfter($(selector+"#"+idGroup1));
                         $(selector+"[data-idHeader="+idGroup2+"]").insertAfter($(selector+"#"+idGroup2));
                         s = "";
@@ -543,8 +546,6 @@ function updateLearnMaterials(idCourse)
                         {
                             s += $(this).attr('id')+",";
                         });
-//                        alert(s);
-//                        return;
                         $.ajax({
                             url: '/learnMaterial/fullOrderMaterial',
                             data: {newOrder: s},
@@ -1132,7 +1133,6 @@ $(document).ready(function(){
             {
                 if (data == "1") {
                     $("#wrongPassword").fadeOut(100);
-
                     self.submit();
                 } else {
                     $("#loginForm").addClass("shakeIt");

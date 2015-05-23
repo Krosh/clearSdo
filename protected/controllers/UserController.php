@@ -206,7 +206,6 @@ class UserController extends CController
         $identity=new UserIdentity($model->login,$model->password);
         if ($identity->authenticate())
         {
-            Yii::app()->user->login($identity);
             echo "1";
         }
         else

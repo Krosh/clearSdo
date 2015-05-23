@@ -3,6 +3,7 @@
 class LearnMaterialController extends CController
 {
     public $layout='//layouts/full';
+    public $breadcrumbs;
 
     public function filters()
     {
@@ -22,6 +23,44 @@ class LearnMaterialController extends CController
                 'publicPath' => Yii::app() -> getBaseUrl() . "/uploads",
             ),
         );
+    }
+
+    public function actionCreate()
+    {
+        $mat = new LearnMaterial();
+        $mat->idAutor = Yii::app()->user->getId();
+        $mat->title = "Новый материал";
+        $mat->category = MATERIAL_INBROWSER;
+        if ($mat->save())
+        {
+            $this->addCourseMaterial($_GET['idCourse'],$mat->id);
+            $this->redirect($this->createUrl("/learnMaterial/edit",array("idMaterial" => $mat->id)));
+        } else
+        {
+            throw new CHttpException(404,'Ошибка в запросе');
+        }
+    }
+
+    public function actionEdit($idMaterial)
+    {
+        $mat = LearnMaterial::model()->findByPk($idMaterial);
+        if ($mat == null)
+            throw new CHttpException(404,'Ошибка в запросе');
+        if ($mat->idAutor != Yii::app()->user->getId())
+            $this->redirect("/noAccess");
+        if(isset($_POST['LearnMaterial']))
+        {
+            $mat->attributes=$_POST['LearnMaterial'];
+            if($mat->save())
+                $this->redirect($this->createUrl("/site/editCourse", array("idCourse" => Yii::app()->session['currentCourse'])));
+        }
+
+        $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
+        $this->breadcrumbs=array(
+            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            $mat->title => array($this->createUrl("/learnMaterial/edit",array("idMaterial" => $idMaterial))),
+        );
+        $this->render("edit", array("model" => $mat));
     }
 
     public function actionDeleteMaterial()
@@ -156,6 +195,11 @@ class LearnMaterialController extends CController
     public function actionGetMaterial($matId)
     {
         $mat = LearnMaterial::model()->findByPk($matId);
+        if ($mat->category == MATERIAL_INBROWSER)
+        {
+            $this->render("view", array("model" => $mat));
+            Yii::app()->end();
+        }
         $filename = $mat->getPathToMaterial();
         $newname = $mat->title;
         $newname = str_replace(",","",$newname);

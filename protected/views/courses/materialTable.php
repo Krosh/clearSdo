@@ -66,7 +66,9 @@
                 }
                 echo $sizeText;
                 ?>
-
+                <?php if ($item->category == MATERIAL_INBROWSER): ?>
+                    <a class="btn" href="<?php echo $this->createUrl("/learnMaterial/edit", array("idMaterial" => $item->id)); ?>" ><i class="fa fa-pencil"></i></a>
+                <?php endif; ?>
             </td>
             <td class="right">
                 <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>

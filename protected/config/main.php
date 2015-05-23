@@ -7,6 +7,8 @@ define("MATERIAL_LINK", 2);
 define("MATERIAL_TORRENT", 3);
 define("MATERIAL_TITLE", 4);
 define("MATERIAL_TEST", 5);
+define("MATERIAL_INBROWSER", 6);
+
 
 define("ROLE_GUEST",-1);
 define("ROLE_STUDENT",0);

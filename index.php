@@ -17,7 +17,4 @@ if($_SERVER['REMOTE_ADDR'] == "127.0.0.1"){
     $config=dirname(__FILE__).'/protected/config/main.php';
 }
 
-// Настройки кеширования страниц
-header("Cache-control: no-cache, must-revalidate");
-
 Yii::createWebApplication($config)->run();

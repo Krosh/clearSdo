@@ -10,6 +10,7 @@
  * @property integer $category
  * @property integer $idAutor
  * @property string $dateAdd
+ * @property string $content
  */
 class LearnMaterial extends CActiveRecord
 {
@@ -37,10 +38,11 @@ class LearnMaterial extends CActiveRecord
 		return array(
 			array('category, idAutor', 'numerical', 'integerOnly'=>true),
 			array('path', 'length', 'max'=>200),
-			array('ext, courses, title', 'length', 'max'=>45),
+            array('content', 'length', 'max'=>65535),
+            array('ext, courses, title', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
+			array('content, showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +72,7 @@ class LearnMaterial extends CActiveRecord
 			'category' => 'Категория',
 			'idAutor' => 'Код автора',
             'showOnlyNoUsed' => 'Показать только неиспользуемые',
+            'content' => 'Содержимое',
 		);
 	}
 

@@ -25,8 +25,16 @@
 			<td width="30%">
 				<?php echo $form->labelEx($questionModel,'content'); ?>
 			</td>
-			<td width="70%">
-				<?php echo $form->textArea($questionModel,'content',array('class'=>'jsRedactor', 'style' => 'width:100%')); ?>
+        </tr>
+        <tr>
+            <style>
+                #btn
+                {
+                    display: none;
+                }
+            </style>
+			<td colspan="2">
+				<?php echo $form->textArea($questionModel,'content',array('class'=>'jsRedactor', 'style' => 'width:100%; height: 200px')); ?>
 				<?php echo $form->error($questionModel,'content'); ?>
 			</td>
 		</tr>

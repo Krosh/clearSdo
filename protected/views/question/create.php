@@ -27,7 +27,8 @@ $listeners = Course::getGroups($model->id);
 
                 </div>
             </div>
-            <div style="display: none">
+<!--            Не определились, нужна ли эта фича
+-->            <div style="display: none">
                 <?php
                 $mas = array();
                 $models = LearnMaterial::model()->findAll("idAutor = -1");

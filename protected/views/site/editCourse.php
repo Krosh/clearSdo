@@ -200,7 +200,7 @@ $listeners = Course::getGroups($model->id);
         <div class="small-btns">
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Загрузить файл" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)"><i class="fa fa-upload"></i></a>
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addexist" data-original-title="Добавить файл из имеющихся" title="Добавить файл из имеющихся"><i class="fa fa-clipboard"></i></a>
-            <a href="#" class="btn small has-tip" data-original-title="Создать файл" title="Создать файл"><i class="fa fa-file-o"></i></a>
+            <a href="<?php echo $this->createUrl("/learnMaterial/create", array("idCourse" => $model->id));?>" class="btn small has-tip" data-original-title="Создать файл" title="Создать файл"><i class="fa fa-file-o"></i></a>
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Раздел" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)"><i class="fa fa-folder"></i></a>
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Ссылка" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)"><i class="fa fa-link"></i></a>
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Торрент" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)"><i class="fa fa-magnet"></i></a>
