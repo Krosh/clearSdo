@@ -125,8 +125,15 @@ class SiteController extends CController
 
     public function actionConfig()
     {
+        $isSaved = false;
         $config = Config::model()->findByPk(1);
-        $this->render('config',array("config" => $config));
+        if(isset($_POST['Config']))
+        {
+            $config->attributes=$_POST['Config'];
+            if($config->save())
+                $isSaved = true;
+        }
+        $this->render('config',array("config" => $config, "isSaved" => $isSaved));
     }
 
     public function actionNoAccess()
@@ -204,9 +211,8 @@ class SiteController extends CController
     public function actionProfile($idUser)
     {
         $user = User::model()->findByPk($idUser);
-        if ($user == null)
-            // Перейти по ошибке
-            return;
+        if ($user == null || $user->role != ROLE_TEACHER)
+            throw new CHttpException(404,"");
         $this->render('/site/profile', array('model' => $user));
 
     }
@@ -216,6 +222,8 @@ class SiteController extends CController
         // Поиск по людям
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
+        $q = ROLE_TEACHER;
+        $criteria->compare("role",1);
         $users = User::model()->findAll($criteria);
 
 

@@ -41,7 +41,7 @@
                     ),
                 )); ?>
             </div>
-            <a href = "/group/create">Создать группу</a>
+            <a href = "/group/create" class="btn blue">Создать группу</a>
 
         </div>
 

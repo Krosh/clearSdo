@@ -53,7 +53,7 @@
                     ),
                 )); ?>
             </div>
-            <a href = "/user/create">Добавить пользователя</a>
+            <a href = "/user/create" class="btn blue">Добавить пользователя</a>
 
         </div>
 

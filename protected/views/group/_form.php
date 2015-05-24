@@ -6,33 +6,46 @@
 
 <div class="form wide">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'group-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
-)); ?>
+    <?php $form=$this->beginWidget('CActiveForm', array(
+        'id'=>'group-form',
+        // Please note: When you enable ajax validation, make sure the corresponding
+        // controller action is handling ajax validation correctly.
+        // There is a call to performAjaxValidation() commented in generated controller code.
+        // See class documentation of CActiveForm for details on this.
+        'enableAjaxValidation'=>false,
+    )); ?>
 
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo CHtml::activeLabel($model,'Title', array("style" => "display: inline")); ?>
-		<?php echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
+    <table style="width: 100%">
 
-    <div class="row">
-        <?php echo CHtml::activeLabel($model,'id_altstu', array("style" => "display: inline")); ?>
-        <?php echo $form->textField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); ?>
-        <?php echo CHtml::button('Получить расписание для группы',array('class' => 'btn blue', 'onclick' => 'ajaxGetTimetable('.$model->id.')'))?>
+        <tr>
+            <td width="35%">
+                <?php echo CHtml::activeLabel($model,'Title', array("style" => "display: inline")); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo CHtml::activeLabel($model,'id_altstu', array("style" => "display: inline")); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); ?>
+                <?php echo CHtml::button('Получить расписание для группы',array('class' => 'btn blue', 'onclick' => 'ajaxGetTimetable('.$model->id.');'))?>
+            </td>
+        </tr>
+
+    </table>
+    <div class="row buttons">
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn blue')); ?>
     </div>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
-	</div>
 
-<?php $this->endWidget(); ?>
+
+    <?php $this->endWidget(); ?>
 
 </div><!-- form -->

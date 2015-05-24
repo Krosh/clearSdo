@@ -51,7 +51,7 @@ class Config extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'idActiveTerm' => 'Id Active Term',
+			'idActiveTerm' => 'Период по умолчанию',
 		);
 	}
 

@@ -48,7 +48,7 @@
                             ),
                         )); ?>
                     </div>
-                    <a href = "/term/create">Добавить период</a>
+                    <a href = "/term/create" class="btn blue">Добавить период</a>
 
                 </div>
 

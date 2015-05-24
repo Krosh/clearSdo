@@ -120,10 +120,10 @@
                     <div class="course-icon">
                         <div class="ci"><i class="fa fa-check-square-o <?php if ($hasNewControl) echo "red"; ?>"></i></div> <a href="<?=$url?>#learn"><strong <?php if ($hasNewControl) echo "class = 'red'"; ?> > <?php echo $controlMaterialCount; ?> тестов</strong></a>
                     </div>
-                    <div class="course-icon">
+<!--                    <div class="course-icon">
                         <div class="ci"><i class="fa fa-comments red"></i></div> <a href="#"><strong class="red">5 сообщений</strong> </a>
                     </div>
-                </div>
+-->                </div>
             </div>
         </td>
         </tr>

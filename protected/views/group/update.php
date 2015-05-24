@@ -19,15 +19,29 @@
 
                     <div>
                         <?php $this->renderPartial('_form', array('model'=>$model)); ?>
-                        <div >
-                            Добавить студентов из файла excel:
+                        <div style="width: 100%">
                             <?php
                             echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
-                            echo Chtml::fileField("filename");
-                            echo CHtml::hiddenField("idGroup",$model->id);
-                            echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()"));
-                            echo CHtml::endForm();
                             ?>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td width="35%">
+                                        Добавить студентов из файла excel:
+                                    </td>
+                                    <td width="40%" class="input-full-width" style="margin-top: 10px; ">
+                                        <?php
+                                        echo Chtml::fileField("filename");
+                                        echo CHtml::hiddenField("idGroup",$model->id);
+                                        ?>
+                                    </td>
+                                    <td width="25%" class="input-full-width">
+                                        <?php
+                                        echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()", 'class' => 'btn blue'));
+                                        ?>
+                                    </td>
+                                </tr>
+                            </table>
+                            <?php echo CHtml::endForm(); ?>
 
                         </div>
                         <?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -58,6 +72,7 @@
                             ),
                         )); ?>
 
+                        Добавить существующего пользователя в группу:
                         <?php
                         $mas = array();
                         $models = User::model()->findAll("role = ".ROLE_STUDENT);
@@ -89,7 +104,7 @@
                                 'allowText' => false,
                             ),
                             // Options passed to the text input
-                            'htmlOptions' => array('size' => 10),
+                            'htmlOptions' => array('size' => 30),
                         ));
 
                         ?>

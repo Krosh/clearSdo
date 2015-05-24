@@ -520,6 +520,7 @@ function updateLearnMaterials(idCourse)
             $("#learnMaterialTable tbody").sortable({
                 items: 'tr',
                 start: function (event, ui) {
+                    console.log("start");
                     if ($(ui.item).hasClass("titleRow") && !window.isDragged)
                     {
                         idGroup1 = $(ui.item).attr('id');
@@ -530,18 +531,21 @@ function updateLearnMaterials(idCourse)
                     window.isDragged = true;
                 },
                 stop: function(event, ui) {
+                    console.log("stop");
                     window.isDragged = false;
                     $(selector+"tr").show();
                 },
                 update: function(event, ui ) {
                     if ($(ui.item).hasClass("titleRow"))
                     {
+                        console.log("update");
                         idGroup1 = $(ui.item).attr('id');
                         idGroup2 = $(ui.item).prev().attr("data-idHeader") || 0;
                         if (idGroup2 == 0)
                             idGroup2 = $(ui.item).prev().attr('id');
-                        $(selector+"tr").show();
-                        $(selector+"#"+idGroup2).insertBefore($(selector+"#"+idGroup1));
+                        console.log(idGroup2);
+                        if (idGroup2 != idGroup1)
+                            $(selector+"#"+idGroup2).insertBefore($(selector+"#"+idGroup1));
                         $(selector+"[data-idHeader="+idGroup1+"]").insertAfter($(selector+"#"+idGroup1));
                         $(selector+"[data-idHeader="+idGroup2+"]").insertAfter($(selector+"#"+idGroup2));
                         s = "";
@@ -974,9 +978,9 @@ $(document).ready(function(){
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
                 "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste jbimages"
+                "insertdatetime media table contextmenu paste jbimages media insert_control_material"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages media insert_control_material",
             relative_urls: false
         });
         // $(".jsRedactor").redactor();

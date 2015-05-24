@@ -25,7 +25,7 @@
     <?php foreach ($coursesMaterials as $currentCourseMaterial):?>
         <?php $item = LearnMaterial::model()->findByPk($currentCourseMaterial->idMaterial); ?>
         <? if($item->category != MATERIAL_TITLE) { ?>
-            <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>" data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
+            <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>" <!--data-href="--><?php /*echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) */?>">
     <? } else { ?>
             <?php $idCurrentHeader = $currentCourseMaterial->id; ?>
             <tr id = "<?php echo $currentCourseMaterial->id; ?>" class="titleRow">

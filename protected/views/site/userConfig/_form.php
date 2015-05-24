@@ -68,11 +68,20 @@
         </tr>
         <tr>
             <td width="35%">
-                <?php echo $form->labelEx($model,'fio'); ?>
-                <?php echo $form->error($model,'fio'); ?>
+                <?php echo $form->labelEx($model,'phone'); ?>
+                <?php echo $form->error($model,'phone'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
+                <?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>20)); ?>
+            </td>
+        </tr>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'email'); ?>
+                <?php echo $form->error($model,'email'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>200)); ?>
             </td>
         </tr>
         <tr>
@@ -81,7 +90,7 @@
                 <?php echo $form->error($model,'info'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->textArea($model,'info',array('cols'=>65,'maxlength'=>100)); ?>
+                <?php echo $form->textArea($model,'info',array('cols'=>75,'maxlength'=>100)); ?>
             </td>
         </tr>
         <tr>

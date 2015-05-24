@@ -127,7 +127,7 @@ class Group extends CActiveRecord
         $ids = array();
         foreach ($courses as $item)
         {
-            $groups = Group::getGroupsByCourse($item->id,$idTerm);
+            $groups = Group::getGroupsByCourse($item->idCourse,$idTerm);
             foreach ($groups as $curGroup)
             {
                 array_push($ids,$curGroup->id);

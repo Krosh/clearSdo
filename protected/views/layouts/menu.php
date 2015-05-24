@@ -22,6 +22,9 @@
               <a href="#">Документы</a>
           </div>
         -->  <?php if (Yii::app()->user->isAdmin()):?>
+            <div class="link">
+                <a href="/config">Настройки</a>
+            </div>
             <div class="link more">
                 <a href="#">Справочники</a>
                 <div class="more-menu">
