@@ -13,12 +13,20 @@ class ControlMaterialController extends CController
         );
     }
 
+    public function actionGetLinks()
+    {
+        $course = Yii::app()->session['currentCourse'];
+        $term = Yii::app()->session['currentTerm'];
+        $this->renderPartial("/controlMaterial/links", array("idCourse" => $course, "idTerm" => $term));
+    }
+
 
     public function actionStartTest($idTest)
     {
         $testModel = $this->loadModel($idTest);
         if (!$testModel->hasAccess(Yii::app()->session['currentCourse']))
             $this->redirect("/");
+
         $questionsFromDb = Question::getQuestionsByControlMaterial($idTest);
         // В сессию записываем два массива
         // $questionsId - массив с номерами вопросов
@@ -26,7 +34,7 @@ class ControlMaterialController extends CController
         if ($testModel->question_show_count == -1)
             $count = count($questionsFromDb);
         else
-            $count = $testModel->question_show_count;
+            $count = min($testModel->question_show_count, count($questionsFromDb));
         $flag = array();
         $ids = array();
         for ($i = 0; $i<count($questionsFromDb); $i++)
@@ -81,6 +89,9 @@ class ControlMaterialController extends CController
         $criteria->compare('question', $idQuestion);
         $criteria->order = 'zindex';
         $answers = Answer::model()->findAll($criteria);
+        $test = ControlMaterial::model()->findByPk(Yii::app()->session['currentTest']);
+        if ($test->answer_random)
+            shuffle($answers);
 
         // Считаем время
         $currentTestGo = UserControlMaterial::model()->findByPk(Yii::app()->session['currentTestGo']);
@@ -222,7 +233,6 @@ class ControlMaterialController extends CController
                 $totalMark+=$answerInfo['mark']*$questions[$i]->weight;
             }
         }
-
         $model->mark = (int)($totalMark/max($summWeight,1));
         $model->save();
         $idGo = Yii::app()->session['currentTestGo'] = -1;

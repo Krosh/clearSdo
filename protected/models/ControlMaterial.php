@@ -96,7 +96,7 @@ class ControlMaterial extends CActiveRecord
         }
         if ($controlMaterial->calc_mode == CALC_AVG)
         {
-            $mark = 100;
+            $mark = 0;
             foreach ($tries as $item)
             {
                 $mark += $item->mark;

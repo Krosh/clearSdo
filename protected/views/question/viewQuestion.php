@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="test-submit">
-                    <button type="submit" class="btn blue" onclick="checkSubmit(<?php echo $question->type; ?>)">Ответить</button>
+                    <button type="submit" class="btn blue" onclick="return checkSubmit(<?php echo $question->type; ?>)">Ответить</button>
                     <a href="/controlMaterial/skipQuestion" class="btn gray">Пропустить</a>
                 </div>
             </form>

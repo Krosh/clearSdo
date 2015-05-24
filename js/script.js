@@ -169,6 +169,10 @@ function ajaxGetTimetable(idGroup)
 
 function checkSubmit(val)
 {
+    if (val >= 3 && val<=4)
+    {
+            return false;
+    }
     if (val == 5)
     {
         var elem = document.getElementById('answer');
@@ -180,6 +184,7 @@ function checkSubmit(val)
         }
         elem.value = s;
     }
+    return true;
 }
 
 function checkHasNewPassword()

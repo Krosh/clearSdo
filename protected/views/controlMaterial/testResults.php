@@ -63,6 +63,7 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
                         <div class="clearfix"></div>
                     </div>
 
+                   <?php if ($controlMaterial->show_answers):?>
                     <?php $i = 0; ?>
                     <?php foreach($questions as $item): ?>
                         <div class="text-block">
@@ -108,5 +109,6 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
                         </div>
                         <?php $i++; ?>
                     <? endforeach ?>
+                    <?php endif; ?>
                 </div>
             </div>

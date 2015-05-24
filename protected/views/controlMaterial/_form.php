@@ -43,16 +43,16 @@
 				<?php echo $form->error($model,'short_title'); ?>
 			</td>
 		</tr>
-		<tr>
+<!--		<tr>
 			<td width="40%">
-				<?php echo $form->labelEx($model,'weight'); ?>
+				<?php /*echo $form->labelEx($model,'weight'); */?>
 			</td>
 			<td width="60%">
-				<?php echo $form->textField($model,'weight'); ?>
-        		<?php echo $form->error($model,'weight'); ?>
+				<?php /*echo $form->textField($model,'weight'); */?>
+        		<?php /*echo $form->error($model,'weight'); */?>
 			</td>
 		</tr>
-		<tr>
+-->		<tr>
 			<td width="40%">
 				<?php echo $form->labelEx($model,'show_in_reports'); ?>
 			</td>
@@ -98,16 +98,16 @@
 				<?php echo $form->error($model,'answer_random'); ?>
 			</td>
 		</tr>
-		<tr>
+<!--		<tr>
 			<td width="40%">
-				<?php echo $form->labelEx($model,'adaptive'); ?>
+				<?php /*echo $form->labelEx($model,'adaptive'); */?>
 			</td>
 			<td width="60%">
-				<?php echo $form->checkBox($model,'adaptive'); ?>
-				<?php echo $form->error($model,'adaptive'); ?>
+				<?php /*echo $form->checkBox($model,'adaptive'); */?>
+				<?php /*echo $form->error($model,'adaptive'); */?>
 			</td>
 		</tr>
-		<tr>
+-->		<tr>
 			<td width="40%">
 				<?php $categories = array(-1 => 'Неограниченно', 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', 6 => '6', 7 => '7', 8 => '8', 9 => '9', 10 => '10');?>
 				<?php echo $form->labelEx($model,'try_amount'); ?>

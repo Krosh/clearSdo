@@ -200,6 +200,10 @@ class LearnMaterialController extends CController
             $this->render("view", array("model" => $mat));
             Yii::app()->end();
         }
+        if ($mat->category == MATERIAL_LINK)
+        {
+            $this->redirect($mat->path);
+        }
         $filename = $mat->getPathToMaterial();
         $newname = $mat->title;
         $newname = str_replace(",","",$newname);

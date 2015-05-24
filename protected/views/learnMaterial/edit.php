@@ -51,3 +51,6 @@
                     </div><!-- form -->
                 </div>
             </div>
+            <script>
+                window.currentCourse = <?php echo Yii::app()->session['currentCourse']; ?>;
+            </script>

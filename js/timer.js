@@ -10,11 +10,14 @@ function onTimer() {
     var endDate =  new Date(window.endTime);
     var startDate = new Date();
     var date = new Date();
-    if (endDate.valueOf()<startDate.valueOf())
+    var seconds = Math.floor((endDate.getTime()-startDate.getTime())/1000);
+    seconds-= 3600;
+    if (seconds<=0)
     {
         window.location = "endTest?reason=2";
     }
     var seconds = Math.floor((endDate.getTime()-startDate.getTime())/1000);
+    seconds-= 3600;
     var text = "";
     if (seconds>3600)
     {
