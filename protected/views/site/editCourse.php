@@ -12,15 +12,15 @@
 <?php
 $listeners = Course::getGroups($model->id);
 ?>
-    <script>
-        window.nameModal = "editCourseModal";
-        <?php
-            if ($model->title == "")
-                echo "window.needModal = true;"
-        ?>
-        window.idCourse = <?php echo $model->id; ?>;
-        window.idTerm = <?php echo Yii::app()->session["currentTerm"]; ?>;
-    </script>
+<script>
+    window.nameModal = "editCourseModal";
+    <?php
+        if ($model->title == "")
+            echo "window.needModal = true;"
+    ?>
+    window.idCourse = <?php echo $model->id; ?>;
+    window.idTerm = <?php echo Yii::app()->session["currentTerm"]; ?>;
+</script>
 <div class="wrapper">
 <div class="container">
 <div class="col-group">
@@ -37,6 +37,19 @@ $listeners = Course::getGroups($model->id);
         </div>
         <div class="col-8 right">
             <div style="vertical-align: middle">
+                <div class="btn courses-list dropdown nohover">
+                    <a href="#" class="caret-link">
+                        <span id = "currentTermTitle"><i class="fa fa-book fa-2x" style="color: #c55a00"></i></span><i class="caret"></i>
+                    </a>
+                    <div class="dropdown-container">
+                        <?php $groups = Group::getGroupsByCourse($model->id, Yii::app()->session["currentTerm"]);
+                        foreach ($groups as $item)
+                        {
+                            echo '<a href="'.$this->createUrl("/site/journal", array("idCourse" => $model->id, "idGroup" => $item->id)).'">'.$item->Title.'</a>';
+                        }
+                        ?>
+                    </div>
+                </div>
                 <a href="#" class="btn icon-colored icon-blue has-tip" data-toggle="modal" data-target="#editCourseModal" data-original-title="Информация" title="Информация"><i class="fa fa-edit"></i></a>
                 <a href="#" class="btn icon-colored icon-red has-tip" data-toggle="modal" data-target="#editTeachersModal" data-original-title="Преподаватели" title="Преподаватели"><i class="fa fa-users"></i></a>
                 <a href="#" class="btn icon-colored icon-violet has-tip" data-toggle="modal" data-target="#editPeoplesModal" data-original-title="Слушатели" title="Слушатели"><i class="fa fa-graduation-cap"></i></a>
@@ -168,16 +181,16 @@ $listeners = Course::getGroups($model->id);
                 <div class="modal-body">
                     <div id="editCourse-access" class="form modal-form">
                         <?php
-                            // Необходимо вывести виджет, чтобы прогрузились файлы
-                            $arr = AccessControlMaterial::model()->findAll();
-                            if (count($arr) > 0)
-                            {
-                                $this->widget('ext.YiiDateTimePicker.jqueryDateTime',array(
-                                    'model'=>$arr[0], //Model object
-                                    'attribute'=>'endDate', //attribute name
-                                    'htmlOptions'=>array('onchange' => 'ajaxUpdateAccess(this);'), // jquery plugin options
-                                ));
-                            }
+                        // Необходимо вывести виджет, чтобы прогрузились файлы
+                        $arr = AccessControlMaterial::model()->findAll();
+                        if (count($arr) > 0)
+                        {
+                            $this->widget('ext.YiiDateTimePicker.jqueryDateTime',array(
+                                'model'=>$arr[0], //Model object
+                                'attribute'=>'endDate', //attribute name
+                                'htmlOptions'=>array('onchange' => 'ajaxUpdateAccess(this);'), // jquery plugin options
+                            ));
+                        }
                         ?>
                     </div>
                 </div>

@@ -820,6 +820,11 @@ function isValidQuestion()
 {
 //    var questionType = $("#ytQuestion_type").val(); // Вот с этой фигней что-то придумать
 
+    if ($("#Question_weight").val()<=0)
+    {
+        alert("Вес должен быть больше 0");
+        return false;
+    }
     var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
     var answerCount = $(".answer").length;
     var rightAnswerCount = $(".answer input:checked").length;

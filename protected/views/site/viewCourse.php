@@ -8,10 +8,6 @@
  */
 /* @var $model Course */
 ?>
-
-
-
-
 <?php
 $teachers = Course::getAutors($model->id);
 $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->id);
@@ -82,6 +78,8 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                             $size = floor($size/1024);
                                         } while ($size>0);
                                     }
+                                    if ($item->category == MATERIAL_LINK)
+                                        $sizeText = $item->path;
                                     echo $sizeText;
                                     ?>
 
@@ -117,9 +115,9 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                 <?php $num++; ?>
                                 <td>
                                     <?php if ($item->is_point): ?>
-                                        <img src="/img/is_point.png" alt="">
+                                        <img class="file-icon" src="/img/fileicons/point.png" alt="">
                                     <?php else:?>
-                                        <img src="/img/is_test.gif" alt="">
+                                        <img class="file-icon" src="/img/fileicons/test.png" alt="">
                                     <?php endif; ?>
                                 <td>
                                     <?php echo $item->title ?></td>

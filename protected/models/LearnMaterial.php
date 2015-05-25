@@ -239,6 +239,10 @@ class LearnMaterial extends CActiveRecord
 
     public function getIconExtension()
     {
+        if ($this->category == MATERIAL_LINK)
+            return "link";
+        if ($this->category == MATERIAL_INBROWSER)
+            return "text";
         $path = "";
         if ($this->category==MATERIAL_FILE) {
             $path = pathinfo($this->path, PATHINFO_EXTENSION);
@@ -246,84 +250,58 @@ class LearnMaterial extends CActiveRecord
 
         switch ($path) {
             case "docx":
-                $f = "file";
-                break;
+                return "file";
             case "txt":
-                $f = "file";
-                break;
+                return "file";
             case "rtf":
-                $f = "file";
-                break;
+                return "file";
             case "doc":
-                $f = "file";
-                break;
+                return "file";
             case "pdf":
-                $f = "pdf";
-                break;
+                return "pdf";
             case "xls":
-                $f = "excel";
-                break;
+                return "excel";
             case "xlsx":
-                $f = "excel";
-                break;
+                return "excel";
             case "csv":
-                $f = "excel";
-                break;
+                return "excel";
             case "ppt":
-                $f = "presentation";
-                break;
+                return "presentation";
             case "pptx":
-                $f = "presentation";
-                break;
+                return "presentation";
             case "zip":
-                $f = "archive";
-                break;
+                return "archive";
             case "rar":
-                $f = "archive";
-                break;
+                return "archive";
             case "7z":
-                $f = "archive";
-                break;
+                return "archive";
             case "tar":
-                $f = "archive";
-                break;
+                return "archive";
             case "gz":
-                $f = "archive";
-                break;
+                return "archive";
             case "jpg":
-                $f = "image";
-                break;
+                return "image";
             case "jpeg":
-                $f = "image";
-                break;
+                return "image";
             case "bmp":
-                $f = "image";
-                break;
+                return "image";
             case "png":
-                $f = "image";
-                break;
+                return "image";
             case "gif":
-                $f = "image";
-                break;
+                return "image";
             case "avi":
-                $f = "movie";
-                break;
+                return "movie";
             case "mpg":
-                $f = "movie";
-                break;
+                return "movie";
             case "mp4":
-                $f = "movie";
-                break;
+                return "movie";
             case "mov":
-                $f = "movie";
-                break;
+                return "movie";
             case "torrent":
-                $f = "torrent";
-                break;
+                return "torrent";
             default:
-                $f = "no";
+                return "no";
         }
-        return $f;
 
     }
 

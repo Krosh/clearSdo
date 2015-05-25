@@ -30,7 +30,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
         <?php $item = ControlMaterial::model()->findByPk($curMaterial->idControlMaterial); ?>
         <?php if ($item->is_point): ?>
             <tr id = "<?php echo $curMaterial->id?>" data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>">
-                <td><img class="file-icon" src="/img/is_point.png" alt="">
+                <td><img class="file-icon" src="/img/fileicons/point.png" alt="">
                 </td>
                 <td><?php echo $item->title ?></td>
                 <td colspan="3" style="text-align: center">
@@ -45,7 +45,7 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
             </tr>
         <?php else: ?>
             <tr id = "<?php echo $curMaterial->id?>" data-href = "<?php echo "/controlMaterial/edit?idMaterial=".$item->id?>">
-                <td><img class="file-icon" src="/img/is_test.gif" alt="">
+                <td><img class="file-icon" src="/img/fileicons/test.png" alt="">
                 </td>
                 <td><?php echo $item->title ?></td>
                 <?php

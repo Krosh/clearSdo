@@ -204,8 +204,7 @@ class SiteController extends CController
 
     public function actionWebinar()
     {
-        $this->render('/webinar/view',array(
-        ));
+        
     }
 
     public function actionProfile($idUser)

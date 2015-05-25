@@ -22,7 +22,7 @@
                             <img style= "float: left; max-width: 30%;" src = "/avatars/<?php echo $model->avatar; ?>">
                             <p style="float: right; min-width: 65%; max-width: 65%">
                                 <i class="fa fa-phone"></i><phone><?php echo $model->phone; ?></phone><br>
-                                <i class="fa fa-mail"></i><a href = "mailto:<?php echo $model->email; ?>"><?php echo $model->email; ?></a><br>
+                                <i class="fa fa-envelope "></i><a href = "mailto:<?php echo $model->email; ?>"><?php echo $model->email; ?></a><br>
                                 <a href = '<?php echo $this->createUrl("/message/index", array("startDialog" => $model->id))?> '>Написать сообщение</a>
                                 <br>
                                 <?php echo str_replace("\n","<br>",$model->info); ?>

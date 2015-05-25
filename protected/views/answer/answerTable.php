@@ -27,7 +27,7 @@
 
             <td >
                 <?php
-                    $this->renderPartial("/answer/_form", array("model" => $item, "needSecondAnswer" => $questionType == 6));
+                    $this->renderPartial("/answer/_form", array("model" => $item, "needSecondAnswer" => $questionType == 5));
                 ?>
             </td>
             <td class="right">
