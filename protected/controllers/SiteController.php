@@ -204,7 +204,132 @@ class SiteController extends CController
 
     public function actionWebinar()
     {
-        
+        $bbb=Yii::app()->bigbluebutton;
+//set default passwords (you may also set them from configuration)
+        $bbb->attendeePW=123;
+        $bbb->moderatorPW=12345;
+
+//create simple meeting with default parameters and generate join url for TestUser
+        $meeting=$bbb->createMeeting("test");
+//see what response we've got from server
+        CVarDumper::dump($meeting, 10, 1);
+        echo "<br/>";
+
+//join url is constructed with viewer privileges by default
+        $joinUrl=$bbb->getJoinMeetingUrl($meeting['meetingID'], "TestUser");
+//redirect user to conference immediately...
+//$this->redirect($joinUrl);
+//...or send him a link to join manually
+        echo CHtml::link("Join my cool conference!", $joinUrl)."<br/>";
+
+//check if created meeting is running
+//(actually it isn't, because we just created it, but
+// there are no participants)
+        $isRunning=$bbb->meetingIsRunning($meeting['meetingID']);
+        echo "meeting state: ".(($isRunning)?"running":"not running")."<br/>";
+
+//show all meetings
+        $meetings=$bbb->getMeetings();
+        CVarDumper::dump($meetings, 10, 1)."<br/>";
+        echo "<br/>";
+
+//imagine you have authenticated user somewhere...
+       // Yii::app()->user->id=456;
+
+//get created meeting for another user
+//with moderator privileges to join and end conference
+        $meeting=$bbb->getMeetingForUser(
+            $meetings[0]['meetingID'],
+            "AnotherUser",
+            //user id will be taken from Yii::app()->user->id
+            null,
+            BigBlueButton::ROLE_MODERATOR,
+            //moderator password
+            $meetings[0]['moderatorPW']);
+        CVarDumper::dump($meeting, 10, 1);
+        echo "<br/>";
+
+//now before we could end meeting we need at least one member there
+//to get it started, otherwise it won't be counted as 'running'.
+//so use join url as shown above and open conference in another tab.
+
+//if it's time to end meeting, you should do like this:
+//$bbb->endMeeting($meeting['meetingID'], $meeting['moderatorPW']);
+//or this, because we have meeting data with moderator privileges:
+        echo CHtml::link("End that boring conference", $meeting['endUrl'])."<br/>";
+//but do not simply show that link to real user, use getApiResponse()
+//or endMeeting() methods instead
+
+//show all running conferences for specified user
+        $meetings=$bbb->getMeetingsForUser(
+        //username which will be shown in BigBlueButton client
+            "TestUser2",
+            //user id
+            457,
+            //request running meetings only (default is any meetings)
+            BigBlueButton::MEETING_STATE_RUNNING,
+            //generate meeting interaction urls with viewer privileges
+            BigBlueButton::ROLE_VIEWER);
+//array of meetings with urls for user to join or end meeting
+        CVarDumper::dump($meetings, 10, 1);
+        echo "<br/>";
+
+//the list of ended meetings with full information about them
+        $meetings=$bbb->getFullMeetings(BigBlueButton::MEETING_STATE_COMPLETED);
+        CVarDumper::dump($meetings, 10, 1);
+        echo "<br/>";
+//...or the list of all meetings with less information,
+//but much faster on large number of meetings
+        $meetings=$bbb->getMeetings(BigBlueButton::MEETING_STATE_ANY);
+        CVarDumper::dump($meetings, 10, 1);
+        echo "<br/>";
+
+//build a link to create another meeting with a bunch of options
+        $newMeetingUrl=$bbb->getCreateMeetingUrl(
+            "My awesome show",
+            array(
+                //set meeting id if you don't want it to be created automatically.
+                //may be you'll manage meetings with your own database
+                //and you can supply it's id here
+                "meetingID"=>356,
+                //free access to any viewer, overwriting password from configuration
+                "attendeePW"=>"",
+                //some custom moderator password
+                "moderatorPW"=>"myhardestpasswordever",
+                //another logout url...
+                "logoutUrl"=>Yii::app()->createAbsoluteUrl(
+                    "conferences/logout"),
+                //welcome chat message
+                "welcome"=>"Hello world!",
+                //+any parameters as described in API docs..
+            )
+        );
+//you may store url somewhere and call later
+//$meeting=$bbb->getApiResponse($newMeetingUrl);
+//or call $bbb->createMeeting() with same parameters as above
+//to create it immediately
+
+//check server state
+        $isOnline=$bbb->serverIsAvailable();
+//hope it's true
+        echo $bbb->url." server availability: ".(($isOnline)?"ok":"fail");
+        echo "<br/>";
+
+//and don't forget to catch exceptions
+        $bbb->url="http://google.com";
+        try
+        {
+            //will be false
+            $isOnline=$bbb->serverIsAvailable();
+            echo $bbb->url." server availability: ".(($isOnline)?"ok":"fail");
+            echo "<br/>";
+            //will throw an exception
+            $meetings=$bbb->getMeetings();
+        }
+        catch (BigBlueButtonException $ex)
+        {
+            echo $ex->getMessage();
+        }
     }
 
     public function actionProfile($idUser)

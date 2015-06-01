@@ -28,7 +28,7 @@ $commonAccess = AccessControlMaterial::model()->find($criteria);
     </style>
     По умолчанию: <br>
 <?php
-$this->renderPartial("/accessControlMaterial/rowForm", array("model" => $commonAccess));
+$this->renderPartial("/accessControlMaterial/rowForm", array("model" => $commonAccess, "idCourse" => $idCourse,));
 ?>
     <br><hr>
     Особые настройки доступа для групп:<br>

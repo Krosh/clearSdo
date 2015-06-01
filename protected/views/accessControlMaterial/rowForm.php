@@ -8,7 +8,6 @@
     <div class="form">
 
         <div class="row">
-
             <?php if ($model->type_relation == ACCESS_RELATION_GROUP): ?>
                 <?php
                 $arr = Course::getGroups($idCourse);
@@ -69,11 +68,17 @@
             <div class = "beforeAccess" data-id ="<?php echo $model->id?>" style="display: inline">
                 <?php echo CHtml::label('После прохождения какого теста дать доступ',null); ?>
                 <?php
-                $controlMaterials = ControlMaterial::model()->findAll();
+
+                $criteria = new CDbCriteria();
+                $criteria->compare('idCourse',$idCourse);
+                $criteria->order = "zindex";
+                $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
+
                 $items = array();
-                foreach ($controlMaterials as $item)
+                foreach ($coursesMaterials as $item)
                 {
-                    $items[$item->id] = $item->title;
+                    $cm = ControlMaterial::model()->findByPk($item->idControlMaterial);
+                    $items[$cm->id] = $cm->title;
                 }
                 ?>
                 <?php echo CHtml::activeDropDownList($model,"idBeforeMaterial", $items,array ('class' => 'datePicker', 'onchange' => 'ajaxUpdateAccess(this); ')); ?>

@@ -105,8 +105,7 @@ class UserFileAnswer extends CActiveRecord
 
     public function beforeSave()
     {
-        echo var_dump($_FILES);
-        if ($this->isNewRecord)
+       if ($this->isNewRecord)
         {
             if ($this->fileAttribute == null)
             {
@@ -119,7 +118,6 @@ class UserFileAnswer extends CActiveRecord
             {
                 mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idUser);
             }
-            echo var_dump($doc);
             $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
             if (!$this->filename->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idUser.DIRECTORY_SEPARATOR.$name))
                 return false;

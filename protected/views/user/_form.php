@@ -46,6 +46,26 @@ $message = Yii::app()->user->getFlash("message");
 
 
     <table width="80%">
+        <?php if ($model->isNewRecord):?>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'login'); ?>
+                <?php echo $form->error($model,'login'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'login',array('size'=>60,'maxlength'=>100)); ?>
+            </td>
+        </tr>
+            <tr>
+                <td width="35%">
+                    <?php echo $form->labelEx($model,'password'); ?>
+                    <?php echo $form->error($model,'password'); ?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100)); ?>
+                </td>
+            </tr>
+        <?php else:?>
         <tr>
             <td width="35%">
                 <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
@@ -68,6 +88,7 @@ $message = Yii::app()->user->getFlash("message");
                 </div>
             </td>
         </tr>
+        <?php endif; ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'fio'); ?>

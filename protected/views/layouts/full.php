@@ -35,7 +35,7 @@ $cs->scriptMap=array(
                     </a>
                 </div>
                 <?php
-                    $this->renderPartial("/layouts/menu");
+                $this->renderPartial("/layouts/menu");
                 ?>
             </div>
             <div class="col-5 col-mb-9 right">
@@ -58,13 +58,15 @@ $cs->scriptMap=array(
                     </div>
                     <a href="/message/index" class="mails">
                         <i class="mail"></i>
-                        <span>
-                            <?php
-                                $sql = "SELECT COUNT(id) FROM `tbl_messages` WHERE STATUS = 0 AND idRecepient = ".Yii::app()->user->id;
-                                $command = Yii::app()->db->createCommand($sql);
-                                echo $command->queryScalar();
-                            ?>
-                        </span>
+                        <?php
+                        $sql = "SELECT COUNT(id) FROM `tbl_messages` WHERE STATUS = 0 AND idRecepient = ".Yii::app()->user->id;
+                        $command = Yii::app()->db->createCommand($sql);
+                        $res = $command->queryScalar();
+                        if ($res>0)
+                        {
+                            echo "<span>$res</span>";
+                        }
+                        ?>
                     </a>
                     <div class="profile dropdown">
                         <?php
@@ -77,7 +79,7 @@ $cs->scriptMap=array(
                         </div>
                     </div>
                     <div class="avatar">
-                         <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(); ?>')"></div>
+                        <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(); ?>')"></div>
                     </div>
                 </div>
             </div>

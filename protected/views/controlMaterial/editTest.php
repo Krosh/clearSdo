@@ -143,7 +143,7 @@
                                 <?php endforeach; ?>
                             </table>
                             <br>
-                            <?php echo CHtml::button("Сохранить", array("class" => "btn blue small", "onclick" => 'changeWeights('.$model->id.')')); ?>
+                            <?php echo CHtml::button("Сохранить", array("class" => "btn blue small", "onclick" => 'changeWeights('.$model->id.','.Yii::app()->session['currentCourse'].')')); ?>
                             <?php echo CHtml::endForm(); ?>
                         <?php endif; ?>
 

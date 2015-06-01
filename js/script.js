@@ -1,3 +1,20 @@
+function startConference(id)
+{
+    $.ajax({
+        type: 'GET',
+        url: '/webinar/startConference',
+        data: {idMaterial: id},
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
+        success: function(data)
+        {
+            window.location = "/webinar/connectToConference?idMaterial="+id;
+        }
+    });
+}
+
 function updateSelectListeners(obj)
 {
     $(".ms-selectable .ms-list").find("span").each(
@@ -169,10 +186,6 @@ function ajaxGetTimetable(idGroup)
 
 function checkSubmit(val)
 {
-    if (val >= 3 && val<=4)
-    {
-            return false;
-    }
     if (val == 5)
     {
         var elem = document.getElementById('answer');
@@ -196,7 +209,7 @@ function checkHasNewPassword()
 
 }
 
-function changeWeights(idMaterial)
+function changeWeights(idMaterial,idCourse)
 {
     var summ = 0;
     var count = 0;
@@ -226,6 +239,10 @@ function changeWeights(idMaterial)
         url: '/controlMaterial/saveWeights',
         data: {idControlMaterial: idMaterial, calcExpression: result},
         type: "POST",
+        success: function(data)
+        {
+          window.location =  "/editCourse?idCourse="+idCourse;
+        },
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
@@ -492,7 +509,7 @@ function addLearnMaterial(idCourse)
 }
 
 
-function deleteLearnMaterial(idCourse,idMaterial)
+function deleteLearnMaterial(idCourse,idMaterial,idDiv)
 {
     $.ajax({
         url: '/learnMaterial/deleteMaterial',
@@ -500,7 +517,8 @@ function deleteLearnMaterial(idCourse,idMaterial)
         type: "POST",
         success: function(data)
         {
-            updateLearnMaterials(window.idCourse);
+             $("#learnMaterialTable #"+idDiv).remove();
+            //updateLearnMaterials(window.idCourse);
         },
         error: function(jqXHR, textStatus, errorThrown){
 //            alert(errorThrown);
@@ -603,7 +621,7 @@ function updateLearnMaterials(idCourse)
     });
 }
 
-function deleteControlMaterial(idCourse,idMaterial)
+function deleteControlMaterial(idCourse,idMaterial,idDiv)
 {
     $.ajax({
         url: '/material/deleteMaterial',
@@ -611,7 +629,7 @@ function deleteControlMaterial(idCourse,idMaterial)
         type: "POST",
         success: function(data)
         {
-            updateControlMaterials(idCourse);
+            $("#controlMaterialTable #"+idDiv).remove();
         },
         error: function(jqXHR, textStatus, errorThrown){
 //            alert(errorThrown);
@@ -660,6 +678,36 @@ function updateControlMaterials(idCourse)
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         }
     });
+}
+
+function changeDiv(title,n)
+{
+    $("#modalTitle").html(title);
+    $("#LearnMaterial_category").val(n);
+    if (n == 2)
+    {
+        $('.fileDiv').hide();
+        $('.dateDiv').hide();
+        $('.linkDiv').show();
+    }
+    if (n ==1 || n == 3)
+    {
+        $('.fileDiv').show();
+        $('.dateDiv').hide();
+        $('.linkDiv').hide();
+    }
+    if (n == 4)
+    {
+        $('.dateDiv').hide();
+        $('.fileDiv').hide();
+        $('.linkDiv').hide();
+    }
+    if (n == 7)
+    {
+        $('.dateDiv').show();
+        $('.fileDiv').hide();
+        $('.linkDiv').hide();
+    }
 }
 
 function updateQuestions(idTest)
@@ -937,6 +985,8 @@ $(document).ready(function(){
             });
         }
     });
+    if ($('.dtPicker').length)
+        $('.dtPicker').datetimepicker({ format:'d.m.Y H:i'});
 
     // Переход у таблиц по data-href
     if (window.currentTerm !== undefined) {

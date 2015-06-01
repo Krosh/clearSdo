@@ -44,7 +44,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         $learnMaterials = LearnMaterial::getMaterialsFromCourse($model->id);
                         ?>
                         <?php foreach ($learnMaterials as $item):?>
-                            <? if($item->category != MATERIAL_TITLE) { ?>
+                            <? if($item->category != MATERIAL_TITLE && $item->category != MATERIAL_WEBINAR) { ?>
                                 <tr data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
                             <? } else { ?>
                                 <tr>
@@ -64,25 +64,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                     ?>
                                 </td>
                                 <td class="right">
-                                    <?php
-                                    $sizeText = "";
-                                    if ($item->category == MATERIAL_FILE)
-                                    {
-                                        $size = filesize($item->getPathToMaterial());
-                                        $sizePrefixxes = array(" Б"," Кб", " Мб", " Гб");
-                                        $i = 0;
-                                        do
-                                        {
-                                            $sizeText = $size.$sizePrefixxes[$i];
-                                            $i++;
-                                            $size = floor($size/1024);
-                                        } while ($size>0);
-                                    }
-                                    if ($item->category == MATERIAL_LINK)
-                                        $sizeText = $item->path;
-                                    echo $sizeText;
-                                    ?>
-
+                                    <?php echo $item->getInfoText(); ?>
                                 </td>
                             <? endif; ?>
                             </tr>
@@ -171,7 +153,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                                     }
                                     if ($access->accessType == 4)
                                     {
-                                        $parentTest = ControlMaterial::model()->findByPk($access->idBeforeTest);
+                                        $parentTest = ControlMaterial::model()->findByPk($access->idBeforeMaterial);
                                         $accessText = "После прохождения<br>";
                                         $accessText.=$parentTest->title."<br>";
                                         $accessText.="Мин. оценка - ".$access->minMark;

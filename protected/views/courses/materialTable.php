@@ -25,7 +25,7 @@
     <?php foreach ($coursesMaterials as $currentCourseMaterial):?>
         <?php $item = LearnMaterial::model()->findByPk($currentCourseMaterial->idMaterial); ?>
         <? if($item->category != MATERIAL_TITLE) { ?>
-            <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>" <!--data-href="--><?php /*echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) */?>">
+            <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>">
     <? } else { ?>
             <?php $idCurrentHeader = $currentCourseMaterial->id; ?>
             <tr id = "<?php echo $currentCourseMaterial->id; ?>" class="titleRow">
@@ -33,7 +33,6 @@
 
         <?php if ($item->category == MATERIAL_TITLE):?>
             <td class="title" colspan="3">
-                <!-- <i class="fileicon-file"></i> -->
                 <input id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->title?>" style="display:none">
                 <span id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
                 <?
@@ -41,7 +40,7 @@
                 ?>
                 </span>
                 <div style="float:right;">
-                    <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>)"><i class="fa fa-remove"></i></a>
+                    <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $currentCourseMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>
                 </div>
             </td>
         <? else: ?>
@@ -58,20 +57,10 @@
                 </span>
             </td>
             <td class="right">
-                <?php
-                $sizeText = "";
-                if ($item->category == MATERIAL_FILE)
-                {
-                    $sizeText = $item->getFileSize();
-                }
-                echo $sizeText;
-                ?>
-                <?php if ($item->category == MATERIAL_INBROWSER): ?>
-                    <a class="btn" href="<?php echo $this->createUrl("/learnMaterial/edit", array("idMaterial" => $item->id)); ?>" ><i class="fa fa-pencil"></i></a>
-                <?php endif; ?>
+                <?php echo $item->getInfoText(true); ?>
             </td>
             <td class="right">
-                <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
+                <a class="btn red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $currentCourseMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>
             </td>
         <? endif; ?>
         </tr>

@@ -16,7 +16,7 @@
             </div>
             <div class="col-xs-9">
                 <a href="#"><?php echo $item["user"]->getShortFio(); ?></a>
-                <p>
+                <p style="text-overflow: ellipsis; overflow:hidden; height: 35px">
                     <span class="preview"><?php echo $item["message"]->text; ?></span>
                     <br>
                     <span class="date"><?php if ($item["message"] != null) echo DateHelper::getDifference($item["message"]->dateSend,date("Y-m-d H:i:s")); ?></span>

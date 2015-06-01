@@ -8,6 +8,12 @@ define("MATERIAL_TORRENT", 3);
 define("MATERIAL_TITLE", 4);
 define("MATERIAL_TEST", 5);
 define("MATERIAL_INBROWSER", 6);
+define("MATERIAL_WEBINAR",7);
+
+define("STATUS_PREPARE",1);
+define("STATUS_ACTIVE",2);
+define("STATUS_END",3);
+
 
 
 define("ROLE_GUEST",-1);
@@ -35,6 +41,8 @@ return array(
     //'defaultController'=>'site',
     'params' => array(
         'images' => array("png","bmp","jpg","jpeg","gif"),
+        'attendeePW' => 'adsasdasd',
+        'moderatorPW' => 'asdsgsdhsa12sd',
         'timezone' => "Asia/Omsk",
         'avatarStatuses' => array('Проходит модерацию', 'Одобрен модератором', 'Заблокирован модератором'),
         'roles' => array (ROLE_ADMIN => 'Администратор', ROLE_STUDENT => 'Студент', ROLE_TEACHER => 'Преподаватель'),
@@ -54,7 +62,37 @@ return array(
         'xupload' => 'ext.xupload'
     ),
     'components'=>array(
+        'bigbluebutton'=>array(
+            'class'=>'ext.bigbluebutton.BigBlueButton',
 
+            //server and salt provided here are intended for BigBlueButton's testing server
+            //do not use it in your real projects
+
+            //security salt - required
+            'salt'=>'8cd8ef52e8e101574e400365b55e11a6',
+            //API host - required
+            'url'=>'http://test-install.blindsidenetworks.com',
+            //the rest parameters are optional
+            //port is 80 by default
+            //'port'=>80,
+            //default path to API
+            //'path'=>'/bigbluebutton/api/',
+
+            //-you may set default passwords here or set
+            // unique passwords for each conference
+            //-or even use no passwords — BigBlueButton
+            // will assign them randomly in that case
+
+            //common moderator password for any conference
+            //'moderatorPW'=>'12345',
+            //common attendee password for any conference
+            //'attendeePW'=>'123',
+
+            //common url to redirect users after leaving conference,
+            //which will be transmitted to Yii::app()->createAbsoluteUrl.
+            //default is site root. you may set unique url for each conference.
+            //'logoutUrl'=>'/',
+        ),
 		'db'=>array(
             'class'=>'system.db.CDbConnection',
             'connectionString'=>'mysql:host=db36.valuehost.ru;dbname=mvtom_stml2',

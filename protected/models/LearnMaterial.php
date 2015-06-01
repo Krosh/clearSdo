@@ -19,86 +19,86 @@ class LearnMaterial extends CActiveRecord
     public $courses = "";
     public $showOnlyNoUsed = false;
     /**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'tbl_learnmaterials';
-	}
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'tbl_learnmaterials';
+    }
 
     public $fileAttribute = null;
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('category, idAutor', 'numerical', 'integerOnly'=>true),
-			array('path', 'length', 'max'=>200),
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('category, idAutor', 'numerical', 'integerOnly'=>true),
+            array('path', 'length', 'max'=>200),
             array('content', 'length', 'max'=>65535),
             array('ext, courses, title', 'length', 'max'=>45),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('content, showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
-		);
-	}
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('content, showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
         return array(
             'courses'=>array(self::MANY_MANY, 'Course', 'tbl_coursesmaterials(idMaterial,idCourse)'),
             'coursesMaterials'=>array(self::HAS_MANY, 'CoursesMaterial', 'idMaterial'),
             // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
         );
-	}
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'path' => 'Путь к материалу',
-			'title' => 'Заголовок',
-			'category' => 'Категория',
-			'idAutor' => 'Код автора',
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'path' => 'Путь к материалу',
+            'title' => 'Заголовок',
+            'category' => 'Категория',
+            'idAutor' => 'Код автора',
             'showOnlyNoUsed' => 'Показать только неиспользуемые',
             'content' => 'Содержимое',
-		);
-	}
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('path',$this->path,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT));
-		$criteria->compare('idAutor',Yii::app()->user->getId());
+        $criteria->compare('id',$this->id);
+        $criteria->compare('path',$this->path,true);
+        $criteria->compare('title',$this->title,true);
+        $criteria->addInCondition("category",array(MATERIAL_FILE,MATERIAL_TORRENT,MATERIAL_INBROWSER,MATERIAL_LINK,MATERIAL_WEBINAR));
+        $criteria->compare('idAutor',Yii::app()->user->getId());
         if ($this->showOnlyNoUsed)
         {
             $criteria->with = array(
@@ -110,10 +110,10 @@ class LearnMaterial extends CActiveRecord
             $criteria->addCondition('coursesMaterials.idCourse IS NULL');
         }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 
     static public function getMaterialsFromCourse($idCourse)
     {
@@ -154,26 +154,37 @@ class LearnMaterial extends CActiveRecord
 
     public function beforeSave()
     {
-        if ($this->isNewRecord && ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT))
+        if ($this->isNewRecord)
         {
-
-            if ($this->fileAttribute == null)
-                $doc = CUploadedFile::getInstance($this,'path');
-            else
-                $doc = $this->fileAttribute;
-            $this->path = $doc;
-            if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor))
-            {
-                mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor);
-            }
-            $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
-            $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name);
-            $this->path = $name;
-            if (!is_file(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name))
-            {
-                return false;
-            }
             $this->dateAdd = date("Y-m-d H:i:s");
+            if ($this->category == MATERIAL_WEBINAR)
+            {
+                $webinar = new Webinar();
+                $webinar->dateStart = $this->path;
+                $webinar->status = STATUS_PREPARE;
+                $webinar->save();
+                $this->content = $webinar->id;
+            }
+            if ($this->category == MATERIAL_FILE || $this-> category == MATERIAL_TORRENT)
+            {
+
+                if ($this->fileAttribute == null)
+                    $doc = CUploadedFile::getInstance($this,'path');
+                else
+                    $doc = $this->fileAttribute;
+                $this->path = $doc;
+                if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor))
+                {
+                    mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor);
+                }
+                $name = time().".".strtolower(pathinfo($doc, PATHINFO_EXTENSION));
+                $this->path->saveAs(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name);
+                $this->path = $name;
+                if (!is_file(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$name))
+                {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -206,6 +217,49 @@ class LearnMaterial extends CActiveRecord
             $i++;
             $size = floor($size/1024);
         } while ($size>0);
+        return $sizeText;
+    }
+
+    public function getInfoText($needEditButton = false)
+    {
+
+        if ($this->category == MATERIAL_INBROWSER && $needEditButton)
+            return '<a href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil"></i></a>';
+        if ($this->category == MATERIAL_FILE)
+        {
+            $size = filesize($this->getPathToMaterial());
+            $sizePrefixxes = array(" Б"," Кб", " Мб", " Гб");
+            $i = 0;
+            do
+            {
+                $sizeText = $size.$sizePrefixxes[$i];
+                $i++;
+                $size = floor($size/1024);
+            } while ($size>0);
+        }
+        if ($this->category == MATERIAL_WEBINAR)
+        {
+            $webinar = Webinar::model()->findByPk($this->content);
+            $webinar->checkOnEnd();
+            if ($webinar->status == STATUS_PREPARE && Yii::app()->user->role == ROLE_TEACHER)
+            {
+                return '<a href = "#" onclick = "startConference('.$this->id.'); return false"><i class = "fa fa-play fa-2x"></i></a>';
+            }
+            if ($webinar->status == STATUS_ACTIVE)
+            {
+                return '<a href = "'.Yii::app()->controller->createUrl("/webinar/connectToConference", array("idMaterial" => $this->id)).'" target = "_blank"><i class = "fa fa-user-plus fa-2x"></i></a>';
+            }
+            if ($webinar->status == STATUS_END)
+            {
+                $path  = $webinar->getRecordPath();
+                if (!$path)
+                    return 'Вебинар окончен';
+                else
+                    return '<a href = "'.$path.'" target="_blank"><i class = "fa fa-video-camera fa-2x"></i></a>';
+            }
+        }
+        if ($this->category == MATERIAL_LINK)
+            $sizeText = $this->path;
         return $sizeText;
     }
 
@@ -243,6 +297,8 @@ class LearnMaterial extends CActiveRecord
             return "link";
         if ($this->category == MATERIAL_INBROWSER)
             return "text";
+        if ($this->category == MATERIAL_WEBINAR)
+            return "webinar";
         $path = "";
         if ($this->category==MATERIAL_FILE) {
             $path = pathinfo($this->path, PATHINFO_EXTENSION);

@@ -18,7 +18,7 @@
         <?php
         $hasNewLearn = CoursesMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
         $hasNewControl = CoursesControlMaterial::model()->count("idCourse = :idCourse AND dateAdd > :date", array(":idCourse" => $item->id, ":date" => Yii::app()->user->getLastVisit())) > 0;
-        $sql = "SELECT COUNT(materials.id) FROM tbl_controlmaterials materials INNER JOIN tbl_coursescontrolmaterials ccm ON materials.id = ccm.idControlMaterial WHERE materials.access <> 2 AND ccm.idCourse = ".$item->id;
+        $sql = "SELECT COUNT(materials.id) FROM tbl_controlmaterials materials INNER JOIN tbl_coursescontrolmaterials ccm ON materials.id = ccm.idControlMaterial WHERE ccm.idCourse = ".$item->id;
         $connection = Yii::app()->db;
         $command = $connection->createCommand($sql);
         $controlMaterialCount = $command->queryScalar();
@@ -30,7 +30,7 @@
 
         if ($isStudent)
         {
-            $maxProgress = $controlMaterialCount;
+            $maxProgress = 0;
             $valProgress = 0;
             $tests = CoursesControlMaterial::model()->findAll("idCourse = :idCourse", array(":idCourse" => $item->id));
             foreach ($tests as $testItem)
@@ -38,6 +38,7 @@
                 $curMark = ControlMaterial::getMark(Yii::app()->user->id,$testItem->idControlMaterial);
                 if ($curMark >= 25) // TODO:: Вынести в конфиг
                 $valProgress++;
+                $maxProgress++;
             }
         } else
         {

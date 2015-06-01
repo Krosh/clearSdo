@@ -15,9 +15,9 @@
         <div class="link">
             <a href="/">Главная</a>
         </div>
-        <div class="link">
+  <!--      <div class="link">
             <a href="#">Общение</a>
-        </div>
+        </div>-->
         <!--  <div class="link">
               <a href="#">Документы</a>
           </div>

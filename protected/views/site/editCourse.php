@@ -37,9 +37,9 @@ $listeners = Course::getGroups($model->id);
         </div>
         <div class="col-8 right">
             <div style="vertical-align: middle">
-                <div class="btn courses-list dropdown nohover">
+                <div class="btn courses-list dropdown nohover has-tip" data-original-title="Журнал" title="Журнал">
                     <a href="#" class="caret-link">
-                        <span id = "currentTermTitle"><i class="fa fa-book fa-2x" style="color: #c55a00"></i></span><i class="caret"></i>
+                        <a href = "#" id = "currentTermTitle"><i class="fa fa-book fa-2x" style="color: #c55a00"></i></a><i class="caret"></i>
                     </a>
                     <div class="dropdown-container">
                         <?php $groups = Group::getGroupsByCourse($model->id, Yii::app()->session["currentTerm"]);
@@ -211,12 +211,13 @@ $listeners = Course::getGroups($model->id);
         <!-- <a href="#" class="btn white small" data-toggle="modal" data-target="#editUMModal"><i class="fa fa-book"></i> Редактировать</a> -->
 
         <div class="small-btns">
-            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Загрузить файл" title="Загрузить файл" onclick="changeDiv(<?php echo MATERIAL_FILE; ?>)"><i class="fa fa-upload"></i></a>
+            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Загрузить файл" title="Загрузить файл" onclick="changeDiv('Загрузить файл',<?php echo MATERIAL_FILE; ?>)"><i class="fa fa-upload"></i></a>
             <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#addexist" data-original-title="Добавить файл из имеющихся" title="Добавить файл из имеющихся"><i class="fa fa-clipboard"></i></a>
             <a href="<?php echo $this->createUrl("/learnMaterial/create", array("idCourse" => $model->id));?>" class="btn small has-tip" data-original-title="Создать файл" title="Создать файл"><i class="fa fa-file-o"></i></a>
-            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Раздел" title="Раздел" onclick="changeDiv(<?php echo MATERIAL_TITLE; ?>)"><i class="fa fa-folder"></i></a>
-            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Ссылка" title="Ссылка" onclick="changeDiv(<?php echo MATERIAL_LINK; ?>)"><i class="fa fa-link"></i></a>
-            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Торрент" title="Торрент" onclick="changeDiv(<?php echo MATERIAL_TORRENT; ?>)"><i class="fa fa-magnet"></i></a>
+            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Раздел" title="Раздел" onclick="changeDiv('Создать новый раздел',<?php echo MATERIAL_TITLE; ?>)"><i class="fa fa-folder"></i></a>
+            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Ссылка" title="Ссылка" onclick="changeDiv('Добавить HTTP-ссылку',<?php echo MATERIAL_LINK; ?>)"><i class="fa fa-link"></i></a>
+            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Торрент" title="Торрент" onclick="changeDiv('Загрузить торрент-файл',<?php echo MATERIAL_TORRENT; ?>)"><i class="fa fa-magnet"></i></a>
+            <a href="#" class="btn small has-tip" data-toggle="modal" data-target="#loadfile" data-original-title="Вебинар" title="Вебинар" onclick="changeDiv('Зарегистрировать вебинар',<?php echo MATERIAL_WEBINAR; ?>)"><i class="fa fa-microphone"></i></a>
         </div>
     </div>
 </div>
@@ -248,7 +249,7 @@ $listeners = Course::getGroups($model->id);
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-check-square"></i> Контрольные материалы</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="text-align: center">
                 <strong>Добавить из существующих:</strong>
 
                 <div id = "editCourse-controlMaterialAddExist" class="form modal-form">
@@ -273,14 +274,15 @@ $listeners = Course::getGroups($model->id);
                                         data: {idMaterial: item.value.split(" ")[0], idCourse:'.$model->id.'},
                                         success: function(data)
                                         {
-                                            updateControlMaterials('.$model->id.')
+                                            updateControlMaterials('.$model->id.');
+                                            $("#addCM1").modal("hide");
                                         },
                                         error: function(jqXHR, textStatus, errorThrown){
                                             alert("error"+textStatus+errorThrown);
                                         }});',
                             'allowText' => false,
                         ),
-                        'htmlOptions' => array('size' => 30),
+                        'htmlOptions' => array('size' => 50),
                     ));
                     ?>
                 </div>
@@ -298,7 +300,7 @@ $listeners = Course::getGroups($model->id);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i> Загрузить файл</h4>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i><span id = "modalTitle">Загрузить файл</span></h4>
             </div>
             <div class="modal-body">
 
@@ -317,8 +319,8 @@ $listeners = Course::getGroups($model->id);
 <!-- добавление имеющихся -->
 <div class="modal fade" id="addexist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" style="text-align: center">
+            <div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i> Добавить файл из имеющихся</h4>
             </div>
@@ -347,7 +349,8 @@ $listeners = Course::getGroups($model->id);
                                         data: {idMaterial: item.value.split(" ")[0], idCourse:'.$model->id.'},
                                         success: function(data)
                                         {
-                                            updateLearnMaterials('.$model->id.')
+                                             updateLearnMaterials('.$model->id.');
+                                             $("#addexist").modal("hide");
                                             /*$("#addexist").hide();*/
                                         },
                                         error: function(jqXHR, textStatus, errorThrown){
@@ -355,7 +358,7 @@ $listeners = Course::getGroups($model->id);
                                         }});',
                             'allowText' => false,
                         ),
-                        'htmlOptions' => array('size' => 30, "placeholder" => "Название", 'id' => 'learnMaterialPicker'),
+                        'htmlOptions' => array('size' => 50, "placeholder" => "Название", 'id' => 'learnMaterialPicker'),
                     ));
                     ?>
                 </div>

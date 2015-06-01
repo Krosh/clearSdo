@@ -461,9 +461,14 @@ class ControlMaterialController extends CController
             $answer->idUser = Yii::app()->user->id;
             $answer->idControlMaterial = $_POST['idMaterial'];
             $answer->filename = "filename";
-            if ($answer->save()) echo "success";
+            if ($answer->save())
+            {
+                UserFileAnswer::model()->deleteAll("idUser = :idUser AND idControlMaterial = :idTest AND id <> :id", array(":idUser" => Yii::app()->user->id, ":idTest" => $_POST['idMaterial'], ":id" => $answer->id));
+                echo "success";
+            }
         }
-        echo "error";
+        else
+            echo "error";
     }
 
     public function actionGetUserAnswers($idControlMaterial)

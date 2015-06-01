@@ -13,10 +13,9 @@ $cs->scriptMap=array(
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Стимул</title>
-    <link rel="stylesheet/less" type="text/css" href="/css/messages.less" />
+    <link rel="stylesheet" type="text/css" href="/css/messages.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="//cdn.jsdelivr.net/less/1.7.3/less.min.js"></script>
-    <!-- <script src="js/less-1.7.5.min.js"></script> -->
+      <!-- <script src="js/less-1.7.5.min.js"></script> -->
 
     <link rel="shortcut icon" href="../../img/favicons/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="../../img/favicons/apple-touch-icon.png" />
@@ -60,13 +59,15 @@ $cs->scriptMap=array(
                     </div>
                     <a href="/message/index" class="mails">
                         <i class="mail"></i>
-                        <span>
-                            <?php
-                            $sql = "SELECT COUNT(id) FROM `tbl_messages` WHERE STATUS = 0 AND idRecepient = ".Yii::app()->user->id;
-                            $command = Yii::app()->db->createCommand($sql);
-                            echo $command->queryScalar();
-                            ?>
-                        </span>
+                        <?php
+                        $sql = "SELECT COUNT(id) FROM `tbl_messages` WHERE STATUS = 0 AND idRecepient = ".Yii::app()->user->id;
+                        $command = Yii::app()->db->createCommand($sql);
+                        $res = $command->queryScalar();
+                        if ($res>0)
+                        {
+                            echo "<span>$res</span>";
+                        }
+                        ?>
                     </a>
                     <div class="profile dropdown">
                         <?php

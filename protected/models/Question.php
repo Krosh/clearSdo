@@ -194,17 +194,26 @@ class Question extends CActiveRecord
         if ($this->type == QUESTION_NUMERIC || $this->type == QUESTION_TEXT)
         {
             $answer = Answer::model()->find('question = :id', array(':id' => $this->id));
-            // TODO:: Если делать нечуствительность к регистру, то здесь
             $text = str_replace("~","",$answer->content);
-            if ($userAnswer->answer == $text)
+            $mark = 0;
+            $isRightAnswer = false;
+
+            $string2=utf8_decode($userAnswer->answer);
+            $string2=strtoupper($string2);
+            $string2=utf8_encode($string2);
+
+            $arrs = explode("|",$text);
+            foreach ($arrs as $item)
             {
-                $mark = 100;
-                $isRightAnswer = true;
-            }
-            else
-            {
-                $mark = 0;
-                $isRightAnswer = false;
+                $string1=utf8_decode($item);
+                $string1=strtoupper($string1);
+                $string1=utf8_encode($string1);
+
+                if ($string2 == $string1)
+                {
+                    $mark = 100;
+                    $isRightAnswer = true;
+                }
             }
             $answerContent = $userAnswer->answer;
         }

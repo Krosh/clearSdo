@@ -37,7 +37,6 @@ $cs->scriptMap=array(
 <script src="../../js/timer.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/tinymce/tinymce.min.js"></script>
-<!--<script src="../../js/redactor.min.js"></script>-->
 <script src="../../js/jquery.quicksearch.js"></script>
 <script src="../../js/jquery.multi-select.js"></script>
 <script src="../../js/frosty.min.js"></script>
