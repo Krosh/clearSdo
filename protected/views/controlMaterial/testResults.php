@@ -28,7 +28,15 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
                         <br>
                         <dl class="test-info clearfix">
                             <dt>Выполнил:</dt>
-                            <dd>1/1</dd>
+                            <?php
+                                $countRight = 0;
+                                foreach ($mark as $item)
+                                {
+                                    if ($item>=25)
+                                        $countRight++;
+                                }
+                            ?>
+                            <dd><?php echo $countRight?>/<?php echo count($questions); ?></dd>
 
                             <dt>Тест начат:</dt>
                             <dd><?php echo $model->dateStart?></dd>
@@ -85,14 +93,14 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
 
                                         <dl class="test-answer-info clearfix">
                                             <dt>Время на ответ:</dt>
-                                            <dd>84 сек.</dd>
+                                            <dd>12 сек.</dd>
 
                                             <dt>Суммарная оценка ответа:</dt>
                                             <dd class="<?php if ($mark[$i]>=25) echo "green"; else echo "red" ;?>"><?php echo $mark[$i]; ?>%</dd>
 
-                                            <dt>Штраф:</dt>
+                                  <!--          <dt>Штраф:</dt>
                                             <dd>0%</dd>
-
+-->
                                             <dt>Итого:</dt>
                                             <dd>
                                                 <?php

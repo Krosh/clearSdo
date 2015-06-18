@@ -537,6 +537,12 @@ function updateLearnMaterials(idCourse)
         success: function(data)
         {
             $("#editCourse-materials").html(data);
+            if($('.has-tip').length) {
+                $('.has-tip').frosty();
+                $('.has-tip.tip-bottom').frosty({
+                    position: 'bottom'
+                });
+            }
             window.isDragged = false;
             selector  = "#learnMaterialTable tbody ";
 

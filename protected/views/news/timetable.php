@@ -10,7 +10,7 @@
             $curTerm = Term::model()->findByPk(Yii::app()->session['currentTerm']);
             $idGroup = $groups[0]->id;
             $criteria = new CDbCriteria();
-            $criteria->compare("idGroup",$idGroup);
+     //       $criteria->compare("idGroup",$idGroup);
             $criteria->order = "time";
             $criteria->compare("numWeek",$curTerm->getNumOfWeek());
             $criteria->compare("day",date("w")-1);

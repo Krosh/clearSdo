@@ -44,7 +44,7 @@ class NewsController extends CController
     {
     //    $this->renderPartial("timetable");
 //        return;
-//        $this->renderPartial('ajax');
+        $this->renderPartial('ajax');
     }
 
 }
