@@ -253,7 +253,7 @@ span {
           box-sizing: border-box;
           margin-left: 0 !important;
 
-          text-align: center;
+          text-align: left;
 
           line-height: normal;
           padding: 10px 9px;
@@ -988,10 +988,13 @@ h2 {
       color: #2c3e50;
       vertical-align: middle;
 
-      font-size: 14px;
+      // font-size: 14px;
       font-weight: 700;
 
-      height: 50px;
+      font-size: 13px;
+      padding: 8px 0;
+
+      // height: 50px;
       border-bottom: 1px solid #edf0f1;
 
       &:first-child {
@@ -1011,7 +1014,8 @@ h2 {
       td {
         border-bottom: 1px solid #edf0f1;
         vertical-align: middle;
-        padding: 20px 0;
+        // padding: 20px 0;
+        padding: 9px 0;
 
         color: #354050;
 
@@ -1988,14 +1992,39 @@ i.fa-remove {
 
   .items {
     width: 100%;
-    text-align: center;
+    // text-align: center;
   }
 
   .filters {
     background-color: #ECF0F1;
   }
 
-  thead tr:first-child {
-    display: none;
+  // thead tr:first-child {
+  //   display: none;
+  // }
+}
+
+
+ul.yiiPager a {
+  background: @lightblue;
+  color: #000 !important;
+  text-decoration: none;
+  padding: 7px !important;
+  font-size: 12px !important;
+  text-align: center;
+  border-radius: 2px;
+  border: none !important;
+
+  &:hover {
+    background: @lightbluehover;
+    color: #fff !important;
   }
+}
+
+ul.yiiPager li.selected a {
+  color: #fff !important;
+}
+
+.pager {
+  padding: 20px 5px;
 }

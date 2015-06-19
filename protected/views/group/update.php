@@ -63,9 +63,13 @@
                                     'buttons' => array(
                                         'update' => array(
                                             'url' => 'Yii::app()->createUrl("/user/update?id=$data->id&goToGroup='.$model->id.'")',
+                                            'label' => '<i class="fa fa-pencil"></i>',
+                                            'imageUrl' => false
                                         ),
                                         'delete' => array(
                                             'url' => 'Yii::app()->createUrl("/group/deleteFromGroup?idStudent=$data->id&idGroup='.$model->id.'")',
+                                            'label' => '<i class="fa fa-remove"></i>',
+                                            'imageUrl' => false
                                         ),
                                     ),
                                 ),
