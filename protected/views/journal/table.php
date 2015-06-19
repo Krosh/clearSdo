@@ -30,24 +30,28 @@ foreach ($coursesMaterials as $item)
             <?php foreach ($controlMaterials as $material):?>
         <th>
 
+            <?php if ($material->get_files_from_students && UserFileAnswer::model()->count("idControlMaterial = :id",array(':id' => $material->id))>0): ?>
+                <a class="has-tip" title="Скачать" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswers', array('idControlMaterial' => $material->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
+            <?php endif; ?>
+
             <?php if ($material->is_autocalc):?>
-                <img src="../../../img/is_point.png" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>)">
+                <a href="#" style="cursor: pointer;" class="has-tip" title="Рассчитать аттестацию" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>); return false;"><i class="fa fa-calculator"></i></a>
                 <?php echo $material->short_title; ?>
             <?php else: ?>
                 <div onclick="showMarksOfMaterial(<?php echo $material->id; ?>)"><?php echo $material->short_title; ?></div>
             <?php endif; ?>
 
-            <?php if ($material->get_files_from_students && UserFileAnswer::model()->count("idControlMaterial = :id",array(':id' => $material->id))>0): ?>
-                <a style="display:block" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswers', array('idControlMaterial' => $material->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
-            <?php endif; ?>
         </th>
         <?php endforeach; ?>
     </tr>
     </thead>
     <tbody>
+    <? $n = 0; ?>
     <?php foreach ($group->students as $student): ?>
+        <? $n++;?>
         <tr>
             <td>
+                <strong><?=$n?></strong>
                 <?php echo $student->fio;?>
             </td>
             <td>
@@ -69,7 +73,7 @@ foreach ($coursesMaterials as $item)
                             <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                         </div>
                         <?php if ($userFileAnswer != null): ?>
-                            <a href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
+                            <a class="has-tip" title="Скачать" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
                         <?php endif; ?>
                         <input data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id); ?>" onfocusout = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" style = "display: none; width: 40px">
                     <?php endif; ?>

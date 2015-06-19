@@ -280,6 +280,12 @@ function recalcMarks(idControlMaterial,idGroup)
                 type: "GET",
                 success: function(data){
                     $("#journal_table").html(data);
+                    if($('.has-tip').length) {
+                        $('.has-tip').frosty();
+                        $('.has-tip.tip-bottom').frosty({
+                            position: 'bottom'
+                        });
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     alert(errorThrown);
