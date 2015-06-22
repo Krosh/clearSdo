@@ -79,7 +79,13 @@ $cs->scriptMap=array(
                         </div>
                     </div>
                     <div class="avatar">
-                        <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(); ?>')"></div>
+                        <?
+                        $avatar = Yii::app()->user->getAvatar();
+                        if($avatar == "/avatars/") {
+                            $avatar = "/img/avatar-default.png";
+                        }
+                        ?>
+                        <div class="the-avatar-box" style="background-image: url('<?=$avatar?>')"></div>
                     </div>
                 </div>
             </div>
@@ -157,6 +163,7 @@ $cs->scriptMap=array(
 <script src="../../js/frosty.min.js"></script>
 <script src="../../js/plugins.js"></script>
 <script src="../../js/jquery.nicefileinput.min.js"></script>
+<script src="../../js/strength.js"></script>
 <script src="../../js/script.js"></script>
 </body>
 </html>

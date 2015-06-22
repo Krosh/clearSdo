@@ -1226,4 +1226,10 @@ $(document).ready(function(){
             }
         });
     });
+
+
+    // сложность пароля
+    if($(".js-strength")) {
+        $(".js-strength").strength();
+    }
 });
