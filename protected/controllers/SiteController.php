@@ -96,7 +96,7 @@ class SiteController extends CController
         $this->render('editCourse', array('model' => $course));
     }
 
-    public function actionJournal($idCourse,$idGroup)
+    public function actionJournal($idCourse,$idGroup, $print = false)
     {
         $course = Course::model()->findByPk($idCourse);
         if ($course == null)
@@ -119,7 +119,12 @@ class SiteController extends CController
                 $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse))),
                 "Журнал ".$group->Title => array($this->createUrl("/site/journal",array("idCourse" => $idCourse, "idGroup" => $idGroup)))
             );
-            $this->render("/journal/view", array("course" => $course, "group" => $group));
+            if ($print)
+            {
+                $this->layout = "";
+                $this->render("/journal/table", array("idCourse" => $course->id, "group" => $group));
+            } else
+                $this->render("/journal/view", array("course" => $course, "group" => $group));
         }
     }
 

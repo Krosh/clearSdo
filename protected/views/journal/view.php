@@ -28,6 +28,10 @@ $listeners = Course::getGroups($course->id);
     <div class="col-4">
         <h2>Журнал</h2>
     </div>
+    <div class="col-6 right">
+        <a href="<?php echo $this->createUrl("/site/journal", array("idCourse" => $course->id, "idGroup" => $group->id, "print" => true))?>" class="page-print"><i class="print"></i> <span>Версия для печати</span></a>
+    </div>
+
 </div>
     <div id = "journal_table">
         <?php $this->renderPartial("/journal/table", array("idCourse" => $course->id, "group" => $group)); ?>
