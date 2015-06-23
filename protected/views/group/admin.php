@@ -37,6 +37,16 @@
                         array(
                             'class'=>'CButtonColumn',
                             'template' => '{update} {delete}',
+                            'buttons' => array(
+                                'update' => array(
+                                    'label' => '<i class="fa fa-pencil"></i>',
+                                    'imageUrl' => false
+                                ),
+                                'delete' => array(
+                                    'label' => '<i class="fa fa-remove"></i>',
+                                    'imageUrl' => false
+                                ),
+                            ),
                         ),
                     ),
                 )); ?>

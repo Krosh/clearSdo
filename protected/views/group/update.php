@@ -23,24 +23,33 @@
                             <?php
                             echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
                             ?>
-                            <table style="width: 100%">
+                            <style>
+                            table.mid td {
+                                vertical-align: middle;
+                            }
+
+                            .NFI-wrapper {
+                                display: inline-block !important;
+                                vertical-align: middle !important;
+                            }
+                            </style>
+                            <table style="width: 100%" class="mid">
                                 <tr>
                                     <td width="35%">
                                         Добавить студентов из файла excel:
                                     </td>
-                                    <td width="40%" class="input-full-width" style="margin-top: 10px; ">
+                                    <td width="65%" class="input-full-width" style="margin-top: 10px; ">
                                         <?php
                                         echo Chtml::fileField("filename");
                                         echo CHtml::hiddenField("idGroup",$model->id);
                                         ?>
-                                    </td>
-                                    <td width="25%" class="input-full-width">
                                         <?php
-                                        echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()", 'class' => 'btn blue'));
+                                        echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()", 'class' => 'btn blue small'));
                                         ?>
                                     </td>
                                 </tr>
                             </table>
+                            <br>
                             <?php echo CHtml::endForm(); ?>
 
                         </div>
@@ -63,9 +72,13 @@
                                     'buttons' => array(
                                         'update' => array(
                                             'url' => 'Yii::app()->createUrl("/user/update?id=$data->id&goToGroup='.$model->id.'")',
+                                            'label' => '<i class="fa fa-pencil"></i>',
+                                            'imageUrl' => false
                                         ),
                                         'delete' => array(
                                             'url' => 'Yii::app()->createUrl("/group/deleteFromGroup?idStudent=$data->id&idGroup='.$model->id.'")',
+                                            'label' => '<i class="fa fa-remove"></i>',
+                                            'imageUrl' => false
                                         ),
                                     ),
                                 ),
@@ -95,6 +108,7 @@
                                     success: function(data)
                                     {
                                         $.fn.yiiGridView.update("group-grid");
+                                        $(this).val("");
 
                                     },
                                     error: function(jqXHR, textStatus, errorThrown){

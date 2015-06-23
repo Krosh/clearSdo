@@ -47,6 +47,49 @@ $message = Yii::app()->user->getFlash("message");
 
     <table width="80%">
         <?php if ($model->isNewRecord):?>
+            <tr>
+                <td width="35%">
+                    <?php echo $form->labelEx($model,'password'); ?>
+                    <?php echo $form->error($model,'password'); ?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100,"class" => "js-strength")); ?>
+                </td>
+            </tr>
+        <?php else:?>
+            <tr>
+                <td width="35%">
+                    <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
+                    <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
+                </td>
+                <td width="65%" class="input-full-width">
+                </td>
+            </tr>
+            <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                <td width="35%">
+                    <?php echo CHTML::label("Старый пароль:","oldPassword")?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo CHTML::passwordField("oldPassword",""); ?>
+                </td>
+            </tr>
+            <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                <td width="35%">
+                    <?php echo CHTML::label("Новый пароль:","newPassword")?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo CHTML::passwordField("newPassword","", array("class" => "js-strength")); ?>
+                </td>
+            </tr>
+            <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+                <td width="35%">
+                    <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
+                </td>
+            </tr>
+        <?php endif; ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'login'); ?>
@@ -56,39 +99,6 @@ $message = Yii::app()->user->getFlash("message");
                 <?php echo $form->textField($model,'login',array('size'=>60,'maxlength'=>100)); ?>
             </td>
         </tr>
-            <tr>
-                <td width="35%">
-                    <?php echo $form->labelEx($model,'password'); ?>
-                    <?php echo $form->error($model,'password'); ?>
-                </td>
-                <td width="65%" class="input-full-width">
-                    <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100)); ?>
-                </td>
-            </tr>
-        <?php else:?>
-        <tr>
-            <td width="35%">
-                <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
-                <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
-                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                    <?php echo CHTML::label("Старый пароль:","oldPassword")?>
-                    <?php echo CHTML::label("Новый пароль:","newPassword")?>
-                    <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
-                </div>
-
-            </td>
-            <td width="65%" class="input-full-width">
-                <br>
-                <br>
-                <br>
-                <div class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                    <?php echo CHTML::passwordField("oldPassword",""); ?>
-                    <?php echo CHTML::passwordField("newPassword",""); ?>
-                    <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
-                </div>
-            </td>
-        </tr>
-        <?php endif; ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'fio'); ?>
@@ -98,7 +108,24 @@ $message = Yii::app()->user->getFlash("message");
                 <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>100)); ?>
             </td>
         </tr>
-
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'phone'); ?>
+                <?php echo $form->error($model,'phone'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>20)); ?>
+            </td>
+        </tr>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'email'); ?>
+                <?php echo $form->error($model,'email'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>200)); ?>
+            </td>
+        </tr>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'role'); ?>

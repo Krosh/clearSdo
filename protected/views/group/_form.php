@@ -22,7 +22,7 @@
 
         <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'Title', array("style" => "display: inline")); ?>
+                <?php echo CHtml::activeLabel($model,'Title', array()); ?>
             </td>
             <td width="65%" class="input-full-width">
                 <?php echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
@@ -31,15 +31,16 @@
 
         <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'id_altstu', array("style" => "display: inline")); ?>
+                <?php echo CHtml::activeLabel($model,'id_altstu', array()); ?>
             </td>
             <td width="65%" class="input-full-width">
                 <?php echo $form->textField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); ?>
-                <?php echo CHtml::button('Получить расписание для группы',array('class' => 'btn blue', 'onclick' => 'ajaxGetTimetable('.$model->id.');'))?>
+                <?php echo CHtml::button('Получить расписание для группы',array('class' => 'btn blue small', 'onclick' => 'ajaxGetTimetable('.$model->id.');'))?>
             </td>
         </tr>
 
     </table>
+    <br>
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array('class' => 'btn blue')); ?>
     </div>

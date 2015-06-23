@@ -52,9 +52,13 @@
                                     'template' => '{update} {delete}',
                                     'buttons' => array(
                                         'delete' => array(
+                                            'label' => '<i class="fa fa-remove"></i>',
+                                            'imageUrl' => false,
                                             'url' => '$this->grid->controller->createUrl("/controlMaterial/fullDeleteMaterial", array("id"=>$data["id"]))',
                                         ),
                                         'update' => array(
+                                            'label' => '<i class="fa fa-pencil"></i>',
+                                            'imageUrl' => false,
                                             'url' => '$this->grid->controller->createUrl("/controlMaterial/edit", array("idMaterial"=>$data["id"]))',
                                         )
                                     )

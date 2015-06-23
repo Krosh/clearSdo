@@ -224,7 +224,7 @@ class LearnMaterial extends CActiveRecord
     {
 
         if ($this->category == MATERIAL_INBROWSER && $needEditButton)
-            return '<a class = "has-tip" data-original-title="Редактировать" title="Редактировать" href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil fa-2x"></i></a>';
+            return '<a href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil"></i> Редактировать</a>';
         if ($this->category == MATERIAL_FILE)
         {
             $size = filesize($this->getPathToMaterial());
@@ -243,11 +243,11 @@ class LearnMaterial extends CActiveRecord
             $webinar->checkOnEnd();
             if ($webinar->status == STATUS_PREPARE && Yii::app()->user->role == ROLE_TEACHER)
             {
-                return '<a class = "has-tip" data-original-title="Начать вебинар" title="Начать вебинар" href = "#" onclick = "startConference('.$this->id.'); return false"><i class = "fa fa-play fa-2x"></i></a>';
+                return '<a href = "#" onclick = "startConference('.$this->id.'); return false"><i class = "fa fa-play"></i> Начать вебинар</a>';
             }
             if ($webinar->status == STATUS_ACTIVE)
             {
-                return '<a class = "has-tip" data-original-title="Присоединиться к вебинару" title="Присоединиться к вебинару" href = "'.Yii::app()->controller->createUrl("/webinar/connectToConference", array("idMaterial" => $this->id)).'" target = "_blank"><i class = "fa fa-user-plus fa-2x"></i></a>';
+                return '<a href = "'.Yii::app()->controller->createUrl("/webinar/connectToConference", array("idMaterial" => $this->id)).'" target = "_blank"><i class = "fa fa-user-plus"></i> Присоединиться к вебинару</a>';
             }
             if ($webinar->status == STATUS_END)
             {
@@ -255,7 +255,7 @@ class LearnMaterial extends CActiveRecord
                 if (!$path)
                     return 'Вебинар окончен';
                 else
-                    return '<a class = "has-tip" data-original-title="Просмотреть запись" title="Просмотреть запись" href = "'.$path.'" target="_blank"><i class = "fa fa-video-camera fa-2x"></i></a>';
+                    return '<a href = "'.$path.'" target="_blank"><i class = "fa fa-video-camera"></i> Просмотреть запись</a>';
             }
         }
         if ($this->category == MATERIAL_LINK)
