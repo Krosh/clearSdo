@@ -7,49 +7,44 @@
  * To change this template use File | Settings | File Templates.
  */?>
 <?php
-    $currentTerm = Yii::app()->session['currentTerm'];
-
-    $thCount = 1; // счетчик th
+$currentTerm = Yii::app()->session['currentTerm'];
 ?>
 <?php foreach (Course::getCoursesByAutor(Yii::app()->user->id, $currentTerm) as $course):?>
     <?php
     if (isset($courseName) && $courseName != "" && $course->title != $courseName)
         continue;
     ?>
-    <h1><?php echo $course->title; ?></h1><br>
-    <table width="100%" class="table table-left table-with-border">
-        <thead>
-            <tr>
-                <th>
-                    ФИО студента
-                </th>
-                <?php $controlMaterials = CoursesControlMaterial::getAllControlMaterials($course->id);?>
-                <?php foreach ($controlMaterials as $test):?>
-                    <th>
-                        <?
-                        echo $test->title; 
-                        $thCount++;
-                        ?>
-                    </th>
-                <?php endforeach?>
-            </tr>
-        </thead>
-        <?php foreach (Group::getGroupsByCourse($course->id,$currentTerm) as $group):?>
-            <?php
-           if (isset($groupName) && $groupName != "" && $group->Title != $groupName)
-                continue;
-            echo "<tr><td colspan='".$thCount."'><strong>".$group->Title."</strong></td></tr>";
-            foreach ($group->students as $student)
+    <?php
+    $table = new TableHelper();
+    $table->title = $course->title;
+    $table->headerRow = array("Фио студента");
+    $controlMaterials = CoursesControlMaterial::getAllControlMaterials($course->id);
+    $thCount = 1;
+    foreach ($controlMaterials as $test)
+    {
+        $table->headerRow[] = $test->title;
+        $thCount++;
+
+    }
+    foreach (Group::getGroupsByCourse($course->id,$currentTerm) as $group)
+    {
+        if (isset($groupName) && $groupName != "" && $group->Title != $groupName)
+            continue;
+        $temp = array();
+        $temp[] = array("style" => "colspan='".$thCount."'", "text" => "<strong>".$group->Title."</strong>");
+        $table->colRows[] = $temp;
+        foreach ($group->students as $student)
+        {
+            $temp = array();
+            $temp[] = $student->fio;
+            foreach ($controlMaterials as $test)
             {
-                echo "<tr>";
-                echo "<td>".$student->fio."</td>";
-                foreach ($controlMaterials as $test)
-                {
-                    echo "<td>".ControlMaterial::getMark($student->id,$test->id)."</td>";
-                }
-                echo "</tr>";
+                $temp[] = ControlMaterial::getMark($student->id,$test->id);
             }
-            ?>
-        <?php endforeach;?>
-    </table>
+            $table->colRows[] = $temp;
+        }
+
+    }
+    $table->printTable();
+    ?>
 <?php endforeach?>

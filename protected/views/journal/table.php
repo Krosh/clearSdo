@@ -38,7 +38,7 @@ foreach ($coursesMaterials as $item)
                 <img src="../../../img/is_point.png" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>)">
                 <div><?php echo $material->title; ?></div>
             <?php else: ?>
-                <div onclick="showMarksOfMaterial(<?php echo $material->id; ?>)"><?php echo $material->title; ?></div>
+                <div onclick="showMarksOfMaterial(<?php echo $material->id; ?>)"><?php echo $material->short_title; ?></div>
             <?php endif; ?>
         </th>
         <?php endforeach; ?>
