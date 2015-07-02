@@ -89,28 +89,10 @@ class UserController extends CController
             $model->attributes=$_POST['User'];
             if ($_POST['haveNewPassword'])
             {
-                // TODO::  эту логику в модель
-                if ($model->password == md5($_POST["oldPassword"]))
-                {
-                    if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
-                    {
-                        $model->password = md5($_POST["newPassword"]);
-                        Yii::app()->user->setFlash("codeMessage","success");
-                        Yii::app()->user->setFlash("message","Пароль изменен");
-                        $flag = false;
-                    } else
-                    {
-                        Yii::app()->user->setFlash("codeMessage","error");
-                        Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
-                        $flag = false;
-                    }
-
-                } else
-                {
-                    Yii::app()->user->setFlash("codeMessage","error");
-                    Yii::app()->user->setFlash("message","Старый пароль введен неверно");
-                    $flag = false;
-                }
+                $model->password = md5($_POST["newPassword"]);
+                Yii::app()->user->setFlash("codeMessage","success");
+                Yii::app()->user->setFlash("message","Пароль изменен");
+                $flag = false;
             }
             $model->newAvatar = $_POST['User']['newAvatar'];
             if($model->save() && $flag)
@@ -210,7 +192,7 @@ class UserController extends CController
         }
         else
             echo "0";
-     }
+    }
 
 
 }

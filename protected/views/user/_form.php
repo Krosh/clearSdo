@@ -67,26 +67,10 @@ $message = Yii::app()->user->getFlash("message");
             </tr>
             <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
                 <td width="35%">
-                    <?php echo CHTML::label("Старый пароль:","oldPassword")?>
-                </td>
-                <td width="65%" class="input-full-width">
-                    <?php echo CHTML::passwordField("oldPassword",""); ?>
-                </td>
-            </tr>
-            <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                <td width="35%">
                     <?php echo CHTML::label("Новый пароль:","newPassword")?>
                 </td>
                 <td width="65%" class="input-full-width">
                     <?php echo CHTML::passwordField("newPassword","", array("class" => "js-strength")); ?>
-                </td>
-            </tr>
-            <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-                <td width="35%">
-                    <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
-                </td>
-                <td width="65%" class="input-full-width">
-                    <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
                 </td>
             </tr>
         <?php endif; ?>
