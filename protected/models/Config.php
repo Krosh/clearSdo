@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_config':
  * @property integer $id
  * @property integer $idActiveTerm
+ * @property string $activeTimezone
  */
 class Config extends CActiveRecord
 {
@@ -27,9 +28,10 @@ class Config extends CActiveRecord
 		return array(
 			array('id', 'required'),
 			array('id, idActiveTerm', 'numerical', 'integerOnly'=>true),
+            array('activeTimezone', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, idActiveTerm', 'safe', 'on'=>'search'),
+			array('id, idActiveTerm, activeTimezone', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +54,7 @@ class Config extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'idActiveTerm' => 'Период по умолчанию',
+            'activeTimezone' => 'Часовой пояс',
 		);
 	}
 

@@ -54,7 +54,32 @@
                                     <?php echo $form->dropDownList($config,'idActiveTerm',$arr, array()); ?>
                                 </td>
                             </tr>
-
+                            <tr>
+                                <td width="35%">
+                                    <?php echo $form->labelEx($config,'activeTimezone'); ?>
+                                </td>
+                                <td width="65%" class="input-full-width">
+                                    <?php
+                                    $arr = array_merge(timezone_identifiers_list(DateTimeZone::ASIA),timezone_identifiers_list(DateTimeZone::EUROPE));
+                                    $timezonesArr = array();
+                                    foreach ($arr as $key => $value)
+                                    {
+                                        $timezonesArr[$value] = $value;
+                                    }
+                                    ?>
+                                    <?php echo $form->dropDownList($config,'activeTimezone',$timezonesArr, array()); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="35%">
+                                    <?php echo CHtml::label("Текущее время на сервере:",""); ?>
+                                </td>
+                                <td width="65%" class="input-full-width">
+                                    <?php
+                                        echo date("H:i:s P e");
+                                    ?>
+                                </td>
+                            </tr>
                         </table>
 
 
