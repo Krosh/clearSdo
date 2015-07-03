@@ -351,8 +351,6 @@ class SiteController extends CController
         // Поиск по людям
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
-        $q = ROLE_TEACHER;
-        $criteria->compare("role",1);
         $users = User::model()->findAll($criteria);
 
 

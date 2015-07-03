@@ -359,14 +359,7 @@ class ControlMaterialController extends CController
 
     public function setMark($idControlMaterial,$idStudent,$mark)
     {
-        UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
-        $model = new UserControlMaterial();
-        $model->dateStart = date("Y-m-d H:i:s");
-        $model->dateEnd = $model->dateStart;
-        $model->idControlMaterial = $idControlMaterial;
-        $model->idUser = $idStudent;
-        $model->mark = round($mark);
-        $model->save();
+        UserControlMaterial::setMark($idControlMaterial,$idStudent,$mark);
     }
 
     public function actionSetMark()

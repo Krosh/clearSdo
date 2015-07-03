@@ -109,4 +109,17 @@ class UserControlMaterial extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function setMark($idControlMaterial,$idStudent,$mark)
+    {
+        UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
+        $model = new UserControlMaterial();
+        $model->dateStart = date("Y-m-d H:i:s");
+        $model->dateEnd = $model->dateStart;
+        $model->idControlMaterial = $idControlMaterial;
+        $model->idUser = $idStudent;
+        $model->mark = round($mark);
+        $model->save();
+    }
+
 }

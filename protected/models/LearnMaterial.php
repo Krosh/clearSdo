@@ -222,7 +222,6 @@ class LearnMaterial extends CActiveRecord
 
     public function getInfoText($needEditButton = false)
     {
-
         if ($this->category == MATERIAL_INBROWSER && $needEditButton)
             return '<a href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil"></i> Редактировать</a>';
         if ($this->category == MATERIAL_FILE)
