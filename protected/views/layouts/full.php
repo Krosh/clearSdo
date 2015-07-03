@@ -150,6 +150,7 @@ $cs->scriptMap=array(
 <?php endif; ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
+<script src="../../js/jquery.maskedinput.min.js"></script>
 <script src="../../js/jquery.easing.1.3.js"></script>
 <script src="../../js/underscore-min.js"></script>
 <script src="../../js/moment-with-locales.min.js"></script>

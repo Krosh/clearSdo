@@ -84,7 +84,13 @@
                 <?php echo $form->error($model,'phone'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>20)); ?>
+                <?php   $this->widget('CMaskedTextField', array(
+                    'model' => $model,
+                    'attribute' => 'phone',
+                    'mask' => '+7-999-999-9999',
+                    'placeholder' => '*',
+                    'completed' => 'function(){console.log("ok");}',
+                )); ?>
             </td>
         </tr>
         <tr>
