@@ -27,6 +27,16 @@ class Question extends CActiveRecord
         return 'tbl_question';
     }
 
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Вопросы',
+            ),
+        );
+    }
+
+
     /**
      * @return array validation rules for model attributes.
      */

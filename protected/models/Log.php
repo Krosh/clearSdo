@@ -1,24 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "tbl_coursesautors".
+ * This is the model class for table "tbl_log".
  *
- * The followings are the available columns in table 'tbl_coursesautors':
+ * The followings are the available columns in table 'tbl_log':
  * @property integer $id
- * @property integer $idCourse
- * @property integer $idAutor
+ * @property integer $idUser
+ * @property integer $idRecord
+ * @property string $tableName
+ * @property integer $idAction
+ * @property string $dateAction
  */
-class CoursesAutor extends CActiveRecord
+class Log extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_coursesautors';
+		return 'tbl_log';
 	}
-
-
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -28,11 +29,12 @@ class CoursesAutor extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idCourse, idAutor', 'required'),
-			array('idCourse, idAutor', 'numerical', 'integerOnly'=>true),
+			array('idUser, idAction, idRecord', 'numerical', 'integerOnly'=>true),
+			array('tableName', 'length', 'max'=>45),
+			array('dateAction', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, idCourse, idAutor', 'safe', 'on'=>'search'),
+			array('id, idUser, tableName, idAction, dateAction, idRecord', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,8 +56,10 @@ class CoursesAutor extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'idCourse' => 'Id Course',
-			'idAutor' => 'Id Autor',
+			'idUser' => 'Id User',
+			'tableName' => 'Tablename',
+			'idAction' => 'Id Action',
+			'dateAction' => 'Date Action',
 		);
 	}
 
@@ -78,8 +82,10 @@ class CoursesAutor extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('idCourse',$this->idCourse);
-		$criteria->compare('idAutor',$this->idAutor);
+		$criteria->compare('idUser',$this->idUser);
+		$criteria->compare('tableName',$this->tableName,true);
+		$criteria->compare('idAction',$this->idAction);
+		$criteria->compare('dateAction',$this->dateAction,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -90,16 +96,10 @@ class CoursesAutor extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CoursesAutor the static model class
+	 * @return Log the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-    public function beforeSave()
-    {
-        $has = CoursesAutor::model()->exists("idAutor=:idAutor AND idCourse=:idCourse",array(':idAutor' => $this->idAutor, ':idCourse' => $this->idCourse));
-        return !$has;
-    }
 }

@@ -19,7 +19,17 @@ class Term extends CActiveRecord
 		return 'tbl_terms';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Периоды',
+            ),
+        );
+    }
+
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()

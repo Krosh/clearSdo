@@ -22,7 +22,17 @@ class Course extends CActiveRecord
 		return 'tbl_courses';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Курсы',
+            ),
+        );
+    }
+
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()

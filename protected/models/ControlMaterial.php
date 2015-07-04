@@ -44,6 +44,16 @@ class ControlMaterial extends CActiveRecord
         return 'tbl_controlmaterials';
     }
 
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Контрольный материал',
+            ),
+        );
+    }
+
+
     /**
      * @return array validation rules for model attributes.
      */

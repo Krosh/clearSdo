@@ -47,11 +47,11 @@
                                         <div class="page-title"><?php echo $user->fio;?> <small><?php echo $role?></small></div><br>
                                         <i class="fa fa-phone"></i><phone> <?php echo $user->phone; ?></phone><br>
                                         <a href = "mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a><br>
-                                        <a href = '<?php echo $this->createUrl("/message/index", array("startDialog" => $user->id))?> '><i class="fa fa-envelope "></i> Написать сообщение</a>
+                                        <a href = '<?php echo $this->createUrl("/message/index", array("startDialog" => $user->id))?> '><i class="fa fa-envelope"></i> Написать сообщение</a>
                                     </td>
                                     <td>
                                         <div class="right">
-                                            <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo "/avatars/".DIRECTORY_SEPARATOR.$user->avatar; ?>">
+                                            <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo $user->getAvatarPath(); ?>">
                                         </div>
                                     </td>
                                 </tr>

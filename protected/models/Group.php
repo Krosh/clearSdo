@@ -18,7 +18,17 @@ class Group extends CActiveRecord
 		return 'tbl_groups';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Группы',
+            ),
+        );
+    }
+
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()

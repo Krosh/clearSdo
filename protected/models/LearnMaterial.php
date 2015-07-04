@@ -26,6 +26,16 @@ class LearnMaterial extends CActiveRecord
         return 'tbl_learnmaterials';
     }
 
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Учебные материалы',
+            ),
+        );
+    }
+
+
     public $fileAttribute = null;
 
     /**

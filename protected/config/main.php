@@ -53,6 +53,7 @@ return array(
         'application.components.*',
         'application.classes.*',
         'application.helpers.*',
+        'application.behaviors.*',
         'application.plugins.*',
         'ext.xupload.*',
     ),$result),

@@ -40,7 +40,17 @@ class AccessControlMaterial extends CActiveRecord
 		return 'tbl_accesscontrolmaterials';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Доступ к контр. материалам',
+            ),
+        );
+    }
+
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()

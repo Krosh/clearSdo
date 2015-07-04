@@ -18,7 +18,17 @@ class Config extends CActiveRecord
 		return 'tbl_config';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Настройки',
+            ),
+        );
+    }
+
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()

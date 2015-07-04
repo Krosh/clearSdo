@@ -30,7 +30,16 @@ class User extends CActiveRecord
 		return 'tbl_users';
 	}
 
-	/**
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Пользователи',
+            ),
+        );
+    }
+
+    /**
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -162,6 +171,7 @@ class User extends CActiveRecord
             $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))
             mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
+        return parent::afterSave();
     }
 
     public function getFiles($category = 'all')
