@@ -13,6 +13,8 @@
  */
 class Log extends CActiveRecord
 {
+
+    static public $actionNames = array(LOG_CREATE => "Создание", LOG_UPDATE => "Изменение", LOG_DELETE => "Удаление");
 	/**
 	 * @return string the associated database table name
 	 */
@@ -82,7 +84,18 @@ class Log extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('idUser',$this->idUser);
+        if ($this->idUser != "")
+        {
+            $userCriteria = new CDbCriteria();
+            $userCriteria->addSearchCondition("fio",$this->idUser);
+            $res = User::model()->findAll($userCriteria);
+            $arr = array();
+            foreach ($res as $item)
+            {
+                $arr[] = $item->id;
+            }
+            $criteria->addInCondition('idUser',$arr);
+        }
 		$criteria->compare('tableName',$this->tableName,true);
 		$criteria->compare('idAction',$this->idAction);
 		$criteria->compare('dateAction',$this->dateAction,true);
@@ -102,4 +115,11 @@ class Log extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getUserName()
+    {
+        $user = User::model()->findByPk($this->idUser);
+        return $user->fio;
+    }
+
 }

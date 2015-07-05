@@ -239,7 +239,7 @@ class SiteController extends CController
         echo "<br/>";
 
 //imagine you have authenticated user somewhere...
-       // Yii::app()->user->id=456;
+        // Yii::app()->user->id=456;
 
 //get created meeting for another user
 //with moderator privileges to join and end conference
@@ -352,10 +352,22 @@ class SiteController extends CController
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
         $users = User::model()->findAll($criteria);
-
-
         $this->render('/site/search', array('query' => $query, 'users' => $users));
     }
+
+    public function actionLog()
+    {
+        $this->noNeedJquery = true;
+        $model=new Log('search');
+        $model->unsetAttributes();
+        if(isset($_GET['Log']))
+            $model->attributes=$_GET['Log'];
+
+        $this->render('log',array(
+            'model'=>$model,
+        ));
+    }
+
 
 
 
