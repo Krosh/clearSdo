@@ -99,6 +99,8 @@ class Log extends CActiveRecord
 		$criteria->compare('tableName',$this->tableName,true);
 		$criteria->compare('idAction',$this->idAction);
 		$criteria->compare('dateAction',$this->dateAction,true);
+        $criteria->order = "dateAction DESC";
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
