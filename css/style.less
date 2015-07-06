@@ -2083,3 +2083,33 @@ ul.yiiPager li.selected a {
   position: absolute;
   padding-right: 70px;
 }
+
+a.update + a.delete {
+  padding-left: 15px;
+}
+
+
+.mark-good {
+
+}
+
+.mark-bad {
+  color: @red;
+}
+
+.hover-table {
+  tr:hover td {
+    background: #ecf0f1;
+  }
+}
+
+
+
+
+
+
+@media print {
+  header .nav, header .user, header .search, .wrapper .sidebar, footer, .page-print {
+    display: none !important;
+  }
+}

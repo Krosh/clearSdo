@@ -74,7 +74,8 @@ class ControlMaterial extends CActiveRecord
         );
     }
 
-    public static function getMark($idStudent,$idControlMaterial)
+    // по умолчанию стилизация включена, можно отключить
+    public static function getMark($idStudent,$idControlMaterial, $stylize = true)
     {
         $controlMaterial = ControlMaterial::model()->findByPk($idControlMaterial);
         $tries = UserControlMaterial::model()->findAll("idControlMaterial = :idMat AND idUser = :idStudent", array(":idMat" => $idControlMaterial, ":idStudent" => $idStudent));
@@ -107,6 +108,16 @@ class ControlMaterial extends CActiveRecord
         {
             $mark = $tries[count($tries)-1]->mark;
         }
+
+        $class = "mark-good";
+        if($stylize) {
+            if($mark < 25) {
+                $class = "mark-bad";
+            }
+
+            $mark = '<span class="'.$class.'">'.$mark.'</span>';
+        }
+
         return $mark;
     }
 

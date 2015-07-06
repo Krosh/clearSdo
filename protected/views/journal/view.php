@@ -25,8 +25,12 @@ $listeners = Course::getGroups($course->id);
 <hr>
 
 <div class="col-group">
-    <div class="col-4">
+    <div class="col-6">
         <h2>Журнал</h2>
+    </div>
+    <div class="col-6 right">
+        <i class="fa fa-refresh fa-spin fa-loading-icon" style="display: none;"></i>
+        <a href="#" class="page-print"><i class="print"></i> <span>Версия для печати</span></a>
     </div>
 </div>
     <div id = "journal_table">
