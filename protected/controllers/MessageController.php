@@ -43,6 +43,8 @@ class MessageController extends CController
         foreach ($res as $idUser)
         {
             $user = User::model()->findByPk($idUser);
+            if ($user == null)
+                continue;
             $criteria = new CDbCriteria();
             $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$idUser,'OR');
             $criteria->addCondition("idAutor = ".$idUser." AND idRecepient = ".Yii::app()->user->getId(),'OR');
@@ -67,17 +69,19 @@ class MessageController extends CController
         if ($startDialog>-1 && (count($items) == 0 || $items[0]["user"]->id != $startDialog))
         {
             $user = User::model()->findByPk($startDialog);
-            $criteria = new CDbCriteria();
-            $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$startDialog,'OR');
-            $criteria->addCondition("idAutor = ".$startDialog." AND idRecepient = ".Yii::app()->user->getId(),'OR');
-            $criteria->order = "dateSend DESC";
-            $criteria->limit = 1;
-            $lastMessage = Message::model()->find($criteria);
-            $criteria = new CDbCriteria();
-            $criteria->addCondition("(idAutor = $startDialog) AND (status = 0)");
-            $count = Message::model()->count($criteria);
-            $item = array("user" => $user, "message" => $lastMessage, "hasNonReadable" => $count>0);
-            $items = array_merge(array($item),$items);
+            if ($user != null)
+            {$criteria = new CDbCriteria();
+                $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$startDialog,'OR');
+                $criteria->addCondition("idAutor = ".$startDialog." AND idRecepient = ".Yii::app()->user->getId(),'OR');
+                $criteria->order = "dateSend DESC";
+                $criteria->limit = 1;
+                $lastMessage = Message::model()->find($criteria);
+                $criteria = new CDbCriteria();
+                $criteria->addCondition("(idAutor = $startDialog) AND (status = 0)");
+                $count = Message::model()->count($criteria);
+                $item = array("user" => $user, "message" => $lastMessage, "hasNonReadable" => $count>0);
+                $items = array_merge(array($item),$items);
+            }
         }
         if (count($items)>0)
             $idStartDialog = $items[0]["user"]->id;
@@ -91,6 +95,11 @@ class MessageController extends CController
     public function actionGetDialogWithUser()
     {
         $user = User::model()->findByPk($_POST['idUser']);
+        if ($user == null)
+        {
+            echo json_encode(array("text" => ""));
+            return;
+        }
         $criteria = new CDbCriteria();
         $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$_POST['idUser'],'OR');
         $criteria->addCondition("idAutor = ".$_POST['idUser']." AND idRecepient = ".Yii::app()->user->getId(),'OR');

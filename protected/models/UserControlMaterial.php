@@ -110,6 +110,12 @@ class UserControlMaterial extends CActiveRecord
 		return parent::model($className);
 	}
 
+    public function beforeDelete()
+    {
+        UserAnswer::model()->deleteAll("idUserControlMaterial = :id", array(":id" => $this->id));
+        return parent::beforeDelete();
+    }
+
     public static function setMark($idControlMaterial,$idStudent,$mark)
     {
         UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));

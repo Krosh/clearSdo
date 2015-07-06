@@ -148,4 +148,12 @@ class Group extends CActiveRecord
         return Group::model()->findAll($criteria);
     }
 
+    public function beforeDelete()
+    {
+        CoursesGroup::model()->deleteAll("idGroup = :id", array(":id" => $this->id));
+        StudentGroup::model()->deleteAll("idGroup = :id", array(":id" => $this->id));
+        AccessControlMaterial::model()->deleteAll("type_relation = :group AND idRecord = :id", array(":group" => ACCESS_RELATION_GROUP, ":id" => $this->id));
+        return parent::beforeDelete();
+    }
+
 }

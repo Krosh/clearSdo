@@ -174,6 +174,19 @@ class User extends CActiveRecord
         return parent::afterSave();
     }
 
+    public function beforeDelete()
+    {
+        Message::model()->deleteAll("idAutor = :id OR idRecepient = :id", array(":id" => $this->id));
+        AccessControlMaterial::model()->deleteAll("type_relation = :user AND idRecord = :id", array(":id" => $this->id, ":user" => ACCESS_RELATION_PERSONAL));
+        CoursesAutor::model()->deleteAll("idAutor = :id", array(":id" => $this->id));
+        LearnMaterial::model()->deleteAll("idAutor = :id", array(":id" => $this->id));
+        Log::model()->deleteAll("idUser = :id", array(":id" => $this->id));
+        StudentGroup::model()->deleteAll("idStudent = :id", array(":id" => $this->id));
+        UserControlMaterial::model()->deleteAll("idUser = :id", array(":id" => $this->id));
+        UserFileAnswer::model()->deleteAll("idUser = :id", array(":id" => $this->id));
+        return parent::beforeDelete();
+    }
+
     public function getFiles($category = 'all')
     {
         $result = array();
