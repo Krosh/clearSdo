@@ -464,6 +464,11 @@ class ControlMaterialController extends CController
             echo "error";
     }
 
+    public function actionDeleteUserFileAnswer()
+    {
+        UserFileAnswer::model()->deleteAll("idUser = :idUser AND idControlMaterial = :idTest", array(":idUser" => Yii::app()->user->id, ":idTest" => $_POST['idMaterial']));
+    }
+
     public function actionGetUserAnswers($idControlMaterial)
     {
         if(extension_loaded('zip'))

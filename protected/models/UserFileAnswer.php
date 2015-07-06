@@ -18,6 +18,15 @@
 class UserFileAnswer extends CActiveRecord
 {
 
+    public function behaviors(){
+        return array(
+            'logBehavior' => array(
+                'class' => 'LogBehavior',
+                'tableName' => 'Работы студентов',
+            ),
+        );
+    }
+
     public $fileAttribute = null;
 	/**
 	 * @return string the associated database table name
@@ -124,13 +133,14 @@ class UserFileAnswer extends CActiveRecord
             $this->filename = $name;
             $this->dateAdd = date("Y-m-d H:i:s");
         }
-        return true;
+        return parent::beforeSave() ;
     }
 
     public function beforeDelete()
     {
         $this->deleteDocument();
-//        CoursesMaterial::model()->deleteAll("idMaterial = :id",array("id" => $this->id));
+        return parent::beforeDelete() ;
+        //        CoursesMaterial::model()->deleteAll("idMaterial = :id",array("id" => $this->id));
     }
 
     public function deleteDocument()

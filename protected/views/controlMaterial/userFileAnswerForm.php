@@ -11,7 +11,7 @@ $userAnswer = UserFileAnswer::model()->find("idUser = :idUser AND idControlMater
 if ($userAnswer != null)
 {
     ?>
-    <td colspan='3' style="text-align: center">Файл уже отправлен!</td>
+    <td colspan='3' style="text-align: center">Файл уже отправлен!<a href = "#" onclick="ajaxDeleteUserFileAnswer(<?php echo $idMaterial; ?>); return false"><i class = "fa fa-remove"></i></a></td>
 <?php
 } else
 {

@@ -118,6 +118,27 @@ function ajaxDeleteAllNonUsedMaterials()
         }
     });
 }
+
+function ajaxDeleteUserFileAnswer(idMaterial)
+{
+    if (confirm("Вы уверены, что хотите удалить этот файл?"))
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/controlMaterial/deleteUserFileAnswer',
+            data: {idMaterial: idMaterial},
+            error: function(jqXHR, textStatus, errorThrown){
+                alert(errorThrown);
+                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+            },
+            success: function(data)
+            {
+                window.location = "";
+            }
+        });
+    }
+}
+
 function ajaxSendUserFileAnswer(fileInput,idMaterial)
 {
     //var form = $(fileInput).parent();

@@ -196,7 +196,7 @@ class LearnMaterial extends CActiveRecord
                 }
             }
         }
-        return true;
+        return parent::beforeSave() ;
     }
 
     public function beforeDelete()
