@@ -332,14 +332,23 @@ function saveMark(idStudent,idControlMaterial,mark)
             console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
         }
     });
+
+    var mark = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val();
+    if(parseInt(mark) < 25) {
+        mark = '<span class="mark-bad">'+mark+'</span>';
+    } else {
+        mark = '<span class="mark-good">'+mark+'</span>';
+    }
     $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
-    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').text($('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val());
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").show();
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').html(mark);
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
 }
 
 function showMarksOfMaterial(idControlMaterial)
 {
     $('div[data-material='+idControlMaterial+']').hide();
+    $('div[data-material='+idControlMaterial+']').parent().find("a").hide();
     $('input[data-material='+idControlMaterial+']').show();
 //    $('input[data-material='+idControlMaterial+']').focus();
 }
@@ -347,6 +356,7 @@ function showMarksOfMaterial(idControlMaterial)
 function showMarkTextbox(idStudent,idControlMaterial)
 {
     $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
+    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").hide();
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').focus();
     $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').focusout(function()
@@ -1253,4 +1263,9 @@ $(document).ready(function(){
     if($(".js-strength").length) {
         $(".js-strength").strength();
     }
+
+    $(".page-print").click(function() {
+        window.print();
+        return false;
+    })
 });
