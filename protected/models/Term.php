@@ -110,14 +110,14 @@ class Term extends CActiveRecord
 
     public static function getTermsByAutor($idAutor)
     {
-        $courses = Course::getCoursesByAutor($idAutor);
-        $ids = array();
-        foreach ($courses as $item)
-        {
-            array_push($ids,$item->idTerm);
-        }
+//        $courses = Course::getCoursesByAutor($idAutor);
+//        $ids = array();
+//        foreach ($courses as $item)
+//        {
+//            array_push($ids,$item->idTerm);
+//        }
         $criteria = new CDbCriteria();
-        $criteria->addInCondition("id",$ids);
+//        $criteria->addInCondition("id",$ids);
         return Term::model()->findAll($criteria);
     }
 
@@ -127,4 +127,10 @@ class Term extends CActiveRecord
         $dayDiff = $dayDiff % 14;
         if ($dayDiff>=7) return 1; else return 0;
     }
+
+    public function canDelete()
+    {
+        return !CoursesGroup::model()->exists("idTerm = :idTerm", array(":idTerm" => $this->id));
+    }
+
 }

@@ -1250,7 +1250,7 @@ $(document).ready(function(){
 
 
     // сложность пароля
-    if($(".js-strength")) {
+    if($(".js-strength").length) {
         $(".js-strength").strength();
     }
 });

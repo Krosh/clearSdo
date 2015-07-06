@@ -51,6 +51,7 @@
                                     ),
                                     'delete' => array(
                                         'label' => '<i class="fa fa-remove"></i>',
+                                        'visible' => '$data->canDelete()',
                                         'imageUrl' => false
                                     ),
                                 ),
