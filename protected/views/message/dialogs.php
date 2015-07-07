@@ -11,7 +11,7 @@
     <div class="dialog <?php if ($item["hasNonReadable"]) echo "unread" ?>" onclick="getDialogWithUser(<?php echo $item["user"]->id; ?>)" data-idUser = "<?php echo $item["user"]->id; ?>"">
         <div class="row">
             <div class="col-xs-3">
-                <a href="#" class="avatar" style="background-image: url(<?php echo $item["user"]->getAvatarPath(); ?>)"></a>
+                <a href="#" class="avatar" style="background-image: url(<?php echo $item["user"]->getAvatarPath(AVATAR_SIZE_MEDIUM); ?>)"></a>
                 <span class="new">НОВОЕ</span>
             </div>
             <div class="col-xs-9">

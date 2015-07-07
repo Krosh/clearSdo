@@ -192,7 +192,15 @@ class User extends CActiveRecord
 
     public function deleteAvatar()
     {
-
+        $path = Yii::getPathOfAlias('webroot').$this->getAvatarPath(AVATAR_SIZE_NORMAL);
+        if (is_file($path))
+            unlink($path);
+        $path = Yii::getPathOfAlias('webroot').$this->getAvatarPath(AVATAR_SIZE_MINI);
+        if (is_file($path))
+            unlink($path);
+        $path = Yii::getPathOfAlias('webroot').$this->getAvatarPath(AVATAR_SIZE_MEDIUM);
+        if (is_file($path))
+            unlink($path);
     }
 
     public function beforeDelete()
