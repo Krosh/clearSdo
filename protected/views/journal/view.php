@@ -28,7 +28,7 @@ $listeners = Course::getGroups($course->id);
     <div class="col-4">
         <h2>Журнал</h2>
     </div>
-    <div class="col-6 right">
+    <div class="col-8 right">
         <i class="fa fa-refresh fa-spin fa-loading-icon" style="display: none;"></i>
         <a href="<?php echo $this->createUrl("/site/journal", array("idCourse" => $course->id, "idGroup" => $group->id, "print" => true))?>" class="page-print"><i class="print"></i> <span>Версия для печати</span></a>
     </div>

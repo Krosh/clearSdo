@@ -81,13 +81,7 @@ $cs->scriptMap=array(
                             </div>
                         </div>
                         <div class="avatar">
-                            <?
-                            $avatar = Yii::app()->user->getAvatar();
-                            if($avatar == "/avatars/") {
-                                $avatar = "/img/avatar-default.png";
-                            }
-                            ?>
-                            <div class="the-avatar-box" style="background-image: url('<?=$avatar?>')"></div>
+                            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(AVATAR_SIZE_MINI); ?>')"></div>
                         </div>
                     </div>
                 </div>

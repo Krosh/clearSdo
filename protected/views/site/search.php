@@ -51,7 +51,7 @@
                                     </td>
                                     <td>
                                         <div class="right">
-                                            <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo $user->getAvatarPath(); ?>">
+                                            <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo $user->getAvatarPath(AVATAR_SIZE_MEDIUM); ?>">
                                         </div>
                                     </td>
                                 </tr>

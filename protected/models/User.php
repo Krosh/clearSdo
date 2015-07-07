@@ -17,6 +17,10 @@
  * @property string $email
  * @property bool $isAvatarModerated
  */
+
+define("AVATAR_SIZE_NORMAL",0);
+define("AVATAR_SIZE_MINI",1);
+define("AVATAR_SIZE_MEDIUM",2);
 class User extends CActiveRecord
 {
 
@@ -136,11 +140,14 @@ class User extends CActiveRecord
 		));
 	}
 
-    public function getAvatarPath()
+    public function getAvatarPath($needImageSize = AVATAR_SIZE_NORMAL)
     {
         $defaultAvatarPath = "/img/avatar-default.png";
+        $names = array(AVATAR_SIZE_NORMAL => ".", AVATAR_SIZE_MINI => "_mini.", AVATAR_SIZE_MEDIUM => "_medium.");
+        $avatarPath = $this->avatar;
+        $avatarPath = str_replace(".",$names[$needImageSize],$avatarPath);
         if ($this->isAvatarModerated == 1)
-            return "/avatars/".$this->avatar;
+            return "/avatars/".$avatarPath;
         else
             return $defaultAvatarPath;
     }
@@ -153,10 +160,19 @@ class User extends CActiveRecord
         }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
+            $this->deleteAvatar();
             $image = CUploadedFile::getInstance($this,'newAvatar');
-            $name = time().".".$image->extensionName;
-            $image->saveAs(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name);
-            $this->avatar = $name;
+            $name = time();
+            $image->saveAs(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName);
+            Yii::app()->imageHandler
+                ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
+                ->thumb(44,44)
+                ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_mini".".".$image->extensionName);
+            Yii::app()->imageHandler
+                ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
+                ->thumb(70,70)
+                ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_medium".".".$image->extensionName);
+            $this->avatar = $name.".".$image->extensionName;
             if (!Yii::app()->user->isAdmin())
                 $this->isAvatarModerated = false;
             else
@@ -174,6 +190,11 @@ class User extends CActiveRecord
         return parent::afterSave();
     }
 
+    public function deleteAvatar()
+    {
+
+    }
+
     public function beforeDelete()
     {
         Message::model()->deleteAll("idAutor = :id OR idRecepient = :id", array(":id" => $this->id));
@@ -184,6 +205,7 @@ class User extends CActiveRecord
         StudentGroup::model()->deleteAll("idStudent = :id", array(":id" => $this->id));
         UserControlMaterial::model()->deleteAll("idUser = :id", array(":id" => $this->id));
         UserFileAnswer::model()->deleteAll("idUser = :id", array(":id" => $this->id));
+        $this->deleteAvatar();
         return parent::beforeDelete();
     }
 

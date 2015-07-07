@@ -48,9 +48,9 @@ class WebUser extends CWebUser {
         }
     }
 
-    function getAvatar() {
+    function getAvatar($needImageSize = AVATAR_SIZE_NORMAL) {
         if ($user = $this->getModel()) {
-            return $user->getAvatarPath();
+            return $user->getAvatarPath($needImageSize);
         }
     }
 

@@ -122,7 +122,7 @@ class SiteController extends CController
             if ($print)
             {
                 $this->layout = "";
-                $this->render("/journal/table", array("idCourse" => $course->id, "group" => $group));
+                $this->render("/journal/table", array("idCourse" => $course->id, "group" => $group, "print" => true));
             } else
                 $this->render("/journal/view", array("course" => $course, "group" => $group));
         }

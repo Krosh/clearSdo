@@ -63,6 +63,7 @@ return array(
         'xupload' => 'ext.xupload'
     ),
     'components'=>array(
+        'imageHandler'=>array('class'=>'CImageHandler'),
         'bigbluebutton'=>array(
             'class'=>'ext.bigbluebutton.BigBlueButton',
 

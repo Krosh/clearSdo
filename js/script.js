@@ -350,7 +350,7 @@ function showMarksOfMaterial(idControlMaterial)
     $('div[data-material='+idControlMaterial+']').hide();
     $('div[data-material='+idControlMaterial+']').parent().find("a").hide();
     $('input[data-material='+idControlMaterial+']').show();
-//    $('input[data-material='+idControlMaterial+']').focus();
+    $('input[data-material='+idControlMaterial+']').first().focus();
 }
 
 function showMarkTextbox(idStudent,idControlMaterial)
@@ -1263,9 +1263,4 @@ $(document).ready(function(){
     if($(".js-strength").length) {
         $(".js-strength").strength();
     }
-
-    $(".page-print").click(function() {
-        window.print();
-        return false;
-    })
 });
