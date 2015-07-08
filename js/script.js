@@ -1,13 +1,16 @@
+function onError(jqXHR, textStatus, errorThrown)
+{
+  //  alert(errorThrown);
+    console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+}
+
 function startConference(id)
 {
     $.ajax({
         type: 'GET',
         url: '/webinar/startConference',
         data: {idMaterial: id},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             window.location = "/webinar/connectToConference?idMaterial="+id;
@@ -39,10 +42,7 @@ function ajaxUpdateAccess(elem)
         type: 'POST',
         url: '/controlMaterial/updateAccessInfo',
         data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val(),
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -53,10 +53,7 @@ function ajaxDeleteAccess(idAccess, idCourse, idMaterial)
         type: 'POST',
         url: '/controlMaterial/deleteAccessInfo',
         data: {id: idAccess},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -66,10 +63,7 @@ function ajaxAddAccess(idCourse, idMaterial, typeRelation)
         type: 'POST',
         url: '/controlMaterial/addAccessInfo',
         data: {idCourse:idCourse, idMaterial: idMaterial, typeRelation: typeRelation},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             ajaxGetAccess(idCourse, idMaterial);
@@ -86,10 +80,7 @@ function ajaxGetAccess(idCourse, idMaterial)
         type: 'POST',
         url: '/controlMaterial/getAccessInfo',
         data: {idCourse: idCourse, idMaterial: idMaterial},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             $("#editCourse-access").html(data);
@@ -108,10 +99,7 @@ function ajaxDeleteAllNonUsedMaterials()
     $.ajax({
         type: 'POST',
         url: '/learnMaterial/deleteAllNonUsedMaterials',
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             $.fn.yiiGridView.update("media-grid");
@@ -127,10 +115,7 @@ function ajaxDeleteUserFileAnswer(idMaterial)
             type: 'POST',
             url: '/controlMaterial/deleteUserFileAnswer',
             data: {idMaterial: idMaterial},
-            error: function(jqXHR, textStatus, errorThrown){
-                alert(errorThrown);
-                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-            },
+            error: onError,
             success: function(data)
             {
                 window.location = "";
@@ -176,10 +161,7 @@ function ajaxChangeLearnMaterialTitle(obj,id)
         type: 'POST',
         url: '/learnMaterial/changeTitle',
         data: {idMaterial: id, title: $(obj).val()},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             $(obj).hide();
@@ -194,10 +176,7 @@ function ajaxGetTimetable(idGroup)
         type: 'POST',
         url: '/group/getTimetable',
         data: {idGroup:idGroup},
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         success: function(data)
         {
             alert('Расписание успешно получено');
@@ -262,12 +241,9 @@ function changeWeights(idMaterial,idCourse)
         type: "POST",
         success: function(data)
         {
-          window.location =  "/editCourse?idCourse="+idCourse;
+            window.location =  "/editCourse?idCourse="+idCourse;
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 
 }
@@ -308,16 +284,10 @@ function recalcMarks(idControlMaterial,idGroup)
                         });
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown){
-                    alert(errorThrown);
-                    console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                }
+                error: onError,
             });
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -327,10 +297,7 @@ function saveMark(idStudent,idControlMaterial,mark)
         url: '/controlMaterial/setMark',
         data: {idStudent: idStudent, idControlMaterial: idControlMaterial, mark: mark},
         type: "POST",
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 
     var mark = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val();
@@ -376,10 +343,7 @@ function makeReport_marks()
             $("#report").html(data);
             footerUpdate();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -419,10 +383,7 @@ function loadCourses(idTerm,newTitle)
                 });
             });
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        },
+        error: onError,
         complete: function() {
             //$("footer").footer();
         }
@@ -440,10 +401,7 @@ function updateTeachers(idCourse)
             $("#editCourse-teachers").html(data);
             footerUpdate();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -457,10 +415,7 @@ function deleteTeacher(idCourse,idTeacher)
         {
             updateTeachers(idCourse);
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -477,10 +432,7 @@ function updateGroups(idCourse, idTerm)
             $("#addGroupsSelect").multiSelect('refresh');
             footerUpdate();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -494,10 +446,7 @@ function deleteGroup(idGroup,idTerm,idCourse)
         {
 //            updateGroups(idCourse,idTerm);
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -513,9 +462,8 @@ function addGroup(idGroup,idTerm,idCourse)
             /* $("#editCourse-groupSelect").hide(); */
 //            footerUpdate();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert("error"+textStatus+errorThrown);
-        }});
+        error: onError
+    });
 }
 
 function addLearnMaterial(idCourse)
@@ -554,13 +502,10 @@ function deleteLearnMaterial(idCourse,idMaterial,idDiv)
         type: "POST",
         success: function(data)
         {
-             $("#learnMaterialTable #"+idDiv).remove();
+            $("#learnMaterialTable #"+idDiv).remove();
             //updateLearnMaterials(window.idCourse);
         },
-        error: function(jqXHR, textStatus, errorThrown){
-//            alert(errorThrown);
-//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError
     });
 }
 
@@ -623,10 +568,7 @@ function updateLearnMaterials(idCourse)
                             url: '/learnMaterial/fullOrderMaterial',
                             data: {newOrder: s},
                             type: "POST",
-                            error: function(jqXHR, textStatus, errorThrown){
-                                alert(errorThrown);
-                                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                            }
+                            error: onError,
                         });
                         return;
                     }
@@ -639,10 +581,7 @@ function updateLearnMaterials(idCourse)
                         url: '/learnMaterial/orderMaterial',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
                         type: "POST",
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert(errorThrown);
-                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                        }
+                        error: onError,
                     });
                 },
                 helper: function(e, tr){
@@ -652,15 +591,12 @@ function updateLearnMaterials(idCourse)
                         $(this).width($originals.eq(index).width());
                     });
                     return $helper;
-                },
+                }
             });
 
             footerUpdate();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -674,10 +610,7 @@ function deleteControlMaterial(idCourse,idMaterial,idDiv)
         {
             $("#controlMaterialTable #"+idDiv).remove();
         },
-        error: function(jqXHR, textStatus, errorThrown){
-//            alert(errorThrown);
-//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -700,10 +633,7 @@ function updateControlMaterials(idCourse)
                         url: '/material/orderMaterial',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
                         type: "POST",
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert(errorThrown);
-                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                        }
+                        error: onError,
                     });
                 },
                 helper: function(e, tr){
@@ -716,10 +646,7 @@ function updateControlMaterials(idCourse)
                 },
             });
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -773,10 +700,7 @@ function updateQuestions(idTest)
                         url: '/question/orderQuestions',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
                         type: "POST",
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert(errorThrown);
-                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                        }
+                        error: onError,
                     });
                 },
                 helper: function(e, tr){
@@ -789,10 +713,7 @@ function updateQuestions(idTest)
                 },
             });
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -806,10 +727,7 @@ function deleteQuestion(idQuestion,idControlMaterial)
         {
             updateQuestions(idControlMaterial);
         },
-        error: function(jqXHR, textStatus, errorThrown){
-//            alert(errorThrown);
-//            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -835,18 +753,12 @@ function updateAnswers(idQuestion)
                         url: '/answer/orderMaterial',
                         data: {idMat: $(ui.item).attr('id'), idParentMat:itemId},
                         type: "POST",
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert(errorThrown);
-                            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-                        }
+                        error: onError,
                     });
                 }
             });
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -865,11 +777,7 @@ function addAnswer(idQuestion)
         success: function(data){
             updateAnswers(idQuestion);
         },
-        error :function()
-        {
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -883,10 +791,7 @@ function deleteAnswer(idAnswer)
         {
             updateAnswers(window.idQuestion);
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -900,10 +805,7 @@ function changeAnswer(idAnswer,content,right)
         url: '/answer/changeAnswer',
         data: {idAnswer: idAnswer,content: content, right: right},
         type: "POST",
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
-            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-        }
+        error: onError,
     });
 }
 
@@ -1235,10 +1137,7 @@ $(document).ready(function(){
             type: 'POST',
             url: '/user/checkOnAuthenticate',
             data: $("#loginForm").serialize(),
-            error: function(jqXHR, textStatus, errorThrown){
-                alert(errorThrown);
-                console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
-            },
+            error: onError,
             success: function(data)
             {
                 if (data == "1") {
