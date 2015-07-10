@@ -1,3 +1,13 @@
+function onAlert(codeMessage)
+{
+    var messages = {"LOAD_FILE_ERROR":"Ошибка при загрузке файла", "TIMETABLE_GET_SUCCESS":"Расписание получено успешно",
+        "SUMM_OF_WEIGHT_MUST_BE_MORE_THAN_ZERO":"Сумма весов должна быть больше 0", "WEIGHT_MUST_BE_MORE_THAN_ZERO":"Вес должен быть больше 0",
+        "MUST_BE_LEAST_RIGHT_ANSWER":"Должен быть хотя бы один правильный ответ","MUST_BE_ONLY_ONE_RIGHT_ANSWER":"Должен быть только один правильный ответ","MUST_BE_ONLY_ONE_ANSWER":"Должен быть только один вариант ответа",
+        "MUST_BE_ONLY_ONE_ANSWER":"Должен быть только один вариант ответа"};
+    alert(messages[codeMessage]);
+
+}
+
 function onError(jqXHR, textStatus, errorThrown)
 {
   //  alert(errorThrown);
@@ -141,7 +151,7 @@ function ajaxSendUserFileAnswer(fileInput,idMaterial)
                     window.location = "";
                 } else
                 {
-                    alert("Ошибка при загрузке файла");
+                    onAlert("LOAD_FILE_ERROR");
                 }
             }
         }
@@ -179,7 +189,7 @@ function ajaxGetTimetable(idGroup)
         error: onError,
         success: function(data)
         {
-            alert('Расписание успешно получено');
+            onAlert("TIMETABLE_GET_SUCCESS");
         }
     });
 }
@@ -222,7 +232,7 @@ function changeWeights(idMaterial,idCourse)
     });
     if (summ == 0)
     {
-        alert("Сумма весов должна быть больше 0!");
+        onAlert("SUMM_OF_WEIGHT_MUST_BE_MORE_THAN_ZERO");
         return;
     }
     var i = 0;
@@ -485,7 +495,7 @@ function addLearnMaterial(idCourse)
                     updateLearnMaterials(idCourse);
                 } else
                 {
-                    alert("Ошибка при загрузке файла");
+                    onAlert("LOAD_FILE_ERROR");
                 }
             }
         }
@@ -767,7 +777,7 @@ function addAnswer(idQuestion)
     var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
     if (questionType == 3 ||questionType==4)
     {
-        alert("У этого типа вопроса может быть только один вариант ответа!");
+        onAlert("MUST_BE_ONLY_ONE_ANSWER");
         return;
     }
     $.ajax({
@@ -815,7 +825,7 @@ function isValidQuestion()
 
     if ($("#Question_weight").val()<=0)
     {
-        alert("Вес должен быть больше 0");
+        onAlert("WEIGHT_MUST_BE_MORE_THAN_ZERO");
         return false;
     }
     var questionType = $(".horizontal-buttons-list input[type='radio']:checked").val();
@@ -823,17 +833,17 @@ function isValidQuestion()
     var rightAnswerCount = $(".answer input:checked").length;
     if (rightAnswerCount == 0)
     {
-        alert("Должен быть хотя бы один правильный ответ!");
+        onAlert("MUST_BE_LEAST_RIGHT_ANSWER");
         return false;
     }
     if (questionType != 2 && questionType != 5 && rightAnswerCount>1)
     {
-        alert("Должен быть один правильный ответ!");
+        onAlert("MUST_BE_ONLY_ONE_RIGHT_ANSWER");
         return false;
     }
     if ((questionType == 3||questionType == 4) && answerCount>1)
     {
-        alert("Должен быть только один вариант ответа!");
+        onAlert("MUST_BE_ONLY_ONE_ANSWER");
         return false;
     }
     return true;
@@ -1114,7 +1124,7 @@ $(document).ready(function(){
     $("#XUploadForm-form").bind('fileuploadfail',function()
     {
         $('body').hideLoader();
-        alert("Произошла ошибка при загрузке файла");
+        onAlert("LOAD_FILE_ERROR");
     });
 
     if ($("#rightAnswers").length)
