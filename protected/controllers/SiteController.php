@@ -10,6 +10,31 @@ class SiteController extends CController
     public $breadcrumbs;
 
 
+    private function runMigrationTool() {
+        $runner=new CConsoleCommandRunner();
+        $runner->commands=array(
+            'migrate' => array(
+                'class' => 'system.cli.commands.MigrateCommand',
+                'interactive' => false,
+            ),
+        );
+
+        ob_start();
+        $runner->run(array(
+            'yiic',
+            'migrate',
+            //          'down'
+            //          'create',
+            //        'add_date_change_password',
+        ));
+        echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
+    }
+
+    public function actionMigration()
+    {
+        $this->runMigrationTool();
+    }
+
     public function filters()
     {
         return array(
@@ -176,6 +201,7 @@ class SiteController extends CController
                     if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
                     {
                         $model->password = md5($_POST["newPassword"]);
+                        $model->dateChangePassword = date("Y-m-d H:i:s");
                         Yii::app()->user->setFlash("codeMessage","success");
                         Yii::app()->user->setFlash("message","Пароль изменен");
                         $flag = false;

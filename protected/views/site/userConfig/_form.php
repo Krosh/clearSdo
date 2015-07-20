@@ -50,6 +50,7 @@
                 <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
             </td>
             <td width="65%" class="input-full-width">
+                Пароль менялся <?php echo DateHelper::getRussianDateFromDatabase($model->dateChangePassword,true);?>
             </td>
         </tr>
         <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>

@@ -90,6 +90,7 @@ class UserController extends CController
             if ($_POST['haveNewPassword'])
             {
                 $model->password = md5($_POST["newPassword"]);
+                $model->dateChangePassword = date("Y-m-d H:i:s");
                 Yii::app()->user->setFlash("codeMessage","success");
                 Yii::app()->user->setFlash("message","Пароль изменен");
                 $flag = false;

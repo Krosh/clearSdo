@@ -14,6 +14,7 @@
  * @property string $curVisit
  * @property string $info
  * @property string $phone
+ * @property string $dateChangePassword
  * @property string $email
  * @property bool $isAvatarModerated
  */
@@ -59,11 +60,12 @@ class User extends CActiveRecord
 			array('avatar', 'length', 'max'=>20),
             array('phone', 'length', 'max'=>20),
             array('email', 'length', 'max'=>200),
+            array('dateChangePassword', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('phone, emial, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
