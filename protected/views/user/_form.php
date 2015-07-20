@@ -98,9 +98,45 @@ $message = Yii::app()->user->getFlash("message");
                 <?php echo $form->error($model,'phone'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>20)); ?>
+                <?php   $this->widget('CMaskedTextField', array(
+                    'model' => $model,
+                    'attribute' => 'phone',
+                    'mask' => '+9-999-999-9999',
+                    'placeholder' => '*',
+                    'completed' => 'function(){console.log("ok");}',
+                )); ?>
             </td>
         </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'gender'); ?>
+                <?php echo $form->error($model,'gender'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?
+                echo $form->dropDownList($model, 'gender', $model->getGenderOptions(), array('empty'=>'Выберите пол...'));
+                ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'birthday'); ?>
+                <?php echo $form->error($model,'birthday'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php   $this->widget('CMaskedTextField', array(
+                    'model' => $model,
+                    'attribute' => 'birthday',
+                    'mask' => '99.99.9999',
+                    'placeholder' => '*'
+                )); ?>
+            </td>
+        </tr>
+
+
+
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'email'); ?>

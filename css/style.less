@@ -1462,6 +1462,15 @@ input {
   &:focus, &:active {
     border-color: #3498db;
   }
+
+  &[disabled='disabled'] {
+    border-color: #bdc3c7;
+    cursor: no-drop !important;
+
+    &:focus, &:active {
+      border-color: #bdc3c7;
+    }
+  }
 }
 
 select {
