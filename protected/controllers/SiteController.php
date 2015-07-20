@@ -24,7 +24,7 @@ class SiteController extends CController
             'yiic',
             'migrate',
             //          'down'
-            //          'create',
+          //            'create',
             //        'add_date_change_password',
         ));
         echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
