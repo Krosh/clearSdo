@@ -41,7 +41,6 @@ class SiteController extends CController
                     Yii::app()->user->setFlash('message','Авторизация прошла успешно');
                     Yii::app()->user->login($identity);
                     $auth = true;
-                    $this->redirect('/site/index');
                 }
                 else
                 {
