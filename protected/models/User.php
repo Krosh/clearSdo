@@ -194,7 +194,19 @@ class User extends CActiveRecord
             $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))
             mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
+
+        if ($this->isNewRecord) {
+            // Регистрация нового пользователя на форуме
+            // Логин, пароль(не захешированный), email, ID группы на форуме(по умолчанию 2-обычный пользователь, 5-администратор)
+            Yii::app()->phpBB->userAdd($this->login, $this->password, $this->email, 2);
+        }
         return parent::afterSave();
+    }
+
+    protected function afterDelete() {
+        // Удаляем пользователя с форума
+        Yii::app()->phpBB->userDelete($this->login);
+        parent::afterDelete();
     }
 
     public function deleteAvatar()
