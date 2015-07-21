@@ -3,6 +3,7 @@ img/
 /protected/config/local.php
 /protected/runtime/
 /.idea/
+.idea/workspace.xml
 /media/
 /userPictures/
 /avatars/
