@@ -2,7 +2,9 @@ framework/
 img/
 /protected/config/local.php
 /.idea/
+/.idea/workspace.xml
+/protected/runtime/
 /media/
 /userPictures/
 /avatars/
-/js/tinymce
+/js/tinymce/
