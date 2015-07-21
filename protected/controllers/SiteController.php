@@ -201,7 +201,6 @@ class SiteController extends CController
                     if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
                     {
                         $model->password = md5($_POST["newPassword"]);
-                        $model->dateChangePassword = date("Y-m-d H:i:s");
                         Yii::app()->user->setFlash("codeMessage","success");
                         Yii::app()->user->setFlash("message","Пароль изменен");
                         $flag = false;

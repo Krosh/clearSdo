@@ -17,6 +17,7 @@
  * @property string $dateChangePassword
  * @property string $email
  * @property bool $isAvatarModerated
+ * @property string $gender
  */
 
 define("AVATAR_SIZE_NORMAL",0);
@@ -63,6 +64,8 @@ class User extends CActiveRecord
             array('dateChangePassword', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
+            array('gender', 'length', 'max'=>20),
+            array('birthday', 'length', 'max'=>10),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
@@ -96,6 +99,8 @@ class User extends CActiveRecord
             'email' => 'Электронная почта',
             'isAvatarModerated' => 'Статус проверки аватара',
             'showOnlyNoModerated' => 'Показывать только с немодерированными аватарами',
+            'gender' => 'Пол',
+            'birthday' => 'Дата рождения',
 		);
 	}
 
@@ -245,4 +250,10 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+
+
+    public function getGenderOptions() {
+        return array('M' => 'Мужской', 'F' => 'Женский');
+    }
 }

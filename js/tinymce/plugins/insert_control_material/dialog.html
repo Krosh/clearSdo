@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../../../../js/jquery-2.1.1.min.js"></script>
+    <script src="../../../../js/jquery-ui.js"></script>
+</head>
+<body>
+<h3>Добавить ссылку на контрольный материал</h3>
+<div id = "links">
+
+</div>
+<script>
+    function addLink(id, title)
+    {
+        top.tinymce.activeEditor.insertContent('<a href = "/controlMaterial/startTest?idTest='+id+'">'+title+"</a>");
+        top.tinymce.activeEditor.windowManager.close();
+    }
+    $.ajax({
+        type: "POST",
+        url: "/controlMaterial/getLinks",
+        success: function(data)
+        {
+            $("#links").html(data);
+        }
+    });
+
+</script>
+</body>
+</html>

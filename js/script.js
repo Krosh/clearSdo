@@ -58,13 +58,16 @@ function ajaxUpdateAccess(elem)
 
 function ajaxDeleteAccess(idAccess, idCourse, idMaterial)
 {
-    $("#accessForm"+idAccess).remove();
-    $.ajax({
-        type: 'POST',
-        url: '/controlMaterial/deleteAccessInfo',
-        data: {id: idAccess},
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $("#accessForm"+idAccess).remove();
+        $.ajax({
+            type: 'POST',
+            url: '/controlMaterial/deleteAccessInfo',
+            data: {id: idAccess},
+            error: onError,
+        });
+    }
 }
 
 function ajaxAddAccess(idCourse, idMaterial, typeRelation)
@@ -106,20 +109,23 @@ function ajaxGetAccess(idCourse, idMaterial)
 
 function ajaxDeleteAllNonUsedMaterials()
 {
-    $.ajax({
-        type: 'POST',
-        url: '/learnMaterial/deleteAllNonUsedMaterials',
-        error: onError,
-        success: function(data)
-        {
-            $.fn.yiiGridView.update("media-grid");
-        }
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/learnMaterial/deleteAllNonUsedMaterials',
+            error: onError,
+            success: function(data)
+            {
+                $.fn.yiiGridView.update("media-grid");
+            }
+        });
+    }
 }
 
 function ajaxDeleteUserFileAnswer(idMaterial)
 {
-    if (confirm("Вы уверены, что хотите удалить этот файл?"))
+    if (confirm("Вы действительно хотите удалить?"))
     {
         $.ajax({
             type: 'POST',
@@ -417,16 +423,19 @@ function updateTeachers(idCourse)
 
 function deleteTeacher(idCourse,idTeacher)
 {
-    $.ajax({
-        url: '/courses/deleteTeacher',
-        data: {idCourse: idCourse, idTeacher: idTeacher},
-        type: "POST",
-        success: function(data)
-        {
-            updateTeachers(idCourse);
-        },
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/courses/deleteTeacher',
+            data: {idCourse: idCourse, idTeacher: idTeacher},
+            type: "POST",
+            success: function(data)
+            {
+                updateTeachers(idCourse);
+            },
+            error: onError,
+        });
+    }
 }
 
 function updateGroups(idCourse, idTerm)
@@ -448,16 +457,19 @@ function updateGroups(idCourse, idTerm)
 
 function deleteGroup(idGroup,idTerm,idCourse)
 {
-    $.ajax({
-        url: '/courses/deleteGroup',
-        data: {idGroup: idGroup, idTerm: window.idTerm, idCourse: idCourse},
-        type: "POST",
-        success: function(data)
-        {
-//            updateGroups(idCourse,idTerm);
-        },
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/courses/deleteGroup',
+            data: {idGroup: idGroup, idTerm: window.idTerm, idCourse: idCourse},
+            type: "POST",
+            success: function(data)
+            {
+    //            updateGroups(idCourse,idTerm);
+            },
+            error: onError,
+        });
+    }
 }
 
 function addGroup(idGroup,idTerm,idCourse)
@@ -506,17 +518,20 @@ function addLearnMaterial(idCourse)
 
 function deleteLearnMaterial(idCourse,idMaterial,idDiv)
 {
-    $.ajax({
-        url: '/learnMaterial/deleteMaterial',
-        data: {idCourse: idCourse, idMaterial:idMaterial},
-        type: "POST",
-        success: function(data)
-        {
-            $("#learnMaterialTable #"+idDiv).remove();
-            //updateLearnMaterials(window.idCourse);
-        },
-        error: onError
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/learnMaterial/deleteMaterial',
+            data: {idCourse: idCourse, idMaterial:idMaterial},
+            type: "POST",
+            success: function(data)
+            {
+                $("#learnMaterialTable #"+idDiv).remove();
+                //updateLearnMaterials(window.idCourse);
+            },
+            error: onError
+        });
+    }
 }
 
 function updateLearnMaterials(idCourse)
@@ -612,16 +627,19 @@ function updateLearnMaterials(idCourse)
 
 function deleteControlMaterial(idCourse,idMaterial,idDiv)
 {
-    $.ajax({
-        url: '/material/deleteMaterial',
-        data: {idCourse: idCourse, idMaterial:idMaterial},
-        type: "POST",
-        success: function(data)
-        {
-            $("#controlMaterialTable #"+idDiv).remove();
-        },
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/material/deleteMaterial',
+            data: {idCourse: idCourse, idMaterial:idMaterial},
+            type: "POST",
+            success: function(data)
+            {
+                $("#controlMaterialTable #"+idDiv).remove();
+            },
+            error: onError,
+        });
+    }
 }
 
 function updateControlMaterials(idCourse)
@@ -729,16 +747,19 @@ function updateQuestions(idTest)
 
 function deleteQuestion(idQuestion,idControlMaterial)
 {
-    $.ajax({
-        url: '/question/deleteQuestion',
-        data: {idQuestion: idQuestion, idControlMaterial:idControlMaterial},
-        type: "POST",
-        success: function(data)
-        {
-            updateQuestions(idControlMaterial);
-        },
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/question/deleteQuestion',
+            data: {idQuestion: idQuestion, idControlMaterial:idControlMaterial},
+            type: "POST",
+            success: function(data)
+            {
+                updateQuestions(idControlMaterial);
+            },
+            error: onError,
+        });
+    }
 }
 
 
@@ -793,16 +814,19 @@ function addAnswer(idQuestion)
 
 function deleteAnswer(idAnswer)
 {
-    $.ajax({
-        url: '/answer/deleteMaterial',
-        data: {idAnswer: idAnswer},
-        type: "POST",
-        success: function(data)
-        {
-            updateAnswers(window.idQuestion);
-        },
-        error: onError,
-    });
+    if (confirm("Вы действительно хотите удалить?"))
+    {
+        $.ajax({
+            url: '/answer/deleteMaterial',
+            data: {idAnswer: idAnswer},
+            type: "POST",
+            success: function(data)
+            {
+                updateAnswers(window.idQuestion);
+            },
+            error: onError,
+        });
+    }
 }
 
 function changeAnswer(idAnswer,content,right)
@@ -1172,4 +1196,13 @@ $(document).ready(function(){
     if($(".js-strength").length) {
         $(".js-strength").strength();
     }
+
+    $(".fa.fa-remove").click(function() {
+        alert("da");
+        if(confirm("Действительно удалить?")) {
+            return true;
+        } else {
+            return false;
+        }
+    });
 });

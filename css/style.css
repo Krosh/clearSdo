@@ -2097,6 +2097,14 @@ input:focus,
 input:active {
   border-color: #3498db;
 }
+input[disabled='disabled'] {
+  border-color: #bdc3c7;
+  cursor: no-drop !important;
+}
+input[disabled='disabled']:focus,
+input[disabled='disabled']:active {
+  border-color: #bdc3c7;
+}
 select {
   min-width: 100px;
   background: #fff;
