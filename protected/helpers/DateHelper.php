@@ -72,4 +72,22 @@ class DateHelper {
 
     }
 
+    public static function getDifferenceTime($time1, $time2)
+    {
+        $time = strtotime($time2)-strtotime($time1);
+        $stringTime = "";
+        $stringTime = ($time % 60)." сек.";
+        if ($time > 60)
+        {
+            $time /= 60;
+            $stringTime = ($time % 60)." мин ".$stringTime;
+            if ($time>60)
+            {
+                $time /= 60;
+                $stringTime = ($time % 60)." ч. ".$stringTime;
+            }
+        }
+        return $stringTime;
+    }
+
 }

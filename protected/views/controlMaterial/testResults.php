@@ -46,22 +46,7 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
 
                             <dt>Время выполнения:</dt>
                             <dd>
-                                <?php
-                                    $time = strtotime($model->dateEnd)-strtotime($model->dateStart);
-                                    $stringTime = "";
-                                    $stringTime = ($time % 60)." сек.";
-                                    if ($time > 60)
-                                    {
-                                        $time /= 60;
-                                        $stringTime = ($time % 60)." мин ".$stringTime;
-                                        if ($time>60)
-                                        {
-                                            $time /= 60;
-                                            $stringTime = ($time % 60)." ч. ".$stringTime;
-                                        }
-                                    }
-                                    echo $stringTime;
-                                ?>
+                                <?php echo DateHelper::getDifferenceTime($model->dateStart, $model->dateEnd) ?>
                             </dd>
 
                             <dt>Оценка:</dt>
@@ -93,7 +78,9 @@ $controlMaterial = ControlMaterial::model()->findByPk($model->idControlMaterial)
 
                                         <dl class="test-answer-info clearfix">
                                             <dt>Время на ответ:</dt>
-                                            <dd>12 сек.</dd>
+                                            <dd>
+                                                <?php echo $time[$i]; ?>
+                                            </dd>
 
                                             <dt>Суммарная оценка ответа:</dt>
                                             <dd class="<?php if ($mark[$i]>=25) echo "green"; else echo "red" ;?>"><?php echo $mark[$i]; ?>%</dd>

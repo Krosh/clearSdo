@@ -67,7 +67,11 @@ class ControlMaterialController extends CController
         $model->dateStart = date("Y-m-d H:i:s");
         $model->save();
 
+        $arr = array();
+        for ($i = 0; $i<$count; $i++)
+            $arr[$i] = "";
         Yii::app()->session['totalQuestions'] = $count;
+        Yii::app()->session['showTimes'] = $arr;
         Yii::app()->session['questions'] = $questions;
         Yii::app()->session['flags'] = $flags;
         Yii::app()->session['currentTest'] = $idTest;
@@ -82,6 +86,12 @@ class ControlMaterialController extends CController
     {
         $this->layout = "//layouts/full";
         $i = Yii::app()->session['currentQuestion'];
+        $arr = Yii::app()->session['showTimes'];
+        if ($arr[$i] == "")
+        {
+            $arr[$i] = date("Y-m-d H:i:s");
+        }
+        Yii::app()->session['showTimes'] = $arr;
         // Получениие информации о вопросе и вариантах ответа
         $idQuestion = Yii::app()->session['questions'][$i];
         $question = Question::model()->findByPk($idQuestion);
@@ -151,6 +161,7 @@ class ControlMaterialController extends CController
         $userAnswer->answer = $answer;
         $userAnswer->answerTime = date("Y-m-d H:i:s");
         $userAnswer->idQuestion = Yii::app()->session['questions'][Yii::app()->session['currentQuestion']];
+        $userAnswer->showTime = Yii::app()->session['showTimes'][Yii::app()->session['currentQuestion']];
         if (!$userAnswer->save())
         {
             echo "Ошибка! Вопрос не сохранился!";
@@ -255,23 +266,26 @@ class ControlMaterialController extends CController
         }
         $answerContent = array();
         $mark = array();
+        $time = array();
         $summWeight = 0;
         for ($i = 0; $i<count($questions); $i++)
         {
             $summWeight+= $questions[$i]->weight;
-            $userAnswer = UserAnswer::model()->findAll('idUserControlMaterial = :idCur and idQuestion = :idQuestion', array(':idCur' => $currentTestGo,':idQuestion' => $questions[$i]->id));
+            $userAnswer = UserAnswer::model()->find('idUserControlMaterial = :idCur and idQuestion = :idQuestion', array(':idCur' => $currentTestGo,':idQuestion' => $questions[$i]->id));
             if ($userAnswer != null)
             {
-                $answerInfo = $questions[$i]->getMark($userAnswer[0]);
+                $answerInfo = $questions[$i]->getMark($userAnswer);
                 $mark[] = $answerInfo['mark'];
+                $time[] = $userAnswer->getFormattedAnswerTime();
                 $answerContent[] = $answerInfo['answerContent'];
             } else
             {
                 $mark[] = 0;
+                $time[] = "";
                 $answerContent[] = "Не отвечено";
             }
         }
-        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => max($summWeight,1)));
+        $this->render('/controlMaterial/testResults', array('questions' => $questions, 'answerContent' => $answerContent, 'mark' => $mark, 'model' => $goTestModel, 'summWeight' => max($summWeight,1), 'time' => $time));
 
     }
 
@@ -566,6 +580,7 @@ class ControlMaterialController extends CController
     public function actionStatistic($idMaterial)
     {
         $controlMaterial = ControlMaterial::model()->findByPk($idMaterial);
+        // Общая статистика о прохождениях
         $tries = UserControlMaterial::model()->findAll("idControlMaterial = ".$controlMaterial->id);
         $result = array();
         $result['total'] = count($tries);
@@ -585,6 +600,23 @@ class ControlMaterialController extends CController
             else
                 $result['excellent']++;
         }
-        $this->render("statistic", array("controlMaterial" => $controlMaterial, 'result' => $result));
+        // По вопросам
+        $questions = Question::getQuestionsByControlMaterial($controlMaterial->id);
+        $questionResult = array();
+        foreach ($questions as $item)
+        {
+            $count = 0;
+            $mark = 0;
+            $answers = UserAnswer::model()->findAll("idQuestion = ".$item->id);
+            foreach ($answers as $answer)
+            {
+                $answMark = $item->getMark($answer);
+                $mark += $answMark['mark'];
+                $count++;
+            }
+            $mark /= $count;
+            $questionResult[] = array('mark' => $mark, 'count' => $count, 'question' => $item);
+        }
+        $this->render("statistic", array("controlMaterial" => $controlMaterial, 'result' => $result, 'questionResult' => $questionResult));
     }
 }

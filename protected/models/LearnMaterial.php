@@ -248,6 +248,7 @@ class LearnMaterial extends CActiveRecord
         }
         if ($this->category == MATERIAL_WEBINAR)
         {
+            return "asd";
             $webinar = Webinar::model()->findByPk($this->content);
             $webinar->checkOnEnd();
             if ($webinar->status == STATUS_PREPARE && Yii::app()->user->role == ROLE_TEACHER)

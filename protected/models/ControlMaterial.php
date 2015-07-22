@@ -80,6 +80,7 @@ class ControlMaterial extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'questions' => array(self::HAS_MANY, 'Question', 'idControlMaterial'),
             'coursesControlMaterials'=>array(self::HAS_MANY, 'CoursesControlMaterial', 'idControlMaterial'),
         );
     }

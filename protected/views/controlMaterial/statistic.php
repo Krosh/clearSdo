@@ -64,7 +64,7 @@
                                                 y: bad
                                             },
                                             {
-                                                color: "#ffc90e",
+                                                color: "#f1c30f",
                                                 name: "Удовлетворительно",
                                                 y: ok
                                             },
@@ -80,6 +80,50 @@
                                             },
                                         ]
                                     }]
+                                });
+                            });
+                        </script>
+                        <div id = "questionChartContainer" style="width: 100%; height: 400px">
+
+                        </div>
+                        <script>
+                            $(function () {
+                                $('#questionChartContainer').highcharts({
+                                    chart: {
+                                        type: 'line'
+                                    },
+                                    title: {
+                                        text: 'Статистика по вопросам'
+                                    },
+                                    xAxis: {
+                                        categories: [<?php $s = "'№1'"; for ($i = 1; $i<count($questionResult); $i++) $s.= " ,'№".($i+1)."'"; echo $s ?>]
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: 'Оценки'
+                                        }
+                                    },
+                                    plotOptions: {
+                                        line: {
+                                            dataLabels: {
+                                                enabled: true
+                                            },
+                                            enableMouseTracking: true
+                                        }
+                                    },
+                                    series: [
+                                        {
+                                            name: 'Средний балл',
+                                            data: [
+                                                <?php
+                                                    echo $questionResult[0]['mark'];
+                                                    for ($i = 1; $i<count($questionResult); $i++)
+                                                    {
+                                                        echo ",".$questionResult[$i]['mark'];
+                                                    }
+                                                ?>
+                                            ]
+                                        }]
                                 });
                             });
                         </script>
