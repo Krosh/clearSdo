@@ -3,7 +3,7 @@
  * Прикручиваем Yii к форуму
 */
 include "yiiapp.php";
-$controller = new Controller('bbforum'); // bbforum - произвольное название
+$controller = new CController('bbforum'); // bbforum - произвольное название
 Yii::app()->controller = $controller;
 ob_start(); // Начинаем буферизацию вывода
 // ...

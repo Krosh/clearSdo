@@ -562,4 +562,29 @@ class ControlMaterialController extends CController
     {
         AccessControlMaterial::model()->deleteByPk($_POST['id']);
     }
+
+    public function actionStatistic($idMaterial)
+    {
+        $controlMaterial = ControlMaterial::model()->findByPk($idMaterial);
+        $tries = UserControlMaterial::model()->findAll("idControlMaterial = ".$controlMaterial->id);
+        $result = array();
+        $result['total'] = count($tries);
+        $result['bad'] = 0;
+        $result['ok'] = 0;
+        $result['good'] = 0;
+        $result['excellent'] = 0;
+        foreach ($tries as $try)
+        {
+            /**@var UserControlMaterial $try */
+            if ($try->mark < 25)
+                $result['bad']++;
+            elseif ($try->mark < 50)
+                $result['ok']++;
+            elseif ($try->mark < 75)
+                $result['good']++;
+            else
+                $result['excellent']++;
+        }
+        $this->render("statistic", array("controlMaterial" => $controlMaterial, 'result' => $result));
+    }
 }

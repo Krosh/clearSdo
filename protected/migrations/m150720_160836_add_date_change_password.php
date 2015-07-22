@@ -5,7 +5,7 @@ class m150720_160836_add_date_change_password extends CDbMigration
     public function up()
     {
         $sql = "ALTER TABLE `tbl_users`
-      ADD COLUMN `dateChangePassword` DATETIME NULL AFTER `dateChangePassword`;";
+      ADD COLUMN `dateChangePassword` DATETIME NULL AFTER `id`;";
         $command = $this->dbConnection->createCommand($sql);
         $command->execute();
     }

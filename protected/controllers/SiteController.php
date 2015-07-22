@@ -189,10 +189,8 @@ class SiteController extends CController
     public function actionUserConfig()
     {
         $model=User::model()->findByPk(Yii::app()->user->getId());
-        $changeAccepted = false;
         if(isset($_POST['User']))
         {
-            $flag = true;
             $model->attributes=$_POST['User'];
             if ($_POST['haveNewPassword'])
             {
@@ -201,26 +199,22 @@ class SiteController extends CController
                     if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
                     {
                         $model->password = md5($_POST["newPassword"]);
+                        $model->dateChangePassword = date("Y-m-d H:i:s");
                         Yii::app()->user->setFlash("codeMessage","success");
                         Yii::app()->user->setFlash("message","Пароль изменен");
-                        $flag = false;
                     } else
                     {
                         Yii::app()->user->setFlash("codeMessage","error");
                         Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
-                        $flag = false;
                     }
-
                 } else
                 {
                     Yii::app()->user->setFlash("codeMessage","error");
                     Yii::app()->user->setFlash("message","Старый пароль введен неверно");
-                    $flag = false;
                 }
             }
             $model->newAvatar = $_POST['User']['newAvatar'];
             $model->save();
-
         }
 
         $this->render('userConfig/update',array(

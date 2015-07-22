@@ -22,6 +22,11 @@ $cs->scriptMap=array(
     <link rel="apple-touch-icon" sizes="72x72" href="../../img/favicons/apple-touch-icon-72x72.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="../../img/favicons/apple-touch-icon-114x114.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="../../img/favicons/apple-touch-icon-144x144.png" />
+
+    <?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
+        <script src="../../js/jquery-2.1.1.min.js"></script>
+        <script src="../../js/jquery-ui.js"></script>
+    <?php endif; ?>
 </head>
 <body>
 <header>
@@ -141,15 +146,11 @@ $cs->scriptMap=array(
         </div>
     </div>
 </footer>
-
-<?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
-    <script src="../../js/jquery-2.1.1.min.js"></script>
-    <script src="../../js/jquery-ui.js"></script>
-<?php endif; ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
 <script src="../../js/jquery.maskedinput.min.js"></script>
 <script src="../../js/jquery.easing.1.3.js"></script>
+<script src="../../js/highcharts/highcharts.js"></script>
 <script src="../../js/underscore-min.js"></script>
 <script src="../../js/moment-with-locales.min.js"></script>
 <script src="../../js/clndr.js"></script>

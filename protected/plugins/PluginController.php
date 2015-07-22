@@ -12,6 +12,7 @@ class PluginController {
 
     public static function init()
     {
+        return;
         $plugins = array();
         $path = "application.plugins";
         $result = array();
