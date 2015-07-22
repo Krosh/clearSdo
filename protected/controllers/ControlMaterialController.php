@@ -607,15 +607,21 @@ class ControlMaterialController extends CController
         {
             $count = 0;
             $mark = 0;
+            $time = 0;
             $answers = UserAnswer::model()->findAll("idQuestion = ".$item->id);
             foreach ($answers as $answer)
             {
                 $answMark = $item->getMark($answer);
                 $mark += $answMark['mark'];
                 $count++;
+                $time += $answer->getAnswerTime();
             }
-            $mark /= $count;
-            $questionResult[] = array('mark' => $mark, 'count' => $count, 'question' => $item);
+            if ($count != 0)
+            {
+                $mark /= $count;
+                $time /= $count;
+                $questionResult[] = array('mark' => $mark, 'count' => $count, 'question' => $item, 'time' => $time);
+            }
         }
         $this->render("statistic", array("controlMaterial" => $controlMaterial, 'result' => $result, 'questionResult' => $questionResult));
     }

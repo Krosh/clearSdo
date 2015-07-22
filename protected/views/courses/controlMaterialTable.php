@@ -59,11 +59,8 @@ $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
             ?>
             <td class="center"><?php echo $countTries?> / <?= $item->try_amount == -1 ? '∞' : $item->try_amount ?></td>
             <td class="right">
-                <!--<label class="toggler" data-idMaterial = "<?php /*echo $item->id; */?>">
-                        <input type="checkbox" <?php /*if ($item->access == 1) echo "checked"*/?>>
-                        <span></span>
-                    </label>-->
-                <a style="" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-lock"></i></a>
+                <a href="<?php echo $this->createUrl("/controlMaterial/statistic", array("idMaterial" => $item->id)); ?>"><i class="fa fa-search"></i></a>
+                <a style="padding-left:10px" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>); return false"><i class="fa fa-lock"></i></a>
                 <a style="padding-left:10px" class="red" href="#" onclick="deleteControlMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $curMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>
             </td>
         </tr>

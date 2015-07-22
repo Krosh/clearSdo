@@ -98,11 +98,21 @@
                                     xAxis: {
                                         categories: [<?php $s = "'№1'"; for ($i = 1; $i<count($questionResult); $i++) $s.= " ,'№".($i+1)."'"; echo $s ?>]
                                     },
-                                    yAxis: {
-                                        title: {
-                                            text: 'Оценки'
+                                    yAxis: [
+                                        {
+                                            title:
+                                            {
+                                                text: 'Оценки'
+                                            }
+                                        },
+                                        {
+                                            title:
+                                            {
+                                                text: 'Среднее время ответа'
+                                            },
+                                            opposite: true
                                         }
-                                    },
+                                    ],
                                     plotOptions: {
                                         line: {
                                             dataLabels: {
@@ -113,6 +123,7 @@
                                     },
                                     series: [
                                         {
+                                            type: 'column',
                                             name: 'Средний балл',
                                             data: [
                                                 <?php
@@ -123,7 +134,21 @@
                                                     }
                                                 ?>
                                             ]
-                                        }]
+                                        },
+                                        {
+                                            yAxis: 1,
+                                            name: 'Среднее время ответа',
+                                            data: [
+                                                <?php
+                                                    echo $questionResult[0]['time'];
+                                                    for ($i = 1; $i<count($questionResult); $i++)
+                                                    {
+                                                        echo ",".$questionResult[$i]['time'];
+                                                    }
+                                                ?>
+                                            ]
+                                        }
+                                    ]
                                 });
                             });
                         </script>
