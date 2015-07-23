@@ -68,5 +68,7 @@ class WebUser extends CWebUser {
         return $this->_model;
     }
 
+    public $isAdmin = true;
+
 
 }
