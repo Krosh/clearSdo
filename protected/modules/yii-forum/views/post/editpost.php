@@ -2,7 +2,7 @@
     $this->widget('zii.widgets.CBreadcrumbs', array(
         'links'=>array_merge(
             $model->thread->getBreadcrumbs(true),
-            array('Edit post')
+            array('Ответ')
         ),
     ));
 ?>
@@ -21,12 +21,12 @@
             <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70)); ?>
             <?php echo $form->error($model,'content'); ?>
             <p class="hint">
-                Hint: You can use <?php echo CHtml::link('markdown', 'http://daringfireball.net/projects/markdown/syntax'); ?> syntax!
+                <e>Подсказка</e>: Вы можете использовать <?php echo CHtml::link('markdown', 'http://daringfireball.net/projects/markdown/syntax'); ?>!
             </p>
         </div>
 
         <div class="row buttons">
-            <?php echo CHtml::submitButton('Submit'); ?>
+            <?php echo CHtml::submitButton('Сохранить'); ?>
         </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

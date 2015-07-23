@@ -45,7 +45,7 @@ class ThreadController extends ForumBaseController
     {
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $thread->view_count++;
         $thread->save(false);
@@ -70,9 +70,9 @@ class ThreadController extends ForumBaseController
     {
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
-            throw new CHttpException(404, 'Forum not found.');
+            throw new CHttpException(404, 'Страница не найдена.');
         if($forum->is_locked)
-            throw new CHttpException(403, 'Forum is locked.');
+            throw new CHttpException(403, 'У вас нет доступа.');
 
         $model=new PostForm;
         $model->setScenario('create'); // This makes subject required
@@ -105,7 +105,7 @@ class ThreadController extends ForumBaseController
     {
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
-            throw new CHttpException(404, 'Thread not found.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         if(isset($_POST['Thread']))
         {
@@ -128,9 +128,9 @@ class ThreadController extends ForumBaseController
     {
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
-            throw new CHttpException(404, 'Thread not found.');
+            throw new CHttpException(404, 'Страница не найдена.');
         if(!Yii::app()->user->isAdmin && $thread->is_locked)
-            throw new CHttpException(403, 'Thread is locked.');
+            throw new CHttpException(403, 'У вас нет доступа.');
 
         $model=new PostForm;
         if(isset($_POST['PostForm']))
@@ -167,12 +167,12 @@ class ThreadController extends ForumBaseController
     public function actionDelete($id)
     {
         if(!Yii::app()->request->isPostRequest || !Yii::app()->request->isAjaxRequest)
-            throw new CHttpException(400, 'Invalid request');
+            throw new CHttpException(400, 'Неправильный запрос.');
 
         // First, we make sure it even exists
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $thread->delete();
     }

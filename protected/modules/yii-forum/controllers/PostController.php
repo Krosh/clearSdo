@@ -50,12 +50,12 @@ class PostController extends ForumBaseController
     public function actionDelete($id)
     {
         if(!Yii::app()->request->isPostRequest || !Yii::app()->request->isAjaxRequest)
-            throw new CHttpException(400, 'Invalid request');
+            throw new CHttpException(400, 'Неправильный запрос.');
 
         // First, we make sure it even exists
         $post = Post::model()->findByPk($id);
         if(null == $post)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $post->delete();
     }
@@ -67,9 +67,9 @@ class PostController extends ForumBaseController
     {
         $post = Post::model()->findByPk($id);
         if(null == $post)
-            throw new CHttpException(404, 'Post not found.');
+            throw new CHttpException(404, 'Ответ не найден.');
         if(!Yii::app()->user->isAdmin && YII::app()->user->id != $post->author_id)
-            throw new CHttpException(403, 'You are not allowed to edit this post.');
+            throw new CHttpException(403, 'У вас нет доступа к редактированию.');
 
         if(isset($_POST['Post']))
         {

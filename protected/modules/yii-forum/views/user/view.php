@@ -1,6 +1,6 @@
 <?php
 $this->widget('zii.widgets.CBreadcrumbs', array('links'=>array(
-    'Forum'=>array('/forum'),
+    'Форум'=>array('/forum'),
     $user->name
 )));
 
@@ -11,22 +11,22 @@ $this->widget('zii.widgets.CDetailView', array(
     'attributes'=>array(
         'name',
         array(
-            'label'=>'First seen',
+            'label'=>'Дата регистрации',
             'value'=>Yii::app()->controller->module->format_date($user->firstseen),
         ),
         array(
-            'label'=>'Last seen',
+            'label'=>'Последний вход',
             'value'=>Yii::app()->controller->module->format_date($user->lastseen),
         ),
         'postCount',
         array(
-            'label'=>'Profile',
+            'label'=>'Профиль',
             'type'=>'html',
             'value'=>isset(Yii::app()->controller->module->userUrl)?CHtml::link('Details', $this->evaluateExpression(Yii::app()->controller->module->userUrl, array('id'=>$user->siteid))):'n/a',
         ),
         array(
             'name'=>'signature',
-            'label'=>'Signature'. $siglink,
+            'label'=>'Подпись'. $siglink,
             // 'type'=>'html',
         ),
     ),

@@ -4,14 +4,14 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdmin;
 
 $gridColumns = array(
     array(
-        'name' => 'Forum',
+        'name' => 'Форум',
         'headerHtmlOptions' => array('colspan' => '2'),
         'type' => 'html',
         'value' => 'CHtml::image(Yii::app()->controller->module->registerImage("on.gif"), "On")',
         'htmlOptions' => array('style' => 'width:22px;'),
     ),
     array(
-        'name' => 'forum',
+        'name' => 'Категории',
         'headerHtmlOptions' => array('style' => 'display:none'),
         'type' => 'html',
         'value' => '$data->renderForumCell()',
@@ -19,17 +19,17 @@ $gridColumns = array(
     array(
         'name' => 'threadCount',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
-        'header' => 'Threads',
+        'header' => 'Темы',
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
         'name' => 'postCount',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
-        'header' => 'Posts',
+        'header' => 'Ответы',
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
-        'name' => 'Last post',
+        'name' => 'Последний ответ',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'type' => 'html',
         'value' => '$data->renderLastpostCell()',
@@ -38,20 +38,20 @@ $gridColumns = array(
 );
 
 if(isset($inforum) && $inforum == true)
-    $preheader = '<div style="text-align:center;">Forums in "' . CHtml::encode($forum->title) . '"</div>';
+    $preheader = '<div style="text-align:center;">Подкатегории в "' . CHtml::encode($forum->title) . '"</div>';
 else
     $preheader = CHtml::link(CHtml::encode($forum->title), $forum->url);
 
 // Add some admin controls
 if($isAdmin)
 {
-    $deleteConfirm = "Are you sure? All subforums and threads are permanently deleted as well!";
+    $deleteConfirm = "Вы уверены? Все темы и записи будут удалены!";
 
     $adminheader =
         '<div class="admin" style="float:right; font-size:smaller;">'.
-            CHtml::link('New forum', array('/forum/forum/create', 'parentid'=>$forum->id)) .' | '.
-            CHtml::link('Edit', array('/forum/forum/update', 'id'=>$forum->id)) .' | '.
-            CHtml::ajaxLink('Delete category',
+            CHtml::link('Новая категория', array('/forum/forum/create', 'parentid'=>$forum->id)) .' | '.
+            CHtml::link('Редактировать', array('/forum/forum/update', 'id'=>$forum->id)) .' | '.
+            CHtml::ajaxLink('Удалить категорию',
                 array('/forum/forum/delete', 'id'=>$forum->id),
                 array('type'=>'POST', 'success'=>'function(){document.location.reload(true);}'),
                 array('confirm'=>$deleteConfirm)
@@ -63,7 +63,7 @@ if($isAdmin)
     // Admin links to show in extra column
     $gridColumns[] = array(
         'class'=>'CButtonColumn',
-        'header'=>'Admin',
+        'header'=>'Админ',
         'template'=>'{delete}{update}',
         'deleteConfirmation'=>"js:'".$deleteConfirm."'",
         'afterDelete'=>'function(){document.location.reload(true);}',
@@ -79,7 +79,7 @@ $this->widget('forum.extensions.groupgridview.GroupGridView', array(
     'enableSorting' => false,
     'summaryText' => '',
     'selectableRows' => 0,
-    'emptyText' => 'No forums found',
+    'emptyText' => 'Не найдено категорий',
     'showTableOnEmpty'=>$isAdmin,
     'preHeader'=>$preheader,
     'preHeaderHtmlOptions' => array(

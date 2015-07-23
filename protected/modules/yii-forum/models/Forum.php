@@ -114,11 +114,11 @@ class Forum extends CActiveRecord
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), array(
             'id' => 'ID',
-            'parent_id' => 'Parent ID',
-            'title'=>'Title',
-            'description'=>'Description',
-            'listorder' => 'Listorder',
-            'is_locaked' => 'Is locked?',
+            'parent_id' => 'Родитель',
+            'title'=>'Название',
+            'description'=>'Описание',
+            'listorder' => 'Сортировка',
+            'is_locaked' => 'Заблокировать?',
         ));
     }
 
@@ -163,7 +163,7 @@ class Forum extends CActiveRecord
         }
 
         $breadcrumbs = array_merge(
-            array('Forum'=>array('/forum')),
+            array('Форум'=>array('/forum')),
             array_reverse($breadcrumbs)
         );
 
@@ -227,7 +227,7 @@ class Forum extends CActiveRecord
             {
                 $subarr[] = CHtml::link(CHtml::encode($forum->title), $forum->url);
             }
-            $result .= '<div class="level3"><b>Sub forums:</b> '. implode(', ', $subarr) .'</div>';
+            $result .= '<div class="level3"><b>Подкатегории:</b> '. implode(', ', $subarr) .'</div>';
         }
         return $result;
     }
@@ -249,7 +249,7 @@ class Forum extends CActiveRecord
 
         return '<div class="name">'. $threadlink .'</div>'.
                 '<div class="level2">'. Yii::app()->controller->module->format_date($lastpost->created) .'</div>'.
-                '<div class="level3">by '. $authorlink .'</div>';
+                '<div class="level3">от '. $authorlink .'</div>';
     }
 
 }

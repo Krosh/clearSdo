@@ -65,7 +65,7 @@ class ForumController extends ForumBaseController
     {
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $subforumsProvider = new CActiveDataProvider('Forum', array(
             'criteria'=>array(
@@ -120,7 +120,7 @@ class ForumController extends ForumBaseController
     {
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         if(isset($_POST['Forum']))
         {
@@ -143,12 +143,12 @@ class ForumController extends ForumBaseController
     public function actionDelete($id)
     {
         if(!Yii::app()->request->isPostRequest || !Yii::app()->request->isAjaxRequest)
-            throw new CHttpException(400, 'Invalid request');
+            throw new CHttpException(400, 'Неправильный запрос.');
 
         // First, we make sure it even exists
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $forum->delete();
     }

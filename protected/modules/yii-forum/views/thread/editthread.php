@@ -2,7 +2,7 @@
     $this->widget('zii.widgets.CBreadcrumbs', array(
         'links'=>array_merge(
             $model->getBreadcrumbs(true),
-            array('Edit')
+            array('Тема')
         ),
     ));
 ?>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="row buttons">
-            <?php echo CHtml::submitButton('Submit'); ?>
+            <?php echo CHtml::submitButton('Сохранить'); ?>
         </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

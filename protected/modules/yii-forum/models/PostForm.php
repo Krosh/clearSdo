@@ -36,9 +36,9 @@ class PostForm extends CFormModel
      */
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), array(
-            'subject' => 'Subject',
-            'content'=>'Content',
-            'lockthread'=>'Lock thread?',
+            'subject' => 'Тема',
+            'content'=>'Контент',
+            'lockthread'=>'Закрепить?',
         ));
     }
 }

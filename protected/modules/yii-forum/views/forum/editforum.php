@@ -2,21 +2,21 @@
 $this->widget('zii.widgets.CBreadcrumbs', array(
     'links'=>array_merge(
         $model->getBreadcrumbs(!$model->isNewRecord),
-        array($model->isNewRecord?'New forum':'Edit')
+        array($model->isNewRecord?'Новая категория':'Редактирование')
     )
 ));
 ?>
 <div class="form" style="margin:20px;">
 <?php $form=$this->beginWidget('CActiveForm'); ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
+    <p class="note">Поля, отмеченные <span class="required">звездочкой</span> обязательны к заполнению.</p>
 
     <div class="row">
         <?php echo $form->labelEx($model,'parent_id'); ?>
         <?php echo CHtml::activeDropDownList($model, 'parent_id', CHtml::listData(
                 Forum::model()->findAll(),
                 'id', 'title'
-            ), array('empty'=>'None (root)')); ?>
+            ), array('empty'=>'Верхний уровень')); ?>
         <?php echo $form->error($model,'parent_id'); ?>
     </div>
 
@@ -45,7 +45,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array(
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
     </div>
 <?php $this->endWidget(); ?>
 </div><!-- form -->

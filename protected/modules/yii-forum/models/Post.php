@@ -72,12 +72,12 @@ class Post extends CActiveRecord
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), array(
             'id' => 'ID',
-            'author_id'=>'Author',
-            'thread_id'=>'Thread',
-            'editor_id'=>'Editor',
-            'content'=>'Content',
-            'created'=>'Created',
-            'updated' => 'Updated',
+            'author_id'=>'Автор',
+            'thread_id'=>'Тема',
+            'editor_id'=>'Редактор',
+            'content'=>'Контент',
+            'created'=>'Дата создания',
+            'updated' => 'Дата обновления',
         ));
     }
 

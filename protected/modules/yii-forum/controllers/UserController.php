@@ -50,7 +50,7 @@ class UserController extends ForumBaseController
     {
         $user = Forumuser::model()->findByPk($id);
         if(null == $user)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         $this->render('view',array(
             'user'=>$user,
@@ -67,11 +67,11 @@ class UserController extends ForumBaseController
                 !Yii::app()->user->isAdmin &&
                 ($id!=Yii::app()->user->forumuser_id)
         ))
-            throw new CHttpException(403, 'You are not allowed to view this page.');
+            throw new CHttpException(403, 'У вас нет доступа.');
 
         $user = Forumuser::model()->findByPk($id);
         if(null == $user)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            throw new CHttpException(404, 'Страница не найдена.');
 
         if(isset($_POST['Forumuser']))
         {

@@ -94,12 +94,12 @@ class Thread extends CActiveRecord
     public function attributeLabels() {
         return array_merge(parent::attributeLabels(), array(
             'id' => 'ID',
-            'forum_id' => 'Forum ID',
-            'subject'=>'Subject',
-            'is_sticky' => 'Is sticky?',
-            'is_locked' => 'Is locked?',
-            'view_count'=>'View count',
-            'created' => 'Created',
+            'forum_id' => 'Форум',
+            'subject'=>'Тема',
+            'is_sticky' => 'Закрепить?',
+            'is_locked' => 'Заблокировать?',
+            'view_count'=>'Просмотры',
+            'created' => 'Дата создания',
         ));
     }
 
@@ -184,7 +184,7 @@ class Thread extends CActiveRecord
         $authorlink = CHtml::link(CHtml::encode($firstpost->author->name), $firstpost->author->url);
 
         return '<div class="name">'. $subjlink .'</div>'.
-                '<div class="level2">by '. $authorlink .'</div>';
+                '<div class="level2">от '. $authorlink .'</div>';
     }
 
     public function renderLastpostCell()
@@ -197,7 +197,7 @@ class Thread extends CActiveRecord
         $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
 
         return '<div class="level2">'. Yii::app()->controller->module->format_date($lastpost->created) .'</div>'.
-                '<div class="level3">by '. $authorlink .'</div>';
+                '<div class="level3">от '. $authorlink .'</div>';
     }
 
 }

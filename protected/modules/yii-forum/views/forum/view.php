@@ -13,32 +13,32 @@ $newthread = $forum->is_locked?'':'<div class="newthread" style="float:right;">'
 
 $gridColumns = array(
     array(
-        'name' => 'Thread / Author',
+        'name' => 'Тема / Автор',
         'headerHtmlOptions' => array('colspan' => '2'),
         'type' => 'html',
         'value' => 'CHtml::image(Yii::app()->controller->module->registerImage("folder". ($data->is_locked?"locked":"") .".gif"), ($data->is_locked?"Locked":"Unlocked"), array("title"=>$data->is_locked?"Thread locked":"Thread unlocked"))',
         'htmlOptions' => array('style' => 'width:20px;'),
     ),
     array(
-        'name' => 'subject',
+        'name' => 'Тема',
         'headerHtmlOptions' => array('style' => 'display:none'),
         'type' => 'html',
         'value' =>'$data->renderSubjectCell()',
     ),
     array(
         'name' => 'postCount',
-        'header' => 'Posts',
+        'header' => 'Ответов',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
         'name' => 'view_count',
-        'header' => 'Views',
+        'header' => 'Просмотров',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
-        'name' => 'Last post',
+        'name' => 'Последний ответ',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'type' => 'html',
         'value' => '$data->renderLastpostCell()',
@@ -51,10 +51,10 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdmin;
 if($isAdmin)
 {
     // Admin links to show in extra column
-    $deleteConfirm = "Are you sure? All posts are permanently deleted as well!";
+    $deleteConfirm = "Вы уверены? Все посты будут удалены!";
     $gridColumns[] = array(
         'class'=>'CButtonColumn',
-        'header'=>'Admin',
+        'header'=>'Админ',
         'template'=>'{delete}{update}',
         'deleteConfirmation'=>"js:'".$deleteConfirm."'",
         'afterDelete'=>'function(){document.location.reload(true);}',
@@ -78,7 +78,7 @@ $this->widget('forum.extensions.groupgridview.GroupGridView', array(
     'dataProvider' => $threadsProvider,
     'template'=>'{summary}'. $newthread .'{pager}{items}{pager}'. $newthread,
     'extraRowColumns' => array('is_sticky'),
-    'extraRowExpression' => '"<b>".($data->is_sticky?"Sticky threads":"Normal threads")."</b>"',
+    'extraRowExpression' => '"<b>".($data->is_sticky?"Закрепленные темы":"Обычные темы")."</b>"',
     'columns' => $gridColumns,
     'htmlOptions'=>array(
         'class'=>Yii::app()->controller->module->forumTableClass,

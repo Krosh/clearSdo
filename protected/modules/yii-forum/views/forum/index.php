@@ -1,11 +1,11 @@
 <?php
 $this->widget('zii.widgets.CBreadcrumbs', array(
-    'links'=>array('Forum')
+    'links'=>array('Форум')
 ));
 
 if(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)
 {
-    echo 'Admin: '. CHtml::link('New forum', array('/forum/forum/create')) .'<br />';
+    echo 'Админ: '. CHtml::link('Новая категория', array('/forum/forum/create')) .'<br />';
 }
 
 foreach($categories as $category)
