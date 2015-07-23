@@ -78,6 +78,26 @@
             </td>
         </tr>
 
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'login'); ?>
+                <?php echo $form->error($model,'login'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'login',array('size'=>60,'maxlength'=>200, 'disabled'=>'disabled')); ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'fio'); ?>
+                <?php echo $form->error($model,'fio'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model,'fio',array('size'=>60,'maxlength'=>200, 'disabled'=>'disabled')); ?>
+            </td>
+        </tr>
+
 
         <tr>
             <td width="35%">

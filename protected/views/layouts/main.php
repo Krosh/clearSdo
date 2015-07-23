@@ -5,7 +5,6 @@ $cs->scriptMap=array(
     'jquery.js'=>false,
     'jquery.ui.js' => false,
 );?>
-
 <!doctype html>
 <html lang="ru">
 <head>
