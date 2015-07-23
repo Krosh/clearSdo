@@ -8,3 +8,7 @@ img/*
 /avatars/*
 /assets/*
 /js/tinymce/*
+*.html
+*.gif
+*.jpg
+*.txt
