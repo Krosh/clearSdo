@@ -40,7 +40,7 @@ $cs->scriptMap=array(
                     </a>
                 </div>
                 <?php
-                $this->renderPartial("/layouts/menu");
+                $this->renderPartial("//layouts/menu");
                 ?>
             </div>
 
@@ -123,8 +123,8 @@ $cs->scriptMap=array(
         </div>
 
         <?php if (Yii::app()->user->getId() >0):?>
-        <?php $this->renderPartial("/news/block") ?>
-        <?php $this->renderPartial("/news/timetable") ?>
+        <?php $this->renderPartial("//news/block") ?>
+        <?php $this->renderPartial("//news/timetable") ?>
         <?php endif; ?>
 
 
