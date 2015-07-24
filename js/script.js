@@ -1016,7 +1016,7 @@ $(document).ready(function(){
             selector: ".jsRedactor",
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen sh4tinymce",
+                "searchreplace visualblocks code fullscreen sh4tinymce wordcount",
                 "insertdatetime media table contextmenu paste jbimages media insert_control_material"
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages media insert_control_material  sh4tinymce",

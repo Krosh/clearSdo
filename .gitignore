@@ -7,7 +7,6 @@ img/*
 /userPictures/*
 /avatars/*
 /assets/*
-/js/tinymce/*
 *.html
 *.gif
 *.jpg
