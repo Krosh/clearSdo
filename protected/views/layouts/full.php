@@ -146,6 +146,7 @@ $cs->scriptMap=array(
         </div>
     </div>
 </footer>
+<?php Yii::app()->syntaxhighlighter->addHighlighter(); ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
 <script src="../../js/jquery.maskedinput.min.js"></script>
