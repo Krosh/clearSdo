@@ -7,7 +7,6 @@ class ResourcesController extends CController
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout='//layouts/full';
-    public $noNeedJquery = false;
 
     /**
      * @return array action filters
@@ -34,7 +33,6 @@ class ResourcesController extends CController
 
     public function actionLearnMaterials()
     {
-        $this->noNeedJquery = true;
         $model=new LearnMaterial('search');
         $model->unsetAttributes();  // clear any default values
         if (Yii::app()->user->getState('mediaSearchParams') == null)
@@ -62,7 +60,6 @@ class ResourcesController extends CController
 
     public function actionCourses()
     {
-        $this->noNeedJquery = true;
         $model=new Course('search');
         $model->unsetAttributes();  // clear any default values
         if (Yii::app()->user->getState('courseSearchParams') == null)
@@ -90,7 +87,6 @@ class ResourcesController extends CController
 
     public function actionControlMaterials()
     {
-        $this->noNeedJquery = true;
         $model=new ControlMaterial('search');
         $model->unsetAttributes();  // clear any default values
         if (Yii::app()->user->getState('controlSearchParams') == null)

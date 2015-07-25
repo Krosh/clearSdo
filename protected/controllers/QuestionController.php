@@ -2,7 +2,6 @@
 
 class QuestionController extends CController
 {
-    public $noNeedJquery = false;
     public $layout='//layouts/full';
     public $breadcrumbs;
 
@@ -116,7 +115,6 @@ class QuestionController extends CController
 
     public function actionEdit($id,$idMaterial)
     {
-        $this->noNeedJquery = true;
         $model = Question::model()->findByPk($id);
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $test = ControlMaterial::model()->findByPk($idMaterial);

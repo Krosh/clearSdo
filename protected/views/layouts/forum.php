@@ -1,10 +1,16 @@
 <?php header("Content-Type: text/html; charset=UTF-8");?>
 <?php
-$cs=Yii::app()->clientScript;
-$cs->scriptMap=array(
-    'jquery.js'=>false,
-    'jquery.ui.js' => false,
-);?>
+$cs = Yii::app()->clientScript;
+$cs->scriptMap = array(
+    'jquery.js' => '../../js/jquery.min.js',
+    'jquery.min.js' => '../../js/jquery.min.js',
+    'jquery-ui.js' => '../../js/jquery.ui.min.js',
+    'jquery-ui.min.js' => '../../js/jquery.ui.min.js',
+);
+$cs->registerCoreScript('jquery');
+//$cs->registerCoreScript('jquery.ui');
+?>
+
 
 <!doctype html>
 <html lang="ru">
@@ -23,10 +29,6 @@ $cs->scriptMap=array(
     <link rel="apple-touch-icon" sizes="114x114" href="../../img/favicons/apple-touch-icon-114x114.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="../../img/favicons/apple-touch-icon-144x144.png" />
 
-    <?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
-        <script src="../../js/jquery-2.1.1.min.js"></script>
-        <script src="../../js/jquery-ui.js"></script>
-    <?php endif; ?>
 </head>
 <body>
 <header>

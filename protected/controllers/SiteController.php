@@ -6,7 +6,6 @@
 class SiteController extends CController
 {
     public $layout = "/layouts/full";
-    public $noNeedJquery = false;
     public $breadcrumbs;
 
 
@@ -117,7 +116,6 @@ class SiteController extends CController
                 $this->refresh();
         }
 
-        $this->noNeedJquery = true;
         $this->render('editCourse', array('model' => $course));
     }
 
@@ -174,7 +172,6 @@ class SiteController extends CController
 
     public function actionPlugin($id)
     {
-        $this->noNeedJquery = true;
         $params = $this->getActionParams();
         unset($params["id"]);
         if (Yii::app()->request->isAjaxRequest)
@@ -243,7 +240,6 @@ class SiteController extends CController
 
     public function actionLog()
     {
-        $this->noNeedJquery = true;
         $model=new Log('search');
         $model->unsetAttributes();
         if(isset($_GET['Log']))

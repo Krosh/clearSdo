@@ -2,7 +2,6 @@
 class ControlMaterialController extends CController
 {
     public $layout='//layouts/full';
-    public $noNeedJquery = false;
     public $breadcrumbs;
 
     public function filters()
@@ -340,7 +339,6 @@ class ControlMaterialController extends CController
     {
         $needRefresh = false;
         $model = $this->loadModel($idMaterial);
-        $this->noNeedJquery = !$model->is_point;
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $this->breadcrumbs=array(
             $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),

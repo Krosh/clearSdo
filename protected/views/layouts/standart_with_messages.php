@@ -1,10 +1,16 @@
 <?php header("Content-Type: text/html; charset=UTF-8");?>
 <?php
-$cs=Yii::app()->clientScript;
-$cs->scriptMap=array(
-    'jquery.js'=>false,
-    'jquery.ui.js' => false,
-);?>
+$cs = Yii::app()->clientScript;
+$cs->scriptMap = array(
+    'jquery.js' => '../../js/jquery.min.js',
+    'jquery.min.js' => '../../js/jquery.min.js',
+    'jquery-ui.js' => '../../js/jquery.ui.min.js',
+    'jquery-ui.min.js' => '../../js/jquery.ui.min.js',
+);
+$cs->registerCoreScript('jquery');
+//$cs->registerCoreScript('jquery.ui');
+?>
+
 
 <!doctype html>
 <html lang="ru">
@@ -110,10 +116,6 @@ $cs->scriptMap=array(
     </div>
 </div>
 
-<?php if (!isset($this->noNeedJquery) || !$this->noNeedJquery ):?>
-    <script src="../../js/jquery-2.1.1.min.js"></script>
-    <script src="../../js/jquery-ui.js"></script>
-<?php endif; ?>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
 <script src="../../js/jquery.easing.1.3.js"></script>

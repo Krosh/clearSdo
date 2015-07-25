@@ -7,7 +7,6 @@ class GroupController extends CController
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout='//layouts/full';
-    public $noNeedJquery = false;
 
     /**
      * @return array action filters
@@ -61,7 +60,6 @@ class GroupController extends CController
      */
     public function actionUpdate($id)
     {
-        $this->noNeedJquery = true;
         $model=$this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -98,7 +96,6 @@ class GroupController extends CController
      */
     public function actionAdmin()
     {
-        $this->noNeedJquery = true;
         $model=new Group('search');
         $model->unsetAttributes();  // clear any default values
         if(isset($_GET['Group']))

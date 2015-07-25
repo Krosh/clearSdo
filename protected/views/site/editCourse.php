@@ -121,7 +121,7 @@ $listeners = Course::getGroups($model->id);
                                                 ',
                                 'allowText' => false,
                             ),
-                            'htmlOptions' => array('size' => 45, 'placeholder' => 'Выберите преподавателя'),
+                            'htmlOptions' => array('style' => "width: 90%", 'placeholder' => 'Выберите преподавателя'),
                         ));
 
                         ?>

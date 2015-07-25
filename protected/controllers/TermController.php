@@ -7,7 +7,6 @@ class TermController extends CController
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
     public $layout='//layouts/full';
-    public $noNeedJquery = false;
 
 
     public function filters()
@@ -84,8 +83,7 @@ class TermController extends CController
 	 */
 	public function actionAdmin()
 	{
-        $this->noNeedJquery = true;
-		$model=new Term('search');
+    	$model=new Term('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Term']))
 			$model->attributes=$_GET['Term'];

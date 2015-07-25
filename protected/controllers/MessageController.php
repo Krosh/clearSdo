@@ -7,7 +7,6 @@ class MessageController extends CController
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout='//layouts/standart_with_messages';
-    public $noNeedJquery = false;
 
     /**
      * @return array action filters

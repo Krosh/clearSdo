@@ -3,7 +3,6 @@
 class ReportController extends CController
 {
     public $layout='//layouts/full';
-    public $noNeedJquery = false;
 
 	/**
 	 * @return array action filters
@@ -18,7 +17,6 @@ class ReportController extends CController
 
     public function actionMarks()
     {
-        $this->noNeedJquery = true;
         $this->render("marks");
     }
 
