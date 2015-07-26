@@ -130,20 +130,62 @@ class CoursesController extends CController
 
     public function actionAjaxGetCalendarEvents($start, $end, $id, $_)
     {
-        $model = Course::model()->findByPk($id);
         $alreadyHasDateMaterials = array();
-        foreach ($model->coursesControlMaterial as $item)
+        if ($id > 0)
         {
-            if (strtotime($item->dateAction) >= strtotime($start) && strtotime($item->dateAction) <= strtotime($end))
+            $model = Course::model()->findByPk($id);
+            foreach ($model->coursesControlMaterial as $item)
             {
-                $mas = array();
-                $mas['title'] = $item->controlMaterial->title;
-                $mas['start'] = $item->dateAction;
-                $mas['idCourseControlMaterial'] = $item->id;
-                $alreadyHasDateMaterials[] = $mas;
+                if (strtotime($item->dateAction) >= strtotime($start) && strtotime($item->dateAction) <= strtotime($end))
+                {
+                    $mas = array();
+                    $mas['title'] = $item->controlMaterial->title;
+                    $mas['start'] = $item->dateAction;
+                    $mas['idCourseControlMaterial'] = $item->id;
+                    $alreadyHasDateMaterials[] = $mas;
+                }
             }
+        } else
+        {
+            $events = array();
+            $idTerm = Yii::app()->session['currentTerm'];
+            foreach (Yii::app()->user->getModel()->groups as $group)
+            {
+                $courses = Course::getCoursesByGroup($group->id,$idTerm);
+                foreach ($courses as $course)
+                {
+                    foreach ($course->coursesControlMaterial as $item)
+                    {
+                        if (strtotime($item->dateAction) >= strtotime($start) && strtotime($item->dateAction) <= strtotime($end))
+                        {
+                            if (!isset($events[$item->dateAction]))
+                            {
+                                $events[$item->dateAction] = array();
+                            }
+                            $mas = array();
+                            $mas['title'] = $item->controlMaterial->title;
+                            $mas['start'] = $item->dateAction;
+                            $mas['idCourseControlMaterial'] = $item->id;
+                            $events[$item->dateAction][] = $mas;
+                        }
+                    }
+                }
+                foreach (array_keys($events) as $date)
+                {
+                    $mas = array();
+                    $mas['title'] = count($events[$date]);
+                    $mas['start'] = $date;
+                    $s = "";
+                    foreach ($events[$date] as $item)
+                    {
+                        $s.= $item['title']."<br>";
+                    }
+                    $mas['description'] = $s;
+                    $alreadyHasDateMaterials[] = $mas;
+                }
+            }
+            echo json_encode($alreadyHasDateMaterials);
         }
-        echo json_encode($alreadyHasDateMaterials);
     }
 
     public function actionAjaxSetEventTime()

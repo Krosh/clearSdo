@@ -112,30 +112,31 @@ $cs->registerCoreScript('jquery');
 <?php echo $content;  ?>
 
 <?php if (!isset($this->noNeedSidebar) || !$this->noNeedSidebar):?>
-<div class="col-3">
-    <div class="sidebar">
+    <div class="col-3">
+        <div class="sidebar">
 
-        <div class="sidebar-item">
-            <div class="sidebar-title">
-                Объявления
+            <div class="sidebar-item">
+                <div class="sidebar-title">
+                    Объявления
+                </div>
+                <div class="sidebar-content notice">
+                    <p>Поздравляем всех студентов с началом <strong>Нового Учебного года 2014-15</strong>!</p>
+                    <p>Тем, кто впервые работает в СДО Стимул рекомендуем ознакомиться с <a href="#">Руководством студента</a>.</p>
+                    <p>Желаем удачной учебы!</p>
+                </div>
             </div>
-            <div class="sidebar-content notice">
-                <p>Поздравляем всех студентов с началом <strong>Нового Учебного года 2014-15</strong>!</p>
-                <p>Тем, кто впервые работает в СДО Стимул рекомендуем ознакомиться с <a href="#">Руководством студента</a>.</p>
-                <p>Желаем удачной учебы!</p>
-            </div>
+
+            <?php if (Yii::app()->user->getId() >0):?>
+                <?php $this->renderPartial("//news/block") ?>
+                <?php $this->renderPartial("//news/calendar") ?>
+                <?php $this->renderPartial("//news/timetable") ?>
+            <?php endif; ?>
+
+
+
+
         </div>
-
-        <?php if (Yii::app()->user->getId() >0):?>
-        <?php $this->renderPartial("//news/block") ?>
-        <?php $this->renderPartial("//news/timetable") ?>
-        <?php endif; ?>
-
-
-
-
     </div>
-</div>
 <?php endif; ?>
 </div>
 </div>
