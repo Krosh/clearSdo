@@ -9,6 +9,7 @@
  * @property integer $idControlMaterial
  * @property integer $zindex
  * @property string $dateAdd
+ * @property string $dateAction
 
  */
 class CoursesControlMaterial extends CActiveRecord
@@ -32,7 +33,7 @@ class CoursesControlMaterial extends CActiveRecord
             array('idCourse, idControlMaterial, zindex', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('dateAdd, id, idCourse, idControlMaterial, zindex', 'safe', 'on'=>'search'),
+            array('dateAction, dateAdd, id, idCourse, idControlMaterial, zindex', 'safe', 'on'=>'search'),
         );
     }
 
@@ -44,6 +45,8 @@ class CoursesControlMaterial extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'controlMaterial' => array(self::BELONGS_TO, 'ControlMaterial', 'idControlMaterial'),
+            'course' => array(self::BELONGS_TO, 'Course', 'idCourse'),
         );
     }
 

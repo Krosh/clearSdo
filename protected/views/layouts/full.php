@@ -6,6 +6,8 @@ $cs->scriptMap = array(
     'jquery.min.js' => '../../js/jquery.min.js',
     'jquery-ui.js' => '../../js/jquery.ui.min.js',
     'jquery-ui.min.js' => '../../js/jquery.ui.min.js',
+    'jquery.ui.combobox.js' => '../../js/jquery.ui.combobox.js',
+    'jquery.ui.combobox.min.js' => '../../js/jquery.ui.combobox.js',
 );
 $cs->registerCoreScript('jquery');
 //$cs->registerCoreScript('jquery.ui');
@@ -109,6 +111,7 @@ $cs->registerCoreScript('jquery');
 
 <?php echo $content;  ?>
 
+<?php if (!isset($this->noNeedSidebar) || !$this->noNeedSidebar):?>
 <div class="col-3">
     <div class="sidebar">
 
@@ -133,6 +136,7 @@ $cs->registerCoreScript('jquery');
 
     </div>
 </div>
+<?php endif; ?>
 </div>
 </div>
 </div>
@@ -155,7 +159,7 @@ $cs->registerCoreScript('jquery');
 <script src="../../js/highcharts/highcharts.js"></script>
 <script src="../../js/underscore-min.js"></script>
 <script src="../../js/moment-with-locales.min.js"></script>
-<script src="../../js/clndr.js"></script>
+<script src="../../js/fullcalendar.min.js"></script>
 <script src="../../js/timer.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/tinymce/tinymce.min.js"></script>

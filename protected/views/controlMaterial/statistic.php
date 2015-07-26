@@ -125,28 +125,28 @@
                                         {
                                             type: 'column',
                                             name: 'Средний балл',
-                                            data: [
-                                                <?php
-                                                    echo $questionResult[0]['mark'];
-                                                    for ($i = 1; $i<count($questionResult); $i++)
-                                                    {
-                                                        echo ",".$questionResult[$i]['mark'];
-                                                    }
-                                                ?>
-                                            ]
+                                            data:
+                                            <?php
+                                                $arr = array();
+                                                foreach ($questionResult as $item)
+                                                {
+                                                    $arr[] = $item['mark'];
+                                                }
+                                                echo json_encode($arr);
+                                            ?>
                                         },
                                         {
                                             yAxis: 1,
                                             name: 'Среднее время ответа',
-                                            data: [
-                                                <?php
-                                                    echo $questionResult[0]['time'];
-                                                    for ($i = 1; $i<count($questionResult); $i++)
-                                                    {
-                                                        echo ",".$questionResult[$i]['time'];
-                                                    }
-                                                ?>
-                                            ]
+                                            data:
+                                            <?php
+                                                $arr = array();
+                                                foreach ($questionResult as $item)
+                                                {
+                                                    $arr[] = $item['time'];
+                                                }
+                                                echo json_encode($arr);
+                                            ?>
                                         }
                                     ]
                                 });

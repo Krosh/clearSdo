@@ -5,12 +5,13 @@
  */
 class CoursesController extends CController
 {
+    public $noNeedSidebar = false;
     public function filters()
     {
         return array(
             array('application.filters.ActiveTestFilter'),
             array('application.filters.TimezoneFilter'),
-            array('application.filters.AccessFilter'),
+//            array('application.filters.AccessFilter'),
         );
     }
 
@@ -97,15 +98,6 @@ class CoursesController extends CController
     {
         $model = new Course();
         $model->save();
-        $ca = new CoursesAutor();
-        $ca->idAutor = Yii::app()->user->getId();
-        $ca->idCourse = $model->id;
-        $ca->save();
-        $cg = new CoursesGroup();
-        $cg->idCourse = $model->id;
-        $cg->idGroup = -1;
-        $cg->idTerm = Yii::app()->session['currentTerm'];
-        $cg->save();
         $this->redirect($this->createUrl("/editCourse?idCourse=".$model->id));
     }
 
@@ -116,13 +108,53 @@ class CoursesController extends CController
         $criteria->compare('idAutor', Yii::app()->user->getId());
         if (CoursesAutor::model()->count($criteria) == 0)
             return;
-        $criteria = new CDbCriteria();
-        $criteria->compare('idCourse',$id);
-        CoursesAutor::model()->deleteAll($criteria);
-        CoursesControlMaterial::model()->deleteAll($criteria);
-        CoursesGroup::model()->deleteAll($criteria);
-        CoursesMaterial::model()->deleteAll($criteria);
         Course::model()->deleteByPk($id);
     }
+
+    public function actionCalendar($id)
+    {
+        $this->noNeedSidebar = true;
+        $this->layout = "//layouts/full";
+        $model = Course::model()->findByPk($id);
+        $alreadyHasDateMaterials = array();
+        $withoutDateMaterials = array();
+        foreach ($model->coursesControlMaterial as $item)
+        {
+            if ($item->dateAction != "0000-00-00" && $item->dateAction != "")
+                $alreadyHasDateMaterials[] = $item;
+            else
+                $withoutDateMaterials[] = $item;
+        }
+        $this->render("calendar", array("model" => $model, "alreadyHasDateMaterials" => $alreadyHasDateMaterials, "withoutDateMaterials" => $withoutDateMaterials));
+    }
+
+    public function actionAjaxGetCalendarEvents($start, $end, $id, $_)
+    {
+        $model = Course::model()->findByPk($id);
+        $alreadyHasDateMaterials = array();
+        foreach ($model->coursesControlMaterial as $item)
+        {
+            if (strtotime($item->dateAction) >= strtotime($start) && strtotime($item->dateAction) <= strtotime($end))
+            {
+                $mas = array();
+                $mas['title'] = $item->controlMaterial->title;
+                $mas['start'] = $item->dateAction;
+                $mas['idCourseControlMaterial'] = $item->id;
+                $alreadyHasDateMaterials[] = $mas;
+            }
+        }
+        echo json_encode($alreadyHasDateMaterials);
+    }
+
+    public function actionAjaxSetEventTime()
+    {
+        $idCourseControlMaterial = $_POST['idCourseControlMaterial'];
+        $date = $_POST['date'];
+        $model = CoursesControlMaterial::model()->findByPk($idCourseControlMaterial);
+        $model->dateAction = $date;
+        $model->save();
+    }
+
+
 
 }

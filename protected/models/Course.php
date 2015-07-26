@@ -60,8 +60,10 @@ class Course extends CActiveRecord
             'coursesGroups'=>array(self::HAS_MANY, 'CoursesGroup', 'idCourse'),
             //      'learnMaterials'=>array(self::MANY_MANY, 'LearnMaterial', 'tbl_coursesmaterials(idCourse,idMaterial)'),
       // Вместо связи использовать метод LearnMaterial::getMaterialsFromCourse
+            'coursesControlMaterial' => array(self::HAS_MANY, 'CoursesControlMaterial', 'idCourse'),
+            'controlMaterials' => array(self::MANY_MANY, 'ControlMaterial', 'tbl_coursescontrolmaterials(idCourse,idControlMaterial)'),
       //      'groups' => array(self::MANY_MANY, 'Group', 'tbl_coursesgroups(idCourse,idGroup)'),
-      // Для вывода групп использовать Course::getGroups
+      // Для вывода групп использовать Course::getGroups, т.к. учитывает семестр и сортирует по алфавиту
         );
 	}
 
@@ -233,7 +235,17 @@ class Course extends CActiveRecord
         $model ->idCourse = $this->id;
         $model -> idAutor = Yii::app()->user->id;
         $model -> save();
+    }
 
+    public function beforeDelete()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse',$id);
+        CoursesAutor::model()->deleteAll($criteria);
+        CoursesControlMaterial::model()->deleteAll($criteria);
+        CoursesGroup::model()->deleteAll($criteria);
+        CoursesMaterial::model()->deleteAll($criteria);
+        return parent::beforeDelete();
     }
 
 	/**

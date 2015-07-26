@@ -926,22 +926,6 @@ $(document).ready(function(){
 
     // Календарь
 
-    var eventsArray = [
-        { date: '2014-09-15', title: 'ЛР 1' },
-        { date: '2014-09-11', title: 'ЛР 2' }
-    ];
-    $("#calendar").clndr({
-        template: $('#mini-clndr-template').html(),
-        weekOffset: 1,
-        daysOfTheWeek: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
-        events: eventsArray,
-        clickEvents: {
-            onMonthChange: function(month) {
-                var ruMonth = moment(month).locale("ru").format("MMMM YYYY");
-                $(".month").text(ruMonth);
-            }
-        }
-    });
 
     // Активность в меню
     $(".big-nav .active").removeClass("active");
