@@ -184,8 +184,8 @@ class CoursesController extends CController
                     $alreadyHasDateMaterials[] = $mas;
                 }
             }
-            echo json_encode($alreadyHasDateMaterials);
         }
+        echo json_encode($alreadyHasDateMaterials);
     }
 
     public function actionAjaxSetEventTime()
