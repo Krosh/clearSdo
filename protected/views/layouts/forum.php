@@ -97,18 +97,10 @@ $cs->registerCoreScript('jquery');
     </div>
 </header>
 
-<div class="container">
-    <?php if(isset($this->breadcrumbs)):?>
-        <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-            'links'=>$this->breadcrumbs,
-            'homeLink'=>CHtml::link('Главная','/' ),
-        )); ?>
-    <?php endif?>
+
+<div id="forum-layout" class="container">
+    <?php echo $content;  ?>
 </div>
-
-
-
-<?php echo $content;  ?>
 
 
 <footer class="fixed">

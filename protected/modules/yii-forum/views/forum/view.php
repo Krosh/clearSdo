@@ -9,14 +9,14 @@ $this->renderPartial('_subforums', array(
     'subforums' => $subforumsProvider,
 ));
 
-$newthread = $forum->is_locked?'':'<div class="newthread" style="float:right;">'. CHtml::link(CHtml::image(Yii::app()->controller->module->registerImage("newthread.gif")), array('/forum/thread/create', 'id'=>$forum->id)) .'</div>';
+$newthread = $forum->is_locked?'':'<div class="newthread" style="float:right;"><a href="/forum/thread/create?id='.$forum->id.'" class="btn small blue"><i class="fa fa-plus-square"></i> Новая тема</a></div>';
 
 $gridColumns = array(
     array(
-        'name' => 'Тема / Автор',
+        'name' => 'Тема',
         'headerHtmlOptions' => array('colspan' => '2'),
         'type' => 'html',
-        'value' => 'CHtml::image(Yii::app()->controller->module->registerImage("folder". ($data->is_locked?"locked":"") .".gif"), ($data->is_locked?"Locked":"Unlocked"), array("title"=>$data->is_locked?"Thread locked":"Thread unlocked"))',
+        'value' => '$data->is_locked ? "<i class=\"fa fa-file\"></i>" : "<i class=\"fa fa-file-o\"></i>"',
         'htmlOptions' => array('style' => 'width:20px;'),
     ),
     array(
@@ -27,18 +27,18 @@ $gridColumns = array(
     ),
     array(
         'name' => 'postCount',
-        'header' => 'Ответов',
+        'header' => 'Ответы',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
         'name' => 'view_count',
-        'header' => 'Просмотров',
+        'header' => 'Сообщения',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'htmlOptions' => array('style' => 'width:65px; text-align:center;'),
     ),
     array(
-        'name' => 'Последний ответ',
+        'name' => 'Последнее сообщение',
         'headerHtmlOptions' => array('style' => 'text-align:center;'),
         'type' => 'html',
         'value' => '$data->renderLastpostCell()',
@@ -55,14 +55,22 @@ if($isAdmin)
     $gridColumns[] = array(
         'class'=>'CButtonColumn',
         'header'=>'Админ',
-        'template'=>'{delete}{update}',
+        'template'=>'{delete} {update}',
         'deleteConfirmation'=>"js:'".$deleteConfirm."'",
         'afterDelete'=>'function(){document.location.reload(true);}',
         'buttons'=>array(
-            'delete'=>array('url'=>'Yii::app()->createUrl("/forum/thread/delete", array("id"=>$data->id))'),
-            'update'=>array('url'=>'Yii::app()->createUrl("/forum/thread/update", array("id"=>$data->id))'),
+            'delete'=>array(
+                'url'=>'Yii::app()->createUrl("/forum/thread/delete", array("id"=>$data->id))',
+                'label' => '<i class="fa fa-remove"></i>',
+                'imageUrl' => false
+            ),
+            'update'=>array(
+                'url'=>'Yii::app()->createUrl("/forum/thread/update", array("id"=>$data->id))',
+                'label' => '<i class="fa fa-pencil"></i>',
+                'imageUrl' => false
+            ),
         ),
-        'htmlOptions' => array('style' => 'width:40px;'),
+        'htmlOptions' => array('style' => 'width:40px; text-align:center;'),
     );
 }
 

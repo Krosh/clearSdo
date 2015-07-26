@@ -7,7 +7,7 @@
 
 .list-view div.preheader {
     color:white;
-    background: url("bg.gif") repeat-x scroll left top #80CFFF;
+    /*background: repeat-x scroll left top #80CFFF;*/
     border:1px solid white;
     text-align: center;
 }
@@ -22,7 +22,7 @@
     border:1px solid white;
 }
 .list-view div.post div.header {
-    background: url("bg.gif") repeat-x scroll left top #80CFFF;
+    background: repeat-x scroll left top #80CFFF;
 }
 
 .list-view div.post div.content {

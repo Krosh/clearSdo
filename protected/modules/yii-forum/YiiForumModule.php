@@ -115,8 +115,8 @@ class YiiForumModule extends CWebModule
 
         if($this->dateReplaceWords)
         {
-            if($date == date($dateFormat)) $date = 'Today';
-            elseif($date == date($dateFormat, time()-86400)) $date = 'Yesterday';
+            if($date == date($dateFormat)) $date = 'Сегодня';
+            elseif($date == date($dateFormat, time()-86400)) $date = 'Вчера';
         }
 
         return $date .' '. $time;

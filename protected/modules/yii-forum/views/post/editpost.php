@@ -7,7 +7,7 @@
     ));
 ?>
 
-<div class="form" style="margin:20px;">
+<div class="form">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'post-form',
         'enableClientValidation'=>true,
@@ -16,17 +16,35 @@
 	),
     )); ?>
 
-        <div class="row">
-            <?php echo $form->labelEx($model,'content'); ?>
-            <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70)); ?>
-            <?php echo $form->error($model,'content'); ?>
-            <p class="hint">
-                <e>Подсказка</e>: Вы можете использовать <?php echo CHtml::link('markdown', 'http://daringfireball.net/projects/markdown/syntax'); ?>!
-            </p>
-        </div>
+    <style>
+    .input-full-width input {
+        width: 100%;
+    }
 
-        <div class="row buttons">
-            <?php echo CHtml::submitButton('Сохранить'); ?>
-        </div>
+    span.required {
+        display: inline !important;
+        width: auto !important;
+        color: red;
+    }
+    </style>
+
+    <p class="note">Поля, отмеченные <span class="required">звездочкой</span>, обязательны к заполнению.</p>
+
+    <table width="65%">
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'content'); ?>
+                <?php echo $form->error($model,'content'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70, 'class'=>'jsRedactor', 'style' => 'width:100%; height: 200px')); ?>
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="row buttons">
+        <?php echo CHtml::submitButton('Сохранить',  array("class" => "btn blue")); ?>
+    </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->
