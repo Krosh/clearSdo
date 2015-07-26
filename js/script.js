@@ -1175,6 +1175,13 @@ $(document).ready(function(){
         });
     });
 
+    $("#messageTextArea").on('keydown', function(e){
+        if (e.which === 13){
+            $(this).parent().submit();
+        }
+    });
+
+
 
     // сложность пароля
     if($(".js-strength").length) {

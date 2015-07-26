@@ -19,7 +19,7 @@
                         <div class="page-title">Профиль пользователя <?php echo $model->fio; ?></div>
                     </div>
                         <div>
-                            <img style= "float: left; max-width: 30%;" src = "/avatars/<?php echo $model->avatar; ?>">
+                            <img style= "float: left; max-width: 30%;" src = "<?php echo $model->getAvatarPath(AVATAR_SIZE_NORMAL); ?>">
                             <p style="float: right; min-width: 65%; max-width: 65%">
                                 <i class="fa fa-phone"></i><phone><?php echo $model->phone; ?></phone><br>
                                 <i class="fa fa-envelope "></i><a href = "mailto:<?php echo $model->email; ?>"><?php echo $model->email; ?></a><br>

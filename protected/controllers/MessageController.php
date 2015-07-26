@@ -119,7 +119,9 @@ class MessageController extends CController
         $criteria->order = "dateSend DESC";
         $criteria->limit = 1;
         $message = Message::model()->find($criteria);
-        if ($message != null && $message->idRecepient == $idUser)
+        $timeDiffToCreateNewMessage = 60*60;
+        // TODO:: вынести в настройки
+        if ($message != null && $message->idRecepient == $idUser && strtotime(date("Y-m-d H:i:s")) - strtotime($message->dateSend) < $timeDiffToCreateNewMessage)
         {
             $message->status = 0;
             $message->text.= "<br>".$_POST["text"];

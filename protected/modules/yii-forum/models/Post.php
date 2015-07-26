@@ -49,7 +49,6 @@ class Post extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('content', 'required'),
         );
     }
 

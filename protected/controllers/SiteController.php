@@ -223,8 +223,6 @@ class SiteController extends CController
     public function actionProfile($idUser)
     {
         $user = User::model()->findByPk($idUser);
-        if ($user == null || $user->role != ROLE_TEACHER)
-            throw new CHttpException(404,"");
         $this->render('/site/profile', array('model' => $user));
 
     }

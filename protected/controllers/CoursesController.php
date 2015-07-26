@@ -5,6 +5,7 @@
  */
 class CoursesController extends CController
 {
+    public $breadcrumbs;
     public $noNeedSidebar = false;
     public function filters()
     {
@@ -113,9 +114,13 @@ class CoursesController extends CController
 
     public function actionCalendar($id)
     {
+        $model = Course::model()->findByPk($id);
+        $this->breadcrumbs=array(
+            $model->title => array($this->createUrl("/site/editCourse",array("idCourse" => $id))),
+            "Календарь" => "",
+        );
         $this->noNeedSidebar = true;
         $this->layout = "//layouts/full";
-        $model = Course::model()->findByPk($id);
         $alreadyHasDateMaterials = array();
         $withoutDateMaterials = array();
         foreach ($model->coursesControlMaterial as $item)
