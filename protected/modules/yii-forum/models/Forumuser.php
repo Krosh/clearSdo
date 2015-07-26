@@ -66,6 +66,6 @@ class Forumuser extends CActiveRecord
      */
     public function getUrl()
     {
-        return Yii::app()->createUrl('/forum/user/view', array('id'=>$this->id));
+        return '/profile/?idUser='.$this->id;
     }
 }

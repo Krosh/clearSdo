@@ -2,6 +2,8 @@
 
 class PostController extends ForumBaseController
 {
+    public $layout='//layouts/forum';
+    
     /**
      * @return array action filters
      */

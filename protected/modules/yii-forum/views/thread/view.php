@@ -3,7 +3,7 @@
 $this->widget('zii.widgets.CBreadcrumbs', array('links'=>$thread->getBreadcrumbs()));
 
 $header = '<div class="preheader"><div class="preheaderinner">'. CHtml::encode($thread->subject) .'</div></div>';
-$footer = $thread->is_locked?'':'<div class="footer">'. CHtml::link(CHtml::image(Yii::app()->controller->module->registerImage("newreply.gif")), array('/forum/thread/newreply', 'id'=>$thread->id)) .'</div>';
+$footer = $thread->is_locked?'':'<div class="footer"><a href="/forum/thread/newreply?id='.$thread->id.'" class="btn small blue"><i class="fa fa-mail-reply"></i> Ответ</a></div>';
 ?>
 
 <?php

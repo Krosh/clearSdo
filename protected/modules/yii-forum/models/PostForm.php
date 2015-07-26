@@ -38,7 +38,7 @@ class PostForm extends CFormModel
         return array_merge(parent::attributeLabels(), array(
             'subject' => 'Тема',
             'content'=>'Контент',
-            'lockthread'=>'Закрепить?',
+            'lockthread'=>'Закреплено',
         ));
     }
 }

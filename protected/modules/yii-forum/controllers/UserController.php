@@ -2,6 +2,8 @@
 
 class UserController extends ForumBaseController
 {
+    public $layout='//layouts/forum';
+    
     /**
      * @return array action filters
      */

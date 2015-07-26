@@ -2630,3 +2630,34 @@ a.update + a.delete {
     display: none !important;
   }
 }
+#forum-layout .newthread {
+  margin: 10px 0;
+}
+#forum-layout .items td {
+  padding: 9px .3em;
+  border-bottom: 1px solid #edf0f1 !important;
+}
+#forum-layout .items .odd {
+  background: #fff !important;
+}
+#forum-layout .items .even {
+  background: #f9fafb !important;
+}
+#forum-layout .items .odd:hover,
+#forum-layout .items .even:hover {
+  background: #ecf0f1 !important;
+}
+#forum-layout div.post div.header {
+  background: #ecf0f1 !important;
+}
+#forum-layout .preheader {
+  background: #ecf0f1;
+  color: #2c3e50;
+}
+#forum-layout .preheader a {
+  color: #2c3e50;
+}
+#forum-layout .preheader a:hover {
+  text-decoration: underline;
+  color: #7997b5;
+}

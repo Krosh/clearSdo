@@ -2122,3 +2122,53 @@ a.update + a.delete {
     display: none !important;
   }
 }
+
+
+
+#forum-layout {
+  .newthread {
+    margin: 10px 0;
+  }
+  
+  .items {
+
+    td {
+      padding: 9px .3em;
+      border-bottom: 1px solid #edf0f1 !important
+    }
+    
+    .odd {
+      background: #fff !important;
+    }
+
+    .even {
+      background: #f9fafb !important;
+    }
+
+    .odd, .even {
+
+      &:hover {
+        background: #ecf0f1 !important;
+      }
+    }
+
+  }
+
+  div.post div.header {
+    background: @lightblue !important;
+  }
+
+  .preheader {
+    background: #ecf0f1;
+    color: #2c3e50;
+
+    a {
+      color: #2c3e50;
+      
+      &:hover {
+        text-decoration: underline;
+        color: @ahover;
+      }
+    }
+  }
+}

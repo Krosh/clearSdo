@@ -30,9 +30,9 @@ class ForumBaseController extends CController
 		} else {
 			$forumuser->lastseen = time();
 			$forumuser->save(false);
-                }
+        }
 
-                // Ad seet the user state
+        // Ad seet the user state
 		Yii::app()->user->setState('forumuser_id', $forumuser->id);
 
 		return true;

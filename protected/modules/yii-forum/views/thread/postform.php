@@ -13,7 +13,7 @@
     ));
 ?>
 
-<div class="form" style="margin:20px;">
+<div class="form">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'post-form',
         'enableClientValidation'=>true,
@@ -22,33 +22,62 @@
 	),
     )); ?>
 
-    <?php if(isset($forum)): ?>
-        <div class="row">
-            <?php echo $form->labelEx($model,'subject'); ?>
-            <?php echo $form->textField($model,'subject'); ?>
-            <?php echo $form->error($model,'subject'); ?>
-        </div>
-    <?php endif; ?>
+    
 
-        <div class="row">
-            <?php echo $form->labelEx($model,'content'); ?>
-            <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70)); ?>
-            <?php echo $form->error($model,'content'); ?>
-            <p class="hint">
-                <e>Подсказка</e>: Вы можете использовать <?php echo CHtml::link('markdown', 'http://daringfireball.net/projects/markdown/syntax'); ?>!
-            </p>
-        </div>
+    <style>
+    .input-full-width input {
+        width: 100%;
+    }
 
-        <?php if(Yii::app()->user->isAdmin): ?>
-            <div class="row rememberMe">
-                <?php echo $form->checkBox($model,'lockthread', array('uncheckValue'=>0)); ?>
-                <?php echo $form->labelEx($model,'lockthread'); ?>
-                <?php // echo $form->error($model,'lockthread'); ?>
-            </div>
+    span.required {
+        display: inline !important;
+        width: auto !important;
+        color: red;
+    }
+    </style>
+
+    <p class="note">Поля, отмеченные <span class="required">звездочкой</span>, обязательны к заполнению.</p>
+
+    <table width="65%">
+        <?php if(isset($forum)): ?>
+            <tr>
+                <td width="35%">
+                    <?php echo $form->labelEx($model,'subject'); ?>
+                    <?php echo $form->error($model,'subject'); ?>
+                </td>
+                <td width="65%" class="input-full-width">
+                    <?php echo $form->textField($model,'subject'); ?>
+                </td>
+            </tr>
         <?php endif; ?>
 
-        <div class="row buttons">
-            <?php echo CHtml::submitButton('Сохранить'); ?>
-        </div>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'content'); ?>
+                <?php echo $form->error($model,'content'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70, 'class'=>'jsRedactor', 'style' => 'width:100%; height: 200px')); ?>
+            </td>
+        </tr>
+    
+        <?php if(Yii::app()->user->isAdmin): ?>
+        <tr>
+            <td width="35%">
+                <?php echo $form->labelEx($model,'lockthread'); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->checkBox($model,'lockthread', array('uncheckValue'=>0)); ?>
+            </td>
+        </tr>
+        <?php endif; ?>
+
+
+    </table>
+
+
+    <div class="row buttons">
+        <?php echo CHtml::submitButton('Сохранить', array("class" => "btn blue")); ?>
+    </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

@@ -1,7 +1,7 @@
 <?php
 $this->widget('zii.widgets.CBreadcrumbs', array('links'=>array(
     'Форум'=>array('/forum'),
-    $model->name=>array('/forum/user/view', 'id'=>$model->id),
+    $model->name=>array('profile', 'idUser'=>$model->id),
     'Update',
 )));
 ?>

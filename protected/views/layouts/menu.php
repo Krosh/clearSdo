@@ -73,5 +73,8 @@
                 </div>
             </div>
         <? endif; ?>
+        <div class="link">
+            <a href="/forum">Форум</a>
+        </div>
     </div>
 </div>

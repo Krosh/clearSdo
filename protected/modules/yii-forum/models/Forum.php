@@ -118,7 +118,7 @@ class Forum extends CActiveRecord
             'title'=>'Название',
             'description'=>'Описание',
             'listorder' => 'Сортировка',
-            'is_locaked' => 'Заблокировать?',
+            'is_locked' => 'Закрыто',
         ));
     }
 
@@ -145,7 +145,7 @@ class Forum extends CActiveRecord
      */
     public function getUrl()
     {
-        return Yii::app()->createUrl('/forum/forum/view', array('id'=>$this->id));
+        return Yii::app()->createUrl('/forum/view', array('id'=>$this->id));
     }
 
     /**
@@ -159,7 +159,7 @@ class Forum extends CActiveRecord
         while(null != $forum->parent_id)
         {
             $forum = Forum::model()->findByPk($forum->parent_id);
-            $breadcrumbs[$forum->title] = array('/forum/forum/view', 'id'=>$forum->id);
+            $breadcrumbs[$forum->title] = array('/forum/view', 'id'=>$forum->id);
         }
 
         $breadcrumbs = array_merge(
@@ -170,7 +170,7 @@ class Forum extends CActiveRecord
         if(!$this->isNewRecord)
         {
             $breadcrumbs = array_merge($breadcrumbs, $currentlink
-               ?array(CHtml::encode($this->title)=>array('/forum/forum/view','id'=>$this->id))
+               ?array(CHtml::encode($this->title)=>array('/forum/view','id'=>$this->id))
                :array(CHtml::encode($this->title))
             );
         }
@@ -248,7 +248,7 @@ class Forum extends CActiveRecord
         $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
 
         return '<div class="name">'. $threadlink .'</div>'.
-                '<div class="level2">'. Yii::app()->controller->module->format_date($lastpost->created) .'</div>'.
+                '<div class="level2">'. Yii::app()->dateFormatter->format("dd MMM yyyy, HH:mm", $lastpost->created) .'</div>'.
                 '<div class="level3">от '. $authorlink .'</div>';
     }
 

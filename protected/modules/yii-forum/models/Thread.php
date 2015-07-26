@@ -96,8 +96,8 @@ class Thread extends CActiveRecord
             'id' => 'ID',
             'forum_id' => 'Форум',
             'subject'=>'Тема',
-            'is_sticky' => 'Закрепить?',
-            'is_locked' => 'Заблокировать?',
+            'is_sticky' => 'Закреплено',
+            'is_locked' => 'Закрыто',
             'view_count'=>'Просмотры',
             'created' => 'Дата создания',
         ));
@@ -196,7 +196,7 @@ class Thread extends CActiveRecord
 
         $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
 
-        return '<div class="level2">'. Yii::app()->controller->module->format_date($lastpost->created) .'</div>'.
+        return '<div class="level2">'. Yii::app()->dateFormatter->format("dd MMM yyyy, HH:mm", $lastpost->created) .'</div>'.
                 '<div class="level3">от '. $authorlink .'</div>';
     }
 
