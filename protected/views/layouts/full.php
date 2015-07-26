@@ -10,6 +10,7 @@ $cs->scriptMap = array(
     'jquery.ui.combobox.min.js' => '../../js/jquery.ui.combobox.js',
 );
 $cs->registerCoreScript('jquery');
+$cs->registerScriptFile("/js/moment-with-locales.min.js");
 //$cs->registerCoreScript('jquery.ui');
 ?>
 
@@ -159,8 +160,6 @@ $cs->registerCoreScript('jquery');
 <script src="../../js/jquery.easing.1.3.js"></script>
 <script src="../../js/highcharts/highcharts.js"></script>
 <script src="../../js/underscore-min.js"></script>
-<script src="../../js/moment-with-locales.min.js"></script>
-<script src="../../js/fullcalendar.min.js"></script>
 <script src="../../js/timer.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/tinymce/tinymce.min.js"></script>

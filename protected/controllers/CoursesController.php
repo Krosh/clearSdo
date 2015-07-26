@@ -11,7 +11,7 @@ class CoursesController extends CController
         return array(
             array('application.filters.ActiveTestFilter'),
             array('application.filters.TimezoneFilter'),
-//            array('application.filters.AccessFilter'),
+            array('application.filters.AccessFilter'),
         );
     }
 
@@ -163,7 +163,7 @@ class CoursesController extends CController
                                 $events[$item->dateAction] = array();
                             }
                             $mas = array();
-                            $mas['title'] = $item->controlMaterial->title;
+                            $mas['title'] = $item->controlMaterial->title." | ".$course->title;
                             $mas['start'] = $item->dateAction;
                             $mas['idCourseControlMaterial'] = $item->id;
                             $events[$item->dateAction][] = $mas;

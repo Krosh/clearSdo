@@ -1218,6 +1218,7 @@ $(document).ready(function(){
                 center: 'title',
                 right: ''
             },
+            lang: 'ru',
             height: 400,
             editable: true,
             eventDurationEditable: false,

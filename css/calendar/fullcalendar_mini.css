@@ -38,7 +38,10 @@ body .fc { /* extra precedence to overcome jqui */
 
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-popover .fc-header {
-	background: #eee;
+    font-size: 12px;
+    color: #363f44;
+    text-align: center;
+    padding-bottom: 5px;
 }
 
 .fc-unthemed .fc-popover .fc-header .fc-close {
@@ -46,7 +49,7 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 .fc-unthemed .fc-today {
-	background: #fcf8e3;
+    background: #dff6ec;
 }
 
 .fc-highlight { /* when user is selecting cells */
@@ -56,9 +59,10 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 .fc-bgevent { /* default look for background events */
-	background: rgb(143, 223, 130);
-	opacity: .3;
-	filter: alpha(opacity=30); /* for IE */
+    text-align: center;
+    padding: 7px 0;
+    font-size: 13px;
+    color: #63676b;
 }
 
 .fc-nonbusiness { /* default look for non-business-hours areas */
@@ -1069,4 +1073,10 @@ be a descendant of the grid when it is being dragged.
 
 .fc-time-grid-event .fc-resizer:after {
 	content: "=";
+}
+
+#calendar
+{
+    border-bottom: 1px solid #eee;
+
 }
