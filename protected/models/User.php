@@ -18,6 +18,7 @@
  * @property string $email
  * @property bool $isAvatarModerated
  * @property string $gender
+ * @property int $idForumUser
  */
 
 define("AVATAR_SIZE_NORMAL",0);
@@ -68,7 +69,7 @@ class User extends CActiveRecord
             array('birthday', 'length', 'max'=>10),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('idForumUser, phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +79,7 @@ class User extends CActiveRecord
     public function relations()
     {
         return array(
+            'forumUser' => array(self::HAS_ONE, 'Forumuser', 'siteid'),
             'groups'=>array(self::MANY_MANY, 'Group', 'tbl_studentsgroups(idStudent,idGroup)'),
         );
     }

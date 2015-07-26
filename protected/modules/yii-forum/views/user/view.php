@@ -4,7 +4,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array('links'=>array(
     $user->name
 )));
 
-$siglink = (!Yii::app()->user->isGuest && (Yii::app()->user->isAdmin || Yii::app()->user->forumuser_id == $user->id))?' ['. CHtml::link('Edit', array('user/update', 'id'=>$user->id)) .']':'';
+$siglink = (!Yii::app()->user->isGuest && (Yii::app()->user->isAdminOnForum() || Yii::app()->user->forumuser_id == $user->id))?' ['. CHtml::link('Edit', array('user/update', 'id'=>$user->id)) .']':'';
 
 $this->widget('zii.widgets.CDetailView', array(
     'data'=>$user,

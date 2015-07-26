@@ -36,7 +36,7 @@ class ForumController extends ForumBaseController
             array('allow',
                 'actions' => array('create', 'update', 'delete'),
                 'users' => array('@'), // Must be authenticated
-                'expression' => 'Yii::app()->user->isAdmin', // And must be admin
+                'expression' => 'Yii::app()->user->isAdminOnForum()', // And must be admin
             ),
 
             // deny all users

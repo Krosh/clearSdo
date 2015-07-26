@@ -11,6 +11,7 @@
  * The followings are the available model relations:
  * @property Post[] $posts List of posts user has authored
  * @property integer $postCount Number of posts user has authored
+ * @property User $sdoUser Model from SDO
  */
 class Forumuser extends CActiveRecord
 {
@@ -56,6 +57,7 @@ class Forumuser extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'sdoUser' => array(self::HAS_ONE,'User', 'idForumUser'),
             'posts'=>array(self::HAS_MANY, 'Post', 'author_id'),
             'postCount'=>array(self::STAT, 'Post', 'author_id'),
         );
@@ -66,6 +68,6 @@ class Forumuser extends CActiveRecord
      */
     public function getUrl()
     {
-        return '/profile/?idUser='.$this->id;
+        return '/site/profile/?idUser='.$this->sdoUser->id;
     }
 }

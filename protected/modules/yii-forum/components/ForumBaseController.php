@@ -27,6 +27,9 @@ class ForumBaseController extends CController
 			$forumuser->firstseen = time();
 			$forumuser->lastseen = time();
 			$forumuser->save(false);
+            $user = User::model()->findByPk(Yii::app()->user->id);
+            $user->idForumUser = $forumuser->id;
+            $user->save();
 		} else {
 			$forumuser->lastseen = time();
 			$forumuser->save(false);

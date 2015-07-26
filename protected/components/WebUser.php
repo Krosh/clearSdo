@@ -32,6 +32,11 @@ class WebUser extends CWebUser {
         return ($this->getRole() == 2);
     }
 
+    function isAdminOnForum()
+    {
+        return ($this->getRole() > 0);
+    }
+
     function getRole() {
         if($user = $this->getModel()){
             // в таблице User есть поле role
@@ -67,8 +72,6 @@ class WebUser extends CWebUser {
         }
         return $this->_model;
     }
-
-    public $isAdmin = true;
 
 
 }

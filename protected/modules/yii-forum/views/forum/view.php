@@ -47,7 +47,7 @@ $gridColumns = array(
 );
 
 // For admins, add column to delete and lock/unlock threads
-$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdmin;
+$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum();
 if($isAdmin)
 {
     // Admin links to show in extra column

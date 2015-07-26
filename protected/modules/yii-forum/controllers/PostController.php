@@ -37,7 +37,7 @@ class PostController extends ForumBaseController
             array('allow',
                 'actions' => array('delete'),
                 'users' => array('@'), // Must be authenticated
-                'expression' => 'Yii::app()->user->isAdmin', // And must be admin
+                'expression' => 'Yii::app()->user->isAdminOnForum()', // And must be admin
             ),
 
             // deny all users

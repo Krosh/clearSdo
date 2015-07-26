@@ -61,7 +61,7 @@
             </td>
         </tr>
     
-        <?php if(Yii::app()->user->isAdmin): ?>
+        <?php if(Yii::app()->user->isAdminOnForum()): ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'lockthread'); ?>
