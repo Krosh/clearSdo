@@ -6,8 +6,12 @@ $cs->scriptMap = array(
     'jquery.min.js' => '../../js/jquery.min.js',
     'jquery-ui.js' => '../../js/jquery.ui.min.js',
     'jquery-ui.min.js' => '../../js/jquery.ui.min.js',
+/*    'jquery.ui.widget.js' => false,
+    'jquery.ui.widget.min.js' => false,*/
     'jquery.ui.combobox.js' => '../../js/jquery.ui.combobox.js',
     'jquery.ui.combobox.min.js' => '../../js/jquery.ui.combobox.js',
+/*    'jquery.ui.combobox.js' => '../../js/jquery.ui.combobox.js',
+    'jquery.ui.combobox.min.js' => '../../js/jquery.ui.combobox.js',*/
 );
 $cs->registerCoreScript('jquery');
 $cs->registerScriptFile("/js/moment-with-locales.min.js");

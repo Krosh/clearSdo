@@ -229,11 +229,18 @@ class SiteController extends CController
 
     public function actionSearch($query)
     {
+        Yii::import('application.modules.yii-forum.models.*');
         // Поиск по людям
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
         $users = User::model()->findAll($criteria);
-        $this->render('/site/search', array('query' => $query, 'users' => $users));
+
+        // Поиск по темам форума
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition('subject',$query);
+        $threads = Thread::model()->findAll($criteria);
+
+        $this->render('/site/search', array('query' => $query, 'users' => $users, 'threads' => $threads));
     }
 
     public function actionLog()
