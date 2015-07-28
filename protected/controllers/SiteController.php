@@ -255,6 +255,13 @@ class SiteController extends CController
         ));
     }
 
+    public function actionAjaxChangeLanguage($lang)
+    {
+        $user = Yii::app()->user->getModel();
+        $user->defaultLanguage = $lang;
+        $user->save();
+    }
+
 
 
 

@@ -19,6 +19,7 @@
  * @property bool $isAvatarModerated
  * @property string $gender
  * @property int $idForumUser
+ * @property string $defaultLanguage
  */
 
 define("AVATAR_SIZE_NORMAL",0);
@@ -65,7 +66,7 @@ class User extends CActiveRecord
             array('dateChangePassword', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
-            array('gender', 'length', 'max'=>20),
+            array('gender, defaultLanguage', 'length', 'max'=>20),
             array('birthday', 'length', 'max'=>10),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

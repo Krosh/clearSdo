@@ -1,3 +1,17 @@
+function ajaxChangeLanguage(lang)
+{
+    $.ajax({
+        type: 'GET',
+        url: '/site/ajaxChangeLanguage',
+        data: {lang: lang},
+        error: onError,
+        success: function()
+        {
+            window.location.reload();
+        }
+    });
+}
+
 function onAlert(codeMessage)
 {
     var messages = {"LOAD_FILE_ERROR":"Ошибка при загрузке файла", "TIMETABLE_GET_SUCCESS":"Расписание получено успешно",

@@ -12,7 +12,11 @@ $allGroups = Group::model()->findAll();
 $res = "";
 foreach ($allGroups as $item)
 {
-    if (array_search($item,$groups) === false)
+    $criteria = new CDbCriteria();
+    $criteria->compare("idCourse",$idCourse);
+    $criteria->compare("idGroup",$item->id);
+    $criteria->compare("idTerm",$idTerm);
+    if (CoursesGroup::model()->count($criteria) == 0)
         $res .= "<option value = '".$item->id."'>".$item->Title."</option>";
     else
         $res .= "<option value = '".$item->id."' selected>".$item->Title."</option>";
