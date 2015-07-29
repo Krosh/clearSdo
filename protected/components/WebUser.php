@@ -44,6 +44,14 @@ class WebUser extends CWebUser {
         }
     }
 
+    function geLanguage()
+    {
+        if($user = $this->getModel()){
+            return $user->defaultLanguage;
+        }
+
+        }
+
     function getFio() {
         if ($user = $this->getModel())
         {

@@ -1,3 +1,17 @@
+function ajaxChangeLanguage(lang)
+{
+    $.ajax({
+        type: 'GET',
+        url: '/site/ajaxChangeLanguage',
+        data: {lang: lang},
+        error: onError,
+        success: function()
+        {
+            window.location.reload();
+        }
+    });
+}
+
 function onAlert(codeMessage)
 {
     var messages = {"LOAD_FILE_ERROR":"Ошибка при загрузке файла", "TIMETABLE_GET_SUCCESS":"Расписание получено успешно",
@@ -1175,6 +1189,13 @@ $(document).ready(function(){
         });
     });
 
+    $("#messageTextArea").on('keydown', function(e){
+        if (e.which === 13){
+            $(this).parent().submit();
+        }
+    });
+
+
 
     // сложность пароля
     if($(".js-strength").length) {
@@ -1218,6 +1239,7 @@ $(document).ready(function(){
                 center: 'title',
                 right: ''
             },
+            lang: 'ru',
             height: 400,
             editable: true,
             eventDurationEditable: false,

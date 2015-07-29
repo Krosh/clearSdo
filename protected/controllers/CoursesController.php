@@ -5,13 +5,14 @@
  */
 class CoursesController extends CController
 {
+    public $breadcrumbs;
     public $noNeedSidebar = false;
     public function filters()
     {
         return array(
             array('application.filters.ActiveTestFilter'),
             array('application.filters.TimezoneFilter'),
-//            array('application.filters.AccessFilter'),
+            array('application.filters.AccessFilter'),
         );
     }
 
@@ -113,9 +114,13 @@ class CoursesController extends CController
 
     public function actionCalendar($id)
     {
+        $model = Course::model()->findByPk($id);
+        $this->breadcrumbs=array(
+            $model->title => array($this->createUrl("/site/editCourse",array("idCourse" => $id))),
+            "Календарь" => "",
+        );
         $this->noNeedSidebar = true;
         $this->layout = "//layouts/full";
-        $model = Course::model()->findByPk($id);
         $alreadyHasDateMaterials = array();
         $withoutDateMaterials = array();
         foreach ($model->coursesControlMaterial as $item)
@@ -163,7 +168,7 @@ class CoursesController extends CController
                                 $events[$item->dateAction] = array();
                             }
                             $mas = array();
-                            $mas['title'] = $item->controlMaterial->title;
+                            $mas['title'] = $item->controlMaterial->title." | ".$course->title;
                             $mas['start'] = $item->dateAction;
                             $mas['idCourseControlMaterial'] = $item->id;
                             $events[$item->dateAction][] = $mas;

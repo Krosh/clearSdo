@@ -223,19 +223,24 @@ class SiteController extends CController
     public function actionProfile($idUser)
     {
         $user = User::model()->findByPk($idUser);
-        if ($user == null || $user->role != ROLE_TEACHER)
-            throw new CHttpException(404,"");
         $this->render('/site/profile', array('model' => $user));
 
     }
 
     public function actionSearch($query)
     {
+        Yii::import('application.modules.yii-forum.models.*');
         // Поиск по людям
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
         $users = User::model()->findAll($criteria);
-        $this->render('/site/search', array('query' => $query, 'users' => $users));
+
+        // Поиск по темам форума
+        $criteria = new CDbCriteria();
+        $criteria->addSearchCondition('subject',$query);
+        $threads = Thread::model()->findAll($criteria);
+
+        $this->render('/site/search', array('query' => $query, 'users' => $users, 'threads' => $threads));
     }
 
     public function actionLog()
@@ -248,6 +253,13 @@ class SiteController extends CController
         $this->render('log',array(
             'model'=>$model,
         ));
+    }
+
+    public function actionAjaxChangeLanguage($lang)
+    {
+        $user = Yii::app()->user->getModel();
+        $user->defaultLanguage = $lang;
+        $user->save();
     }
 
 

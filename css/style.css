@@ -2661,3 +2661,7 @@ a.update + a.delete {
   text-decoration: underline;
   color: #7997b5;
 }
+.ui-front
+{
+    z-index: 10000;
+}

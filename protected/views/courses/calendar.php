@@ -14,10 +14,9 @@
 </script>
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerScriptFile("/js/fullcalendar.min.js",CClientScript::POS_END);
 Yii::app()->clientScript->registerCssFile('/css/calendar/fullcalendar.css');
 ?>
-
-
 
 <div class="wrapper">
     <div class="container">

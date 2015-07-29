@@ -29,14 +29,15 @@ $listeners = Course::getGroups($model->id);
 <div class="content">
 <div class="page-heading">
     <div class="col-group">
-        <div class="col-4">
+        <div class="col-3">
             <div class="page-title">
                 Курс: <?php echo $model->title?>
             </div>
             <div id="editCourse-groups"></div>
         </div>
-        <div class="col-8 right">
+        <div class="col-9 right">
             <div style="vertical-align: middle">
+                <a href="<?php echo $this->createUrl("/courses/calendar", array("id" => $model->id)); ?>" class="btn icon-colored icon-violet has-tip" data-original-title="Календарь" title="Календарь"><i class="fa fa-calendar"></i></a>
                 <div class="btn courses-list dropdown nohover has-tip" data-original-title="Журнал" title="Журнал">
                     <a href="#" class="caret-link">
                         <a href = "#" id = "currentTermTitle"><i class="fa fa-book fa-2x" style="color: #c55a00"></i></a><i class="caret"></i>

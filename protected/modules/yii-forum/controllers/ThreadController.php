@@ -131,7 +131,7 @@ class ThreadController extends ForumBaseController
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
             throw new CHttpException(404, 'Страница не найдена.');
-        if(!Yii::app()->user->isAdmin && $thread->is_locked)
+        if(!Yii::app()->user->isAdminOnForum() && $thread->is_locked)
             throw new CHttpException(403, 'У вас нет доступа.');
 
         $model=new PostForm;
@@ -146,7 +146,7 @@ class ThreadController extends ForumBaseController
                 $post->content = $model->content;
                 $post->save(false);
 
-                if(Yii::app()->user->isAdmin && $thread->is_locked != $model->lockthread)
+                if(Yii::app()->user->isAdminOnForum() && $thread->is_locked != $model->lockthread)
                 {
                     $thread->is_locked = $model->lockthread;
                     $thread->save(false);

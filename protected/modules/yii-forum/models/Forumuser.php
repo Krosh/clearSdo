@@ -68,6 +68,6 @@ class Forumuser extends CActiveRecord
      */
     public function getUrl()
     {
-        return '/site/profile/?idUser='.$this->sdoUser->id;
+        return '/site/profile?idUser='.$this->sdoUser->id;
     }
 }
