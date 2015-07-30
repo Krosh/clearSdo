@@ -2733,6 +2733,12 @@ a.update + a.delete {
 .sidebar-content .fc-unthemed .fc-month-view table .fc-day {
   vertical-align: middle !important;
 }
+.sidebar-content .fc-unthemed .fc-event-container {
+  text-align: center;
+}
+.sidebar-content .fc-unthemed .fc-event-container a {
+  display: inline-block;
+}
 #selectUserDialog input {
   width: 100%;
 }
