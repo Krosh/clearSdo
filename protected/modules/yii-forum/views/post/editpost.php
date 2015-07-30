@@ -44,7 +44,7 @@
 
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Сохранить',  array("class" => "btn blue")); ?>
+        <?php echo CHtml::submitButton('Сохранить', array("class" => "btn blue", "onClick" => '$("textarea").val(tinyMCE.activeEditor.getContent())')); ?>
     </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

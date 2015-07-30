@@ -40,7 +40,7 @@ $gridColumns = array(
 );
 
 if(isset($inforum) && $inforum == true)
-    $preheader = '<div style="text-align:center;">Подкатегории в "' . CHtml::encode($forum->title) . '"</div>';
+    $preheader = '<div>Подкатегории в "' . CHtml::encode($forum->title) . '"</div>';
 else
     $preheader = CHtml::link(CHtml::encode($forum->title), $forum->url);
 

@@ -44,7 +44,7 @@ class WebUser extends CWebUser {
         }
     }
 
-    function geLanguage()
+    function getLanguage()
     {
         if($user = $this->getModel()){
             return $user->defaultLanguage;
@@ -61,7 +61,7 @@ class WebUser extends CWebUser {
         }
     }
 
-    function getAvatar($needImageSize = AVATAR_SIZE_NORMAL) {
+    function getAvatarPath($needImageSize = AVATAR_SIZE_NORMAL) {
         if ($user = $this->getModel()) {
             return $user->getAvatarPath($needImageSize);
         }

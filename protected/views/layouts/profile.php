@@ -6,6 +6,18 @@
  * Time: 14:26
  * To change this template use File | Settings | File Templates.
  */?>
+
+<div style="display: none !important;">
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'ru', includedLanguages: 'ru,en,zh-CN', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, autoDisplay: false}, 'google_translate_element');
+    }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+
+
 <div class="col-5 col-mb-9 right">
     <div class="search">
         <form action="/search" method="GET">
@@ -20,7 +32,7 @@
 
             <div class="dropdown-container">
                 <?php
-                $languages = array("lang-rus" => "ru", "lang-eng" => "en", "lang-cn" => "cn");
+                $languages = array("lang-rus" => "ru", "lang-eng" => "en", "lang-cn" => "zh-CN");
                 foreach ($languages as $key => $value)
                 {
                     echo "<a href='#' onclick='ajaxChangeLanguage(\"$value\"); return false;'><i class='$key'></i></a>";
@@ -51,7 +63,7 @@
             </div>
         </div>
         <div class="avatar">
-            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(AVATAR_SIZE_MINI); ?>')"></div>
+            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatarPath(AVATAR_SIZE_MINI); ?>')"></div>
         </div>
     </div>
 </div>

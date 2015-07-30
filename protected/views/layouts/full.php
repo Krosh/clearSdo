@@ -17,14 +17,13 @@ $cs->registerCoreScript('jquery');
 $cs->registerScriptFile("/js/moment-with-locales.min.js");
 //$cs->registerCoreScript('jquery.ui');
 ?>
-
 <!doctype html>
 <html lang="ru">
 <head>
 
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Стимул</title>
+    <title class="skiptranslate">Стимул</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="js/less-1.7.5.min.js"></script> *-->
 
@@ -34,7 +33,6 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
     <link rel="apple-touch-icon" sizes="72x72" href="../../img/favicons/apple-touch-icon-72x72.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="../../img/favicons/apple-touch-icon-114x114.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="../../img/favicons/apple-touch-icon-144x144.png" />
-
 </head>
 <body>
 <header>
@@ -44,7 +42,7 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
                 <div class="logo">
                     <a href="/">
                         <img src="/img/logo-small.png" height="40" width="40" alt="" data-retina>
-                        <span>Стимул</span>
+                        <span class="skiptranslate">Стимул</span>
                     </a>
                 </div>
                 <?php $this->renderPartial("//layouts/menu"); ?>
@@ -66,10 +64,7 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
     <?php endif?>
 </div>
 
-
-
 <?php echo $content;  ?>
-
 <?php if (!isset($this->noNeedSidebar) || !$this->noNeedSidebar):?>
     <div class="col-3">
         <div class="sidebar">
@@ -86,8 +81,8 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
             </div>
 
             <?php if (Yii::app()->user->getId() >0):?>
-                <?php $this->renderPartial("//news/block") ?>
                 <?php $this->renderPartial("//news/calendar") ?>
+                <?php $this->renderPartial("//news/block") ?>
                 <?php $this->renderPartial("//news/timetable") ?>
             <?php endif; ?>
 
@@ -103,13 +98,11 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
 
 <footer class="fixed">
     <div class="container">
-        <div class="col-group">
-            <div class="col-6">
-                Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a>
-            </div>
-            <div class="col-6 right">
-                СДО Стимул 2.0 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
-            </div>
+        <div class="col-6">
+            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#" class="skiptranslate">СДО Стимул</a>
+        </div>
+        <div class="col-6 right">
+            <span class="skiptranslate">СДО Стимул 2.0</span> &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
         </div>
     </div>
 </footer>

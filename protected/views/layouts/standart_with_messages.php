@@ -18,7 +18,7 @@ $cs->registerCoreScript('jquery');
 
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Стимул</title>
+    <title class="skiptranslate">Стимул</title>
     <link rel="stylesheet" type="text/css" href="/css/messages.css" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
       <!-- <script src="js/less-1.7.5.min.js"></script> -->
@@ -38,7 +38,7 @@ $cs->registerCoreScript('jquery');
                 <div class="logo">
                     <a href="/">
                         <img src="/img/logo-small.png" height="40" width="40" alt="" data-retina>
-                        <span>Стимул</span>
+                        <span class="skiptranslate">Стимул</span>
                     </a>
                 </div>
                 <?php
@@ -87,6 +87,7 @@ $cs->registerCoreScript('jquery');
 <!--<script src="../../js/redactor.min.js"></script>-->
 <script src="../../js/jquery.quicksearch.js"></script>
 <script src="../../js/jquery.multi-select.js"></script>
+<script src="../../js/jquery.ddslick.min.js"></script>
 <script src="../../js/frosty.min.js"></script>
 <script src="../../js/plugins.js"></script>
 <script src="../../js/jquery.nicefileinput.min.js"></script>

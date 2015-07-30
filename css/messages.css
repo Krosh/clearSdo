@@ -81,7 +81,7 @@ html {
     overflow-y: auto;
     overflow-x: hidden;
     margin-bottom: 70px;
-    height: 550px !important;
+    height: 482px !important;
 }
 #dialogs .dialog {
     cursor: pointer;
@@ -135,8 +135,6 @@ html {
     margin-top: 6px;
 }
 .actions {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     text-align: center;
     z-index: 1;
@@ -216,4 +214,8 @@ html {
 }
 .right {
     text-align: right;
+}
+.dd-option
+{
+    height: 80px;
 }

@@ -4,7 +4,7 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum();
 ?>
 <div class="post">
     <div class="header">
-        <?php echo Yii::app()->dateFormatter->format("dd MMM yyyy, HH:mm", $data->created); ?> от <?php echo CHtml::link(CHtml::encode($data->author->name), $data->author->url); ?>
+        <?php echo Yii::app()->dateFormatter->format("dd MMM yyyy, HH:mm", $data->created); ?>
         <?php if($data->editor) echo ' (Отредактировано: '. Yii::app()->controller->module->format_date($data->updated, 'long') .' пользователем '. CHtml::link(CHtml::encode($data->editor->name), $data->editor->url) .')'; ?>
 
         <div class="admin" style="float:right; border:none;vertical-align: middle; vertical-align: top;">
@@ -24,18 +24,33 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum();
         </div>
     </div>
     <div class="content">
-        <?php
-            $this->beginWidget('CMarkdown', array('purifyOutput'=>true));
-                echo $data->content;
-            $this->endWidget();
+        <table class="post-answer-view">
+            <tr>
+                <td>
+                    <div class="the-avatar-box" style="background-image: url('<?=($data->author->sdoUser->getAvatarPath(AVATAR_SIZE_MEDIUM));?>')"></div>
+                    <?php echo CHtml::link(CHtml::encode($data->author->name), $data->author->url); ?>
 
-            if($data->author->signature)
-            {
-                echo '<br />---<br />';
-                $this->beginWidget('CMarkdown', array('purifyOutput'=>true));
-                    echo $data->author->signature;
-                $this->endWidget();
-            }
-        ?>
+                    <div class="fut" style="border:none!important;">
+                        <?=CHtml::link('<i class="fa fa-user"></i>', $data->author->url, array('target'=>'_blank','class'=>'btn tiny blue has-tip','title'=>'Профиль пользователя')); ?>
+                        <?=CHtml::link('<i class="fa fa-envelope"></i>', array('/message/index','startDialog'=>$data->author->sdoUser->id), array('target'=>'_blank','class'=>'btn tiny blue has-tip','title'=>'Написать сообщение')); ?>
+                    </div>
+                </td>
+                <td>
+                    <?php
+                        $this->beginWidget('CMarkdown', array('purifyOutput'=>true));
+                            echo $data->content;
+                        $this->endWidget();
+
+                        if($data->author->signature)
+                        {
+                            echo '<br />---<br />';
+                            $this->beginWidget('CMarkdown', array('purifyOutput'=>true));
+                                echo $data->author->signature;
+                            $this->endWidget();
+                        }
+                    ?>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

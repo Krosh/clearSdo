@@ -217,7 +217,7 @@ class Forum extends CActiveRecord
     {
         $result =
             '<div class="name">'. CHtml::link(CHtml::encode($this->title), $this->url) .'</div>'.
-            '<div class="level2">'. $this->description .'</div>';
+            '<div class="level2">'. strip_tags($this->description) .'</div>';
 
         $subforums = $this->subforums;
         if($subforums)

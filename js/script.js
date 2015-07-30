@@ -1,3 +1,21 @@
+function fireEvent(element,event){
+     console.log("in Fire Event");
+    if (document.createEventObject){
+            // dispatch for IE
+            console.log("in IE FireEvent");
+        var evt = document.createEventObject();
+        return element.fireEvent('on'+event,evt)
+    }
+    else{
+            // dispatch for firefox + others
+            console.log("In HTML5 dispatchEvent");
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+            return !element.dispatchEvent(evt);
+    }
+ }
+
+
 function ajaxChangeLanguage(lang)
 {
     $.ajax({
@@ -7,7 +25,10 @@ function ajaxChangeLanguage(lang)
         error: onError,
         success: function()
         {
-            window.location.reload();
+            var jObj = $('.goog-te-combo');
+            var db = jObj.get(0);
+            jObj.val(lang);
+            fireEvent(db, 'change');
         }
     });
 }
@@ -1018,7 +1039,8 @@ $(document).ready(function(){
                 "insertdatetime media table contextmenu paste jbimages media insert_control_material"
             ],
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages media insert_control_material  sh4tinymce",
-            relative_urls: false
+            relative_urls: false,
+            init_instance_callback: "footerUpdate"
         });
         // $(".jsRedactor").redactor();
     }
@@ -1195,20 +1217,17 @@ $(document).ready(function(){
         }
     });
 
-
-
     // сложность пароля
     if($(".js-strength").length) {
         $(".js-strength").strength();
     }
 
     $(".fa.fa-remove").click(function() {
-        alert("da");
-        if(confirm("Действительно удалить?")) {
-            return true;
-        } else {
-            return false;
-        }
+        // if(confirm("Действительно удалить?")) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
     });
 
 
@@ -1235,12 +1254,12 @@ $(document).ready(function(){
     {
         $('#calendar').fullCalendar({
             header: {
-                left: 'prev,next',
+                left: 'prev',
                 center: 'title',
-                right: ''
+                right: 'next'
             },
             lang: 'ru',
-            height: 400,
+            // height: 400,
             editable: true,
             eventDurationEditable: false,
             events: {
@@ -1252,6 +1271,9 @@ $(document).ready(function(){
             },
             dragRevertDuration: 0,
             droppable: true, // this allows things to be dropped onto the calendar
+            loading: function() {
+                footerUpdate()
+            },
             drop: function() {
                 $(this).remove();
             },

@@ -70,7 +70,11 @@ class PostController extends ForumBaseController
         $post = Post::model()->findByPk($id);
         if(null == $post)
             throw new CHttpException(404, 'Ответ не найден.');
-        if(!Yii::app()->user->isAdmin && YII::app()->user->id != $post->author_id)
+<<<<<<< Updated upstream
+        if(!Yii::app()->user->isAdminOnForum()&& YII::app()->user->id != $post->author_id)
+=======
+        if(!Yii::app()->user->isAdminOnForum() && YII::app()->user->id != $post->author_id)
+>>>>>>> Stashed changes
             throw new CHttpException(403, 'У вас нет доступа к редактированию.');
 
         if(isset($_POST['Post']))

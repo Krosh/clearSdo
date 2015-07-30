@@ -75,7 +75,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array(
     </table>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue", "onClick" => '$("textarea").val(tinyMCE.activeEditor.getContent())')); ?>
     </div>
 <?php $this->endWidget(); ?>
 </div><!-- form -->

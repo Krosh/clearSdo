@@ -18,7 +18,7 @@ $cs->registerCoreScript('jquery');
 
     <META http-equiv='Content-Type' content='text/html; charset=UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Стимул</title>
+    <title class="skiptranslate">Стимул</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <!-- <script src="js/less-1.7.5.min.js"></script> *-->
 
@@ -38,7 +38,7 @@ $cs->registerCoreScript('jquery');
                 <div class="logo">
                     <a href="/">
                         <img src="/img/logo-small.png" height="40" width="40" alt="" data-retina>
-                        <span>Стимул</span>
+                        <span class="skiptranslate">Стимул</span>
                     </a>
                 </div>
                 <?php
@@ -54,20 +54,18 @@ $cs->registerCoreScript('jquery');
 </header>
 
 
-<div id="forum-layout" class="container">
+<div id="forum-layout" class="container wrapper">
     <?php echo $content;  ?>
 </div>
 
 
 <footer class="fixed">
     <div class="container">
-        <div class="col-group">
-            <div class="col-6">
-                Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a>
-            </div>
-            <div class="col-6 right">
-                СДО Стимул 2.0 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
-            </div>
+        <div class="col-6">
+            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#" class="skiptranslate">СДО Стимул</a>
+        </div>
+        <div class="col-6 right">
+            <span class="skiptranslate">СДО Стимул 2.0</span> &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
         </div>
     </div>
 </footer>
