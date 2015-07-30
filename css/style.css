@@ -993,6 +993,7 @@ body {
 body {
   min-height: 100%;
   width: 100%;
+  top: 0 !important;
 }
 img {
   max-width: 100%;
@@ -2661,7 +2662,20 @@ a.update + a.delete {
   text-decoration: underline;
   color: #7997b5;
 }
-.ui-front
-{
-    z-index: 10000;
+.ui-front {
+  z-index: 10000;
+}
+.goog-te-banner-frame {
+  display: none !important;
+}
+.goog-tooltip {
+  display: none !important;
+}
+.goog-tooltip:hover {
+  display: none !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
