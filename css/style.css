@@ -1964,6 +1964,12 @@ a.btn {
   line-height: 30px;
   padding: 0 20px;
 }
+.btn.tiny {
+  font-size: 13px;
+  height: 23px;
+  line-height: 23px;
+  padding: 0 10px;
+}
 .btn.green {
   background: #00b16a;
   color: #fff;
@@ -2631,12 +2637,15 @@ a.update + a.delete {
     display: none !important;
   }
 }
+#forum-layout .grid-view table.items th {
+  background: #2980b9;
+}
 #forum-layout .newthread {
   margin: 10px 0;
 }
 #forum-layout .items td {
   padding: 9px .3em;
-  border-bottom: 1px solid #edf0f1 !important;
+  border-bottom: 1px solid #edf0f1;
 }
 #forum-layout .items .odd {
   background: #fff !important;
@@ -2652,8 +2661,11 @@ a.update + a.delete {
   background: #ecf0f1 !important;
 }
 #forum-layout .preheader {
-  background: #ecf0f1;
+  background: #ecf0f1 !important;
   color: #2c3e50;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: left !important;
 }
 #forum-layout .preheader a {
   color: #2c3e50;
@@ -2678,4 +2690,20 @@ a.update + a.delete {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
+.post-answer-view {
+  width: 100%;
+}
+.post-answer-view td {
+  border-bottom: none !important;
+  vertical-align: top !important;
+}
+.post-answer-view td:first-child {
+  border-right: 1px solid #edf0f1;
+  padding-left: 10px !important;
+  width: 20%;
+}
+.post-answer-view td:last-child {
+  padding-left: 10px !important;
+  width: 80%;
 }
