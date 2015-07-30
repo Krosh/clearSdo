@@ -179,6 +179,13 @@ class MessageController extends CController
             $item['imageSrc'] = $user->getAvatarPath(AVATAR_SIZE_MINI);
             $arr[] = $item;
         }
+        $item = array();
+        $item['value'] = -1;
+        $item['text'] = "Никого не нашли :(";
+        $item['selected'] = false;
+        $item['description'] = "Попробуйте уточнить данные поиска";
+        $item['imageSrc'] = "";
+        $arr[] = $item;
         echo json_encode($arr);
     }
 

@@ -73,7 +73,8 @@ function updateSelectUserDialog(text)
     var showCount = 5;
     $(".dd-options li a").each(function()
     {
-        if (i < showCount)
+        var val = $($(this).children(".dd-option-value")[0]).val();
+        if (i < showCount && val>=0)
         {
             var currentText = $(this).children("label")[0].innerText;
             console.log(currentText);
@@ -90,6 +91,18 @@ function updateSelectUserDialog(text)
             $(this).hide();
         }
     });
+    if (i == 0)
+    {
+        // Сообщаем, что никого не нашли
+        $(".dd-options li a").each(function()
+        {
+            var val = $($(this).children(".dd-option-value")[0]).val();
+            if (val < 0)
+            {
+                $(this).show();
+            }
+        });
+    }
 }
 
 $(document).ready(function(){
@@ -106,11 +119,12 @@ $(document).ready(function(){
             {
                 $('#selectUserDialog').ddslick({
                     data:data,
-                    width:300,
+                    width:274,
                     selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocusout = "$(\'#selectUserData\').ddslick(\'close\');" onkeyup="updateSelectUserDialog(this.value)">',
                     imagePosition:"left",
                     onSelected: function(selectedData){
-                        console.log(selectedData);
+                        if (selectedData.selectedData.value < 0)
+                            return;
                         $("input[name=startDialog]").val(selectedData.selectedData.value);
                         updateDialogs();
                     }
