@@ -29,7 +29,7 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-row,
 .fc-unthemed .fc-popover {
-	border-color: #ddd;
+	/*border-color: #ddd;*/
 }
 
 .fc-unthemed .fc-popover {
@@ -166,9 +166,6 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc button {
 	/* force height to include the border and padding */
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 
 	/* dimensions */
 	margin: 0;
@@ -185,7 +182,7 @@ NOTE: use percentage font sizes or else old IE chokes
 .fc button::-moz-focus-inner { margin: 0; padding: 0; }
 	
 .fc-state-default { /* non-theme */
-	border: 1px solid;
+	/*border: 1px solid;*/
 }
 
 .fc-state-default.fc-corner-left { /* non-theme */
@@ -220,8 +217,8 @@ NOTE: use percentage font sizes or else old IE chokes
 	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
 	background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
 	background-repeat: repeat-x;
-	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	/*border-color: #e6e6e6 #e6e6e6 #bfbfbf;*/
+	/*border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);*/
 	color: #333;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -316,8 +313,8 @@ previous button's border...
 /* unthemed */
 
 .fc-unthemed .fc-popover {
-	border-width: 1px;
-	border-style: solid;
+	/*border-width: 1px;*/
+	/*border-style: solid;*/
 }
 
 .fc-unthemed .fc-popover .fc-header .fc-close {
@@ -328,7 +325,7 @@ previous button's border...
 /* jqui themed */
 
 .fc-popover > .ui-widget-header + .ui-widget-content {
-	border-top: 0; /* where they meet, let the header have the border */
+	/*border-top: 0; /* where they meet, let the header have the border */
 }
 
 
@@ -336,8 +333,8 @@ previous button's border...
 --------------------------------------------------------------------------------------------------*/
 
 .fc-divider {
-	border-style: solid;
-	border-width: 1px;
+	/*border-style: solid;*/
+	/*border-width: 1px;*/
 }
 
 hr.fc-divider {
@@ -377,9 +374,10 @@ hr.fc-divider {
 .fc table {
 	width: 100%;
 	table-layout: fixed;
-	border-collapse: collapse;
-	border-spacing: 0;
+	/*border-collapse: collapse;*/
+	/*border-spacing: 0;*/
 	font-size: 1em; /* normalize cross-browser */
+	border: none !important;
 }
 
 .fc th {
@@ -388,14 +386,14 @@ hr.fc-divider {
 
 .fc th,
 .fc td {
-	border-style: solid;
-	border-width: 1px;
+	/*border-style: solid;*/
+	/*border-width: 1px;*/
 	padding: 0;
 	vertical-align: top;
 }
 
 .fc td.fc-today {
-	border-style: double; /* overcome neighboring borders */
+	/*border-style: double; /* overcome neighboring borders */
 }
 
 
@@ -404,22 +402,22 @@ hr.fc-divider {
 
 .fc .fc-row { /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */
 	/* no visible border by default. but make available if need be (scrollbar width compensation) */
-	border-style: solid;
-	border-width: 0;
+	/*border-style: solid;*/
+	/*border-width: 0;*/
 }
 
 .fc-row table {
 	/* don't put left/right border on anything within a fake row.
 	   the outer tbody will worry about this */
-	border-left: 0 hidden transparent;
-	border-right: 0 hidden transparent;
+	/*border-left: 0 hidden transparent;*/
+	/*border-right: 0 hidden transparent;*/
 
 	/* no bottom borders on rows */
-	border-bottom: 0 hidden transparent; 
+	/*border-bottom: 0 hidden transparent; */
 }
 
 .fc-row:first-child table {
-	border-top: 0 hidden transparent; /* no top border on first row */
+	/*border-top: 0 hidden transparent; /* no top border on first row */
 }
 
 
@@ -448,7 +446,7 @@ hr.fc-divider {
 
 .fc-row .fc-highlight-skeleton td,
 .fc-row .fc-bgevent-skeleton td {
-	border-color: transparent;
+	/*border-color: transparent;*/
 }
 
 .fc-row .fc-bgevent-skeleton {
@@ -479,16 +477,16 @@ temporary rendered events).
 .fc-row .fc-helper-skeleton td {
 	/* see-through to the background below */
 	background: none; /* in case <td>s are globally styled */
-	border-color: transparent;
+	/*border-color: transparent;*/
 
 	/* don't put a border between events and/or the day number */
-	border-bottom: 0;
+	/*border-bottom: 0;*/
 }
 
 .fc-row .fc-content-skeleton tbody td, /* cells with events inside (so NOT the day number cell) */
 .fc-row .fc-helper-skeleton tbody td {
 	/* don't put a border between event cells */
-	border-top: 0;
+	/*border-top: 0;*/
 }
 
 
@@ -519,7 +517,7 @@ temporary rendered events).
     text-align: center;
     width: 15px !important;
     height: 15px !important;
-	border: 1px solid #3a87ad; /* default BORDER color */
+	/*border: 1px solid #3a87ad; /* default BORDER color */
 	background-color: #3a87ad; /* default BACKGROUND color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
 }
@@ -773,7 +771,7 @@ a.fc-more:hover {
 }
 
 .fc-basic-view .fc-body .fc-row {
-	min-height: 4em; /* ensure that all rows are at least this tall */
+	/*min-height: 4em; /* ensure that all rows are at least this tall */
 }
 
 /* a "rigid" row will take up a constant amount of height because content-skeleton is absolute */
@@ -813,7 +811,8 @@ a.fc-more:hover {
 }
 
 .fc-ltr .fc-basic-view .fc-day-number {
-	text-align: right;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .fc-rtl .fc-basic-view .fc-day-number {
@@ -837,7 +836,7 @@ a.fc-more:hover {
 }
 
 .fc-agenda-view .fc-day-grid .fc-row {
-	min-height: 3em; /* all-day section will never get shorter than this */
+	/*min-height: 3em; /* all-day section will never get shorter than this */
 }
 
 .fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {
@@ -882,7 +881,7 @@ a.fc-more:hover {
 }
 
 .fc-time-grid table { /* don't put outer borders on slats/bg/content/etc */
-	border: 0 hidden transparent;
+	/*border: 0 hidden transparent;*/
 }
 
 .fc-time-grid > .fc-bg {
@@ -924,12 +923,12 @@ a.fc-more:hover {
 --------------------------------------------------------------------------------------------------*/
 
 .fc-time-grid .fc-slats td {
-	height: 1.5em;
-	border-bottom: 0; /* each cell is responsible for its top border */
+	/*height: 1.5em;
+	/*border-bottom: 0; /* each cell is responsible for its top border */
 }
 
 .fc-time-grid .fc-slats .fc-minor td {
-	border-top-style: dotted;
+	/*border-top-style: dotted;
 }
 
 .fc-time-grid .fc-slats .ui-widget-content { /* for jqui theme */
@@ -1077,6 +1076,6 @@ be a descendant of the grid when it is being dragged.
 
 #calendar
 {
-    border-bottom: 1px solid #eee;
+    /*border-bottom: 1px solid #eee;*/
 
 }

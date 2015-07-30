@@ -695,6 +695,7 @@ footer {
   color: @blue;
   margin-top: 20px;
   box-shadow: 0 0 5px rgba(0,0,0,.2);
+  z-index: 9999;
 
   .transition(all, .2s);
 
@@ -2229,6 +2230,40 @@ a.update + a.delete {
     &:last-child {
       padding-left: 10px !important;
       width: 80%;
+    }
+  }
+}
+
+
+.sidebar-content .fc-unthemed {
+  h2 {
+    font-weight: normal;
+    font-size: 15px;
+    text-transform: capitalize;
+  }
+
+  .fc-state-default {
+    background: none;
+    box-shadow: none;
+    border: none;
+    .transition();
+  }
+
+  .fc-state-hover {
+    background: white;
+  }
+
+  .fc-month-view table {
+    // border: none !important;
+
+    .fc-day-header {
+      text-transform: uppercase;
+      font-size: 12px; 
+    }
+
+
+    .fc-day {
+      vertical-align: middle !important;
     }
   }
 }

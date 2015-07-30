@@ -1489,6 +1489,7 @@ footer {
   color: #2c3e50;
   margin-top: 20px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
@@ -2706,4 +2707,29 @@ a.update + a.delete {
 .post-answer-view td:last-child {
   padding-left: 10px !important;
   width: 80%;
+}
+.sidebar-content .fc-unthemed h2 {
+  font-weight: normal;
+  font-size: 15px;
+  text-transform: capitalize;
+}
+.sidebar-content .fc-unthemed .fc-state-default {
+  background: none;
+  box-shadow: none;
+  border: none;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.sidebar-content .fc-unthemed .fc-state-hover {
+  background: white;
+}
+.sidebar-content .fc-unthemed .fc-month-view table .fc-day-header {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.sidebar-content .fc-unthemed .fc-month-view table .fc-day {
+  vertical-align: middle !important;
 }
