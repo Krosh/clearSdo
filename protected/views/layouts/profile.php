@@ -51,7 +51,7 @@
             </div>
         </div>
         <div class="avatar">
-            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatar(AVATAR_SIZE_MINI); ?>')"></div>
+            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatarPath(AVATAR_SIZE_MINI); ?>')"></div>
         </div>
     </div>
 </div>

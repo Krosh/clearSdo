@@ -31,6 +31,7 @@ function getDialogWithUser(idUser)
 
 function updateDialogs()
 {
+    console.log($("input[name=startDialog]").val());
     $.ajax({
         type: 'POST',
         url: '/message/getDialogs',
@@ -66,9 +67,56 @@ function sendMessage()
     });
 }
 
+function updateSelectUserDialog(text)
+{
+    var i = 0;
+    var showCount = 5;
+    $(".dd-options li a").each(function()
+    {
+        if (i < showCount)
+        {
+            var currentText = $(this).children("label")[0].innerText;
+            console.log(currentText);
+            if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
+            {
+                $(this).hide();
+            } else
+            {
+                i++;
+                $(this).show();
+            }
+        } else
+        {
+            $(this).hide();
+        }
+    });
+}
+
 $(document).ready(function(){
-
     updateDialogs();
+    if ($("#selectUserDialog").length)
+    {
 
-
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/message/ajaxGetUsers',
+            height: 40,
+            success: function(data)
+            {
+                $('#selectUserDialog').ddslick({
+                    data:data,
+                    width:300,
+                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocusout = "$(\'#selectUserData\').ddslick(\'close\');" onkeyup="updateSelectUserDialog(this.value)">',
+                    imagePosition:"left",
+                    onSelected: function(selectedData){
+                        console.log(selectedData);
+                        $("input[name=startDialog]").val(selectedData.selectedData.value);
+                        updateDialogs();
+                    }
+                });
+                updateSelectUserDialog("");
+            }
+        });
+    }
 });

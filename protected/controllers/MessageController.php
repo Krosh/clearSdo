@@ -137,6 +137,23 @@ class MessageController extends CController
         }
     }
 
+    public function actionAjaxGetUsers()
+    {
+        $users = User::model()->findAll();
+        $arr = array();
+        foreach ($users as $user)
+        {
+            $item = array();
+            $item['value'] = $user->id;
+            $item['text'] = $user->fio;
+            $item['selected'] = false;
+            $item['description'] = "";
+            $item['imageSrc'] = $user->getAvatarPath(AVATAR_SIZE_MINI);
+            $arr[] = $item;
+        }
+        echo json_encode($arr);
+    }
+
     public function actionIndex($startDialog = -1)
     {
         $this->render('view', array("startDialog" => $startDialog));

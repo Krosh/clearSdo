@@ -1,7 +1,10 @@
-<section id="dialogs">
-</section>
 <section class="actions">
-    <a href="#" class="outline-btn">Найти пользователей</a>
+    <div id = "selectUserDialog">
+
+    </div>
+<!--    <a href="#" class="outline-btn">Найти пользователей</a>
+--></section>
+<section id="dialogs">
 </section>
 </div>
 <div class="rightside clearfix">

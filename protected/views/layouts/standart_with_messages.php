@@ -87,6 +87,7 @@ $cs->registerCoreScript('jquery');
 <!--<script src="../../js/redactor.min.js"></script>-->
 <script src="../../js/jquery.quicksearch.js"></script>
 <script src="../../js/jquery.multi-select.js"></script>
+<script src="../../js/jquery.ddslick.min.js"></script>
 <script src="../../js/frosty.min.js"></script>
 <script src="../../js/plugins.js"></script>
 <script src="../../js/jquery.nicefileinput.min.js"></script>

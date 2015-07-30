@@ -25,8 +25,8 @@ class PostForm extends CFormModel
         // will receive user inputs.
         return array(
             array('subject', 'required', 'on'=>'create'),
-            array('subject', 'length', 'max'=>120),
             array('content', 'required'),
+            array('subject', 'length', 'max'=>120),
             array('lockthread', 'safe'),
         );
     }
