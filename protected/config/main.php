@@ -35,6 +35,7 @@ if ($handle = opendir($path)) {
 }
 
 return array(
+    'basePath' => '//pub/home/mvtom/stml2/protected/',
     'name'=>'SDO Stimul v 2.0',
     'sourceLanguage'=>'ru',
     'language'=>'ru',
@@ -62,7 +63,15 @@ return array(
         //If you manually installed it
         'xupload' => 'ext.xupload'
     ),
+        'modules'=>array(
+        'forum'=>array(
+            'class'=>'application.modules.yii-forum.YiiForumModule',
+        ),
+    ),
     'components'=>array(
+        'syntaxhighlighter' => array(
+            'class' => 'ext.syntaxhighlighter.JMSyntaxHighlighter',
+        ),
         'imageHandler'=>array('class'=>'CImageHandler'),
         'bigbluebutton'=>array(
             'class'=>'ext.bigbluebutton.BigBlueButton',
@@ -117,7 +126,10 @@ return array(
             'showScriptName'=>false,
 			'rules'=>array(
                 'gii'=>'gii',
-                '<action:\w+>' => 'site/<action>',
+                 'forum'                                         => '/forum/forum/index',
+                '/forum/<controller:\w+>/<action:[\w-]+>'        => 'forum/<controller>/<action>',
+                '/forum/<action:[\w-]+>'                        => 'forum/forum/<action>',
+               '<action:\w+>' => 'site/<action>',
                 'gii/<controller:\w+>'=>'gii/<controller>',
                 'gii/<controller:\w+>/<action:\w+>'=>'gii/<controller>/<action>',
 				'site/<action:\w>'=>'index.php/site/<action>',
@@ -127,5 +139,11 @@ return array(
      //           		'index.php/site' => 'site/index',
 			),
 		),
+		        'request'=>array(
+            // Возможно это и костыль, но без него никуда не поехать, тут мы определяем базовый URL нашего приложения.
+            'baseUrl'=>$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'] != $_SERVER['SCRIPT_FILENAME'] ? 'http://'.$_SERVER['HTTP_HOST'] : '',
+            // ...
+        ),
+
 	),
 );
