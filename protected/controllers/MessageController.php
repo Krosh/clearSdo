@@ -65,11 +65,19 @@ class MessageController extends CController
                     $items[$j] = $t;
                 }
             }
+        $MAX_DIALOGS_COUNT = 5;
+        $mas = $items;
+        $items = array();
+        for ($i = 0; $i < min(count($mas),$MAX_DIALOGS_COUNT); $i++)
+        {
+            $items[] = $mas[$i];
+        }
         if ($startDialog>-1 && (count($items) == 0 || $items[0]["user"]->id != $startDialog))
         {
             $user = User::model()->findByPk($startDialog);
             if ($user != null)
-            {$criteria = new CDbCriteria();
+            {
+                $criteria = new CDbCriteria();
                 $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$startDialog,'OR');
                 $criteria->addCondition("idAutor = ".$startDialog." AND idRecepient = ".Yii::app()->user->getId(),'OR');
                 $criteria->order = "dateSend DESC";
@@ -139,15 +147,35 @@ class MessageController extends CController
 
     public function actionAjaxGetUsers()
     {
-        $users = User::model()->findAll();
+        $criteria = new CdbCriteria();
+        $criteria->addCondition("id <> ".Yii::app()->user->id);
+        $users = User::model()->findAll($criteria);
         $arr = array();
         foreach ($users as $user)
         {
+            if ($user->role == ROLE_TEACHER)
+                $role = "Преподаватель";
+            if ($user->role == ROLE_STUDENT)
+            {
+                $role = "Студент ";
+                $groups = StudentGroup::model()->findAll("idStudent = :id", array(':id' => $user->id));
+                $flag = true;
+                foreach ($groups as $item)
+                {
+                    if (!$flag)
+                        $role.=", ";
+                    $group = Group::model()->findByPk($item->idGroup);
+                    $role.= $group->Title;
+                    $flag = false;
+                }
+            }
+            if ($user->role == ROLE_ADMIN)
+                $role = "Администратор";
             $item = array();
             $item['value'] = $user->id;
             $item['text'] = $user->fio;
             $item['selected'] = false;
-            $item['description'] = "";
+            $item['description'] = $role;
             $item['imageSrc'] = $user->getAvatarPath(AVATAR_SIZE_MINI);
             $arr[] = $item;
         }
