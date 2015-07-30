@@ -2733,3 +2733,9 @@ a.update + a.delete {
 .sidebar-content .fc-unthemed .fc-month-view table .fc-day {
   vertical-align: middle !important;
 }
+#selectUserDialog input {
+  width: 100%;
+}
+#selectUserDialog .dd-pointer {
+  right: 20px !important;
+}
