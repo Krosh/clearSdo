@@ -103,11 +103,13 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
 
 <footer class="fixed">
     <div class="container">
-        <div class="col-6">
-            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a>
-        </div>
-        <div class="col-6 right">
-            СДО Стимул 2.0 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
+        <div class="col-group">
+            <div class="col-6">
+                Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a>
+            </div>
+            <div class="col-6 right">
+                СДО Стимул 2.0 &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
+            </div>
         </div>
     </div>
 </footer>
