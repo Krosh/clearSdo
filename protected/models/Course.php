@@ -130,6 +130,25 @@ class Course extends CActiveRecord
 		));
 	}
 
+
+    public function checkAccessAsStudent()
+    {
+        $ids = array();
+        $criteria = new CDbCriteria();
+        $criteria->addCondition("idCourse = :idCourse", array(":idCourse" => $this->id));
+        foreach (Yii::app()->user->getModel()->groups as $group)
+        {
+            $ids[] = $group->id;
+        }
+        $criteria->addInCondition("idGroup",$ids);
+        return CoursesGroup::model()->exists("idCourse = :idCourse AND idGroup IN :groups");
+    }
+
+    public function checkAccessAsTeacher()
+    {
+        return CoursesAutor::model()->exists('idCourse = :idCourse AND idAutor = :idAutor', array(':idCourse' => $this->id,':idAutor' => Yii::app()->user->getId()));
+    }
+
     static public function getCoursesByAutor($idAutor, $idTerm)
     {
         $models = CoursesAutor::model()->findAll('idAutor = :idAutor', array(':idAutor' => $idAutor));
@@ -216,7 +235,10 @@ class Course extends CActiveRecord
 
     static public function getCoursesByGroup($idGroup,$idTerm)
     {
-        $models = CoursesGroup::model()->findAll('idGroup = :idGroup AND idTerm = :idTerm', array(':idGroup' => $idGroup, ':idTerm' => $idTerm));
+        if ($idTerm != -1)
+            $models = CoursesGroup::model()->findAll('idGroup = :idGroup AND idTerm = :idTerm', array(':idGroup' => $idGroup, ':idTerm' => $idTerm));
+        else
+            $models = CoursesGroup::model()->findAll('idGroup = :idGroup', array(':idGroup' => $idGroup));
         $idString = '(';
         foreach ($models as  $item)
         {
@@ -230,11 +252,32 @@ class Course extends CActiveRecord
 
     public function afterSave()
     {
-        $model = new CoursesAutor();
-        $model ->isNewRecord = true;
-        $model ->idCourse = $this->id;
-        $model -> idAutor = Yii::app()->user->id;
-        $model -> save();
+        Yii::import('application.modules.yii-forum.models.*');
+        if ($this->isNewRecord)
+        {
+            $model = new CoursesAutor();
+            $model ->isNewRecord = true;
+            $model ->idCourse = $this->id;
+            $model -> idAutor = Yii::app()->user->id;
+            $model -> save();
+
+            $model = new Forum();
+            $model->title = $this->title != "" ? $this->title : "Временное имя темы";
+            $model->idCourse = $this->id;
+            $model->save();
+            $id = $model->id;
+
+            $model = new Forum();
+            $model->title = "Общие вопросы по курсу";
+            $model->parent_id = $id;
+            $model->save();
+        } else
+        {
+            $model = Forum::model()->find("idCourse = ".$this->id);
+            $model->title = $this->title;
+            $model->save();
+       }
+
     }
 
     public function beforeDelete()

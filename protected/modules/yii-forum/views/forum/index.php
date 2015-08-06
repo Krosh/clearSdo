@@ -3,7 +3,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array(
     'links'=>array('Форум')
 ));
 
-if(!Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum())
+if(!Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($category->id))
 {
     echo 'Админ: '. CHtml::link('Новая категория', array('/forum/create')) .'<br />';
 }

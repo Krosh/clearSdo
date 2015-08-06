@@ -9,6 +9,7 @@
  * @property string $title Forum title
  * @property string $description Forum description
  * @property integer $listorder
+ * @property integer $idCourse
  * @property boolean $is_locked Create new threads in forum? (ignored for categories)
  *
  * The followings are the available model relations:
@@ -107,6 +108,33 @@ class Forum extends CActiveRecord
             'threadCount'=>array(self::STAT, 'Thread', 'forum_id'),
         );
     }
+
+    public function getCourse()
+    {
+        if ($this->idCourse > 0)
+            return Course::model()->findByPk($this->idCourse);
+        else
+            return null;
+    }
+
+    public function hasAccess()
+    {
+        if ($this->getCourse() == null)
+            return true;
+        if (Yii::app()->user->isAdmin())
+        {
+            return true;
+        }
+        if (Yii::app()->user->isStudent())
+        {
+            return $this->getCourse()->checkAccessAsStudent();
+        }
+        if (Yii::app()->user->isTeacher())
+        {
+            return $this->getCourse()->checkAccessAsTeacher();
+        }
+    }
+
 
     /**
      * @return array customized attribute labels (name=>label)

@@ -1,6 +1,6 @@
 <?php
 // For admins, add link to delete post
-$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum();
+$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($data->thread->forum->id);
 ?>
 <div class="post">
     <div class="header">

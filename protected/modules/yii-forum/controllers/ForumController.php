@@ -24,19 +24,18 @@ class ForumController extends ForumBaseController
                 'actions' => array('index', 'view'),
                 'users' => array('*'),
             ),
-/*
-            // authenticated users
-            array('allow',
-                'actions' => array(),
-                'users' => array('@'),
-            ),
-*/
+            /*
+                        // authenticated users
+                        array('allow',
+                            'actions' => array(),
+                            'users' => array('@'),
+                        ),
+            */
 
             // administrators
             array('allow',
                 'actions' => array('create', 'update', 'delete'),
                 'users' => array('@'), // Must be authenticated
-                'expression' => 'Yii::app()->user->isAdminOnForum()', // And must be admin
             ),
 
             // deny all users
@@ -50,10 +49,47 @@ class ForumController extends ForumBaseController
      */
     public function actionIndex()
     {
+        $categories = array();
+        if (Yii::app()->user->isAdmin())
+        {
+            $categories = Forum::model()->categories()->findAll();
+        }
+        elseif (Yii::app()->user->isStudent())
+        {
+            $resultCourses = array();
+            foreach (Yii::app()->user->getModel()->groups as $group)
+            {
+                $courses = Course::getCoursesByGroup($group->id,-1);
+                $resultCourses = array_merge($resultCourses,$courses);
+            }
+            $ids = array();
+            foreach ($resultCourses as $item)
+            {
+                $ids[] = $item->id;
+            }
+            $criteria = new CDbCriteria();
+            $criteria->addCondition("idCourse IS NULL");
+            $criteria->addInCondition("idCourse",$ids,"OR");
+            $categories = Forum::model()->categories()->findAll($criteria);
+        }
+        elseif (Yii::app()->user->isTeacher())
+        {
+            $models = CoursesAutor::model()->findAll('idAutor = :idAutor', array(':idAutor' => Yii::app()->user->getId()));
+            $ids = array();
+            foreach ($models as $item)
+            {
+               $ids[] = $item->idCourse;
+            }
+            $criteria = new CDbCriteria();
+            $criteria->addCondition("idCourse IS NULL");
+            $criteria->addInCondition("idCourse",$ids,"OR");
+            $categories = Forum::model()->categories()->findAll($criteria);
+        }
+
         // Dataproviders for forums in each category will be created on the fly
         // This may be a good candidate for eager loading...
         $this->render('index',array(
-            'categories'=>Forum::model()->categories()->findAll(),
+            'categories'=>$categories,
         ));
     }
 
@@ -121,6 +157,8 @@ class ForumController extends ForumBaseController
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
             throw new CHttpException(404, 'Страница не найдена.');
+        if (!$forum->hasAccess())
+            throw new CHttpException(404, 'У вас недостаточно прав.');
 
         if(isset($_POST['Forum']))
         {
@@ -149,6 +187,9 @@ class ForumController extends ForumBaseController
         $forum = Forum::model()->findByPk($id);
         if(null == $forum)
             throw new CHttpException(404, 'Страница не найдена.');
+
+        if (!$forum->hasAccess())
+            throw new CHttpException(404, 'У вас недостаточно прав.');
 
         $forum->delete();
     }

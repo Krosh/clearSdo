@@ -37,7 +37,6 @@ class PostController extends ForumBaseController
             array('allow',
                 'actions' => array('delete'),
                 'users' => array('@'), // Must be authenticated
-                'expression' => 'Yii::app()->user->isAdminOnForum()', // And must be admin
             ),
 
             // deny all users
@@ -58,6 +57,10 @@ class PostController extends ForumBaseController
         $post = Post::model()->findByPk($id);
         if(null == $post)
             throw new CHttpException(404, 'Страница не найдена.');
+
+        $forum = $post->thread->forum;
+        if (!$forum->hasAccess())
+            throw new CHttpException(404, 'У вас недостаточно прав.');
 
         $post->delete();
     }

@@ -66,7 +66,7 @@ class UserController extends ForumBaseController
     {
         // A user can onbly edit themselves, unless they're admin of course
         if(Yii::app()->user->isGuest || (
-                !Yii::app()->user->isAdmin &&
+                !Yii::app()->user->isAdminOnForum() &&
                 ($id!=Yii::app()->user->forumuser_id)
         ))
             throw new CHttpException(403, 'У вас нет доступа.');

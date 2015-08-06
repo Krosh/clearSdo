@@ -60,8 +60,11 @@
                 <?php echo $form->textArea($model,'content', array('rows'=>10, 'cols'=>70, 'class'=>'jsRedactor', 'style' => 'width:100%; height: 200px')); ?>
             </td>
         </tr>
-    
-        <?php if(Yii::app()->user->isAdminOnForum()): ?>
+
+        <?php
+            $thread = Thread::model()->findByPk($model->thread_id)
+        ?>
+        <?php if(Yii::app()->user->isAdminOnForum($thread->forum->id)): ?>
         <tr>
             <td width="35%">
                 <?php echo $form->labelEx($model,'lockthread'); ?>

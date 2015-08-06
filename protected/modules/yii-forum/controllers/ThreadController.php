@@ -35,7 +35,6 @@ class ThreadController extends ForumBaseController
             array('allow',
                 'actions' => array('update', 'delete'),
                 'users' => array('@'), // Must be authenticated
-                'expression' => 'Yii::app()->user->isAdminOnForum()', // And must be admin
             ),
 
             // deny all users
@@ -108,7 +107,8 @@ class ThreadController extends ForumBaseController
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
             throw new CHttpException(404, 'Страница не найдена.');
-
+        if (!$thread->forum->hasAccess())
+            throw new CHttpException(404, 'У вас недостаточно прав доступа');
         if(isset($_POST['Thread']))
         {
             $thread->attributes=$_POST['Thread'];
@@ -131,7 +131,7 @@ class ThreadController extends ForumBaseController
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
             throw new CHttpException(404, 'Страница не найдена.');
-        if(!Yii::app()->user->isAdminOnForum() && $thread->is_locked)
+        if(!Yii::app()->user->isAdminOnForum($thread->forum->id) && $thread->is_locked)
             throw new CHttpException(403, 'У вас нет доступа.');
 
         $model=new PostForm;
@@ -146,7 +146,7 @@ class ThreadController extends ForumBaseController
                 $post->content = $model->content;
                 $post->save(false);
 
-                if(Yii::app()->user->isAdminOnForum() && $thread->is_locked != $model->lockthread)
+                if(Yii::app()->user->isAdminOnForum($thread->forum->id) && $thread->is_locked != $model->lockthread)
                 {
                     $thread->is_locked = $model->lockthread;
                     $thread->save(false);
@@ -175,6 +175,8 @@ class ThreadController extends ForumBaseController
         $thread = Thread::model()->findByPk($id);
         if(null == $thread)
             throw new CHttpException(404, 'Страница не найдена.');
+        if (!$thread->forum->hasAccess())
+            throw new CHttpException(404, 'У вас недостаточно прав доступа');
 
         $thread->delete();
     }

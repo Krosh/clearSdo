@@ -1,15 +1,13 @@
 <?php
 
-$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum();
+$isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($forum->id);
 
 $gridColumns = array(
     array(
         'name' => 'Категория',
         'headerHtmlOptions' => array('colspan' => '2'),
         'type' => 'html',
-        'value' => function () {
-              return '<i class="fa fa-arrow-circle-o-right"></i>';
-        },
+        'value' => "",
         'htmlOptions' => array('style' => 'width:22px;'),
     ),
     array(

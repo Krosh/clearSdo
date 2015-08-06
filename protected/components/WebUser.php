@@ -32,9 +32,13 @@ class WebUser extends CWebUser {
         return ($this->getRole() == 2);
     }
 
-    function isAdminOnForum()
+    function isAdminOnForum($idForum = -1)
     {
-        return ($this->getRole() > 0);
+        if ($idForum <= 0)
+            return $this->isAdmin();
+        Yii::import('application.modules.yii-forum.models.*');
+        $forum = Forum::model()->findByPk($idForum);
+        return $forum->hasAccess();
     }
 
     function getRole() {

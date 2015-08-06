@@ -65,7 +65,7 @@ class MessageController extends CController
                     $items[$j] = $t;
                 }
             }
-        $MAX_DIALOGS_COUNT = 5;
+        $MAX_DIALOGS_COUNT = 4;
         $mas = $items;
         $items = array();
         for ($i = 0; $i < min(count($mas),$MAX_DIALOGS_COUNT); $i++)
@@ -147,7 +147,7 @@ class MessageController extends CController
 
     public function actionAjaxGetUsers()
     {
-        $criteria = new CdbCriteria();
+        $criteria = new CDbCriteria();
         $criteria->addCondition("id <> ".Yii::app()->user->id);
         $users = User::model()->findAll($criteria);
         $arr = array();
