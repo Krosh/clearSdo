@@ -63,7 +63,7 @@ class SiteController extends CController
                 if($identity->authenticate())
                 {
                     Yii::app()->user->setFlash('message','Авторизация прошла успешно');
-                    Yii::app()->user->login($identity);
+                    Yii::app()->user->login($identity,60 * 20);
                     $auth = true;
                     $this->redirect('/site/index');
                 }
@@ -76,7 +76,6 @@ class SiteController extends CController
         else
         {
             $auth = true;
-
         }
         if ($auth)
             $this->render("mainPage");

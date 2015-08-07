@@ -117,9 +117,14 @@ return array(
             // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
             'defaultRoles' => array('guest'),
         ),
+        'session' => array(
+            'timeout' => 20 * 60,
+        ),
         'user'=>array(
+            'autoRenewCookie' => true,
+            'authTimeout' => 60 * 20,
+            'allowAutoLogin'=>true,
             'class' => 'WebUser',
-            // …
         ),
         'urlManager'=>array(
             'urlFormat'=>'path',

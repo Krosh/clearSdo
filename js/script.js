@@ -545,6 +545,7 @@ function addLearnMaterial(idCourse)
                 if (xhr.responseText == "success")
                 {
                     updateLearnMaterials(idCourse);
+                    closeLearnMaterialDialog();
                 } else
                 {
                     onAlert("LOAD_FILE_ERROR");
@@ -658,6 +659,12 @@ function updateLearnMaterials(idCourse)
                     return $helper;
                 }
             });
+            $('.changeOnEnter').keyup(function(e)
+            {
+                if (e.keyCode == 13)
+                    $(this).change();
+            });
+
 
             footerUpdate();
         },
