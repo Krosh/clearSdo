@@ -38,7 +38,7 @@ class WebUser extends CWebUser {
             return $this->isAdmin();
         Yii::import('application.modules.yii-forum.models.*');
         $forum = Forum::model()->findByPk($idForum);
-        return $forum->hasAccess();
+        return $forum->hasAdminAccess();
     }
 
     function getRole() {

@@ -26,7 +26,7 @@
                 <?php echo $form->labelEx($model,'title'); ?>
             </td>
             <td>
-                <?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
+                <?php echo $form->textField($model,'title',array('size'=>45)); ?>
                 <?php echo $form->error($model,'title'); ?>
             </td>
         </tr>
@@ -48,7 +48,7 @@
                     <?php echo $form->error($model,'path'); ?>
                 </div>
                 <div class="linkDiv">
-                    <?php echo CHtml::textField("LinkPath",$model->path,array('size'=>45,'maxlength'=>45))?>
+                    <?php echo CHtml::textField("LinkPath",$model->path,array('size'=>45))?>
                     <?php echo $form->error($model,'path'); ?>
                 </div>
                 <div class="dateDiv">
@@ -66,7 +66,7 @@
 
     <div class="row buttons" style="text-align:right; margin-top: 15px;">
         <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue", "onclick" => "$(this).hide(); $('#learnMaterialLoader').show();addLearnMaterial($idCourse);return false")); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue", "onclick" => "$(this).hide(); $('#learnMaterialLoader').show();addLearnMaterial($idCourse);closeLearnMaterialDialog(); return false")); ?>
     </div>
 
     <?php $this->endWidget(); ?>

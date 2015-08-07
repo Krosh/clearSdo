@@ -15,6 +15,11 @@ function fireEvent(element,event){
     }
  }
 
+function closeLearnMaterialDialog()
+{
+    $("#learnMaterialForm").trigger('reset');
+    $("#loadfile").modal('hide');
+}
 
 function ajaxChangeLanguage(lang)
 {
@@ -715,7 +720,7 @@ function updateControlMaterials(idCourse)
 
 function changeDiv(title,n)
 {
-    $("#modalTitle").html(title);
+    $("#modalTitle").html(" "+title);
     $("#LearnMaterial_category").val(n);
     if (n == 2)
     {

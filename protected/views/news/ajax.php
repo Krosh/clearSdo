@@ -30,7 +30,7 @@ $count = min(count($index["TITLE"])-1,$MAX_NEWS_COUNT);
     $time = strtotime($element[$index["PUBDATE"][$i+1]]["value"]);
     ?>
     <div class="sidebar-small-item">
-        <a href="<?php echo $element[$index["LINK"][$i+1]]["value"]; ?>"><?php echo $text;?></a>
+        <a target="_blank" href="<?php echo $element[$index["LINK"][$i+1]]["value"]; ?>"><?php echo $text;?></a>
         <div class="description"><i><?php echo date("d.m.Y",$time)?></i></div>
     </div>
 <?php endfor; ?>
