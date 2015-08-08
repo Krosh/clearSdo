@@ -1259,7 +1259,7 @@ $(document).ready(function(){
                 right: 'next'
             },
             lang: 'ru',
-            // height: 400,
+            height: 350,
             editable: true,
             eventDurationEditable: false,
             events: {
