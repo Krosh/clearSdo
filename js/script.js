@@ -1362,4 +1362,8 @@ $(document).ready(function(){
             },
         });
     }
+
+    if($(".are-you-sure")) {
+        $(".are-you-sure").areYouSure();
+    }
 });

@@ -8,6 +8,9 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($data-
         <?php if($data->editor) echo ' (Отредактировано: '. Yii::app()->controller->module->format_date($data->updated, 'long') .' пользователем '. CHtml::link(CHtml::encode($data->editor->name), $data->editor->url) .')'; ?>
 
         <div class="admin" style="float:right; border:none;vertical-align: middle; vertical-align: top;">
+            <?if($isAdmin || Yii::app()->user->id == $data->author_id): ?>
+                <a href="/forum/post/update?id=<?=$data->id?>"><i class="fa fa-pencil"></i></a>
+            <?endif; ?>
             <? if($isAdmin)
                 {
                     $deleteConfirm = "Вы уверены? Этот ответ будет удален!";
@@ -18,9 +21,6 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($data-
                     );
                 }
             ?>
-            <?if($isAdmin || Yii::app()->user->id == $data->author_id): ?>
-                <a href="/forum/post/update?id=<?=$data->id?>"><i class="fa fa-pencil"></i></a>
-            <?endif; ?>
         </div>
     </div>
     <div class="content">

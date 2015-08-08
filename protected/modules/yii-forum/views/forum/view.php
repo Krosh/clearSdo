@@ -55,19 +55,21 @@ if($isAdmin)
     $gridColumns[] = array(
         'class'=>'CButtonColumn',
         'header'=>'Админ',
-        'template'=>'{delete} {update}',
+        'template'=>'{update} {delete}',
         'deleteConfirmation'=>"js:'".$deleteConfirm."'",
         'afterDelete'=>'function(){document.location.reload(true);}',
         'buttons'=>array(
             'delete'=>array(
                 'url'=>'Yii::app()->createUrl("/forum/thread/delete", array("id"=>$data->id))',
                 'label' => '<i class="fa fa-remove"></i>',
-                'imageUrl' => false
+                'imageUrl' => false,
+                'options'=>array('title'=>''),
             ),
             'update'=>array(
                 'url'=>'Yii::app()->createUrl("/forum/thread/update", array("id"=>$data->id))',
                 'label' => '<i class="fa fa-pencil"></i>',
-                'imageUrl' => false
+                'imageUrl' => false,
+                'options'=>array('title'=>''),
             ),
         ),
         'htmlOptions' => array('style' => 'width:40px; text-align:center;'),

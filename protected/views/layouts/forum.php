@@ -87,6 +87,7 @@ $cs->registerCoreScript('jquery');
 <script src="../../js/plugins.js"></script>
 <script src="../../js/jquery.nicefileinput.min.js"></script>
 <script src="../../js/strength.js"></script>
+<script src="../../js/jquery.are-you-sure.js"></script>
 <script src="../../js/script.js"></script>
 </body>
 </html>
