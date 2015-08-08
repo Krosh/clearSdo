@@ -38,6 +38,7 @@ html {
     border-radius: 2px;
     box-shadow: 0 0 15px 2px #dadee1;
     margin-top: 15px;
+    overflow: hidden !important;
 }
 .mrkp-tbl .leftside {
     width: 25%;
