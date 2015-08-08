@@ -4,7 +4,7 @@
 	    </div>
 	</section>
 
-	<section id="dialogs" class="clearfix">
+	<section id="dialogs" class="clearfix" style="overflow: hidden">
 	</section>
 
 </div>
@@ -18,10 +18,11 @@
 
 		<div class="col-group">
 			<div class="col-6">
-				<a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn">Участники конференции</a>
+				<a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn" onclick="updateConferenceUsers(); return false">Участники конференции</a>
 			</div>
 			<div class="col-6">
 			    <input type="hidden" name = "idUser">
+                <input type="hidden" name = "isConference" value = "0">
 			    <input type="hidden" name = "startDialog" value = "<?php echo $startDialog; ?>">
 			    <div class="right">
 			    	<button type="submit" class="btn small">Отправить</button>
@@ -57,15 +58,12 @@
                 <h4 class="modal-title" id="myModalLabel" style="text-align: left !important;"><i class="fa fa-users"></i> Участники конференции</h4>
             </div>
             <div class="modal-body">
-				
-				<table width="100%">
-					<tr>
-						<td width="90%" class="left"><strong>1.</strong> Медведев Илья</td>
-						<td width="10%" class="right">
-							<a href="#"><i class="fa fa-remove"></i></a>
-						</td>
-					</tr>
-				</table>
+                <span id = "conferenceUsersList">
+
+                </span>
+                <hr>
+                <div id = "addUserToConferenceDialog">
+                </div>
             </div>
         </div>
     </div>

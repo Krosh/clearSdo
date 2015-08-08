@@ -216,6 +216,7 @@ class User extends CActiveRecord
     public function beforeDelete()
     {
         Message::model()->deleteAll("idAutor = :id OR idRecepient = :id", array(":id" => $this->id));
+        Conference::model()->deleteAll("idUser = :id", array(":id" => $this->id));
         AccessControlMaterial::model()->deleteAll("type_relation = :user AND idRecord = :id", array(":id" => $this->id, ":user" => ACCESS_RELATION_PERSONAL));
         CoursesAutor::model()->deleteAll("idAutor = :id", array(":id" => $this->id));
         LearnMaterial::model()->deleteAll("idAutor = :id", array(":id" => $this->id));

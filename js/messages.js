@@ -5,15 +5,14 @@
  * Time: 14:14
  * To change this template use File | Settings | File Templates.
  */
-function getDialogWithUser(idUser)
+function getDialogWithUser(idUser, isConf)
 {
     $(".dialog.active").removeClass("active");
-    $(".dialog[data-idUser="+idUser+"]").addClass("active");
-    $(".dialog[data-idUser="+idUser+"]").removeClass("noread");
+    $(".dialog[data-idUser="+idUser+"][data-isConf="+isConf+"]").addClass("active").removeClass("noread");
     $.ajax({
         type: 'POST',
         url: '/message/getDialogWithUser',
-        data: {idUser: idUser},
+        data: {idUser: idUser, isConf: isConf},
         dataType:'json',
         error: function(jqXHR, textStatus, errorThrown){
             alert(errorThrown);
@@ -25,6 +24,54 @@ function getDialogWithUser(idUser)
             var block = document.getElementById("messages");
             block.scrollTop = block.scrollHeight;
             $("input[name=idUser]").val(idUser);
+            $("input[name=isConference]").val(isConf);
+        }
+    });
+}
+
+function updateConferenceUsers()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/message/ajaxGetConferenceUsers',
+        data: $("#sendmessage").serialize(),
+        success: function(data)
+        {
+            $("#conferenceUsersList").html(data);
+        }
+    });
+    updateDialogs();
+}
+
+function deleteFromConference(idDeletedUser)
+{
+    var idConference = $("input[name=idUser]").val();
+    $.ajax({
+        type: 'POST',
+        url: '/message/ajaxDeleteFromConference',
+        data: {idConference: idConference, idUser: idDeletedUser},
+        success: function()
+        {
+            updateConferenceUsers();
+        }
+    });
+}
+
+function addToConference(idAddedUser)
+{
+    var isConference = $("input[name=isConference]").val();
+    var idConference = $("input[name=idUser]").val();
+    console.log(idConference);
+    $.ajax({
+        type: 'GET',
+        url: '/message/ajaxAddToConference',
+        data: {isConference: isConference, idConference: idConference, idUser: idAddedUser},
+        dataType: 'JSON',
+        success: function(data)
+        {
+            $("input[name=isConference]").val(1);
+            $("input[name=idUser]").val(data.idConference);
+            updateConferenceUsers();
         }
     });
 }
@@ -45,8 +92,14 @@ function updateDialogs()
         {
             $("input[name=startDialog]").val(-1);
             $("#dialogs").html(data.text);
+            $('.dialog').click(function()
+            {
+                getDialogWithUser($(this).attr("data-idUser"), $(this).attr("data-isConf"));
+
+            })
+            console.log(data);
             if (data.idDialog>0)
-                getDialogWithUser(data.idDialog);
+                $(".dialog[data-idUser="+data.idDialog+"][data-isConf="+data.isConf+"]").click();
         }
     });
 }
@@ -61,55 +114,85 @@ function sendMessage()
         },
         success: function(data)
         {
+            console.log(data);
             $("#messageTextArea").val("");
-            getDialogWithUser($("input[name=idUser]").val());
+            getDialogWithUser($("input[name=idUser]").val(),$("input[name=isConference]").val());
         }
     });
 }
 
-function updateSelectUserDialog(text)
+function addSelectUserDialog()
 {
-    var i = 0;
-    var showCount = 5;
-    $(".dd-options li a").each(function()
+    if ($("#addUserToConferenceDialog").length)
     {
-        var val = $($(this).children(".dd-option-value")[0]).val();
-        if (i < showCount && val>=0)
-        {
-            var currentText = $(this).children("label")[0].innerText;
-            console.log(currentText);
-            if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/message/ajaxGetUsers',
+            height: 40,
+            success: function(data)
             {
-                $(this).hide();
-            } else
-            {
-                i++;
-                $(this).show();
-            }
-        } else
-        {
-            $(this).hide();
-        }
-    });
-    if (i == 0)
-    {
-        // Сообщаем, что никого не нашли
-        $(".dd-options li a").each(function()
-        {
-            var val = $($(this).children(".dd-option-value")[0]).val();
-            if (val < 0)
-            {
-                $(this).show();
+                $('#addUserToConferenceDialog').ddslick({
+                    data:data,
+                    width:274,
+                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
+                    imagePosition:"left",
+                    onSelected: function(selectedData){
+                        if (selectedData.selectedData.value < 0)
+                            return;
+                        addToConference(selectedData.selectedData.value);
+                    }
+                });
+                updateSelectUserDialog("");
             }
         });
     }
 }
 
+function updateSelectUserDialog(text)
+{
+    $(".dd-container").each(function(){
+        var i = 0;
+        var showCount = 5;
+        $(this).find(".dd-options li a").each(function()
+        {
+            var val = $($(this).children(".dd-option-value")[0]).val();
+            if (i < showCount && val>=0)
+            {
+                var currentText = $(this).children("label")[0].innerText;
+                if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
+                {
+                    $(this).hide();
+                } else
+                {
+                    i++;
+                    $(this).show();
+                }
+            } else
+            {
+                $(this).hide();
+            }
+        });
+        if (i == 0)
+        {
+            // Сообщаем, что никого не нашли
+            $(this).find(".dd-options li a").each(function()
+            {
+                var val = $($(this).children(".dd-option-value")[0]).val();
+                if (val < 0)
+                {
+                    $(this).show();
+                }
+            });
+        }
+    })
+}
+
 $(document).ready(function(){
     updateDialogs();
+    addSelectUserDialog();
     if ($("#selectUserDialog").length)
     {
-
         $.ajax({
             type: 'GET',
             dataType: 'JSON',
@@ -120,7 +203,7 @@ $(document).ready(function(){
                 $('#selectUserDialog').ddslick({
                     data:data,
                     width:274,
-                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocusout = "$(\'#selectUserData\').ddslick(\'close\');" onkeyup="updateSelectUserDialog(this.value)">',
+                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
                     imagePosition:"left",
                     onSelected: function(selectedData){
                         if (selectedData.selectedData.value < 0)

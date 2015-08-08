@@ -10,6 +10,9 @@
  * @property string $dateSend
  * @property integer $status
  * @property string $text
+ * @property bool $isConference
+ * @property bool $isService
+ * @property bool $isPublishedOnMain
  */
 class Message extends CActiveRecord
 {
@@ -29,7 +32,7 @@ class Message extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idAutor, idRecepient, status', 'numerical', 'integerOnly'=>true),
+			array('isPublishedOnMain, isConference, isService, idAutor, idRecepient, status', 'numerical', 'integerOnly'=>true),
 			array('text, dateSend', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
