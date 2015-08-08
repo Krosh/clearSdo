@@ -15,6 +15,11 @@ function fireEvent(element,event){
     }
  }
 
+function closeLearnMaterialDialog()
+{
+    $("#learnMaterialForm").trigger('reset');
+    $("#loadfile").modal('hide');
+}
 
 function ajaxChangeLanguage(lang)
 {
@@ -540,6 +545,7 @@ function addLearnMaterial(idCourse)
                 if (xhr.responseText == "success")
                 {
                     updateLearnMaterials(idCourse);
+                    closeLearnMaterialDialog();
                 } else
                 {
                     onAlert("LOAD_FILE_ERROR");
@@ -653,6 +659,12 @@ function updateLearnMaterials(idCourse)
                     return $helper;
                 }
             });
+            $('.changeOnEnter').keyup(function(e)
+            {
+                if (e.keyCode == 13)
+                    $(this).change();
+            });
+
 
             footerUpdate();
         },
@@ -715,7 +727,7 @@ function updateControlMaterials(idCourse)
 
 function changeDiv(title,n)
 {
-    $("#modalTitle").html(title);
+    $("#modalTitle").html(" "+title);
     $("#LearnMaterial_category").val(n);
     if (n == 2)
     {

@@ -305,6 +305,19 @@ class ControlMaterial extends CActiveRecord
         $access->save();
     }
 
+    public function getCommonAccess($idCourse)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare("type_relation",1);
+        $criteria->compare("idControlMaterial",$this->id);
+        $criteria->compare("idCourse",$idCourse);
+        $accessInfo = AccessControlMaterial::model()->find($criteria);
+        if ($accessInfo->accessType == 2)
+            return false;
+        else
+            return true;
+    }
+
 
 
 }

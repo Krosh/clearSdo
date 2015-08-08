@@ -31,7 +31,9 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                             ?>
                         </div>
                     </div>
-
+                    <?php if (Yii::app()->user->isTeacher()):?>
+                        <a class="right" href="<?php echo $this->createUrl("/site/editCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим редактирования</span></a>
+                    <?php endif; ?>
                     <h2 id="files">Учебные материалы</h2>
                     <table class="table green">
                         <thead>

@@ -135,6 +135,21 @@ class Forum extends CActiveRecord
         }
     }
 
+    public function hasAdminAccess()
+    {
+        if (Yii::app()->user->isAdmin())
+        {
+            return true;
+        }
+        if (Yii::app()->user->isTeacher())
+        {
+            if ($this->getCourse() == null)
+                return false;
+            else
+                return $this->getCourse()->checkAccessAsTeacher();
+        }
+        return false;
+    }
 
     /**
      * @return array customized attribute labels (name=>label)

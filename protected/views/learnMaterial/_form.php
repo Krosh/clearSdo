@@ -26,7 +26,7 @@
                 <?php echo $form->labelEx($model,'title'); ?>
             </td>
             <td>
-                <?php echo $form->textField($model,'title',array('size'=>45,'maxlength'=>45)); ?>
+                <?php echo $form->textField($model,'title',array('size'=>45)); ?>
                 <?php echo $form->error($model,'title'); ?>
             </td>
         </tr>
@@ -48,7 +48,7 @@
                     <?php echo $form->error($model,'path'); ?>
                 </div>
                 <div class="linkDiv">
-                    <?php echo CHtml::textField("LinkPath",$model->path,array('size'=>45,'maxlength'=>45))?>
+                    <?php echo CHtml::textField("LinkPath",$model->path,array('size'=>45))?>
                     <?php echo $form->error($model,'path'); ?>
                 </div>
                 <div class="dateDiv">

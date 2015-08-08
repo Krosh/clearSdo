@@ -26,14 +26,14 @@
         <?php $item = LearnMaterial::model()->findByPk($currentCourseMaterial->idMaterial); ?>
         <? if($item->category != MATERIAL_TITLE) { ?>
             <tr id = "<?php echo $currentCourseMaterial->id; ?>"  data-idHeader = "<?php echo $idCurrentHeader; ?>">
-    <? } else { ?>
+        <? } else { ?>
             <?php $idCurrentHeader = $currentCourseMaterial->id; ?>
             <tr id = "<?php echo $currentCourseMaterial->id; ?>" class="titleRow">
         <? } ?>
 
         <?php if ($item->category == MATERIAL_TITLE):?>
             <td class="title" colspan="3">
-                <input id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->title?>" style="display:none">
+                <input class = "changeOnEnter" id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->title?>" style="display:none">
                 <span id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
                 <?
                 echo $item->title;
@@ -49,7 +49,7 @@
                 $f = $item->getIconExtension();
                 ?>
                 <img class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
-                <input id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->getViewedTitle()?>" style="display:none">
+                <input class = "changeOnEnter" id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->getViewedTitle()?>" style="display:none">
                 <span id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
                 <?
                 echo $item->getViewedTitle();

@@ -32,9 +32,11 @@ $listeners = Course::getGroups($model->id);
         <div class="col-3">
             <div class="page-title">
                 Курс: <?php echo $model->title?>
-            </div>
+            </div><br>
+            <a href="<?php echo $this->createUrl("/site/viewCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим просмотра</span></a>
             <div id="editCourse-groups"></div>
         </div>
+        <br>
         <div class="col-9 right">
             <div style="vertical-align: middle">
                 <a href="<?php echo $this->createUrl("/courses/calendar", array("id" => $model->id)); ?>" class="btn icon-colored icon-violet has-tip" data-original-title="Календарь" title="Календарь"><i class="fa fa-calendar"></i></a>
@@ -356,7 +358,8 @@ $listeners = Course::getGroups($model->id);
                                         },
                                         error: function(jqXHR, textStatus, errorThrown){
                                             alert("error"+textStatus+errorThrown);
-                                        }});',
+                                        }});
+                                        closeLearnMaterialDialog();',
                             'allowText' => false,
                         ),
                         'htmlOptions' => array('size' => 50, "placeholder" => "Название", 'id' => 'learnMaterialPicker'),
