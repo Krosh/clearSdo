@@ -19,6 +19,7 @@
 		<div class="col-group">
 			<div class="col-6">
 				<a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn" onclick="updateConferenceUsers(); return false">Участники конференции</a>
+                <a href="#" class="outline-btn" onclick="startNewConference(<?php echo Yii::app()->user->getId(); ?>); return false">Создать конференцию</a>
 			</div>
 			<div class="col-6">
 			    <input type="hidden" name = "idUser">
@@ -63,6 +64,8 @@
                 </span>
                 <hr>
                 <div id = "addUserToConferenceDialog">
+                </div>
+                <div id = "addGroupToConferenceDialog">
                 </div>
             </div>
         </div>

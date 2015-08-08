@@ -40,7 +40,6 @@ function updateConferenceUsers()
             $("#conferenceUsersList").html(data);
         }
     });
-    updateDialogs();
 }
 
 function deleteFromConference(idDeletedUser)
@@ -53,6 +52,7 @@ function deleteFromConference(idDeletedUser)
         success: function()
         {
             updateConferenceUsers();
+            updateDialogs();
         }
     });
 }
@@ -61,17 +61,50 @@ function addToConference(idAddedUser)
 {
     var isConference = $("input[name=isConference]").val();
     var idConference = $("input[name=idUser]").val();
-    console.log(idConference);
+    console.log("idCOnf:"+idConference);
     $.ajax({
         type: 'GET',
         url: '/message/ajaxAddToConference',
         data: {isConference: isConference, idConference: idConference, idUser: idAddedUser},
+        dataType: 'JSON',
+        error: function()
+        {
+        },
+
+        success: function(data)
+        {
+            console.log("result:");
+            console.log(data);
+            $("input[name=isConference]").val(1);
+            $("input[name=idUser]").val(data.idConference);
+            updateConferenceUsers();
+            updateDialogs();
+        }
+    });
+}
+
+function startNewConference(idUser)
+{
+    $("input[name=isConference]").val(0);
+    $("input[name=idUser]").val(idUser);
+    addToConference(idUser);
+}
+
+function addGroupToConference(idAddedGroup)
+{
+    var isConference = $("input[name=isConference]").val();
+    var idConference = $("input[name=idUser]").val();
+    $.ajax({
+        type: 'GET',
+        url: '/message/ajaxAddGroupToConference',
+        data: {isConference: isConference, idConference: idConference, idGroup: idAddedGroup},
         dataType: 'JSON',
         success: function(data)
         {
             $("input[name=isConference]").val(1);
             $("input[name=idUser]").val(data.idConference);
             updateConferenceUsers();
+            updateDialogs();
         }
     });
 }
@@ -79,7 +112,7 @@ function addToConference(idAddedUser)
 function updateDialogs()
 {
     console.log($("input[name=startDialog]").val());
-    $.ajax({
+        $.ajax({
         type: 'POST',
         url: '/message/getDialogs',
         data: {startDialog: $("input[name=startDialog]").val()},
@@ -96,7 +129,7 @@ function updateDialogs()
             {
                 getDialogWithUser($(this).attr("data-idUser"), $(this).attr("data-isConf"));
 
-            })
+            });
             console.log(data);
             if (data.idDialog>0)
                 $(".dialog[data-idUser="+data.idDialog+"][data-isConf="+data.isConf+"]").click();
@@ -123,6 +156,31 @@ function sendMessage()
 
 function addSelectUserDialog()
 {
+    if ($("#addGroupToConferenceDialog").length)
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/message/ajaxGetGroups',
+            height: 40,
+            success: function(data)
+            {
+                console.log(data);
+                $('#addGroupToConferenceDialog').ddslick({
+                    data:data,
+                    width:274,
+                    selectText: '<input type = "text" value = "" placeholder="Добавить группу..." onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
+                    imagePosition:"left",
+                    onSelected: function(selectedData){
+                        if (selectedData.selectedData.value < 0)
+                            return;
+                        addGroupToConference(selectedData.selectedData.value);
+                    }
+                });
+                updateSelectUserDialog("");
+            }
+        });
+    }
     if ($("#addUserToConferenceDialog").length)
     {
         $.ajax({

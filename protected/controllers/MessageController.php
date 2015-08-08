@@ -41,7 +41,7 @@ class MessageController extends CController
                 UNION
                 SELECT DISTINCT idAutor as 'id', 0 as 'isConference' FROM `tbl_messages` WHERE idRecepient = ".Yii::app()->user->getId()." AND isConference <> 1
                 UNION
-                SELECT DISTINCT idRecepient as 'id', 1 as 'isConference' FROM `tbl_messages` WHERE idAutor = ".Yii::app()->user->getId()." AND isConference = 1
+                SELECT DISTINCT idRecepient as 'id', 1 as 'isConference' FROM `tbl_messages` mes INNER JOIN `tbl_conference` conf ON mes.idRecepient = conf.idConference WHERE idUser = ".Yii::app()->user->getId()." AND isConference = 1
                 ";
         $command = Yii::app()->db->createCommand($sql);
         $res = $command->queryAll();
@@ -75,12 +75,12 @@ class MessageController extends CController
                     $users[] = $item->user;
                 }
                 $criteria = new CDbCriteria();
-                $criteria->addCondition("idAutor = ".Yii::app()->user->getId()." AND idRecepient = ".$idUser." AND isConference = 1");
+                $criteria->addCondition("idRecepient = ".$idUser." AND isConference = 1");
                 $criteria->order = "dateSend DESC";
                 $criteria->limit = 1;
                 $lastMessage = Message::model()->find($criteria);
                 $criteria = new CDbCriteria();
-                $criteria->addCondition("idAutor <> ".Yii::app()->user->id." AND idRecepient = $idUser AND status = 0 AND isService <> 1");
+                $criteria->addCondition("idAutor <> ".Yii::app()->user->id." AND idRecepient = $idUser AND status = 0 AND isService <> 1 AND isConference = 1");
                 $count = Message::model()->count($criteria);
                 $items[] = array("user" => $users, "message" => $lastMessage, "hasNonReadable" => $count>0, "isConf" => 1, "idUser" => $idUser);
             }
@@ -102,7 +102,7 @@ class MessageController extends CController
         {
             $items[] = $mas[$i];
         }
-        if ($startDialog>-1 && (count($items) == 0 || $items[0]["user"]->id != $startDialog || $items[0]['isConf']))
+        if ($startDialog>-1 && (count($items) == 0 || $items[0]['isConf'] || $items[0]["user"]->id != $startDialog))
         {
             $user = User::model()->findByPk($startDialog);
             if ($user != null)
@@ -127,7 +127,7 @@ class MessageController extends CController
         }
         else
         {
-            $isCong = 0;
+            $isConf = 0;
             $idStartDialog = -1;
         }
         $text = $this->renderPartial("dialogs", array("items" => $items),true);
@@ -251,6 +251,29 @@ class MessageController extends CController
         echo json_encode($arr);
     }
 
+    public function actionAjaxGetGroups()
+    {
+        $groups = Group::model()->findAll();
+        $arr = array();
+        foreach ($groups as $group)
+        {
+            $item = array();
+            $item['value'] = $group->id;
+            $item['text'] = $group->Title;
+            $item['selected'] = false;
+            $arr[] = $item;
+        }
+        $item = array();
+        $item['value'] = -1;
+        $item['text'] = "Никого не нашли :(";
+        $item['selected'] = false;
+        $item['description'] = "Попробуйте уточнить данные поиска";
+        $item['imageSrc'] = "";
+        $arr[] = $item;
+        echo json_encode($arr);
+    }
+
+
     public function actionIndex($startDialog = -1)
     {
         $this->render('view', array("startDialog" => $startDialog));
@@ -280,19 +303,45 @@ class MessageController extends CController
             $conference->idUser = Yii::app()->user->getId();
             $conference->save();
             $newConference = $conference->idConference;
-            $conference = new Conference();
-            $conference->idConference = $newConference;
-            $conference->idUser = $idConference;
-            $conference->save();
+            if ($idConference != Yii::app()->user->getId())
+            {
+                $conference = new Conference();
+                $conference->idConference = $newConference;
+                $conference->idUser = $idConference;
+                $conference->save();
+            } else
+            {
+                $this->addServiceMessage($newConference, Yii::app()->user->getModel()->getShortFio()." создал новую конференцию");
+            }
         }
+        Conference::model()->deleteAll("idUser = :us AND idConference = :conf", array(":us" => $idUser, ":conf" => $idConference));
         $addConf = new Conference();
         $addConf->idConference = $newConference;
         $addConf->idUser = $idUser;
-        $addConf->save();
+        if ($idUser <> Yii::app()->user->getId())
+        {
+            $addConf->save();
+            $user = User::model()->findByPk($idUser);
+            $this->addServiceMessage($newConference, Yii::app()->user->getModel()->getShortFio()." добавил в конференцию ".$user->getShortFio());
+        }
         $result = array();
         $result["idConference"] = $newConference;
-        $user = User::model()->findByPk($idUser);
-        $this->addServiceMessage($newConference, Yii::app()->user->getModel()->getShortFio()." добавил в конференцию ".$user->getShortFio());
+        echo json_encode($result);
+    }
+
+    public function actionAjaxAddGroupToConference($idConference, $idGroup, $isConference)
+    {
+        $group = Group::model()->findByPk($idGroup);
+        foreach ($group->students as $student)
+        {
+            $addConf = new Conference();
+            $addConf->idConference = $idConference;
+            $addConf->idUser = $student->id;
+            $addConf->save();
+        }
+        $this->addServiceMessage($idConference, Yii::app()->user->getModel()->getShortFio()." добавил в конференцию ".$group->Title);
+        $result = array();
+        $result["idConference"] = $idConference;
         echo json_encode($result);
     }
 
@@ -321,7 +370,9 @@ class MessageController extends CController
         {
             $users = array();
             $users[] = Yii::app()->user->getModel();
-            $users[] = User::model()->findByPk($idUser);
+            if ( Yii::app()->user->getId() <> $idUser)
+                $users[] = User::model()->findByPk($idUser);
+
             $this->renderPartial("conferenceUsers", array("users" => $users));
 
         }
