@@ -6,12 +6,16 @@
     else
     {
         if ($isConference)
-            $autor = $item->idAutor;
+            $autor = User::model()->findByPk($item->idAutor);
         else
             $autor = $user;
     }
     ?>
-    <?php if ($item->isService):?>
+    <?php if ($item->isPublishedOnMain):?>
+        <div class="row">
+            <p class="text" style="background-color: #f1c30f"><?php echo $item->text?></p>
+        </div>
+    <?php elseif ($item->isService):?>
         <div class="row">
             <p class="text"><?php echo $item->text?></p>
         </div>
@@ -26,6 +30,11 @@
             </span>
                 <p class="text"><?php echo $item->text?></p>
             </div>
+            <?php if (Yii::app()->user->isAdmin() && $item->idAutor == Yii::app()->user->getId()): ?>
+                <div class="right">
+                    <a href="#" onclick="deleteMessage(<?php echo $item->id; ?>); return false"><i class="fa fa-remove"></i></a>
+                </div>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 </div>

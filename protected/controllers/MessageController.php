@@ -334,6 +334,7 @@ class MessageController extends CController
         $group = Group::model()->findByPk($idGroup);
         foreach ($group->students as $student)
         {
+            Conference::model()->deleteAll("idUser = :us AND idConference = :conf", array(":us" => $student->id, ":conf" => $idConference));
             $addConf = new Conference();
             $addConf->idConference = $idConference;
             $addConf->idUser = $student->id;
@@ -372,11 +373,18 @@ class MessageController extends CController
             $users[] = Yii::app()->user->getModel();
             if ( Yii::app()->user->getId() <> $idUser)
                 $users[] = User::model()->findByPk($idUser);
-
             $this->renderPartial("conferenceUsers", array("users" => $users));
 
         }
+    }
 
+    public function actionDeleteMessage()
+    {
+        if (Yii::app()->user->isAdmin())
+        {
+            $idMessage = $_POST['idMessage'];
+            Message::model()->deleteByPk($idMessage);
+        }
     }
 
 }
