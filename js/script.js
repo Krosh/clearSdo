@@ -15,6 +15,21 @@ function fireEvent(element,event){
     }
  }
 
+function readNotice(idNotice, hidedObject)
+{
+    console.log(hidedObject);
+    $.ajax({
+        type: 'GET',
+        url: '/message/readNotice',
+        data: {idNotice: idNotice},
+        error: onError,
+        success: function(data)
+        {
+            hidedObject.slideUp();
+        }
+    });
+}
+
 function closeLearnMaterialDialog()
 {
     $("#learnMaterialForm").trigger('reset');

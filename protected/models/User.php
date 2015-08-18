@@ -80,6 +80,7 @@ class User extends CActiveRecord
     public function relations()
     {
         return array(
+            'readedNotices' => array(self::HAS_MANY, 'ReadedNotice', 'idUser'),
             'forumUser' => array(self::HAS_ONE, 'Forumuser', 'siteid'),
             'groups'=>array(self::MANY_MANY, 'Group', 'tbl_studentsgroups(idStudent,idGroup)'),
         );
@@ -224,6 +225,7 @@ class User extends CActiveRecord
         StudentGroup::model()->deleteAll("idStudent = :id", array(":id" => $this->id));
         UserControlMaterial::model()->deleteAll("idUser = :id", array(":id" => $this->id));
         UserFileAnswer::model()->deleteAll("idUser = :id", array(":id" => $this->id));
+        ReadedNotice::model()->deleteAll("idUser = :id", array(":id" => $this->id));
         $this->deleteAvatar();
         return parent::beforeDelete();
     }

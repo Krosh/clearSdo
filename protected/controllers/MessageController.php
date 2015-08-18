@@ -139,14 +139,7 @@ class MessageController extends CController
     {
         if ($_POST['isConf'])
         {
-            $criteria = new CDbCriteria();
-            $criteria->addCondition("idConference = ".$_POST['idUser']);
-            $confs = Conference::model()->findAll($criteria);
-            $users = array();
-            foreach ($confs as $item)
-            {
-                $users[$item->idUser] = $item->user;
-            }
+            $users = Conference::getUsersFromConference($_POST['idUser']);
             $criteria = new CDbCriteria();
             $criteria->addCondition("idRecepient = ".$_POST['idUser']." AND isConference = 1");
             $criteria->order = "dateSend DESC";
@@ -169,7 +162,6 @@ class MessageController extends CController
             $messages = Message::model()->findAll($criteria);
             $text = $this->renderPartial('dialog', array('messages' => array_reverse($messages), 'user' => $user, 'isConference' => false),true);
         }
-
         echo json_encode(array("text" => $text));
     }
 
@@ -184,7 +176,7 @@ class MessageController extends CController
         $criteria->limit = 1;
         $message = Message::model()->find($criteria);
         $timeDiffToCreateNewMessage = 60*60;
-        // TODO:: вынести в настройки
+        // TODO:: вынести в настройки это время
         if (!$_POST["isConference"] && $message != null && strtotime(date("Y-m-d H:i:s")) - strtotime($message->dateSend) < $timeDiffToCreateNewMessage)
         {
             $message->status = 0;
@@ -204,7 +196,26 @@ class MessageController extends CController
                 $ad = 0;
             $message->isPublishedOnMain = $ad && Yii::app()->user->isAdmin();
             $message->save(false);
+            if ($message->isPublishedOnMain)
+            {
+                $users = Conference::getUsersFromConference($_POST['idUser']);
+                foreach ($users as $user)
+                {
+                    $readedNotice = new ReadedNotice();
+                    $readedNotice->idUser = $user->id;
+                    $readedNotice->idMessage = $message->id;
+                    $readedNotice->isReaded = 0;
+                    $readedNotice->save();
+                }
+            }
         }
+    }
+
+    public function actionReadNotice($idNotice)
+    {
+        $notice = ReadedNotice::model()->findByPk($idNotice);
+        $notice->isReaded = 1;
+        $notice->save();
     }
 
     public function actionAjaxGetUsers()
@@ -334,6 +345,7 @@ class MessageController extends CController
         $group = Group::model()->findByPk($idGroup);
         foreach ($group->students as $student)
         {
+            Conference::model()->deleteAll("idUser = :us AND idConference = :conf", array(":us" => $student->id, ":conf" => $idConference));
             $addConf = new Conference();
             $addConf->idConference = $idConference;
             $addConf->idUser = $student->id;
@@ -372,11 +384,19 @@ class MessageController extends CController
             $users[] = Yii::app()->user->getModel();
             if ( Yii::app()->user->getId() <> $idUser)
                 $users[] = User::model()->findByPk($idUser);
-
             $this->renderPartial("conferenceUsers", array("users" => $users));
 
         }
+    }
 
+    public function actionDeleteMessage()
+    {
+        if (Yii::app()->user->isAdmin())
+        {
+            $idMessage = $_POST['idMessage'];
+            Message::model()->deleteByPk($idMessage);
+            ReadedNotice::model()->deleteAll("idMessage = ".$idMessage);
+        }
     }
 
 }

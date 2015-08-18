@@ -5,6 +5,23 @@
  * Time: 14:14
  * To change this template use File | Settings | File Templates.
  */
+function deleteMessage(idMessage)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/message/deleteMessage',
+        data: {idMessage: idMessage},
+        error: function(jqXHR, textStatus, errorThrown){
+        },
+        success: function(data)
+        {
+            var isConf = $("input[name=isConference]").val();
+            var idUser = $("input[name=idUser]").val();
+            getDialogWithUser(idUser, isConf)
+        }
+    });
+}
+
 function getDialogWithUser(idUser, isConf)
 {
     $(".dialog.active").removeClass("active");
@@ -116,7 +133,7 @@ function addGroupToConference(idAddedGroup)
 function updateDialogs()
 {
     console.log($("input[name=startDialog]").val());
-        $.ajax({
+    $.ajax({
         type: 'POST',
         url: '/message/getDialogs',
         data: {startDialog: $("input[name=startDialog]").val()},

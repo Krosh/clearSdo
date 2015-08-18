@@ -1,40 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "tbl_conference".
+ * This is the model class for table "tbl_readednotices".
  *
- * The followings are the available columns in table 'tbl_conference':
+ * The followings are the available columns in table 'tbl_readednotices':
  * @property integer $id
- * @property integer $idConference
+ * @property integer $idMessage
  * @property integer $idUser
- * @property User $user
+ * @property integer $isReaded
  */
-class Conference extends CActiveRecord
+class ReadedNotice extends CActiveRecord
 {
-	static public function getNextIdConference()
-    {
-        return time();
-    }
-
-    static public function getUsersFromConference($idConference)
-    {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition("idConference = ".$idConference);
-        $confs = Conference::model()->findAll($criteria);
-        $users = array();
-        foreach ($confs as $item)
-        {
-            $users[$item->idUser] = $item->user;
-        }
-        return $users;
-    }
-
-    /**
+	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_conference';
+		return 'tbl_readednotices';
 	}
 
 	/**
@@ -45,10 +27,10 @@ class Conference extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idConference, idUser', 'numerical', 'integerOnly'=>true),
+			array('idMessage, idUser, isReaded', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, idConference, idUser', 'safe', 'on'=>'search'),
+			array('id, idMessage, idUser, isReaded', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +43,7 @@ class Conference extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'user' => array(self::BELONGS_TO, 'User', 'idUser'),
+            'message' => array(self::BELONGS_TO, 'Message', 'idMessage'),
 		);
 	}
 
@@ -71,8 +54,9 @@ class Conference extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'idConference' => 'Id Conference',
+			'idMessage' => 'Id Message',
 			'idUser' => 'Id User',
+			'isReaded' => 'Is Readed',
 		);
 	}
 
@@ -95,8 +79,9 @@ class Conference extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('idConference',$this->idConference);
+		$criteria->compare('idMessage',$this->idMessage);
 		$criteria->compare('idUser',$this->idUser);
+		$criteria->compare('isReaded',$this->isReaded);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -107,7 +92,7 @@ class Conference extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Conference the static model class
+	 * @return ReadedNotice the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
