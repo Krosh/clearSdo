@@ -41,11 +41,17 @@
             $timetable = array();
         }
         ?>
-        <?php foreach($timetable as $item):?>
+        <?php if (count($timetable == 0)): ?>
             <div class="sidebar-small-item">
-                <span><?php echo $item->name;?></span>
-                <div class="description"><?php echo $item->time;?></div>
+                <span>ЗАНЯТИЙ НЕТ</span>
             </div>
-        <?php endforeach; ?>
+        <?php else:?>
+            <?php foreach($timetable as $item):?>
+                <div class="sidebar-small-item">
+                    <span><?php echo $item->name;?></span>
+                    <div class="description"><?php echo $item->time;?></div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>

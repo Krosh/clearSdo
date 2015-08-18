@@ -11,19 +11,20 @@
         Объявления
     </div>
     <?php
-    $conferences = Conference::model()->findAll("idUser = ".Yii::app()->user->getId());
-    foreach ($conferences as $conf)
-    {
-        $messages = Message::model()->findAll("idRecepient = ".$conf->idConference." AND isConference = 1 AND isPublishedOnMain = 1");
-        foreach ($messages as $message)
-        {
+    $readedNotices = ReadedNotice::model()->findAll("idUser = ".Yii::app()->user->getId()." AND isReaded = 0");
+    ?>
+    <?php foreach ($readedNotices as $notice):?>
+        <?php
+        $message = $notice->message;
         ?>
-            <div class="sidebar-content notice">
+        <div class="sidebar-content notice" style="padding-bottom: 20px">
+            <div class="col-10" style="padding-bottom: 5px">
                 <?php echo $message->text; ?>
             </div>
-        <?php
-        }
-    }
-    ?>
+            <div class="col-1">
+                <a href = "#" onclick="readNotice(<?php echo $notice->id; ?>,$(this).parent().parent()); return false"><i class="fa fa-remove"></i></a>
+            </div>
+        </div>
+    <?php endforeach; ?>
 
 </div>
