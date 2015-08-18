@@ -35,6 +35,10 @@ function updateConferenceUsers()
         type: 'POST',
         url: '/message/ajaxGetConferenceUsers',
         data: $("#sendmessage").serialize(),
+        error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            console.error('Ajax request failed', jqXHR, textStatus, errorThrown, 1);
+        },
         success: function(data)
         {
             $("#conferenceUsersList").html(data);
