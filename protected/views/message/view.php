@@ -1,11 +1,11 @@
-	<section class="actions">
-	    <div id = "selectUserDialog">
+<section class="actions">
+    <div id = "selectUserDialog">
 
-	    </div>
-	</section>
+    </div>
+</section>
 
-	<section id="dialogs" class="clearfix" style="overflow: hidden">
-	</section>
+<section id="dialogs" class="clearfix" style="overflow: hidden">
+</section>
 
 </div>
 <div class="rightside clearfix">
@@ -13,38 +13,40 @@
     </section>
 </div>
 <div class="bottomform clearfix">
-	<form action="sendMessage"  METHOD = "POST" id="sendmessage" onsubmit="sendMessage(); return false">
-		<textarea id = "messageTextArea" name="text" placeholder="Введите сообщение..."></textarea>
+    <form action="sendMessage"  METHOD = "POST" id="sendmessage" onsubmit="sendMessage(); return false">
+        <textarea id = "messageTextArea" name="text" placeholder="Введите сообщение..."></textarea>
 
-		<div class="col-group">
-			<div class="col-6">
-				<a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn" onclick="updateConferenceUsers(); return false">Участники конференции</a>
+        <div class="col-group">
+            <div class="col-6">
+                <a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn conferenceButton" onclick="updateConferenceUsers(); return false">Участники конференции</a>
                 <a href="#" class="outline-btn" onclick="startNewConference(<?php echo Yii::app()->user->getId(); ?>); return false">Создать конференцию</a>
-			</div>
-			<div class="col-6">
-			    <input type="hidden" name = "idUser">
+            </div>
+            <div class="col-6">
+                <input type="hidden" name = "idUser">
                 <input type="hidden" name = "isConference" value = "0">
-			    <input type="hidden" name = "startDialog" value = "<?php echo $startDialog; ?>">
-			    <div class="right">
-			    	<button type="submit" class="btn small">Отправить</button>
+                <input type="hidden" name = "startDialog" value = "<?php echo $startDialog; ?>">
+                <div class="right">
+                    <button type="submit" class="btn small">Отправить</button>
 
-					<style>
-					.picker {
-						padding-top: 10px;
-					}
+                    <style>
+                        .picker {
+                            padding-top: 10px;
+                        }
 
-					.picker .picker-handle {
-						float: right;
-						margin-left: 20px;
-					}
-					</style>
+                        .picker .picker-handle {
+                            float: right;
+                            margin-left: 20px;
+                        }
+                    </style>
+                    <span class="sendAsAdmin">
 			    	<label for="ad" class="picker-label">Отправить как объявление</label>
 			    	<input type="checkbox" value="1" name="ad" id="ad" class="picker-element">
-			    </div>
+                    </span>
+                </div>
 
-			</div>
-		</div>
-	</form>
+            </div>
+        </div>
+    </form>
 </div>
 
 
@@ -71,3 +73,6 @@
         </div>
     </div>
 </div>
+<script>
+    window.isAdmin = <?php echo Yii::app()->user->isAdmin() ? "1" : "0"; ?>;
+</script>

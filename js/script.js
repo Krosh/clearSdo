@@ -1239,7 +1239,7 @@ $(document).ready(function(){
     });
 
     $("#messageTextArea").on('keydown', function(e){
-        if (e.which === 13){
+        if (e.which === 13 && e.ctrlKey){
             $(this).parent().submit();
         }
     });
