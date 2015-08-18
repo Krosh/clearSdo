@@ -26,6 +26,18 @@ function getDialogWithUser(idUser, isConf)
 {
     $(".dialog.active").removeClass("active");
     $(".dialog[data-idUser="+idUser+"][data-isConf="+isConf+"]").addClass("active").removeClass("noread");
+    if (isConf == 1)
+    {
+        $(".conferenceButton").show();
+        if (window.isAdmin == 1)
+            $(".sendAsAdmin").show();
+        else
+            $(".sendAsAdmin").hide();
+    } else
+    {
+        $(".conferenceButton").hide();
+        $(".sendAsAdmin").hide();
+    }
     $.ajax({
         type: 'POST',
         url: '/message/getDialogWithUser',
