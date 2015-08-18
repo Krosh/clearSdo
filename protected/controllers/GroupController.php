@@ -162,7 +162,7 @@ class GroupController extends CController
                 $student->fio = $Excel->sheets[0]['cells'][$num][1]." ".$Excel->sheets[0]['cells'][$num][2]." ".$Excel->sheets[0]['cells'][$num][3];
                 $student->role = "student";
                 $student->login = StringHelper::translitText(str_replace("-","",$group->Title)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][1],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][2],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][3],0,2));
-                $student->password = rand(111111,999999);
+                $student->password = $num;
                 if ($student->save())
                 {
                     $sg = new StudentGroup();

@@ -4,17 +4,38 @@
     </div>
     <div class="sidebar-content">
         <?php
-        $groups = Yii::app()->user->getModel()->groups;
-        if (count($groups)>0)
+        if (Yii::app()->user->isStudent())
+        {
+            $groups = Yii::app()->user->getModel()->groups;
+            if (count($groups)>0)
+            {
+                $timetable = array();
+                foreach ($groups as $group)
+                {
+                    $curTerm = Term::model()->findByPk(Yii::app()->session['currentTerm']);
+                    $idGroup = $group->id;
+                    $criteria = new CDbCriteria();
+                    $criteria->compare("idGroup",$idGroup);
+                    $criteria->order = "time";
+                    $criteria->compare("numWeek",$curTerm->getNumOfWeek());
+                    $criteria->compare("day",date("w")-1);
+                    $timetable = array_merge($timetable,Timetable::model()->findAll($criteria));
+                }
+            } else
+            {
+                $timetable = array();
+            }
+        } elseif (Yii::app()->user->isTeacher())
         {
             $curTerm = Term::model()->findByPk(Yii::app()->session['currentTerm']);
-            $idGroup = $groups[0]->id;
             $criteria = new CDbCriteria();
-     //       $criteria->compare("idGroup",$idGroup);
+            $criteria->compare("teacher",Yii::app()->user->getFio());
             $criteria->order = "time";
             $criteria->compare("numWeek",$curTerm->getNumOfWeek());
             $criteria->compare("day",date("w")-1);
             $timetable = Timetable::model()->findAll($criteria);
+            if ($timetable == null)
+                $timetable = array();
         } else
         {
             $timetable = array();
