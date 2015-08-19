@@ -12,13 +12,13 @@
     }
     ?>
     <?php if ($item->isPublishedOnMain):?>
-        <div class="row">
+        <!-- <div class="row"> -->
             <p class="text" style="background-color: #f1c30f"><?php echo $item->text?></p>
-        </div>
+        <!-- </div> -->
     <?php elseif ($item->isService):?>
-        <div class="row">
+        <!-- <div class="row"> -->
             <p class="text"><?php echo $item->text?></p>
-        </div>
+        <!-- </div> -->
     <?php else: ?>
         <div class="row">
             <div class="col-xs-1">

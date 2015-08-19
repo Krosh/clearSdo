@@ -18,8 +18,8 @@
 
         <div class="col-group">
             <div class="col-6">
-                <a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn conferenceButton" onclick="updateConferenceUsers(); return false">Участники конференции</a>
-                <a href="#" class="outline-btn" onclick="startNewConference(<?php echo Yii::app()->user->getId(); ?>); return false">Создать конференцию</a>
+                <a href="#" data-toggle="modal" data-target="#confusers" class="outline-btn conferenceButton has-tip" onclick="updateConferenceUsers(); return false" title="Участники конференции"><i class="fa fa-users"></i></a>
+                <a href="#" class="outline-btn has-tip" onclick="startNewConference(<?php echo Yii::app()->user->getId(); ?>); return false" title="Создать конференцию"><i class="fa fa-plus"></i></a>
             </div>
             <div class="col-6">
                 <input type="hidden" name = "idUser">
@@ -39,8 +39,8 @@
                         }
                     </style>
                     <span class="sendAsAdmin">
-			    	<label for="ad" class="picker-label">Отправить как объявление</label>
-			    	<input type="checkbox" value="1" name="ad" id="ad" class="picker-element">
+    			    	<label for="ad" class="picker-label">Отправить как объявление</label>
+    			    	<input type="checkbox" value="1" name="ad" id="ad" class="picker-element">
                     </span>
                 </div>
 
@@ -74,5 +74,5 @@
     </div>
 </div>
 <script>
-    window.isAdmin = <?php echo Yii::app()->user->isAdmin() ? "1" : "0"; ?>;
+    window.isAdmin = <?php echo Yii::app()->user->isTeacher() ? "1" : Yii::app()->user->isAdmin() ? "1" : "0"; ?>;
 </script>
