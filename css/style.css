@@ -2745,3 +2745,13 @@ a.update + a.delete {
 #selectUserDialog .dd-pointer {
   right: 20px !important;
 }
+.modal .dd-container,
+.modal .dd-select {
+  width: 100% !important;
+}
+.modal input {
+  width: 100% !important;
+}
+.modal .dd-pointer {
+  right: 20px !important;
+}
