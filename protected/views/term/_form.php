@@ -13,6 +13,7 @@
         // There is a call to performAjaxValidation() commented in generated controller code.
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation'=>false,
+        'htmlOptions' => array('class' => "are-you-sure"),
     )); ?>
 
     <table>
@@ -49,6 +50,7 @@
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить', array("class" => "btn blue")); ?>
+        <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
     </div>
 
     <?php $this->endWidget(); ?>

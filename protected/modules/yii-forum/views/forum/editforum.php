@@ -7,7 +7,9 @@ $this->widget('zii.widgets.CBreadcrumbs', array(
 ));
 ?>
 <div class="form">
-<?php $form=$this->beginWidget('CActiveForm'); ?>
+<?php $form=$this->beginWidget('CActiveForm', array(
+    'htmlOptions' => array('class' => "are-you-sure"),
+)); ?>
 
     <style>
     .input-full-width input {
@@ -76,6 +78,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array(
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue", "onClick" => '$("textarea").val(tinyMCE.activeEditor.getContent())')); ?>
+        <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
     </div>
 <?php $this->endWidget(); ?>
 </div><!-- form -->

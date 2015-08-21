@@ -11,13 +11,13 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'question-form',
 	'htmlOptions'=>array(
-        'class'=>'form inline noborder',
+        'class'=>'form inline noborder are-you-sure',
     ),
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>false
 )); ?>
 
 	<table width="100%">
@@ -78,6 +78,7 @@
 
 	<div class="row buttons">
 		<a style="margin-right:25px" class="btn blue" href = "#" onclick = "addAnswer(<?php echo $questionModel->id; ?>); return false">Добавить вариант</a> <?php echo CHtml::submitButton($questionModel->isNewRecord ? 'Создать' : 'Сохранить', array('onclick' => 'if (!isValidQuestion()) return false;', 'class'=>'btn blue')); ?>
+		<a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
 	</div>
 
 <?php $this->endWidget(); ?>

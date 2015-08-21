@@ -19,7 +19,8 @@
         'enableClientValidation'=>true,
         'clientOptions'=>array(
             'validateOnSubmit'=>true,
-	),
+	    ),
+        'htmlOptions' => array('class' => "are-you-sure"),
     )); ?>
 
     
@@ -81,6 +82,7 @@
 
     <div class="row buttons">
         <?php echo CHtml::submitButton('Сохранить', array("class" => "btn blue", "onClick" => '$("textarea").val(tinyMCE.activeEditor.getContent())')); ?>
+        <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
     </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

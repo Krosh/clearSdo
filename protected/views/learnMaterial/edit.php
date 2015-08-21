@@ -16,7 +16,7 @@
                     <div class="form modal-form">
 
                         <?php $form=$this->beginWidget('CActiveForm', array(
-                            'htmlOptions' => array('enctype' => 'multipart/form-data'),
+                            'htmlOptions' => array('enctype' => 'multipart/form-data', 'class' => "are-you-sure"),
                             'id'=>'learnMaterialForm',
                             // Please note: When you enable ajax validation, make sure the corresponding
                             // controller action is handling ajax validation correctly.
@@ -44,6 +44,7 @@
                         <div class="row buttons" style="text-align:right; margin-top: 15px;">
                             <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
                             <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue")); ?>
+                            <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
                         </div>
 
                         <?php $this->endWidget(); ?>

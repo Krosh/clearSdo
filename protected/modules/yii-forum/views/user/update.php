@@ -12,7 +12,8 @@ $this->widget('zii.widgets.CBreadcrumbs', array('links'=>array(
         'enableClientValidation'=>true,
         'clientOptions'=>array(
             'validateOnSubmit'=>true,
-	),
+	    ),
+        'htmlOptions' => array('class' => "are-you-sure"),
     )); ?>
 
         <div class="row">
@@ -26,6 +27,7 @@ $this->widget('zii.widgets.CBreadcrumbs', array('links'=>array(
 
         <div class="row buttons">
             <?php echo CHtml::submitButton('Сохранить'); ?>
+            <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
         </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->
