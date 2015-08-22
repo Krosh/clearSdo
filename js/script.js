@@ -1378,6 +1378,11 @@ $(document).ready(function(){
         });
     }
 
+    $("#user-form input").change(function(e)
+    {
+       $(".divOldPassword").show();
+    });
+
     if($(".are-you-sure")) {
         $(".are-you-sure").areYouSure();
     }

@@ -18,7 +18,7 @@
             </div>
 
             <div>
-                <?php $this->renderPartial('userConfig/_form', array('model'=>$model)); ?>
+                <?php $this->renderPartial('userConfig/_form', array('model'=>$model, 'newPassword' => $newPassword)); ?>
             </div>
 
         </div>

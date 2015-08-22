@@ -167,34 +167,35 @@
         <tr>
             <td width="35%">
                 <?php echo CHTML::label("Новый пароль", "haveNewPassword"); ?>
-                <?php echo CHTML::checkBox("haveNewPassword",$code == "error", array('onclick' => 'checkHasNewPassword()')); ?>
+                <?php echo CHTML::checkBox("haveNewPassword",$newPassword != "", array('onclick' => 'checkHasNewPassword()')); ?>
             </td>
             <td width="65%" class="input-full-width">
                 Пароль менялся <?php echo DateHelper::getRussianDateFromDatabase($model->dateChangePassword,true);?>
             </td>
         </tr>
-        <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
-            <td width="35%">
-                <?php echo CHTML::label("Старый пароль:","oldPassword")?>
-            </td>
-            <td width="65%" class="input-full-width">
-                <?php echo CHTML::passwordField("oldPassword",""); ?>
-            </td>
-        </tr>
-        <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+        <tr class = "divNewPassword" <?php if ($newPassword == ""):?> style="display: none" <?php endif; ?>>
             <td width="35%">
                 <?php echo CHTML::label("Новый пароль:","newPassword")?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo CHTML::passwordField("newPassword","", array("class" => "js-strength")); ?>
+                <?php echo CHTML::passwordField("newPassword",$newPassword, array("class" => "js-strength")); ?>
             </td>
         </tr>
-        <tr class = "divNewPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+        <tr class = "divNewPassword" <?php if ($newPassword == ""):?> style="display: none" <?php endif; ?>>
             <td width="35%">
+
                 <?php echo CHTML::label("Подтвердите пароль:","newPassword")?>
             </td>
             <td width="65%" class="input-full-width">
                 <?php echo CHTML::passwordField("confirmNewPassword",""); ?>
+            </td>
+        </tr>
+        <tr class = "divOldPassword" <?php if ($code != "error"):?> style="display: none" <?php endif; ?>>
+            <td width="35%">
+                <?php echo CHTML::label("Пароль для подтверждения изменения:","oldPassword")?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo CHTML::passwordField("oldPassword",""); ?>
             </td>
         </tr>
 
@@ -206,6 +207,7 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
         <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
     </div>
+
 
     <?php $this->endWidget(); ?>
 

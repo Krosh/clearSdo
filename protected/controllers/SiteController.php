@@ -24,7 +24,7 @@ class SiteController extends CController
             'migrate',
             //          'down'
 //                      'create',
-  //                  'add_links_to_forumusers',
+            //                  'add_links_to_forumusers',
         ));
         echo htmlentities(ob_get_clean(), null, Yii::app()->charset);
     }
@@ -185,36 +185,37 @@ class SiteController extends CController
     public function actionUserConfig()
     {
         $model=User::model()->findByPk(Yii::app()->user->getId());
+        $newPassword = "";
         if(isset($_POST['User']))
         {
             $model->attributes=$_POST['User'];
-            if ($_POST['haveNewPassword'])
+            if ($model->password == md5($_POST["oldPassword"]))
             {
-                if ($model->password == md5($_POST["oldPassword"]))
+                if (isset($_POST["haveNewPassword"]) && $_POST["newPassword"] == $_POST["confirmNewPassword"])
                 {
-                    if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
-                    {
-                        $model->password = md5($_POST["newPassword"]);
-                        $model->dateChangePassword = date("Y-m-d H:i:s");
-                        Yii::app()->user->setFlash("codeMessage","success");
-                        Yii::app()->user->setFlash("message","Пароль изменен");
-                    } else
-                    {
-                        Yii::app()->user->setFlash("codeMessage","error");
-                        Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
-                    }
+                    $model->password = md5($_POST["newPassword"]);
+                    $model->dateChangePassword = date("Y-m-d H:i:s");
+                    Yii::app()->user->setFlash("codeMessage","success");
+                    Yii::app()->user->setFlash("message","Данные пользователя изменены");
                 } else
                 {
+                    $newPassword = $_POST["newPassword"];
                     Yii::app()->user->setFlash("codeMessage","error");
-                    Yii::app()->user->setFlash("message","Старый пароль введен неверно");
+                    Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
                 }
+                $model->newAvatar = $_POST['User']['newAvatar'];
+                $model->save();
+            } else
+            {
+                $newPassword = $_POST["newPassword"];
+                Yii::app()->user->setFlash("codeMessage","error");
+                Yii::app()->user->setFlash("message","Старый пароль введен неверно");
             }
-            $model->newAvatar = $_POST['User']['newAvatar'];
-            $model->save();
         }
 
         $this->render('userConfig/update',array(
             'model'=>$model,
+            'newPassword' => $newPassword,
         ));
     }
 
