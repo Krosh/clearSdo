@@ -20,6 +20,7 @@
  * @property string $gender
  * @property int $idForumUser
  * @property string $defaultLanguage
+ * @property string $activationCache
  */
 
 define("AVATAR_SIZE_NORMAL",0);
@@ -261,5 +262,14 @@ class User extends CActiveRecord
 
     public function getGenderOptions() {
         return array('M' => 'Мужской', 'F' => 'Женский');
+    }
+
+    public function activateEmail()
+    {
+        $cache = md5(rand(1,999999)+"asd");
+        $this->activationCache = $cache;
+        $this->save();
+        $text = "Для восстановления вашего пароля перейдите по ссылке:".$_SERVER['SERVER_NAME']."/user/activation?idUser=".$this->id."&cache=".$this->activationCache;
+        MailHelper::sendMail($this->email,"Восстановление пароля",$text);
     }
 }

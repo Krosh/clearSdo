@@ -193,5 +193,16 @@ class UserController extends CController
             echo "0";
     }
 
+    public function actionActivation($idUser, $cache)
+    {
+        $user = $this->loadModel($idUser);
+        if ($user->activationCache != $cache)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $user->password = md5("1234");
+        $user->save();
+        echo "Новые параметы для входа:<br>";
+        echo "Ваш логин:[".$user->login."], ваш пароль:[1234]";
+    }
+
 
 }
