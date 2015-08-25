@@ -5,13 +5,15 @@
  * Date: 09.08.15
  * Time: 14:29
  * To change this template use File | Settings | File Templates.
- */?>
+ */
+$readedNotices = ReadedNotice::model()->findAll("idUser = ".Yii::app()->user->getId()." AND isReaded = 0");
+?>
+<?php if (count($readedNotices) > 0):?>
 <div class="sidebar-item">
     <div class="sidebar-title">
         Объявления
     </div>
     <?php
-    $readedNotices = ReadedNotice::model()->findAll("idUser = ".Yii::app()->user->getId()." AND isReaded = 0");
     ?>
     <?php foreach ($readedNotices as $notice):?>
         <?php
@@ -25,6 +27,9 @@
                 <a href = "#" onclick="readNotice(<?php echo $notice->id; ?>,$(this).parent().parent()); return false"><i class="fa fa-remove"></i></a>
             </div>
         </div>
-    <?php endforeach; ?>
+        <div class="clearfix">
 
+        </div>
+    <?php endforeach; ?>
 </div>
+<?php endif; ?>
