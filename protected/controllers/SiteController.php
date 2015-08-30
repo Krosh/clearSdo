@@ -191,20 +191,22 @@ class SiteController extends CController
             $model->attributes=$_POST['User'];
             if ($model->password == md5($_POST["oldPassword"]))
             {
-                if (isset($_POST["haveNewPassword"]) && $_POST["newPassword"] == $_POST["confirmNewPassword"])
-                {
-                    $model->password = md5($_POST["newPassword"]);
-                    $model->dateChangePassword = date("Y-m-d H:i:s");
-                    Yii::app()->user->setFlash("codeMessage","success");
-                    Yii::app()->user->setFlash("message","Данные пользователя изменены");
-                } else
-                {
-                    $newPassword = $_POST["newPassword"];
-                    Yii::app()->user->setFlash("codeMessage","error");
-                    Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
-                }
+                $newPassword = $_POST["newPassword"];
                 $model->newAvatar = $_POST['User']['newAvatar'];
-                $model->save();
+                Yii::app()->user->setFlash("codeMessage","success");
+                Yii::app()->user->setFlash("message","Данные пользователя изменены");
+                if (isset($_POST["haveNewPassword"]))
+                    if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
+                    {
+                        $model->password = md5($_POST["newPassword"]);
+                        $model->dateChangePassword = date("Y-m-d H:i:s");
+                        $newPassword = "";
+                        $model->save();
+                    } else
+                    {
+                        Yii::app()->user->setFlash("codeMessage","error");
+                        Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
+                    }
             } else
             {
                 $newPassword = $_POST["newPassword"];

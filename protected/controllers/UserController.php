@@ -196,7 +196,7 @@ class UserController extends CController
     // Отправка мыла с восстановлением пароля
     public function actionSendForgotMessage()
     {
-        $user = User::model()->find("email = ".$_POST['User']["email"]);
+        $user = User::model()->find("email = '".$_POST['User']["email"]."'");
 
         if($user->activateEmail()) {
             echo "1";
