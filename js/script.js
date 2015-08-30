@@ -1386,4 +1386,56 @@ $(document).ready(function(){
     if($(".are-you-sure")) {
         $(".are-you-sure").areYouSure();
     }
+
+    // Восстановление пароля
+    $("[data-open-forgot-form]").click(function() {
+        $(".login-tab").addClass("zoomOut");
+        setTimeout(function() {
+            $(".login-tab").hide().removeClass("zoomOut");
+            $(".forgot-tab").show().addClass("zoomIn");
+        }, 300);
+
+        return false;
+    });
+
+    $("[data-open-login-form]").click(function() {
+        $(".forgot-tab").addClass("zoomOut");
+        setTimeout(function() {
+            $(".forgot-tab").hide().removeClass("zoomOut");
+            $(".login-tab").show().addClass("zoomIn");
+        }, 300);
+
+        return false;
+    });
+
+    $("#forgotForm").submit(function(e) {
+        e.preventDefault();
+
+        var self = this;
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/sendForgotMessage',
+            data: $("#forgotForm").serialize(),
+            error: onError,
+            success: function(data)
+            {
+                console.log(data);
+
+                if (data == "1") {
+                    $("#wrongEmail").fadeOut(100);
+                    alert("На вашу почту придет сообщение с инструкциями. Проверьте почту.");
+                } else {
+                    $("#forgotForm").addClass("shakeIt");
+                    if(!$("#wrongEmail").length) {
+                        $("#forgotForm button[type='submit']").after('<div id="wrongEmail" class="center red" style="display:none">Пользователя с таким E-Mail не существует.</div>');
+                        $("#wrongEmail").fadeIn(100);
+                    }
+                    setTimeout(function() {
+                        $("#forgotForm").removeClass("shakeIt");
+                    }, 1000);
+                }
+            }
+        });
+    });
 });
