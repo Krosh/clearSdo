@@ -10,6 +10,7 @@
     $code = Yii::app()->user->getFlash("codeMessage");
     $message = Yii::app()->user->getFlash("message");
     ?>
+    
     <?php if ($code == "success"):?>
         <div class = "success">
             <?php echo $message; ?>

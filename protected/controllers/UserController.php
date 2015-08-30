@@ -193,6 +193,18 @@ class UserController extends CController
             echo "0";
     }
 
+    // Отправка мыла с восстановлением пароля
+    public function actionSendForgotMessage()
+    {
+        $user = User::model()->find("email = ".$_POST['User']["email"]);
+
+        if($user->activateEmail()) {
+            echo "1";
+        }
+        else
+            echo "0";
+    }
+
     public function actionActivation($idUser, $cache)
     {
         $user = $this->loadModel($idUser);

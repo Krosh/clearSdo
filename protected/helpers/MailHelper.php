@@ -10,7 +10,11 @@
 class MailHelper {
     public static function sendMail($recepientMail,$subject,$htmlText,$fromMail = "admin@mail.ru",$fromName = "admin")
     {
-        mail($recepientMail,$subject,$htmlText);
+        if(mail($recepientMail,$subject,$htmlText)) {
+        	return true;
+        } else {
+        	return false;
+        }
 //        Yii::import('application.extensions.phpmailer.JPhpMailer');
 //        $mail = new JPhpMailer;
 //        $mail->IsSMTP();
