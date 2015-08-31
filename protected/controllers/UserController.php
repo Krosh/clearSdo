@@ -205,15 +205,34 @@ class UserController extends CController
             echo "0";
     }
 
+    private function randomPassword() {
+        $alphabet = "0123456789";
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
     public function actionActivation($idUser, $cache)
     {
+        $this->layout = '//layouts/main';
         $user = $this->loadModel($idUser);
+        $newpass = $this->randomPassword();
         if ($user->activationCache != $cache)
             throw new CHttpException(404,'The requested page does not exist.');
-        $user->password = md5("1234");
+        $user->password = md5($newpass);
         $user->save();
-        echo "Новые параметы для входа:<br>";
-        echo "Ваш логин:[".$user->login."], ваш пароль:[1234]";
+
+        // echo "Новые параметы для входа:<br>";
+        // echo "Ваш логин:[".$user->login."], ваш пароль:[1234]";
+
+        $this->render("activation", array(
+            "login" => $user->login,
+            "newpassword" => $newpass
+        ));
     }
 
 
