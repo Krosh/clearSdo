@@ -269,7 +269,7 @@ class User extends CActiveRecord
         $cache = md5(rand(1,999999)+"asd");
         $this->activationCache = $cache;
         $this->save();
-        $text = "Для восстановления вашего пароля перейдите по ссылке:".$_SERVER['SERVER_NAME']."/user/activation?idUser=".$this->id."&cache=".$this->activationCache;
+        $text = "Для восстановления вашего пароля перейдите по ссылке: http://".$_SERVER['SERVER_NAME']."/user/activation?idUser=".$this->id."&cache=".$this->activationCache;
         if(MailHelper::sendMail($this->email,"Восстановление пароля",$text)) {
             return true;
         } else {
