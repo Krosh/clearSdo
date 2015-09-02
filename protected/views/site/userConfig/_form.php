@@ -9,6 +9,11 @@
     <?php
     $code = Yii::app()->user->getFlash("codeMessage");
     $message = Yii::app()->user->getFlash("message");
+    if ($model->errorOnSave != "")
+    {
+        $code= "error";
+        $message= $model->errorOnSave;
+    }
     ?>
     
     <?php if ($code == "success"):?>
