@@ -9,6 +9,11 @@
 <?php
 $code = Yii::app()->user->getFlash("codeMessage");
 $message = Yii::app()->user->getFlash("message");
+if ($model->errorOnSave != "")
+{
+    $code= "error_duble";
+    $message= $model->errorOnSave;
+}
 ?>
 <?php if ($code == "success"):?>
     <div class = "success">
@@ -16,7 +21,7 @@ $message = Yii::app()->user->getFlash("message");
     </div>
 <?php endif; ?>
 
-<?php if ($code == "error"):?>
+<?php if ($code == "error" || $code == "error_duble"):?>
     <div class = "error">
         <?php echo $message; ?>
     </div>
@@ -81,6 +86,16 @@ $message = Yii::app()->user->getFlash("message");
         </td>
         <td width="65%" class="input-full-width" style="padding-top:20px">
             <?php echo $form->textField($model,'login',array('size'=>60,'maxlength'=>200)); ?>
+        </td>
+    </tr>
+
+    <tr>
+        <td width="35%">
+            <?php echo $form->labelEx($model,'role'); ?>
+            <?php echo $form->error($model,'role'); ?>
+        </td>
+        <td width="65%" class="input-full-width">
+            <?php echo $form->dropDownList($model,'role',Yii::app()->params['roles']); ?>
         </td>
     </tr>
 

@@ -196,6 +196,7 @@ class SiteController extends CController
                 Yii::app()->user->setFlash("codeMessage","success");
                 Yii::app()->user->setFlash("message","Данные пользователя изменены");
                 if (isset($_POST["haveNewPassword"]))
+                {
                     if ($_POST["newPassword"] == $_POST["confirmNewPassword"])
                     {
                         $model->password = md5($_POST["newPassword"]);
@@ -207,6 +208,10 @@ class SiteController extends CController
                         Yii::app()->user->setFlash("codeMessage","error");
                         Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
                     }
+                } else
+                {
+                    $model->save();
+                }
             } else
             {
                 $newPassword = $_POST["newPassword"];

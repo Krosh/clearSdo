@@ -31,6 +31,7 @@ class User extends CActiveRecord
 
     public $newAvatar = "";
     public $showOnlyNoModerated = false;
+    public $errorOnSave = "";
 	/**
 	 * @return string the associated database table name
 	 */
@@ -169,6 +170,26 @@ class User extends CActiveRecord
         if ($this->isNewRecord)
         {
             $this->password = md5($this->password);
+        }
+        if ($this->email != "")
+        {
+            $model = User::model()->findAll("LOWER(email) = LOWER('".$this->email."')");
+            if (count($model) > 1 || (count($model) > 0 && ($this->isNewRecord || $model[0]->id !=$this->id)))
+            {
+                $this->errorOnSave = "Такой e-mail уже зарегистрирован!";
+                return false;
+            }
+        }
+        $model = User::model()->findAll("LOWER(login) = LOWER('".$this->login."')");
+        if (count($model) > 1 || (count($model) > 0 && ($this->isNewRecord || $model[0]->id !=$this->id)))
+        {
+            $this->errorOnSave = "Такой логин уже зарегистрирован!";
+            return false;
+        }
+        if ($this->login == "")
+        {
+            $this->errorOnSave = "Нельзя создавать запись с пустым логином!";
+            return false;
         }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
