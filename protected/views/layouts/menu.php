@@ -32,9 +32,9 @@
                 <a href="#">Справочники</a>
                 <div class="more-menu">
                     <div class="more-menu-links">
-                        <a href="<?php echo $this->createUrl("group/admin")?>"><span>Группы</span></a>
-                        <a href="<?php echo $this->createUrl("user/admin")?>"><span>Пользователи</span></a>
-                        <a href="<?php echo $this->createUrl("term/admin")?>"><span>Периоды</span></a>
+                        <a href="<?php echo $this->createUrl("/group/admin")?>"><span>Группы</span></a>
+                        <a href="<?php echo $this->createUrl("/user/admin")?>"><span>Пользователи</span></a>
+                        <a href="<?php echo $this->createUrl("/term/admin")?>"><span>Периоды</span></a>
                     </div>
                 </div>
             </div>

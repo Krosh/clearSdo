@@ -73,6 +73,9 @@ return array(
             'class' => 'ext.syntaxhighlighter.JMSyntaxHighlighter',
         ),
         'imageHandler'=>array('class'=>'CImageHandler'),
+        'morphy'=>array(
+            'class'=>'ext.phpMorphy.RMorphy',
+        ),
         'bigbluebutton'=>array(
             'class'=>'ext.bigbluebutton.BigBlueButton',
 

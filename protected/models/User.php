@@ -216,6 +216,9 @@ class User extends CActiveRecord
 
     protected function afterSave()
     {
+        Yii::import('application.modules.yii-forum.models.*');
+        $this->forumUser->name = $this->fio;
+        $this->forumUser->save();
         if ($this->avatar == "")
             $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))

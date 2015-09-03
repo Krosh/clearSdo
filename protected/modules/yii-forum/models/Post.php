@@ -1,5 +1,5 @@
 <?php
-
+define("TABLE_POST",1);
 /**
  * This is the model class for table "post".
  *
@@ -92,6 +92,33 @@ class Post extends CActiveRecord
 
         return parent::beforeSave();
     }
+
+    public function afterSave()
+    {
+        return parent::afterSave();
+        $searchIndex = SearchIndex::model()->find("idTable = ".TABLE_POST." AND idRecord = ".$this->id);
+        if ($searchIndex == null)
+        {
+            $searchIndex = new SearchIndex();
+            $searchIndex->idTable = TABLE_POST;
+            $searchIndex->idRecord = $this->id;
+        }
+        $searchText = strip_tags(mb_strtoupper($this->content, 'UTF-8'));
+        $searchText = str_replace(","," ",$searchText);
+        $searchText = str_replace("."," ",$searchText);
+        $searchText = str_replace("!"," ",$searchText);
+        $searchText = str_replace("?"," ",$searchText);
+        $searchText = str_replace("&NBSP"," ",$searchText);
+        $contentArray = explode(" ",$searchText);
+        $resultArray = Yii::app()->morphy->getPseudoRoot($contentArray);
+        $text = "";
+        foreach ($resultArray as $item)
+            $text.= $item[0]." ";
+        $searchIndex->content = $text;
+        $searchIndex->save();
+        return parent::afterSave();
+    }
+
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
