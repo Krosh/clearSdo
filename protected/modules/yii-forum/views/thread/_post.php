@@ -15,7 +15,7 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($data-
                 {
                     $deleteConfirm = "Вы уверены? Этот ответ будет удален!";
                     echo CHtml::ajaxLink('<i class="fa fa-remove"></i>',
-                        array('/forum/admin/deletepost', 'id'=>$data->id),
+                        array('/forum/post/delete', 'id'=>$data->id),
                         array('type'=>'POST', 'success'=>'function(){document.location.reload(true);}'),
                         array('confirm'=>$deleteConfirm, 'id'=>'post'.$data->id)
                     );
