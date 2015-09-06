@@ -1453,6 +1453,10 @@ $(document).ready(function(){
                 faculty.append('<option value="'+this.id+'">'+this.name+'</option>');
             });
             floader.fadeOut(300);
+            if (typeof(window.faculty) != 'undefined')
+            {
+                faculty.val(window.faculty).change();
+            }
         });
 
 
@@ -1466,6 +1470,10 @@ $(document).ready(function(){
                 $.each(data, function() {
                     group.append('<option value="'+this.id+'">'+this.name+'</option>');
                 });
+                if (typeof(window.id_altstu) != 'undefined')
+                {
+                    group.val(window.id_altstu);
+                }
             });
 
             gloader.fadeOut(300);

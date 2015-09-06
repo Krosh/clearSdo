@@ -3,7 +3,10 @@
 /* @var $model Group */
 
 ?>
-
+<script>
+    window.id_altstu = '<?php echo $model->id_altstu; ?>';
+    window.faculty = '<?php echo $model->faculty; ?>';
+</script>
 
 <div class="wrapper">
     <div class="container">

@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $Title
  * @property string $id_altstu
+ * @property string $facluty
  */
 class Group extends CActiveRecord
 {
