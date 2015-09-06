@@ -67,7 +67,7 @@ $cs->registerCoreScript('jquery');
 
 <div class="container">
 
-    <div class="mrkp-tbl">
+    <div class="mrkp-tbl clearfix">
         <div class="leftside clearfix">
             <?php echo $content;?>
         </div>

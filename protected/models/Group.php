@@ -37,6 +37,7 @@ class Group extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Title', 'required'),
+			array('faculty', 'required'),
 			array('Title, id_altstu', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -62,6 +63,7 @@ class Group extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'Title' => 'Название',
+			'faculty' => 'Факультет',
             'id_altstu' => 'Код группы на сайте АЛТГТУ',
 		);
 	}
