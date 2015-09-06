@@ -32,15 +32,25 @@
 
         <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'Title', array()); ?>
+                <?php echo CHtml::activeLabel($model,'id_altstu', array()); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dropDownList($model, 'Title', array("0" => "Выберите факультет..."), array("disabled"=>"disabled")); ?>
+                <?php echo $form->dropDownList($model, 'id_altstu', array("0" => "Выберите факультет..."), array("disabled"=>"disabled")); ?>
                 <?php //echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
                 <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
             </td>
         </tr>
 
+        <tr>
+            <td width="35%">
+                <?php echo CHtml::activeLabel($model,'Title', array()); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->textField($model, 'Title'); ?>
+                <?php //echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
+                <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
+            </td>
+        </tr>
         <? /* <tr>
             <td width="35%">
                 <?php echo CHtml::activeLabel($model,'id_altstu', array()); ?>

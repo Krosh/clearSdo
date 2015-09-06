@@ -1487,7 +1487,7 @@ $(document).ready(function(){
     }
 
     if($("#Group_faculty").length) {
-        loadFaculties($("#Group_faculty"), $(".faculty-loader"), $("#Group_Title"), $(".group-loader"), $("#Group_id_altstu"));
+        loadFaculties($("#Group_faculty"), $(".faculty-loader"), $("#Group_id_altstu"), $(".group-loader"), $("#Group_id_altstu"));
     }
 
     /** 
