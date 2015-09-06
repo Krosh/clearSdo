@@ -41,7 +41,7 @@
             $timetable = array();
         }
         ?>
-        <?php if (count($timetable == 0)): ?>
+        <?php if (count($timetable) == 0): ?>
             <div class="sidebar-small-item">
                 <span>ЗАНЯТИЙ НЕТ</span>
             </div>
