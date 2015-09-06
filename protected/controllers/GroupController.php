@@ -121,8 +121,8 @@ class GroupController extends CController
 
     public function actionAddToGroup()
     {
-        $fio = $_POST["fio"];
-        $user = User::model()->find("fio = :fio",array(":fio" => $fio));
+        $id = $_POST["id"];
+        $user = User::model()->findByPk($id);
         if ($user != null)
         {
             $group = $_POST["group"];

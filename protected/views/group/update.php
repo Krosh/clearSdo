@@ -27,14 +27,14 @@
                             echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
                             ?>
                             <style>
-                            table.mid td {
-                                vertical-align: middle;
-                            }
+                                table.mid td {
+                                    vertical-align: middle;
+                                }
 
-                            .NFI-wrapper {
-                                display: inline-block !important;
-                                vertical-align: middle !important;
-                            }
+                                .NFI-wrapper {
+                                    display: inline-block !important;
+                                    vertical-align: middle !important;
+                                }
                             </style>
                             <table style="width: 100%" class="mid">
                                 <tr>
@@ -89,42 +89,58 @@
                         )); ?>
 
                         Добавить существующего пользователя в группу:
-                        <?php
-                        $mas = array();
-                        $models = User::model()->findAll("role = ".ROLE_STUDENT);
-                        foreach ($models as $item)
-                        {
-                            $mas[$item->id] = $item->fio;
-                        }
-                        $fakeModel = new User;
-                        $fakeModel->fio = "";
-                        $this->widget('ext.combobox.EJuiComboBox', array(
-                            'model' => $fakeModel,
-                            'attribute' => 'fio',
-                            'data' => $mas,
-                            'options' => array(
-                                'onSelect' => '
-                                    $.ajax({
-                                    type: "POST",
-                                    url: "/group/addToGroup",
-                                    data: {fio: item.value, group:'.$model->id.'},
-                                    success: function(data)
-                                    {
-                                        $.fn.yiiGridView.update("group-grid");
-                                        $(this).val("");
+                        <!--  --><?php
+                        /*                        $mas = array();
+                                                $models = User::model()->findAll("role = ".ROLE_STUDENT);
+                                                foreach ($models as $item)
+                                                {
+                                                    $mas[$item->id] = $item->fio;
+                                                }
+                                                $fakeModel = new User;
+                                                $fakeModel->fio = "";
+                                                $this->widget('ext.combobox.EJuiComboBox', array(
+                                                    'model' => $fakeModel,
+                                                    'attribute' => 'fio',
+                                                    'data' => $mas,
+                                                    'options' => array(
+                                                        'onSelect' => '
+                                                            $.ajax({
+                                                            type: "POST",
+                                                            url: "/group/addToGroup",
+                                                            data: {fio: item.value, group:'.$model->id.'},
+                                                            success: function(data)
+                                                            {
+                                                                $.fn.yiiGridView.update("group-grid");
+                                                                $(this).val("");
 
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown){
-                                        alert("error"+textStatus+errorThrown);
-                                    }});
-                                    ',
-                                'allowText' => false,
-                            ),
-                            // Options passed to the text input
-                            'htmlOptions' => array('size' => 30),
-                        ));
+                                                            },
+                                                            error: function(jqXHR, textStatus, errorThrown){
+                                                                alert("error"+textStatus+errorThrown);
+                                                            }});
+                                                            ',
+                                                        'allowText' => false,
+                                                    ),
+                                                    // Options passed to the text input
+                                                    'htmlOptions' => array('size' => 30),
+                                                ));
 
-                        ?>
+                                                */?>
+                        <div class = "selectUser" >
+                            <?php
+                            echo CHTML::hiddenField("addUserToGroup",-1,array(
+                                'onchange' => "$.ajax({
+                                              type: 'POST',
+                                              url: '/group/addToGroup',
+                                              data: {id: this.value, group:".$model->id."},
+                                              success: function(data)
+                                              {
+                                                    $.fn.yiiGridView.update('group-grid');
+                                                    $(this).val('');
+                      }});
+                                                                     ",
+                            ));
+                            ?>
+                        </div>
 
                     </div>
 

@@ -1,19 +1,19 @@
 function fireEvent(element,event){
-     console.log("in Fire Event");
+    console.log("in Fire Event");
     if (document.createEventObject){
-            // dispatch for IE
-            console.log("in IE FireEvent");
+        // dispatch for IE
+        console.log("in IE FireEvent");
         var evt = document.createEventObject();
         return element.fireEvent('on'+event,evt)
     }
     else{
-            // dispatch for firefox + others
-            console.log("In HTML5 dispatchEvent");
-            var evt = document.createEvent("HTMLEvents");
-            evt.initEvent(event, true, true ); // event type,bubbling,cancelable
-            return !element.dispatchEvent(evt);
+        // dispatch for firefox + others
+        console.log("In HTML5 dispatchEvent");
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent(event, true, true ); // event type,bubbling,cancelable
+        return !element.dispatchEvent(evt);
     }
- }
+}
 
 function readNotice(idNotice, hidedObject)
 {
@@ -1382,7 +1382,7 @@ $(document).ready(function(){
 
     $("#user-form input").change(function(e)
     {
-       $(".divOldPassword").show();
+        $(".divOldPassword").show();
     });
 
     if($(".are-you-sure")) {
@@ -1440,7 +1440,7 @@ $(document).ready(function(){
             }
         });
     });
-    
+
     /**
      * Загрузка факультетов
      */
@@ -1490,7 +1490,7 @@ $(document).ready(function(){
         loadFaculties($("#Group_faculty"), $(".faculty-loader"), $("#Group_id_altstu"), $(".group-loader"), $("#Group_id_altstu"));
     }
 
-    /** 
+    /**
      * Загрузка расписания
      */
     String.prototype.capitalizeFirstLetter = function() {
@@ -1499,7 +1499,7 @@ $(document).ready(function(){
 
     if($("#schedule-groups").length) {
         var groups = JSON.parse($("#schedule-groups").val())
-            scheduleContent = $("#schedule-content"),
+        scheduleContent = $("#schedule-content"),
             url = "https://altstu-schedule.herokuapp.com/api/scheduleByGroup/",
             sloader = $(".schedule-loader");
 
@@ -1513,7 +1513,7 @@ $(document).ready(function(){
                 var thisWeekSchedule = week1spt&1 == moment().week() ? data["week1"] : data["week2"],
                     todayName = moment().format("dddd").capitalizeFirstLetter(),
                     todaySchedule = thisWeekSchedule[todayName];
-                    
+
 
                 if(todaySchedule) {
                     $.each(todaySchedule, function() {
@@ -1525,6 +1525,74 @@ $(document).ready(function(){
 
                 sloader.fadeOut(300);
             });
+        });
+    }
+
+    if ($(".selectUser").length)
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/message/ajaxGetUsers',
+            height: 40,
+            success: function(data)
+            {
+                $('.selectUser').each(function()
+                {
+                    $(this).append('<div class = "selectUserBox"></div>');
+                    var selectUser = $(this).children(".selectUserBox");
+                    selectUser.ddslick({
+                        data:data,
+                        width:274,
+                        selectText: '<input class = "fioTextBox" type = "text" value = "" placeholder="Выберите пользователя...">',
+                        imagePosition:"left",
+                        onSelected: function(selectedData){
+                            $($(selectedData.selectedItem).closest('.selectUser')).children("input").val(selectedData.selectedData.value).change();
+                        }
+                    });
+                    var fioText = $(this).find(".fioTextBox");
+                    fioText.keyup(function()
+                    {
+                        var text = $(this).val();
+                        $($(this).closest(".selectUser")).find(".dd-container").each(function(){
+                            var i = 0;
+                            var showCount = 5;
+                            $(this).find(".dd-options li a").each(function()
+                            {
+                                var val = $($(this).children(".dd-option-value")[0]).val();
+                                if (i < showCount && val>=0)
+                                {
+                                    var currentText = $(this).children("label")[0].innerText;
+                                    if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
+                                    {
+                                        $(this).hide();
+                                    } else
+                                    {
+                                        i++;
+                                        $(this).show();
+                                    }
+                                } else
+                                {
+                                    $(this).hide();
+                                }
+                            });
+                            if (i == 0)
+                            {
+                                // Сообщаем, что никого не нашли
+                                $(this).find(".dd-options li a").each(function()
+                                {
+                                    var val = $($(this).children(".dd-option-value")[0]).val();
+                                    if (val < 0)
+                                    {
+                                        $(this).show();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    fioText.keyup();
+                });
+            }
         });
     }
 });
