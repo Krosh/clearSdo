@@ -202,15 +202,15 @@ function addSelectUserDialog()
                 $('#addGroupToConferenceDialog').ddslick({
                     data:data,
                     width:274,
-                    selectText: '<input type = "text" value = "" placeholder="Добавить группу..." onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
                     imagePosition:"left",
+                    needTextBox: true,
+                    placeholderTextBox: 'Выберите группу...',
                     onSelected: function(selectedData){
                         if (selectedData.selectedData.value < 0)
                             return;
                         addGroupToConference(selectedData.selectedData.value);
                     }
                 });
-                updateSelectUserDialog("");
             }
         });
     }
@@ -226,57 +226,18 @@ function addSelectUserDialog()
                 $('#addUserToConferenceDialog').ddslick({
                     data:data,
                     width:274,
-                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
                     imagePosition:"left",
+                    needTextBox: true,
+                    placeholderTextBox: 'Выберите собеседника...',
                     onSelected: function(selectedData){
                         if (selectedData.selectedData.value < 0)
                             return;
                         addToConference(selectedData.selectedData.value);
                     }
                 });
-                updateSelectUserDialog("");
             }
         });
     }
-}
-
-function updateSelectUserDialog(text)
-{
-    $(".dd-container").each(function(){
-        var i = 0;
-        var showCount = 5;
-        $(this).find(".dd-options li a").each(function()
-        {
-            var val = $($(this).children(".dd-option-value")[0]).val();
-            if (i < showCount && val>=0)
-            {
-                var currentText = $(this).children("label")[0].innerText;
-                if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
-                {
-                    $(this).hide();
-                } else
-                {
-                    i++;
-                    $(this).show();
-                }
-            } else
-            {
-                $(this).hide();
-            }
-        });
-        if (i == 0)
-        {
-            // Сообщаем, что никого не нашли
-            $(this).find(".dd-options li a").each(function()
-            {
-                var val = $($(this).children(".dd-option-value")[0]).val();
-                if (val < 0)
-                {
-                    $(this).show();
-                }
-            });
-        }
-    })
 }
 
 $(document).ready(function(){
@@ -294,8 +255,9 @@ $(document).ready(function(){
                 $('#selectUserDialog').ddslick({
                     data:data,
                     width:274,
-                    selectText: '<input type = "text" value = "" placeholder="Найти пользователя" onfocus="updateSelectUserDialog(this.value)" onkeyup="updateSelectUserDialog(this.value)">',
                     imagePosition:"left",
+                    needTextBox: true,
+                    placeholderTextBox: 'Выберите собеседника...',
                     onSelected: function(selectedData){
                         if (selectedData.selectedData.value < 0)
                             return;
@@ -303,7 +265,6 @@ $(document).ready(function(){
                         updateDialogs();
                     }
                 });
-                updateSelectUserDialog("");
             }
         });
     }

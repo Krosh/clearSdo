@@ -136,8 +136,8 @@
                                               {
                                                     $.fn.yiiGridView.update('group-grid');
                                                     $(this).val('');
-                      }});
-                                                                     ",
+                                              }});
+                                              ",
                             ));
                             ?>
                         </div>

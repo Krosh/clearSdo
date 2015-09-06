@@ -1544,53 +1544,13 @@ $(document).ready(function(){
                     selectUser.ddslick({
                         data:data,
                         width:274,
-                        selectText: '<input class = "fioTextBox" type = "text" value = "" placeholder="Выберите пользователя...">',
                         imagePosition:"left",
+                        needTextBox: true,
+                        placeholderTextBox: 'Выберите собеседника...',
                         onSelected: function(selectedData){
                             $($(selectedData.selectedItem).closest('.selectUser')).children("input").val(selectedData.selectedData.value).change();
                         }
                     });
-                    var fioText = $(this).find(".fioTextBox");
-                    fioText.keyup(function()
-                    {
-                        var text = $(this).val();
-                        $($(this).closest(".selectUser")).find(".dd-container").each(function(){
-                            var i = 0;
-                            var showCount = 5;
-                            $(this).find(".dd-options li a").each(function()
-                            {
-                                var val = $($(this).children(".dd-option-value")[0]).val();
-                                if (i < showCount && val>=0)
-                                {
-                                    var currentText = $(this).children("label")[0].innerText;
-                                    if (currentText.toUpperCase().indexOf(text.toUpperCase()) < 0)
-                                    {
-                                        $(this).hide();
-                                    } else
-                                    {
-                                        i++;
-                                        $(this).show();
-                                    }
-                                } else
-                                {
-                                    $(this).hide();
-                                }
-                            });
-                            if (i == 0)
-                            {
-                                // Сообщаем, что никого не нашли
-                                $(this).find(".dd-options li a").each(function()
-                                {
-                                    var val = $($(this).children(".dd-option-value")[0]).val();
-                                    if (val < 0)
-                                    {
-                                        $(this).show();
-                                    }
-                                });
-                            }
-                        });
-                    });
-                    fioText.keyup();
                 });
             }
         });
