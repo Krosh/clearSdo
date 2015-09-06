@@ -1328,6 +1328,9 @@ menu .menu-item {
   color: #2c3e50;
   display: inline-block;
 }
+.page-title small {
+  display: block;
+}
 .page-subtitle {
   font-size: 13px;
   color: #8a8c8d;
@@ -2138,6 +2141,13 @@ select {
 }
 select:focus {
   border-color: #3498db;
+}
+select[disabled='disabled'] {
+  border-color: #bdc3c7;
+  cursor: no-drop !important;
+}
+select[disabled='disabled']:focus {
+  border-color: #bdc3c7;
 }
 textarea {
   min-height: 100px;
