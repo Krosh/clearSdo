@@ -946,6 +946,8 @@ function footerUpdate() {
 }
 
 $(document).ready(function(){
+    moment.locale("ru");
+
     footerUpdate();
     $(window).resize(function(){
         footerUpdate();
@@ -1438,4 +1440,83 @@ $(document).ready(function(){
             }
         });
     });
+    
+    /**
+     * Загрузка факультетов
+     */
+    function loadFaculties(faculty, floader, group, gloader, group_id) {
+        var fUrl = "https://altstu-schedule.herokuapp.com/api/faculties/",
+            gUrl = "https://altstu-schedule.herokuapp.com/api/groupsByFaculty/";
+
+        $.getJSON(fUrl, function(data) {
+            $.each(data, function() {
+                faculty.append('<option value="'+this.id+'">'+this.name+'</option>');
+            });
+            floader.fadeOut(300);
+        });
+
+
+        faculty.change(function() {
+            var v = $(this).val();
+
+            gloader.fadeIn(300);
+            group.html("");
+
+            $.getJSON(gUrl + v, function(data) {
+                $.each(data, function() {
+                    group.append('<option value="'+this.id+'">'+this.name+'</option>');
+                });
+            });
+
+            gloader.fadeOut(300);
+            group.prop("disabled", false);
+        });
+
+        group.change(function() {
+            var v = $(this).val();
+            group_id.val(v);
+        });
+    }
+
+    if($("#Group_faculty").length) {
+        loadFaculties($("#Group_faculty"), $(".faculty-loader"), $("#Group_Title"), $(".group-loader"), $("#Group_id_altstu"));
+    }
+
+    /** 
+     * Загрузка расписания
+     */
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
+
+    if($("#schedule-groups").length) {
+        var groups = JSON.parse($("#schedule-groups").val())
+            scheduleContent = $("#schedule-content"),
+            url = "https://altstu-schedule.herokuapp.com/api/scheduleByGroup/",
+            sloader = $(".schedule-loader");
+
+        var week1spt = moment("09-01-" + new Date().getFullYear(), "MM-DD-YYYY").week(); // сравниваем если четность недели 1 сентября == четности текущией недели => 1 неделя
+
+        $.each(groups, function() {
+            var group = this;
+
+            $.getJSON(url + group, function(data) {
+                data = data[0];
+                var thisWeekSchedule = week1spt&1 == moment().week() ? data["week1"] : data["week2"],
+                    todayName = moment().format("dddd").capitalizeFirstLetter(),
+                    todaySchedule = thisWeekSchedule[todayName];
+                    
+
+                if(todaySchedule) {
+                    $.each(todaySchedule, function() {
+                        scheduleContent.append('<div class="sidebar-small-item"><span>'+this.name+' '+this.type+' '+this.room+'</span><div class="description">'+this.timeFrom+' — '+this.timeTo+'</div></div>')
+                    });
+                } else {
+                    scheduleContent.html('<span>ЗАНЯТИЙ НЕТ</span>');
+                }
+
+                sloader.fadeOut(300);
+            });
+        });
+    }
 });

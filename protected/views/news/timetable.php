@@ -1,3 +1,4 @@
+<? /*
 <div class="sidebar-item">
     <div class="sidebar-title">
         Расписание
@@ -55,3 +56,25 @@
         <?php endif; ?>
     </div>
 </div>
+*/ ?>
+
+<?
+if (Yii::app()->user->isStudent()) {
+    $groups = array_map(function($i) {
+        return $i->id_altstu;
+    }, Yii::app()->user->getModel()->groups);
+}
+?>
+
+<? if($groups) { ?>
+<textarea class="hide" id="schedule-groups"><?=trim(json_encode($groups))?></textarea>
+
+<div class="sidebar-item">
+    <div class="sidebar-title">
+        Расписание
+    </div>
+    <div id="schedule-content" class="sidebar-content">
+        <i class="fa fa-spinner fa-spin schedule-loader"></i>
+    </div>
+</div>
+<? } ?>
