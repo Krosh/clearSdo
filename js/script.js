@@ -1555,4 +1555,31 @@ $(document).ready(function(){
             }
         });
     }
+    if ($(".selectTeacher").length)
+    {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/message/ajaxGetTeachers',
+            height: 40,
+            success: function(data)
+            {
+                $('.selectTeacher').each(function()
+                {
+                    $(this).append('<div class = "selectUserBox"></div>');
+                    var selectUser = $(this).children(".selectUserBox");
+                    selectUser.ddslick({
+                        data:data,
+                        width:'100%',
+                        imagePosition:"left",
+                        needTextBox: true,
+                        placeholderTextBox: 'Выберите собеседника...',
+                        onSelected: function(selectedData){
+                            $($(selectedData.selectedItem).closest('.selectTeacher')).children("input").val(selectedData.selectedData.value).change();
+                        }
+                    });
+                });
+            }
+        });
+    }
 });

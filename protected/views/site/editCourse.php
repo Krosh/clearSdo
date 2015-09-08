@@ -93,25 +93,13 @@ $listeners = Course::getGroups($model->id);
                 <div class="modal-body">
                     <strong>Добавить преподавателя:</strong>
                     <div id="editCourse-teacherSelect" class="form modal-form">
-                        <?php
-                        $mas = array();
-                        $models = User::model()->findAll("role >= ".ROLE_TEACHER);
-                        foreach ($models as $item)
-                        {
-                            $mas[$item->id] = $item->fio;
-                        }
-                        $fakeModel = new User;
-                        $fakeModel->fio = "";
-                        $this->widget('ext.combobox.EJuiComboBox', array(
-                            'model' => $fakeModel,
-                            'attribute' => 'fio',
-                            'data' => $mas,
-                            'options' => array(
-                                'onSelect' => '
-                                                $.ajax({
+                        <div class = "selectTeacher" >
+                            <?php
+                            echo CHTML::hiddenField("addUserToGroup",-1,array(
+                                'onchange' => ' $.ajax({
                                                 type: "POST",
                                                 url: "/courses/addTeacherToCourse",
-                                                data: {fio: item.value, idCourse:'.$model->id.'},
+                                                data: {id: this.value, idCourse:'.$model->id.'},
                                                 success: function(data)
                                                 {
                                                     updateTeachers('.$model->id.')
@@ -122,12 +110,9 @@ $listeners = Course::getGroups($model->id);
                                                     alert("error"+textStatus+errorThrown);
                                                 }});
                                                 ',
-                                'allowText' => false,
-                            ),
-                            'htmlOptions' => array('style' => "width: 90%", 'placeholder' => 'Выберите преподавателя'),
-                        ));
-
-                        ?>
+                            ));
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>

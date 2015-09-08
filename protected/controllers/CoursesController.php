@@ -39,14 +39,12 @@ class CoursesController extends CController
 
     public function actionAddTeacherToCourse()
     {
-        $fio = $_POST["fio"];
+        $id = $_POST["id"];
         $idCourse = $_POST["idCourse"];
-        $criteria = new CDbCriteria();
-        $criteria->addSearchCondition("fio",$fio);
-        $user = User::model()->findAll($criteria);
+        CoursesAutor::model()->deleteAll("idCourse = :idCourse AND idAutor = :idAutor", array(":idCourse" => $idCourse, ":idAutor" => $id));
         $model = new CoursesAutor();
         $model->idCourse = $idCourse;
-        $model->idAutor = $user[0]->id;
+        $model->idAutor = $id;
         $model->save();
     }
 

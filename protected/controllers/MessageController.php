@@ -262,6 +262,33 @@ class MessageController extends CController
         echo json_encode($arr);
     }
 
+    public function actionAjaxGetTeachers()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition("role = ".ROLE_TEACHER);
+        $users = User::model()->findAll($criteria);
+        $arr = array();
+        foreach ($users as $user)
+        {
+            $role = "Преподаватель";
+            $item = array();
+            $item['value'] = $user->id;
+            $item['text'] = $user->fio;
+            $item['selected'] = false;
+            $item['description'] = $role;
+            $item['imageSrc'] = $user->getAvatarPath(AVATAR_SIZE_MINI);
+            $arr[] = $item;
+        }
+        $item = array();
+        $item['value'] = -1;
+        $item['text'] = "Никого не нашли :(";
+        $item['selected'] = false;
+        $item['description'] = "Попробуйте уточнить данные поиска";
+        $item['imageSrc'] = "";
+        $arr[] = $item;
+        echo json_encode($arr);
+    }
+
     public function actionAjaxGetGroups()
     {
         $groups = Group::model()->findAll();
