@@ -254,6 +254,8 @@ class XUploadAction extends CAction {
         {
             throw new CHttpException(-1,"Слишком большой файл");
         }
+        echo json_encode(true);
+        return true;
       }
 
     /**

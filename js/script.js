@@ -553,6 +553,7 @@ function addLearnMaterial(idCourse)
     xhr.open("POST", "/learnMaterial/addMaterial");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
+            console.log(xhr.responseText);
             if(xhr.status == 200) {
 //                $("#loadfile").hide();
                 $("#learnMaterialLoader").hide();
@@ -1194,7 +1195,7 @@ $(document).ready(function(){
         $('body').hideLoader();
         updateLearnMaterials(window.idCourse);
     });
-    $("#XUploadForm-form").bind('fileuploadfail',function()
+    $("#XUploadForm-form").bind('fileuploadfail',function(e,data,x)
     {
         $('body').hideLoader();
         onAlert("LOAD_FILE_ERROR");
