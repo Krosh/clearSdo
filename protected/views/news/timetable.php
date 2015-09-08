@@ -60,9 +60,11 @@
 
 <?
 if (Yii::app()->user->isStudent()) {
-    $groups = array_map(function($i) {
+    function groups_fn($i) {
         return $i->id_altstu;
-    }, Yii::app()->user->getModel()->groups);
+    };
+
+    $groups = array_map("groups_fn", Yii::app()->user->getModel()->groups);
 }
 ?>
 
