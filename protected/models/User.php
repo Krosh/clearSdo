@@ -217,6 +217,12 @@ class User extends CActiveRecord
     protected function afterSave()
     {
         Yii::import('application.modules.yii-forum.models.*');
+        if ($this->forumUser == null)
+        {
+            $forumUser = new Forumuser();
+            $forumUser->siteid = $this->id;
+            $forumUser->save();
+        }
         $this->forumUser->name = $this->fio;
         $this->forumUser->save();
         if ($this->avatar == "")

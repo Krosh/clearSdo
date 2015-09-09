@@ -8,9 +8,9 @@
  */?>
 
 <div class="sidebar-item">
-            <div class="sidebar-title">
-                Новости
-            </div>
-            <div class="sidebar-content" id = "news-content">
-            </div>
-        </div>
+    <div class="sidebar-title">
+        Новости
+    </div>
+    <div class="sidebar-content" id = "news-content">
+    </div>
+</div>
