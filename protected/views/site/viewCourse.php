@@ -32,9 +32,15 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         </div>
                     </div>
                     <?php if (Yii::app()->user->isTeacher()):?>
-                        <a class="right" href="<?php echo $this->createUrl("/site/editCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим редактирования</span></a>
+                        <a href="<?php echo $this->createUrl("/site/editCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим редактирования</span></a>
                     <?php endif; ?>
-                    <h2 id="files">Учебные материалы</h2>
+                    <br>
+                    <h2 id="files" class="col-9" >Учебные материалы</h2>
+                    <span class="col-3 right">
+                        <a href = "<?php echo $this->createUrl("courses/getCoursesFiles", array("idCourse" => $model->id));?>">
+                            <i class="fa fa-download fa-2x has-tip" data-original-title="Скачать все материалы архивом" title="Скачать все материалы архивом"></i>
+                        </a>
+                    </span>
                     <table class="table green">
                         <thead>
                         <tr>
