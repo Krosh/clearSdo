@@ -97,10 +97,20 @@ class LearnMaterialController extends CController
     public function actionChangeTitle()
     {
         $material = LearnMaterial::model()->findByPk($_POST['idMaterial']);
+        // TODO:: Проверка на права доступа к материалу
         if ($material->getExtension() != "")
             $material->title = $_POST['title'].".".$material->getExtension();
         else
             $material->title = $_POST['title'];
+        $material->save();
+    }
+
+    public function actionChangeLink()
+    {
+        $material = LearnMaterial::model()->findByPk($_POST['idMaterial']);
+        // TODO:: Проверка на права доступа к материалу
+        if ($material->category == MATERIAL_LINK)
+            $material->path = $_POST["link"];
         $material->save();
     }
 

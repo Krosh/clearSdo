@@ -241,6 +241,28 @@ function ajaxChangeLearnMaterialTitle(obj,id)
     });
 }
 
+function startChangeLearnMaterialLink(obj,id)
+{
+    $(obj).hide();
+    $("#editLink"+id).show().focus();
+}
+
+function ajaxChangeLearnMaterialLink(obj,id)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/learnMaterial/changeLink',
+        data: {idMaterial: id, link: $(obj).val()},
+        error: onError,
+        success: function(data)
+        {
+            $(obj).hide();
+            $("#labelLink"+id).show().html($(obj).val());
+        }
+    });
+}
+
+
 function ajaxGetTimetable(idGroup)
 {
     $.ajax({
