@@ -200,6 +200,46 @@ class CoursesController extends CController
         $model->save();
     }
 
+    public function actionGetCoursesFiles($idCourse)
+    {
+        if(extension_loaded('zip'))
+        {
+            $course = Course::model()->findByPk($idCourse);
+            $learnMaterials = LearnMaterial::getMaterialsFromCourse($course->id);
+            $zip = new ZipArchive();
+            $zip_name = $course->title.".zip";
+            if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
+            {
+                return;
+            }
+            $currentDirectory = "";
+            foreach ($learnMaterials as $item)
+            {
+                if ($item->category == MATERIAL_TITLE)
+                {
+                    // Создаем новую директорию в архиве
+                    $currentDirectory = StringHelper::translitText($item->title);
+                    $zip->addEmptyDir($currentDirectory);
+                    $currentDirectory.= "/";
+                }
+                else
+                {
+                    // добавляем файлы в zip архив
+                    $path = $item->getAsFile();
+                    $zip->addFile($path,$currentDirectory.StringHelper::translitText($item->title));
+                }
+            }
+            $zip->close();
+            if(file_exists($zip_name))
+            {
+                header('Content-type: application/zip');
+                header('Content-Disposition: attachment; filename="'.$zip_name.'"');
+                readfile($zip_name);
+                unlink($zip_name);
+            }
+        }
+    }
+
 
 
 }

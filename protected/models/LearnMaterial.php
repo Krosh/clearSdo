@@ -139,10 +139,19 @@ class LearnMaterial extends CActiveRecord
         return $result;
     }
 
+    public function getAsFile()
+    {
+        if ($this->category == MATERIAL_FILE || $this->category == MATERIAL_TORRENT)
+        {
+            return Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$this->path;
+        }
+        // TODO:: дописать для остальных категорий учебных материалов
+    }
+
 
     public function getPathToMaterial()
     {
-        if ($this->category == 1 || $this->category == 3)
+        if ($this->category == MATERIAL_FILE || $this->category == MATERIAL_TORRENT)
         {
             return Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->idAutor.DIRECTORY_SEPARATOR.$this->path;
         } else
