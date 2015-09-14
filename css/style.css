@@ -2461,6 +2461,10 @@ i.fa-remove:hover {
   background-size: cover;
   background-position: center center;
 }
+.the-avatar-box.big {
+  width: 100px;
+  height: 100px;
+}
 .NFI-wrapper {
   cursor: pointer;
   display: block !important;
@@ -2765,7 +2769,7 @@ a.update + a.delete {
 .modal .dd-select {
   width: 100% !important;
 }
-.modal input {
+.modal input:not(.btn) {
   width: 100% !important;
 }
 .modal .dd-pointer {
@@ -2785,4 +2789,9 @@ a.update + a.delete {
 }
 .forgot-tab {
   display: none;
+}
+.bottoms-info-table {
+  padding-left: 44px;
+  color: #666;
+  margin-top: 5px;
 }

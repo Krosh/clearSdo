@@ -1890,6 +1890,11 @@ i.fa-remove {
   display: block;
   background-size: cover;
   background-position: center center;
+
+  &.big {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .NFI-wrapper {
@@ -2302,7 +2307,7 @@ a.update + a.delete {
     width: 100% !important;
   }
 
-  input {
+  input:not(.btn) {
     width: 100% !important;
   }
   .dd-pointer {
@@ -2325,3 +2330,9 @@ a.update + a.delete {
 }
 
 .forgot-tab {display: none;}
+
+.bottoms-info-table {
+  padding-left: 44px;
+  color: #666;
+  margin-top: 5px;
+}
