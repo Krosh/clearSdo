@@ -16,6 +16,7 @@
  * @property string $phone
  * @property string $dateChangePassword
  * @property string $email
+ * @property string $new_email
  * @property bool $isAvatarModerated
  * @property string $gender
  * @property int $idForumUser
@@ -64,7 +65,7 @@ class User extends CActiveRecord
 			array('role', 'length', 'max'=>15),
 			array('avatar', 'length', 'max'=>20),
             array('phone', 'length', 'max'=>20),
-            array('email', 'length', 'max'=>200),
+            array('new_email,email', 'length', 'max'=>200),
             array('dateChangePassword', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
@@ -72,7 +73,7 @@ class User extends CActiveRecord
             array('birthday', 'length', 'max'=>10),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('idForumUser, phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('new_email,idForumUser, phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -179,6 +180,12 @@ class User extends CActiveRecord
                 $this->errorOnSave = "Такой e-mail уже зарегистрирован!";
                 return false;
             }
+            $model = User::model()->findAll("LOWER(new_email) = LOWER('".$this->email."')");
+            if (count($model) > 1 || (count($model) > 0 && ($this->isNewRecord || $model[0]->id !=$this->id)))
+            {
+                $this->errorOnSave = "Такой e-mail уже зарегистрирован!";
+                return false;
+            }
         }
         $model = User::model()->findAll("LOWER(login) = LOWER('".$this->login."')");
         if (count($model) > 1 || (count($model) > 0 && ($this->isNewRecord || $model[0]->id !=$this->id)))
@@ -190,6 +197,12 @@ class User extends CActiveRecord
         {
             $this->errorOnSave = "Нельзя создавать запись с пустым логином!";
             return false;
+        }
+        if (!$this->isNewRecord) {
+            $old = User::model()->findByPk($this->id);
+            if ($old->new_email != $this->email && $old->email != $this->email) {
+                $this->sendChangeEmail($old->email);
+            }
         }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
@@ -306,4 +319,20 @@ class User extends CActiveRecord
             return false;
         }
     }
+
+    public function sendChangeEmail($oldEmail)
+    {
+        $cache = md5(rand(1,999999)+"asd");
+        $this->activationCache = $cache;
+        $this->new_email = $this->email;
+        $this->email = $oldEmail;
+        $this->save();
+        $text = "Для изменения адреса электронной почты, перейдите по ссылке: http://".$_SERVER['SERVER_NAME']."/user/setNewEmail?idUser=".$this->id."&cache=".$this->activationCache;
+        if(MailHelper::sendMail($this->email,"Изменение адрема электронной почты",$text)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

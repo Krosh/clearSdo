@@ -39,7 +39,7 @@
                 </div>
             </div>
         <? endif; ?>
-        <?php if (isset(PluginController::$plugins)):?>
+        <?php if (isset(PluginController::$plugins) && count(PluginController::$plugins)>0):?>
             <div class="link more">
                 <a href="#">Плагины (<?php echo count(PluginController::$plugins)?>)</a>
                 <div class="more-menu">

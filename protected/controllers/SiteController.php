@@ -203,7 +203,8 @@ class SiteController extends CController
                         $model->dateChangePassword = date("Y-m-d H:i:s");
                         $newPassword = "";
                         $model->save();
-                    } else
+                        $this->redirect("/site/index");
+                        } else
                     {
                         Yii::app()->user->setFlash("codeMessage","error");
                         Yii::app()->user->setFlash("message","Введенные пароли не совпадают");
@@ -211,6 +212,7 @@ class SiteController extends CController
                 } else
                 {
                     $model->save();
+                    $this->redirect("/site/index");
                 }
             } else
             {

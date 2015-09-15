@@ -244,5 +244,21 @@ class UserController extends CController
         ));
     }
 
+    public function actionSetNewEmail($idUser, $cache)
+    {
+        $this->layout = '//layouts/main';
+        $user = $this->loadModel($idUser);
+        if ($user->activationCache != $cache)
+            throw new CHttpException(404,'The requested page does not exist.');
+        $user->email = $user->new_email;
+        $user->save();
+
+        // echo "Новые параметы для входа:<br>";
+        // echo "Ваш логин:[".$user->login."], ваш пароль:[1234]";
+
+        $this->render("setNewEmail", array(
+            "email" => $user->email,
+        ));
+    }
 
 }
