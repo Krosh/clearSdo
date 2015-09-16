@@ -2816,3 +2816,7 @@ a.update + a.delete {
   background: #00b16a;
   color: #fff;
 }
+.noty_container_type_alert {
+  background: #e74c3c;
+  color: #fff;
+}
