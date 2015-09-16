@@ -2795,3 +2795,24 @@ a.update + a.delete {
   color: #666;
   margin-top: 5px;
 }
+.relax {
+  padding: 20px 16px;
+  border: 1px solid #DEE1E2;
+  box-shadow: 0px 3px 15px 1px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+.relax p,
+.relax a,
+.relax strong {
+  color: #fff;
+}
+.relax p {
+  margin: 0;
+}
+.noty_container_type_information {
+  background: #ecf0f1;
+}
+.noty_container_type_success {
+  background: #00b16a;
+  color: #fff;
+}
