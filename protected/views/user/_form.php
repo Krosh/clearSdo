@@ -66,9 +66,9 @@ if ($model->errorOnSave != "")
             <div class="col-group">
                 <div class="col-3">
                     <?php if ($model->avatar != ""):?>
-                        <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
+                        <div class="the-avatar-box big" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
                     <?php else: ?>
-                        <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
+                        <div class="the-avatar-box big" style="background-image: url('/img/avatar-default.png')"></div>
                     <?php endif; ?>
                 </div>
                 <div class="col-9">

@@ -44,7 +44,7 @@
                 </div>
             </td>
         <? else: ?>
-            <td>
+            <td colspan="2">
                 <?
                 $f = $item->getIconExtension();
                 ?>
@@ -55,16 +55,17 @@
                 echo $item->getViewedTitle();
                 ?>
                 </span>
-            </td>
-            <td class="right">
-                <?php if ($item->category == MATERIAL_LINK): ?>
-                    <input class = "changeOnEnter" id = "editLink<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" value = "<?php echo $item->getInfoText(true);?>" style="display:none">
-                    <span id = "labelLink<?php echo $item->id;?>" onclick="startChangeLearnMaterialLink(this,<?php echo $item->id;?>)">
+
+                <div class="bottoms-info-table">
+                    <?php if ($item->category == MATERIAL_LINK): ?>
+                        <input class = "changeOnEnter" id = "editLink<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" value = "<?php echo $item->getInfoText(true);?>" style="display:none">
+                        <span id = "labelLink<?php echo $item->id;?>" onclick="startChangeLearnMaterialLink(this,<?php echo $item->id;?>)">
+                            <?php echo $item->getInfoText(true); ?>
+                        </span>
+                    <?php else: ?>
                         <?php echo $item->getInfoText(true); ?>
-                    </span>
-                <?php else: ?>
-                    <?php echo $item->getInfoText(true); ?>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </td>
             <td class="right">
                 <a class="red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $currentCourseMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>

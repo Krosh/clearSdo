@@ -67,9 +67,9 @@
                 <div class="col-group">
                     <div class="col-3">
                         <?php if ($model->avatar != ""):?>
-                            <div class="the-avatar-box" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
+                            <div class="the-avatar-box big" style="background-image: url('/avatars/<?php echo $model->avatar?>')"></div>
                         <?php else: ?>
-                            <div class="the-avatar-box" style="background-image: url('/img/avatar-default.png')"></div>
+                            <div class="the-avatar-box big" style="background-image: url('/img/avatar-default.png')"></div>
                         <?php endif; ?>
                     </div>
                     <div class="col-9">
@@ -78,6 +78,9 @@
                         <?php endif;?>
                         <?php if ($model->isAvatarModerated == 2):?>
                             <small>Ваш аватар заблокирован администратором и поэтому не виден пользователям</small>
+                        <?php endif;?>
+                        <?php if ($model->isAvatarModerated):?>
+                            <small>Аватар прошел модерацию и виден всем пользователям</small>
                         <?php endif;?>
                     </div>
                 </div>
