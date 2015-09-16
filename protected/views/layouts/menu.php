@@ -78,3 +78,15 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function()
+    {
+        <?php foreach (Yii::app()->user->getFlashes() as $item):?>
+        noty({
+                text: '<?php echo $item["text"]?>',
+                layout: 'topRight',
+                type: '<?php echo $item["type"]?>'}
+        );
+        <?php endforeach; ?>
+    });
+</script>

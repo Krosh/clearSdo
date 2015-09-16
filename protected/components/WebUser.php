@@ -84,5 +84,11 @@ class WebUser extends CWebUser {
         return $this->_model;
     }
 
+    public function sendNotification($text, $type)
+    {
+        $message = array("text" => $text,"type" => $type);
+        Yii::app()->user->setFlash(rand(0,9999999),$message);
+    }
+
 
 }
