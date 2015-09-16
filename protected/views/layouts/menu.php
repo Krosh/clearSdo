@@ -15,9 +15,9 @@
         <div class="link">
             <a href="/">Главная</a>
         </div>
-  <!--      <div class="link">
-            <a href="#">Общение</a>
-        </div>-->
+        <!--      <div class="link">
+                  <a href="#">Общение</a>
+              </div>-->
         <!--  <div class="link">
               <a href="#">Документы</a>
           </div>
@@ -82,11 +82,13 @@
     $(document).ready(function()
     {
         <?php foreach (Yii::app()->user->getFlashes() as $item):?>
+        <?php if (is_array($item)):?>
         noty({
                 text: '<?php echo $item["text"]?>',
                 layout: 'topRight',
                 type: '<?php echo $item["type"]?>'}
         );
+        <?php endif; ?>
         <?php endforeach; ?>
     });
 </script>
