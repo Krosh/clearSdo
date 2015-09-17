@@ -65,7 +65,7 @@ $cs->registerCoreScript('jquery');
             Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#" class="skiptranslate">СДО Стимул</a>
         </div>
         <div class="col-6 right">
-            <span class="skiptranslate">СДО Стимул 2.0</span> &nbsp;&nbsp;&nbsp; <a href="#">Разработка системы</a>
+            <span class="skiptranslate">СДО Стимул 2.0</span> &nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" class="footer-authors">Разработка системы</a>
         </div>
     </div>
 </footer>
@@ -89,6 +89,7 @@ $cs->registerCoreScript('jquery');
 <script src="../../js/strength.js"></script>
 <script src="../../js/jquery.are-you-sure.js"></script>
 <script src="../../js/jquery.noty.packaged.min.js"></script>
+<script src="../../js/ZergRush.js"></script>
 <script src="../../js/script.js"></script>
 </body>
 </html>

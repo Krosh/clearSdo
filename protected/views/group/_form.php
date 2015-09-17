@@ -75,4 +75,4 @@
 
     <?php $this->endWidget(); ?>
 
-</div><!-- form -->0
+</div><!-- form -->
