@@ -234,10 +234,12 @@ class User extends CActiveRecord
         {
             $forumUser = new Forumuser();
             $forumUser->siteid = $this->id;
+            $forumUser->name = $this->fio;
             $forumUser->save();
+        } else{
+            $this->forumUser->name = $this->fio;
+            $this->forumUser->save();
         }
-        $this->forumUser->name = $this->fio;
-        $this->forumUser->save();
         if ($this->avatar == "")
             $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))

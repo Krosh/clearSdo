@@ -62,7 +62,7 @@
         </tr>
         */ ?>
 
-        <?php echo $form->hiddenField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); ?>
+       <!-- --><?php /*echo $form->hiddenField($model,'id_altstu',array('size'=>20,'maxlength'=>20)); */?>
 
     </table>
     <br>
@@ -75,4 +75,4 @@
 
     <?php $this->endWidget(); ?>
 
-</div><!-- form -->0
+</div><!-- form -->
