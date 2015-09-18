@@ -1634,4 +1634,22 @@ $(document).ready(function(){
         },
         buttons: false
     };
+
+
+    if($(".footer-authors").length) {
+        $(".footer-authors").frosty({
+            html: true,
+            content: 'Разработка: <a href="#" target="_blank" style="color: #fff">Прохоров Павел</a>, <a href="http://medvedev.im" target="_blank" style="color: #fff" data-zerg-rush>Медведев Илья</a>',
+            trigger: "click"
+        });
+    }
+
+    var z;
+    $(document).on("click", "[data-zerg-rush]", function(e) {
+        e.preventDefault();
+        
+        z = new ZergRush(20);
+
+        return false;
+    });
 });
