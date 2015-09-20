@@ -7,6 +7,12 @@
  * To change this template use File | Settings | File Templates.
  */
 
+define("NOTIFICATION_WARNING","warning");
+define("NOTIFICATION_ERROR","error");
+define("NOTIFICATION_SUCCESS","success");
+define("NOTIFICATION_INFORMATION","information");
+define("NOTIFICATION_NOTIFICATION","notification");
+
 class WebUser extends CWebUser {
     private $_model = null;
 

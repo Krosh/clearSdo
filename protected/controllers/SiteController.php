@@ -212,6 +212,7 @@ class SiteController extends CController
                 } else
                 {
                     $model->save();
+                    Yii::app()->user->sendNotification("Новые настройки сохранены",NOTIFICATION_SUCCESS);
                     $this->redirect("/site/index");
                 }
             } else
