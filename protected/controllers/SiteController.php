@@ -211,9 +211,15 @@ class SiteController extends CController
                     }
                 } else
                 {
-                    $model->save();
-                    Yii::app()->user->sendNotification("Новые настройки сохранены",NOTIFICATION_SUCCESS);
-                    $this->redirect("/site/index");
+                    if ($model->save())
+                    {
+                        Yii::app()->user->sendNotification("Новые настройки сохранены",NOTIFICATION_SUCCESS);
+                        $this->redirect("/site/index");
+                    } else
+                    {
+                        Yii::app()->user->setFlash("codeMessage","error");
+                        Yii::app()->user->setFlash("message","Ошибка при загрузке аватара, выберите другой");
+                    }
                 }
             } else
             {

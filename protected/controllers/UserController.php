@@ -105,10 +105,19 @@ class UserController extends CController
             }
             $model->newAvatar = $_POST['User']['newAvatar'];
             if($model->save() && $flag)
+            {
                 if ($goToGroup>-1)
                     $this->redirect(array($this->createUrl('/group/update',array('id' => $goToGroup))));
                 else
                     $this->redirect(array('admin'));
+            } else
+            {
+                if ($flag)
+                {
+                    Yii::app()->user->setFlash("codeMessage","error");
+                    Yii::app()->user->setFlash("message","Ошибка при загрузке аватара, выберите другой");
+                }
+            }
         }
 
         $this->render('update',array(

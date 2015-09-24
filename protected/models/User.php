@@ -161,16 +161,17 @@ class User extends CActiveRecord
         ));
 	}
 
+    private $defaultAvatarPath = "/img/avatar-default.png";
+
     public function getAvatarPath($needImageSize = AVATAR_SIZE_NORMAL)
     {
-        $defaultAvatarPath = "/img/avatar-default.png";
         $names = array(AVATAR_SIZE_NORMAL => ".", AVATAR_SIZE_MINI => "_mini.", AVATAR_SIZE_MEDIUM => "_medium.");
         $avatarPath = $this->avatar;
         $avatarPath = str_replace(".",$names[$needImageSize],$avatarPath);
         if ($this->isAvatarModerated == 1)
             return "/avatars/".$avatarPath;
         else
-            return $defaultAvatarPath;
+            return $this->defaultAvatarPath;
     }
 
 
@@ -217,15 +218,22 @@ class User extends CActiveRecord
             $image = CUploadedFile::getInstance($this,'newAvatar');
             $name = time();
             $image->saveAs(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName);
-            Yii::app()->imageHandler
-                ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
-                ->thumb(44,44)
-                ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_mini".".".$image->extensionName);
-            Yii::app()->imageHandler
-                ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
-                ->thumb(70,70)
-                ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_medium".".".$image->extensionName);
-            $this->avatar = $name.".".$image->extensionName;
+            try
+            {
+                Yii::app()->imageHandler
+                    ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
+                    ->thumb(44,44)
+                    ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_mini".".".$image->extensionName);
+                Yii::app()->imageHandler
+                    ->load(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name.".".$image->extensionName)
+                    ->thumb(70,70)
+                    ->save(Yii::getPathOfAlias('webroot.avatars').DIRECTORY_SEPARATOR.$name."_medium".".".$image->extensionName);
+                $this->avatar = $name.".".$image->extensionName;
+            } catch (Exception $e)
+            {
+                $this->errors[] = $e->getMessage();
+                return false;
+            }
             if (!Yii::app()->user->isAdmin())
                 $this->isAvatarModerated = false;
             else
@@ -256,6 +264,8 @@ class User extends CActiveRecord
 
     public function deleteAvatar()
     {
+        if ($this->getAvatarPath(AVATAR_SIZE_NORMAL) == $this->defaultAvatarPath)
+            return;
         $path = Yii::getPathOfAlias('webroot').$this->getAvatarPath(AVATAR_SIZE_NORMAL);
         if (is_file($path))
             unlink($path);
