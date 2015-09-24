@@ -122,16 +122,16 @@
                                 $text = explode("=",$item);
                                 $weights[$text[0]] = $text[1];
                             }
-                            $arr = CoursesControlMaterial::getAllControlMaterials($idCourse);
-                            $res = array();
+                            $arr = CoursesControlMaterial::getAllControlMaterials($idCourse,$model->id);
+               /*             $res = array();
                             foreach ($arr as $item)
                             {
                                 if (!$item->is_autocalc)
                                     array_push($res,$item);
                             }
-                            ?>
-                            <table width="35%">
-                                <?php foreach($res as $item): ?>
+                            */?><!--
+               -->             <table width="35%">
+                                <?php foreach($arr as $item): ?>
                                     <tr>
                                         <td width="80%" style="padding-bottom: 10px;">
                                             <?php echo $item->title; ?>

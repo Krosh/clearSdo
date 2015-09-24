@@ -52,7 +52,7 @@ class Group extends CActiveRecord
 	public function relations()
 	{
 		return array(
-            'students'=>array(self::MANY_MANY, 'User', 'tbl_studentsgroups(idGroup,idStudent)'),
+            'students'=>array(self::MANY_MANY, 'User', 'tbl_studentsgroups(idGroup,idStudent)',"order" => "fio"),
         );
 	}
 

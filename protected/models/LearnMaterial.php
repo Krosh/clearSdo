@@ -47,9 +47,9 @@ class LearnMaterial extends CActiveRecord
         // will receive user inputs.
         return array(
             array('category, idAutor', 'numerical', 'integerOnly'=>true),
-            array('path', 'length', 'max'=>200),
+            array('path, title', 'length', 'max'=>2000),
             array('content', 'length', 'max'=>65535),
-            array('ext, courses, title', 'length', 'max'=>45),
+            array('ext, courses', 'length', 'max'=>45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('content, showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
