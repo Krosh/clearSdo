@@ -64,9 +64,7 @@ class WebUser extends CWebUser {
     function getFio() {
         if ($user = $this->getModel())
         {
-            $mas = explode(" ",$user->fio);
-            $text = $mas[0]." ".mb_substr($mas[1],0,1,"UTF-8").".".mb_substr($mas[2],0,1,"UTF-8").".";
-            return $text;
+            return $user->getShortFio();
         }
     }
 

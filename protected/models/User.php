@@ -119,7 +119,7 @@ class User extends CActiveRecord
     public function getShortFio()
     {
         $names = explode(" ",$this->fio);
-        return $names[0]." ".substr($names[1],0,2).". ".substr($names[2],0,2).".";
+        return $names[0]." ".($names[1] != "" ? substr($names[1],0,2).". " : "").($names[2] != "" ? substr($names[2],0,2)."." : "");
     }
 
 	/**
@@ -208,9 +208,13 @@ class User extends CActiveRecord
         }
         if (!$this->isNewRecord) {
             $old = User::model()->findByPk($this->id);
-            if ($old->new_email != $this->email && $old->email != $this->email) {
+            if ($old->new_email != $this->email && $old->email != $this->email && $this->email != "") {
                 $this->sendChangeEmail($old->email);
             }
+        } else
+        {
+            if ($this->email != "")
+                $this->sendChangeEmail($this->email);
         }
         if (CUploadedFile::getInstance($this,'newAvatar') != "")
         {
@@ -347,7 +351,7 @@ class User extends CActiveRecord
         $this->email = $oldEmail;
         $this->save();
         $text = "Для изменения адреса электронной почты, перейдите по ссылке: http://".$_SERVER['SERVER_NAME']."/user/setNewEmail?idUser=".$this->id."&cache=".$this->activationCache;
-        if(MailHelper::sendMail($this->email,"Изменение адрема электронной почты",$text)) {
+        if(MailHelper::sendMail($this->new_email,"Изменение адрема электронной почты",$text)) {
             return true;
         } else {
             return false;
