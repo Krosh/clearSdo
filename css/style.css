@@ -2204,7 +2204,8 @@ textarea:active {
   width: 130px;
   vertical-align: inherit !important;
 }
-.form.modal-form input {
+.form.modal-form input,
+.form.modal-form a.btn {
   vertical-align: middle;
 }
 .form.inline {
@@ -2233,7 +2234,6 @@ textarea:active {
   max-width: 20px;
   width: 100%;
   margin-right: 20px;
-  vertical-align: bottom;
 }
 .fa-loading-icon {
   display: none;
@@ -2793,7 +2793,6 @@ a.update + a.delete {
 .bottoms-info-table {
   padding-left: 44px;
   color: #666;
-  margin-top: 5px;
 }
 .relax {
   padding: 20px 16px;
@@ -2819,4 +2818,10 @@ a.update + a.delete {
 .noty_container_type_alert {
   background: #e74c3c;
   color: #fff;
+}
+.changeOnEnter {
+  min-width: 75% !important;
+}
+.row.buttons {
+  text-align: left !important;
 }
