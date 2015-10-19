@@ -11,6 +11,7 @@
  * @property string $dateEnd
  * @property string $questions
  * @property integer $mark
+ * @property integer $idAutorMark
  * @property integer $endReason
  */
 class UserControlMaterial extends CActiveRecord
@@ -31,11 +32,11 @@ class UserControlMaterial extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('idUser, idControlMaterial, mark, endReason', 'numerical', 'integerOnly'=>true),
+			array('idAutorMark, idUser, idControlMaterial, mark, endReason', 'numerical', 'integerOnly'=>true),
 			array('dateStart, dateEnd, questions', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, idUser, idControlMaterial, dateStart, dateEnd, questions, mark, endReason', 'safe', 'on'=>'search'),
+			array('idAutorMark, id, idUser, idControlMaterial, dateStart, dateEnd, questions, mark, endReason', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +50,11 @@ class UserControlMaterial extends CActiveRecord
 		return array(
 		);
 	}
+
+    public function getAutorMark()
+    {
+        return User::model()->findByPk($this->idAutorMark);
+    }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -124,6 +130,7 @@ class UserControlMaterial extends CActiveRecord
         $model->dateEnd = $model->dateStart;
         $model->idControlMaterial = $idControlMaterial;
         $model->idUser = $idStudent;
+        $model->idAutorMark = Yii::app()->user->getId();
         $model->mark = round($mark);
         $model->save();
 
