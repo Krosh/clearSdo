@@ -98,7 +98,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         <?php $num = 0;?>
                         <?php foreach ($controlMaterials as $item):?>
                             <tr
-                                <?php if ($item->accessInfo != null && $item->accessInfo->hasAccess && !$item->is_point): ?>
+                                <?php if ($item->accessInfo != null && $item->accessInfo->hasAccess && !$item->is_point && $item->hasQuestions()): ?>
                                     data-href = "<?php echo "/controlMaterial/startTest?idTest=".$item->id?>"
                                 <?php endif; ?>
                                 >

@@ -318,6 +318,11 @@ class ControlMaterial extends CActiveRecord
             return true;
     }
 
+    public function hasQuestions()
+    {
+       return count(Question::getQuestionsByControlMaterial($this->id))>0;
+    }
+
 
 
 }
