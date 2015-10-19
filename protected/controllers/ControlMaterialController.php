@@ -371,7 +371,7 @@ class ControlMaterialController extends CController
 
     public function setMark($idControlMaterial,$idStudent,$mark)
     {
-        UserControlMaterial::setMark($idControlMaterial,$idStudent,$mark);
+        UserControlMaterial::setMark($idControlMaterial,$idStudent,$mark,true);
     }
 
     public function actionSetMark()
@@ -382,28 +382,7 @@ class ControlMaterialController extends CController
 
     public function actionRecalcMarks()
     {
-        $controlMaterial = ControlMaterial::model()->findByPk($_POST["idControlMaterial"]);
-        $arr = explode(";",$controlMaterial->calc_expression);
-        $weights = array();
-        foreach ($arr as $item) {
-            if (strlen($item) == 0)
-                continue;
-            $mas = explode("=",$item);
-            $weights[$mas[0]] = $mas[1];
-        }
-        $group = Group::model()->findByPk($_POST["idGroup"]);
-        $result = array();
-        foreach ($group->students as $student)
-        {
-            $mark = 0;
-            foreach ($weights as $id => $coef)
-            {
-                $mark += ControlMaterial::getMark($student->id,$id)*$coef;
-            }
-            $this->setMark($controlMaterial->id,$student->id,$mark);
-            $result[$student->id] = round($mark);
-        }
-        echo json_encode($result);
+        echo ControlMaterial::recalcMarks($_POST["idControlMaterial"],$_POST["idGroup"]);
     }
 
     public function actionGetGroupMarks()

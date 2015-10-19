@@ -116,7 +116,7 @@ class UserControlMaterial extends CActiveRecord
         return parent::beforeDelete();
     }
 
-    public static function setMark($idControlMaterial,$idStudent,$mark)
+    public static function setMark($idControlMaterial,$idStudent,$mark, $needRecalc = false)
     {
         UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
         $model = new UserControlMaterial();
@@ -126,6 +126,20 @@ class UserControlMaterial extends CActiveRecord
         $model->idUser = $idStudent;
         $model->mark = round($mark);
         $model->save();
+
+        if ($needRecalc)
+        {
+            $idCourse = Yii::app()->session['currentCourse'];
+            $ccm = CoursesControlMaterial::getAllControlMaterials($idCourse);
+            foreach ($ccm as $cm)
+            {
+                if ($cm->is_autocalc && $cm->calc_mode == CALC_AUTO)
+                {
+                    ControlMaterial::recalcMarks($cm->id,0, $idStudent, false);
+                }
+            }
+        }
+
     }
 
 }

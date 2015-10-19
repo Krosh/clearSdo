@@ -323,6 +323,45 @@ class ControlMaterial extends CActiveRecord
        return count(Question::getQuestionsByControlMaterial($this->id))>0;
     }
 
+    public static function recalcMarks($idControlMaterial, $idGroup, $idStudent = -1, $needRecalc = false)
+    {
+        $controlMaterial = ControlMaterial::model()->findByPk($idControlMaterial);
+        $arr = explode(";",$controlMaterial->calc_expression);
+        $weights = array();
+        foreach ($arr as $item) {
+            if (strlen($item) == 0)
+                continue;
+            $mas = explode("=",$item);
+            $weights[$mas[0]] = $mas[1];
+        }
+        $group = Group::model()->findByPk($idGroup);
+        $result = array();
+        if ($idStudent == -1)
+        {
+            foreach ($group->students as $student)
+            {
+                $mark = 0;
+                foreach ($weights as $id => $coef)
+                {
+                    $mark += ControlMaterial::getMark($student->id,$id,false)*$coef;
+                }
+                UserControlMaterial::setMark($controlMaterial->id,$student->id,$mark, false);
+                $result[$student->id] = round($mark);
+            }
+        }
+        else
+        {
+            $mark = 0;
+            foreach ($weights as $id => $coef)
+            {
+                $mark += ControlMaterial::getMark($idStudent,$id,false)*$coef;
+            }
+            UserControlMaterial::setMark($controlMaterial->id,$idStudent,$mark, false);
+            $result[$idStudent] = round($mark);
+        }
+        return json_encode($result);
+    }
+
 
 
 }
