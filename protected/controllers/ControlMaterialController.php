@@ -382,7 +382,7 @@ class ControlMaterialController extends CController
 
     public function actionRecalcMarks()
     {
-        echo ControlMaterial::recalcMarks($_POST["idControlMaterial"],$_POST["idGroup"]);
+        echo ControlMaterial::recalcMarks($_POST["idControlMaterial"],$_POST["idGroup"],-1,true);
     }
 
     public function actionGetGroupMarks()

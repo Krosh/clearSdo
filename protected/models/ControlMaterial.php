@@ -345,7 +345,7 @@ class ControlMaterial extends CActiveRecord
                 {
                     $mark += ControlMaterial::getMark($student->id,$id,false)*$coef;
                 }
-                UserControlMaterial::setMark($controlMaterial->id,$student->id,$mark, false);
+                UserControlMaterial::setMark($controlMaterial->id,$student->id,$mark, true);
                 $result[$student->id] = round($mark);
             }
         }

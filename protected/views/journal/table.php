@@ -33,7 +33,9 @@ foreach ($coursesMaterials as $item)
                 <br>
                 <?php if ($material->is_point):?>
                     <?php if ($material->is_autocalc):?>
-                        <a href="#" style="cursor: pointer;" class="has-tip" title="Рассчитать аттестацию" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>); return false;"><i class="fa fa-calculator"></i></a>
+                        <?php if ($material->calc_mode == CALC_LAUNCH): ?>
+                            <a href="#" style="cursor: pointer;" class="has-tip" title="Рассчитать аттестацию" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>); return false;"><i class="fa fa-calculator"></i></a>
+                        <?php endif; ?>
                     <?php else: ?>
                         <a class="has-tip" title="Редактировать" href = '#'  onclick="showMarksOfMaterial(<?php echo $material->id; ?>); return false;"><i class="fa fa-pencil"></i></a>
                     <?php endif; ?>
