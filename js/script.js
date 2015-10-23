@@ -357,6 +357,25 @@ function loadStudentsFromExcel()
     xhr.send(formData);
 }
 
+function updateJournal(idGroup, idCourse)
+{
+    $.ajax({
+        url: '/site/journal',
+        data: {idGroup: idGroup, idCourse: window.idCourse},
+        type: "GET",
+        success: function(data){
+            $("#journal_table").html(data);
+            if($('.has-tip').length) {
+                $('.has-tip').frosty();
+                $('.has-tip.tip-bottom').frosty({
+                    position: 'bottom'
+                });
+            }
+        },
+        error: onError,
+    });
+}
+
 function recalcMarks(idControlMaterial,idGroup)
 {
     $.ajax({
@@ -364,21 +383,7 @@ function recalcMarks(idControlMaterial,idGroup)
         data: {idGroup: idGroup, idControlMaterial: idControlMaterial},
         type: "POST",
         success: function(data){
-            $.ajax({
-                url: '/site/journal',
-                data: {idGroup: idGroup, idCourse: window.idCourse},
-                type: "GET",
-                success: function(data){
-                    $("#journal_table").html(data);
-                    if($('.has-tip').length) {
-                        $('.has-tip').frosty();
-                        $('.has-tip.tip-bottom').frosty({
-                            position: 'bottom'
-                        });
-                    }
-                },
-                error: onError,
-            });
+            updateJournal(idGroup,window.idCourse);
         },
         error: onError,
     });
@@ -386,32 +391,72 @@ function recalcMarks(idControlMaterial,idGroup)
 
 function saveMark(idStudent,idControlMaterial,mark)
 {
+    var curMark = $('div[data-student='+idStudent+'][data-material='+idControlMaterial+'] span').html();
+    var autosave = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').attr("data-autosave") == "1";
+    if (curMark == mark)
+    {
+        $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
+        $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").show();
+        $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
+        return;
+    }
+    if (!autosave)
+        return;
+    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').attr("data-autosave",0);
     $.ajax({
         url: '/controlMaterial/setMark',
         data: {idStudent: idStudent, idControlMaterial: idControlMaterial, mark: mark},
         type: "POST",
+        success:function()
+        {
+            updateJournal(window.idGroup,window.idCourse);
+        },
         error: onError,
     });
 
-    var mark = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val();
-    if(parseInt(mark) < 25) {
-        mark = '<span class="mark-bad">'+mark+'</span>';
-    } else {
-        mark = '<span class="mark-good">'+mark+'</span>';
-    }
-    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
-    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").show();
-    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').html(mark);
-    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
+//    var mark = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').val();
+//    if(parseInt(mark) < 25) {
+//        mark = '<span class="mark-bad">'+mark+'</span>';
+//    } else {
+//        mark = '<span class="mark-good">'+mark+'</span>';
+//    }
+//    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
+//    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").show();
+//    $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').html(mark);
+//    $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').hide();
 }
 
 function showMarksOfMaterial(idControlMaterial)
 {
-    $('div[data-material='+idControlMaterial+']').hide();
-    $('div[data-material='+idControlMaterial+']').parent().find("a").hide();
-    $('input[data-material='+idControlMaterial+']').show();
-    $('input[data-material='+idControlMaterial+']').first().focus();
+    $('.editMaterialMarks[data-material='+idControlMaterial+']').hide();
+    $('.saveMaterialMarks[data-material='+idControlMaterial+']').show();
+    $('div[data-material='+idControlMaterial+']').hide().parent().find("a").hide();
+    $('input[data-material='+idControlMaterial+']').attr("data-autosave",0).show().first().focus();
 }
+
+function saveMarksOfMaterial(idControlMaterial)
+{
+    $('.editMaterialMarks[data-material='+idControlMaterial+']').hide();
+    $('.saveMaterialMarks[data-material='+idControlMaterial+']').show();
+    window.countMaterialsToSave = 0;
+    $('input[data-material='+idControlMaterial+']').each(function()
+    {
+        window.countMaterialsToSave++;
+        $.ajax({
+            url: '/controlMaterial/setMark',
+            data: {idStudent: $(this).attr("data-student"), idControlMaterial: $(this).attr("data-material"), mark: $(this).val()},
+            type: "POST",
+            success:function()
+            {
+                if (--window.countMaterialsToSave == 0)
+                    updateJournal(window.idGroup,window.idCourse);
+            },
+            error: onError,
+        });
+    })
+}
+
+
 
 function showMarkTextbox(idStudent,idControlMaterial)
 {

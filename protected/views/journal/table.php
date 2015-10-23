@@ -37,7 +37,8 @@ foreach ($coursesMaterials as $item)
                             <a href="#" style="cursor: pointer;" class="has-tip" title="Рассчитать аттестацию" onclick="recalcMarks(<?php echo $material->id; ?>,<?php echo $group->id; ?>); return false;"><i class="fa fa-calculator"></i></a>
                         <?php endif; ?>
                     <?php else: ?>
-                        <a class="has-tip" title="Редактировать" href = '#'  onclick="showMarksOfMaterial(<?php echo $material->id; ?>); return false;"><i class="fa fa-pencil"></i></a>
+                        <a class="has-tip editMaterialMarks" title="Редактировать" href = '#' data-material = "<?php echo $material->id; ?>" onclick="showMarksOfMaterial(<?php echo $material->id; ?>); return false;"><i class="fa fa-pencil"></i></a>
+                        <a style="display: none" class="has-tip saveMaterialMarks" title="Сохранить" href = '#' data-material = "<?php echo $material->id; ?>" onclick="saveMarksOfMaterial(<?php echo $material->id; ?>); return false;"><i class="fa fa-save"></i></a>
                     <?php endif; ?>
                 <?php endif; ?>
 
@@ -77,7 +78,7 @@ foreach ($coursesMaterials as $item)
                             <div style="display: inline; cursor:pointer;" class="has-tip" title="Редактировать" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
                                 <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                             </div>
-                            <input class = "changeOnEnter" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id, false); ?>" onchange = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" onfocusout="$(this).change()" style = "display: none; width: 40px">
+                            <input class = "changeOnEnter" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" data-autosave = "1" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id, false); ?>" onchange = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" onfocusout="$(this).change()" style = "display: none; width: 40px">
                             <?php if ($userFileAnswer != null): ?>
                                 <a class="has-tip" title="Скачать" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
                             <?php endif; ?>

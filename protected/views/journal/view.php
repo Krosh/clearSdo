@@ -14,7 +14,8 @@
 $listeners = Course::getGroups($course->id);
 ?>
     <script>
-        window.idCourse = <?php echo $course->id; ?>
+        window.idCourse = <?php echo $course->id; ?>;
+        window.idGroup = <?php echo $group->id; ?>;
     </script>
 <div class="wrapper">
 <div class="container">
