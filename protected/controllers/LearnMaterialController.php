@@ -207,6 +207,11 @@ class LearnMaterialController extends CController
         $mat = LearnMaterial::model()->findByPk($matId);
         if ($mat->category == MATERIAL_INBROWSER)
         {
+            $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
+            $this->breadcrumbs=array(
+                $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+                $mat->title => array($this->createUrl("/learnMaterial/getMaterial",array("idMaterial" => $mat->id))),
+            );
             $this->render("view", array("model" => $mat));
             Yii::app()->end();
         }

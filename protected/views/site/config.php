@@ -60,7 +60,7 @@
                                 </td>
                                 <td width="65%" class="input-full-width">
                                     <?php
-                                    $arr = array_merge(timezone_identifiers_list(DateTimeZone::ASIA),timezone_identifiers_list(DateTimeZone::EUROPE));
+                                    $arr = array_merge(timezone_identifiers_list(16),timezone_identifiers_list(128));
                                     $timezonesArr = array();
                                     foreach ($arr as $key => $value)
                                     {
@@ -84,7 +84,7 @@
 
 
                         <div class="row buttons">
-                            <?php echo CHtml::submitButton($config->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
+                            <?php echo CHtml::submitButton('Сохранить', array("class" => "btn blue")); ?>
                         </div>
 
                         <?php $this->endWidget(); ?>
