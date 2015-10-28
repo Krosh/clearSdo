@@ -122,7 +122,7 @@
                                 $text = explode("=",$item);
                                 $weights[$text[0]] = $text[1];
                             }
-                            $arr = CoursesControlMaterial::getAllControlMaterials($idCourse,$model->id);
+                            $arr = CoursesControlMaterial::getAllControlMaterials($idCourse,$model->id,true);
                /*             $res = array();
                             foreach ($arr as $item)
                             {
@@ -132,6 +132,9 @@
                             */?><!--
                -->             <table width="35%">
                                 <?php foreach($arr as $item): ?>
+                                    <?php
+                                        if ($item)
+                                    ?>
                                     <tr>
                                         <td width="80%" style="padding-bottom: 10px;">
                                             <?php echo $item->title; ?>

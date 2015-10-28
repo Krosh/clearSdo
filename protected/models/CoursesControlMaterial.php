@@ -102,12 +102,27 @@ class CoursesControlMaterial extends CActiveRecord
         return parent::model($className);
     }
 
-    public static function getAllControlMaterials($idCourse,$idExceptionTest = -1)
+    /**
+     * @param int $idCourse id of parent course
+     * @param int $idExceptionTest id of material who needn't add (usually calculated material)
+     * @param bool $onlyPrevious true if need only previuos materials, don't work without idExceptionTest
+     * @return ControlMaterial[] materials of parent course
+     */
+    public static function getAllControlMaterials($idCourse,$idExceptionTest = -1,$onlyPrevious = false)
     {
         $criteria = new CDbCriteria();
         $criteria->compare('idcourse',$idCourse);
         if ($idExceptionTest != -1)
         {
+            if ($onlyPrevious)
+            {
+                $criteria->compare("idControlMaterial",$idExceptionTest);
+                $cMaterial = CoursesControlMaterial::model()->find($criteria);
+                $zindex = $cMaterial->zindex;
+                $criteria = new CDbCriteria();
+                $criteria->compare('idcourse',$idCourse);
+                $criteria->addCondition("zindex < ".$zindex);
+            }
             $criteria->addCondition("idControlMaterial != ".$idExceptionTest);
         }
         $criteria->order = 'zindex';
