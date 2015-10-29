@@ -393,7 +393,7 @@ function saveMark(idStudent,idControlMaterial,mark)
 {
     var curMark = $('div[data-student='+idStudent+'][data-material='+idControlMaterial+'] span').html();
     var autosave = $('input[data-student='+idStudent+'][data-material='+idControlMaterial+']').attr("data-autosave") == "1";
-    if (curMark == mark)
+    if (curMark == mark && autosave)
     {
         $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').show();
         $('div[data-student='+idStudent+'][data-material='+idControlMaterial+']').parent().find("a").show();
@@ -461,6 +461,9 @@ function saveMarksOfMaterial(idControlMaterial)
             $('input[data-student='+idUser+'][data-material='+idControlMaterial+']').attr("data-autosave",1).hide();
         } else
         {
+            $('div[data-student='+idUser+'][data-material='+idControlMaterial+']').show().parent().find("a").show();
+            $('div[data-student='+idUser+'][data-material='+idControlMaterial+'] span').html(newMark).show().removeClass("mark-bad").addClass((newMark < 25) ? 'mark-bad':'');
+            $('input[data-student='+idUser+'][data-material='+idControlMaterial+']').attr("data-autosave",1).val(newMark).hide();
             window.countMaterialsToSave++;
             $.ajax({
                 url: '/controlMaterial/setMark',
@@ -487,7 +490,12 @@ function saveMarksOfMaterial(idControlMaterial)
                 error: onError,
             });
         }
-    })
+        if (window.countMaterialsToSave == 0)
+        {
+            $('.editMaterialMarks[data-material='+idControlMaterial+']').show();
+            $('.saveMaterialMarks[data-material='+idControlMaterial+']').hide();
+        }
+    });
 }
 
 

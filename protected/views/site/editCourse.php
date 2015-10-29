@@ -39,7 +39,6 @@ $listeners = Course::getGroups($model->id);
         <br>
         <div class="col-9 right">
             <div style="vertical-align: middle">
-                <a href="<?php echo $this->createUrl("/courses/calendar", array("id" => $model->id)); ?>" class="btn icon-colored icon-violet has-tip" data-original-title="Календарь" title="Календарь"><i class="fa fa-calendar"></i></a>
                 <div class="btn courses-list dropdown nohover has-tip" data-original-title="Журнал" title="Журнал">
                     <a href="#" class="caret-link">
                         <a href = "#" id = "currentTermTitle"><i class="fa fa-book fa-2x" style="color: #c55a00"></i></a><i class="caret"></i>
@@ -53,6 +52,7 @@ $listeners = Course::getGroups($model->id);
                         ?>
                     </div>
                 </div>
+                <a href="<?php echo $this->createUrl("/courses/calendar", array("id" => $model->id)); ?>" class="btn icon-colored icon-violet has-tip" data-original-title="Календарь" title="Календарь"><i class="fa fa-calendar"></i></a>
                 <a href="#" class="btn icon-colored icon-blue has-tip" data-toggle="modal" data-target="#editCourseModal" data-original-title="Информация" title="Информация"><i class="fa fa-edit"></i></a>
                 <a href="#" class="btn icon-colored icon-red has-tip" data-toggle="modal" data-target="#editTeachersModal" data-original-title="Преподаватели" title="Преподаватели"><i class="fa fa-users"></i></a>
                 <a href="#" class="btn icon-colored icon-violet has-tip" data-toggle="modal" data-target="#editPeoplesModal" data-original-title="Слушатели" title="Слушатели"><i class="fa fa-graduation-cap"></i></a>
