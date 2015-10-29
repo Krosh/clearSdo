@@ -123,8 +123,17 @@ class LearnMaterialController extends CController
         $mat->category == MATERIAL_LINK ? $mat->path = $_POST["LinkPath"]:$mat->path = $_FILES['filePath']['name'];
         if ($mat->save())
         {
-            $this->addCourseMaterial($_POST['idCourse'],$mat->id);
-            echo "success";
+            // Я не знаю, что это за баг, но почему-то некоторые большие файлы не загружаются и при этом save
+            // возвращает true
+            // Выручает вот такая проверка
+            if ($_POST['idCourse'] > 0)
+            {
+                $this->addCourseMaterial($_POST['idCourse'],$mat->id);
+                echo "success";
+            } else
+            {
+                echo "error";
+            }
         } else
         {
             echo "error";

@@ -65,6 +65,7 @@
 
 
     <div class="row buttons" style="text-align:right; margin-top: 15px;">
+        <span id="progressBar"></span>
         <i style = "display: none" class="fa fa-refresh fa-spin fa-loading-icon" id = "learnMaterialLoader"></i>
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Добавить' : 'Сохранить',array("id" => "learnMaterialSubmitButton","class" => "btn blue", "onclick" => "$(this).hide(); $('#learnMaterialLoader').show();addLearnMaterial($idCourse);return false")); ?>
         <a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>

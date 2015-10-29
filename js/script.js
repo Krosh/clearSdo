@@ -618,6 +618,9 @@ function addLearnMaterial(idCourse)
     formData.append("linkPath",$("#LinkPath").val());
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/learnMaterial/addMaterial");
+    xhr.upload.addEventListener("progress", function(e) {
+        $("#progressBar").html((e.loaded / e.total * 100).toFixed(0).toString()+"%");
+    }, false);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             console.log(xhr.responseText);
@@ -633,6 +636,7 @@ function addLearnMaterial(idCourse)
                 {
                     onAlert("LOAD_FILE_ERROR");
                 }
+                $("#progressBar").html("");
             }
         }
     };
