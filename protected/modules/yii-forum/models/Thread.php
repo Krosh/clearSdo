@@ -165,6 +165,7 @@ class Thread extends CActiveRecord
 
     /**
      * Return the last post in this thread (or null)
+     * @return Post
      */
     public function getLastPost()
     {
@@ -181,7 +182,11 @@ class Thread extends CActiveRecord
         if(null == $firstpost) return '<div style="text-align:center;">-</div>';
 
         $subjlink = CHtml::link(CHtml::encode($this->subject), $this->url);
-        $authorlink = CHtml::link(CHtml::encode($firstpost->author->name), $firstpost->author->url);
+        $author = $firstpost->author;
+        if ($author->sdoUser != null)
+            $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
+        else
+            $authorlink = CHtml::encode($author->name."(удален)");
 
         return '<div class="name">'. $subjlink .'</div>'.
                 '<div class="level2">от '. $authorlink .'</div>';
@@ -189,12 +194,15 @@ class Thread extends CActiveRecord
 
     public function renderLastpostCell()
     {
-        $lastpost = $this->lastPost;
+        $lastpost = $this->getLastPost();
         if(null == $lastpost) return '<div style="text-align:center;">-</div>';
 
         $author = $lastpost->author;
 
-        $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
+        if ($author->sdoUser != null)
+            $authorlink = CHtml::link(CHtml::encode($author->name), $author->url);
+        else
+            $authorlink = CHtml::encode($author->name."(удален)");
 
         return '<div class="level2">'. Yii::app()->dateFormatter->format("dd MMM yyyy, HH:mm", $lastpost->created) .'</div>'.
                 '<div class="level3">от '. $authorlink .'</div>';

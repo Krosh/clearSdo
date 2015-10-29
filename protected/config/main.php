@@ -20,6 +20,9 @@ define("ROLE_GUEST",-1);
 define("ROLE_STUDENT",0);
 define("ROLE_TEACHER",1);
 define("ROLE_ADMIN",2);
+
+define("DEFAULT_AVATAR_PATH","/img/avatar-default.png");
+
 $path = "/pub/home/mvtom/stml2/protected/plugins";
 $result = array();
 

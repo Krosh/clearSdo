@@ -14,7 +14,8 @@ define("TABLE_POST",1);
  *
  * The followings are the available model relations:
  * @property Thread $thread Thread this post lives in
- * @property Forumuser $user User who posted this
+ * @property Forumuser $author User who posted this
+ * @property Forumuser $editor User who posted this
  */
 class Post extends CActiveRecord
 {

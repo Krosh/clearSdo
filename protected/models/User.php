@@ -161,7 +161,7 @@ class User extends CActiveRecord
         ));
 	}
 
-    private $defaultAvatarPath = "/img/avatar-default.png";
+    private $defaultAvatarPath = DEFAULT_AVATAR_PATH;
 
     public function getAvatarPath($needImageSize = AVATAR_SIZE_NORMAL)
     {
