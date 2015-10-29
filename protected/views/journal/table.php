@@ -67,9 +67,10 @@ foreach ($coursesMaterials as $item)
                     <?php if ($material->is_point):?>
                         <?php if ($material->is_autocalc): ?>
                             <td class="center">
-                            <div>
-                                <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
-                            </div>
+                                <div style="display: inline; " data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>">
+                                    <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
+                                </div>
+                            </td>
                         <?php else: ?>
                             <td class="center">
                             <?php
@@ -83,11 +84,10 @@ foreach ($coursesMaterials as $item)
                                 <a class="has-tip" title="Скачать" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
                             <?php endif; ?>
                         <?php endif; ?>
-
                         </td>
                     <?php else: ?>
                         <td class="center">
-                            <div id = "markDiv_<?php echo $student->id; ?>_<?php echo $material->id; ?>">
+                            <div style="display: inline; " data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>">
                                 <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                             </div>
                         </td>

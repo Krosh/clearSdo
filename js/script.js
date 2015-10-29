@@ -407,9 +407,20 @@ function saveMark(idStudent,idControlMaterial,mark)
         url: '/controlMaterial/setMark',
         data: {idStudent: idStudent, idControlMaterial: idControlMaterial, mark: mark},
         type: "POST",
-        success:function()
+        dataType: "JSON",
+        success:function(data)
         {
-            updateJournal(window.idGroup,window.idCourse);
+            for (var i in data)
+            {
+                var idMaterial = data[i].idMaterial;
+                var idUser = data[i].idUser;
+                var mark = data[i].mark;
+                $('div[data-student='+idUser+'][data-material='+idMaterial+']').show().parent().find("a").show();
+                $('div[data-student='+idUser+'][data-material='+idMaterial+'] span').html(mark).show().removeClass("mark-bad").addClass((mark < 25) ? 'mark-bad':'');
+                $('div[data-student='+idUser+'][data-material='+idMaterial+'] span').html(mark).show().removeClass("mark-bad").addClass((mark < 25) ? 'mark-bad':'');
+                $('input[data-student='+idUser+'][data-material='+idMaterial+']').attr("data-autosave",1).val(mark).hide();
+            }
+  //          updateJournal(window.idGroup,window.idCourse);
         },
         error: onError,
     });
@@ -441,18 +452,41 @@ function saveMarksOfMaterial(idControlMaterial)
     window.countMaterialsToSave = 0;
     $('input[data-material='+idControlMaterial+']').each(function()
     {
-        window.countMaterialsToSave++;
-        $.ajax({
-            url: '/controlMaterial/setMark',
-            data: {idStudent: $(this).attr("data-student"), idControlMaterial: $(this).attr("data-material"), mark: $(this).val()},
-            type: "POST",
-            success:function()
-            {
-                if (--window.countMaterialsToSave == 0)
-                    updateJournal(window.idGroup,window.idCourse);
-            },
-            error: onError,
-        });
+        var idUser = $(this).attr("data-student");
+        var curMark = $('div[data-student='+idUser+'][data-material='+idControlMaterial+'] span').html();
+        var newMark = $('input[data-student='+idUser+'][data-material='+idControlMaterial+']').val();
+        if (curMark == newMark)
+        {
+            $('div[data-student='+idUser+'][data-material='+idControlMaterial+']').show().parent().find("a").show();
+            $('input[data-student='+idUser+'][data-material='+idControlMaterial+']').attr("data-autosave",1).hide();
+        } else
+        {
+            window.countMaterialsToSave++;
+            $.ajax({
+                url: '/controlMaterial/setMark',
+                data: {idStudent: $(this).attr("data-student"), idControlMaterial: $(this).attr("data-material"), mark: $(this).val()},
+                type: "POST",
+                dataType: "JSON",
+                success:function(data)
+                {
+                    for (var i in data)
+                    {
+                        var idMaterial = data[i].idMaterial;
+                        var idUser = data[i].idUser;
+                        var mark = data[i].mark;
+                        $('div[data-student='+idUser+'][data-material='+idMaterial+']').show().parent().find("a").show();
+                        $('div[data-student='+idUser+'][data-material='+idMaterial+'] span').html(mark).show().removeClass("mark-bad").addClass((mark < 25) ? 'mark-bad':'');
+                        $('input[data-student='+idUser+'][data-material='+idMaterial+']').attr("data-autosave",1).val(mark).hide();
+                        if (--window.countMaterialsToSave == 0)
+                        {
+                            $('.editMaterialMarks[data-material='+idControlMaterial+']').show();
+                            $('.saveMaterialMarks[data-material='+idControlMaterial+']').hide();
+                        }
+                    }
+                },
+                error: onError,
+            });
+        }
     })
 }
 

@@ -124,8 +124,9 @@ class UserControlMaterial extends CActiveRecord
 
     public static function setMark($idControlMaterial,$idStudent,$mark, $needRecalc = false)
     {
-        UserControlMaterial::model()->deleteAll("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
-        $model = new UserControlMaterial();
+        $model = UserControlMaterial::model()->find("idUser = :idUser and idControlMaterial = :idControlMaterial", array(":idUser" => $idStudent, ":idControlMaterial" => $idControlMaterial));
+        if ($model == null)
+            $model = new UserControlMaterial();
         $model->dateStart = date("Y-m-d H:i:s");
         $model->dateEnd = $model->dateStart;
         $model->idControlMaterial = $idControlMaterial;

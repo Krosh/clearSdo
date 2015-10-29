@@ -371,12 +371,34 @@ class ControlMaterialController extends CController
 
     public function setMark($idControlMaterial,$idStudent,$mark)
     {
+        // Сохраняем старые оценки
+        $oldMarks = array();
+        $marks = UserControlMaterial::model()->findAll("idUser = ".$idStudent);
+        foreach ($marks as $item)
+            $oldMarks[$item->id] = $item->mark;
+        // Выставляем новую
         UserControlMaterial::setMark($idControlMaterial,$idStudent,$mark,true);
+        // Находим дифф со старыми
+        // Если добавили новую запись, то обновляем список оценок
+        $marks = UserControlMaterial::model()->findAll("idUser = ".$idStudent);
+        $arr = array();
+        foreach ($marks as $item)
+        {
+            if (!isset($oldMarks[$item->id]) || $oldMarks[$item->id] != $item->mark)
+            {
+                $elem = array();
+                $elem["idMaterial"] = $item->idControlMaterial;
+                $elem["idUser"] = $item->idUser;
+                $elem["mark"] = $item->mark;
+                $arr[] = $elem;
+            }
+        }
+        return json_encode($arr);
     }
 
     public function actionSetMark()
     {
-        $this->setMark($_POST["idControlMaterial"],$_POST["idStudent"],$_POST["mark"]);
+        echo $this->setMark($_POST["idControlMaterial"],$_POST["idStudent"],$_POST["mark"]);
     }
 
 
