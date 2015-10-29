@@ -55,7 +55,7 @@ function ajaxChangeLanguage(lang)
 
 function onAlert(codeMessage)
 {
-    var messages = {"LOAD_FILE_ERROR":"Ошибка при загрузке файла", "TIMETABLE_GET_SUCCESS":"Расписание получено успешно",
+    var messages = {"TOO_BIG_FILE":"Слишком большой файл","LOAD_FILE_ERROR":"Ошибка при загрузке файла", "TIMETABLE_GET_SUCCESS":"Расписание получено успешно",
         "SUMM_OF_WEIGHT_MUST_BE_MORE_THAN_ZERO":"Сумма весов должна быть больше 0", "WEIGHT_MUST_BE_MORE_THAN_ZERO":"Вес должен быть больше 0",
         "MUST_BE_LEAST_RIGHT_ANSWER":"Должен быть хотя бы один правильный ответ","MUST_BE_ONLY_ONE_RIGHT_ANSWER":"Должен быть только один правильный ответ","MUST_BE_ONLY_ONE_ANSWER":"Должен быть только один вариант ответа",
         "MUST_BE_ONLY_ONE_ANSWER":"Должен быть только один вариант ответа"};
@@ -1028,7 +1028,20 @@ $(document).ready(function(){
     // вид инпута файлов
     $("input[type=file]").nicefileinput({
         label: "Обзор"
-    });
+    })
+        // Проверка на размер файла
+        .bind('change',function()
+        {
+            var size = this.files[0].size;
+            if (size > window.MAX_UPLOAD_FILESIZE)
+            {
+                onAlert("TOO_BIG_FILE");
+                //Очистка input
+                $(this).wrap('<form>').closest('form').get(0).reset();
+                $(this).unwrap();
+                $(this).trigger("change");
+            }
+        });
 
     // Запуск лоадера, скрываем элемент
     if($(".login").length && !$(".login").hasClass("disable-loader")) {
@@ -1257,9 +1270,24 @@ $(document).ready(function(){
 
     $("#XUploadForm-form").bind("fileuploadadd",function()
     {
-        setTimeout(function(){
-            $("#XUploadForm-form button[type=submit]").click();
-        },100);
+        var elem = $("#XUploadForm-form input[type=file]")[0];
+        var flag = true;
+        for (var i in elem.files)
+        {
+            if (elem.files[i].size > window.MAX_UPLOAD_FILESIZE)
+                flag = false;
+        }
+        if (flag)
+        {
+            onAlert("TOO_BIG_FILE");
+            //Очистка input
+            $(this).wrap('<form>').closest('form').get(0).reset();
+            $(this).unwrap();
+            $(this).trigger("change");
+        } else
+            setTimeout(function(){
+                $("#XUploadForm-form button[type=submit]").click();
+            },100);
     });
     $("#XUploadForm-form").bind("fileuploaddone",function()
     {
@@ -1696,7 +1724,7 @@ $(document).ready(function(){
     var z;
     $(document).on("click", "[data-zerg-rush]", function(e) {
         e.preventDefault();
-        
+
         z = new ZergRush(20);
 
         return false;

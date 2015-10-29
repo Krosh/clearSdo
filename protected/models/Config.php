@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $idActiveTerm
  * @property string $activeTimezone
+ * @property integer $maxUploadFilesize
  */
 class Config extends CActiveRecord
 {
@@ -37,7 +38,7 @@ class Config extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id', 'required'),
-			array('id, idActiveTerm', 'numerical', 'integerOnly'=>true),
+			array('maxUploadFilesize, id, idActiveTerm', 'numerical', 'integerOnly'=>true),
             array('activeTimezone', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -65,6 +66,7 @@ class Config extends CActiveRecord
 			'id' => 'ID',
 			'idActiveTerm' => 'Период по умолчанию',
             'activeTimezone' => 'Часовой пояс',
+            'maxUploadFilesize' => 'Максимальный размер загружаемых файлов',
 		);
 	}
 

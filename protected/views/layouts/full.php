@@ -96,6 +96,9 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
     </div>
 </footer>
 <?php Yii::app()->syntaxhighlighter->addHighlighter(); ?>
+<script>
+    window.MAX_UPLOAD_FILESIZE = <?php echo Config::model()->findByPk(1)->maxUploadFilesize; ?>
+</script>
 <script src="../../js/jquery.fs.picker.min.js"></script>
 <script src="../../js/jquery.fs.tabber.min.js"></script>
 <script src="../../js/jquery.maskedinput.min.js"></script>

@@ -40,6 +40,14 @@
                         <table width="80%">
                             <tr>
                                 <td width="35%">
+                                    <?php echo $form->labelEx($config,'maxUploadFilesize'); ?>
+                                </td>
+                                <td width="65%" class="input-full-width">
+                                    <?php echo $form->textField($config,'maxUploadFilesize',$arr); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="35%">
                                     <?php echo $form->labelEx($config,'idActiveTerm'); ?>
                                 </td>
                                 <td width="65%" class="input-full-width">
