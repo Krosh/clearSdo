@@ -1148,7 +1148,7 @@ $(document).ready(function(){
     }
 
     $(document).on("click", '[data-href]', function() {
-        window.location = $(this).data('href');
+        window.open($(this).data('href'));
         return false;
     });
 
