@@ -1148,7 +1148,10 @@ $(document).ready(function(){
     }
 
     $(document).on("click", '[data-href]', function() {
-        window.open($(this).data('href'));
+        if ($(this).data("openinnewwindow") == 1)
+            window.open($(this).data('href'));
+        else
+            window.location = $(this).data('href');
         return false;
     });
 

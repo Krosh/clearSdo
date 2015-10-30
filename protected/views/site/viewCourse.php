@@ -53,7 +53,7 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         ?>
                         <?php foreach ($learnMaterials as $item):?>
                             <? if($item->category != MATERIAL_TITLE && $item->category != MATERIAL_WEBINAR) { ?>
-                                <tr data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
+                                <tr data-openInNewWindow = "<?php echo ($item->category != MATERIAL_INBROWSER) ? "1":"0" ?>" data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
                             <? } else { ?>
                                 <tr>
                             <? } ?>
