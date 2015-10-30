@@ -226,7 +226,7 @@ class CoursesController extends CController
                 {
                     // добавляем файлы в zip архив
                     $path = $item->getAsFile();
-                    $zip->addFile($path,$currentDirectory.StringHelper::translitText($item->title));
+                    $zip->addFile($path,$currentDirectory.StringHelper::translitText($item->getDownloadableName()));
                 }
             }
             $zip->close();

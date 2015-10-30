@@ -229,7 +229,7 @@ class LearnMaterialController extends CController
             $this->redirect($mat->path);
         }
         $filename = $mat->getPathToMaterial();
-        $newname = $mat->title;
+        $newname = $mat->getDownloadableName();
         $newname = str_replace(",","",$newname);
         $newname = str_replace("#","",$newname);
         $newname = str_replace(" ","_",$newname);

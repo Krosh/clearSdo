@@ -287,6 +287,15 @@ class LearnMaterial extends CActiveRecord
         return str_replace(".".$this->getExtension(),"",$this->title);
     }
 
+    public function getDownloadableName()
+    {
+        $name = $this->title;
+        // TODO:: переделать в более точный алгоритм
+        if (strpos($name,".".$this->getExtension()) === false)
+            $name.= ".".$this->getExtension();
+        return $name;
+    }
+
     public function getExtension()
     {
         if ($this->category==MATERIAL_FILE) {
