@@ -87,7 +87,7 @@
                 <?php echo CHtml::activeTextField($model,"minMark", array('onchange' => 'ajaxUpdateAccess(this); ', 'style' => 'width: 40px')); ?>
             </div>
             <?php if ($model->type_relation != ACCESS_RELATION_COMMON):?>
-                <a style="padding-left:10px" class="red" href="#" onclick="ajaxDeleteAccess(<?php echo $model->id.",".$idCourse.",".$idLearnMaterial ?>); return false"><i class="fa fa-remove"></i></a>
+                <a style="padding-left:10px" class="red" href="#" onclick="ajaxDeleteAccess(<?php echo $model->id.",".$idCourse.",".$idMaterial ?>); return false"><i class="fa fa-remove"></i></a>
             <?php endif; ?>
 
         </div>

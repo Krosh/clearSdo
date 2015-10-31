@@ -149,13 +149,13 @@ class AccessLearnMaterial extends CActiveRecord
         if ($this->accessType == 3)
         {
             $this->isCalced = true;
-            $this->hasAccess = DateHelper::getTimestampFromDateTime($this->startDate)<DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) && (DateHelper::getTimestampFromDateTime($this->endDate)>DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) || $this->endDate = "0000-00-00 00:00:00");
+            $this->hasAccess = DateHelper::getTimestampFromDateTime($this->startDate)<DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) && (DateHelper::getTimestampFromDateTime($this->endDate)>DateHelper::getTimestampFromDateTime(date("Y-m-d H:i:s")) || $this->endDate == "0000-00-00 00:00:00");
             return $this->hasAccess;
         }
         if ($this->accessType == 4)
         {
             $this->isCalced = true;
-            $this->hasAccess = ControlMaterial::model()->getMark($user->id,$this->idBeforeMaterial)>=$this->minMark;
+            $this->hasAccess = ControlMaterial::model()->getMark($user->id,$this->idBeforeMaterial,false)>=$this->minMark;
             return $this->hasAccess;
         }
     }

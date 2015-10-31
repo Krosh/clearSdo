@@ -249,11 +249,13 @@ class SiteController extends CController
         // Поиск по людям
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('fio',$query);
+        $criteria->limit = 10;
         $users = User::model()->findAll($criteria);
 
         // Поиск по темам форума
         $criteria = new CDbCriteria();
         $criteria->addSearchCondition('subject',$query);
+        $criteria->limit = 10;
         $threads = Thread::model()->findAll($criteria);
 
         $this->render('/site/search', array('query' => $query, 'users' => $users, 'threads' => $threads));
