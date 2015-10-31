@@ -11,6 +11,7 @@
 <?php
 $teachers = Course::getAutors($model->id);
 $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->id);
+$learnMaterials = CoursesMaterial::getAccessedLearnMaterials($model->id);
 ?>
 <div class="wrapper">
     <div class="container">
@@ -49,9 +50,17 @@ $controlMaterials = CoursesControlMaterial::getAccessedControlMaterials($model->
                         </thead>
                         <tbody>
                         <?php
-                        $learnMaterials = LearnMaterial::getMaterialsFromCourse($model->id);
+                            $visibleFolderStatus = true;
                         ?>
                         <?php foreach ($learnMaterials as $item):?>
+                            <?php
+                            $visibleStatus = ($item->accessInfo != null && $item->accessInfo->hasAccess);
+                            if ($item->category == MATERIAL_TITLE)
+                                $visibleFolderStatus = $visibleStatus;
+                            if (!$visibleFolderStatus || !$visibleStatus)
+                                continue;
+                            ?>
+
                             <? if($item->category != MATERIAL_TITLE && $item->category != MATERIAL_WEBINAR) { ?>
                                 <tr data-openInNewWindow = "<?php echo ($item->category != MATERIAL_INBROWSER) ? "1":"0" ?>" data-href="<?php echo $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) ?>">
                             <? } else { ?>

@@ -103,10 +103,15 @@ function updateSelectListeners(obj)
 
 function ajaxUpdateAccess(elem)
 {
+    var s = "";
+    if (window.isControlMaterial)
+        s = "&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val();
+    else
+        s = "&AccessLearnMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val();
     $.ajax({
         type: 'POST',
-        url: '/controlMaterial/updateAccessInfo',
-        data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+"&AccessControlMaterial[idRecord]="+$("#"+elem.form.id+" #GroupSelect_select").val(),
+        url: (window.isControlMaterial) ? '/controlMaterial/updateAccessInfo' : '/learnMaterial/updateAccessInfo',
+        data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+s,
         error: onError,
     });
 }
@@ -118,7 +123,7 @@ function ajaxDeleteAccess(idAccess, idCourse, idMaterial)
         $("#accessForm"+idAccess).remove();
         $.ajax({
             type: 'POST',
-            url: '/controlMaterial/deleteAccessInfo',
+            url: (window.isControlMaterial) ? '/controlMaterial/deleteAccessInfo' : '/learnMaterial/deleteAccessInfo',
             data: {id: idAccess},
             error: onError,
         });
@@ -129,24 +134,24 @@ function ajaxAddAccess(idCourse, idMaterial, typeRelation)
 {
     $.ajax({
         type: 'POST',
-        url: '/controlMaterial/addAccessInfo',
+        url: (window.isControlMaterial) ? '/controlMaterial/addAccessInfo' : '/learnMaterial/addAccessInfo',
         data: {idCourse:idCourse, idMaterial: idMaterial, typeRelation: typeRelation},
         error: onError,
         success: function(data)
         {
-            ajaxGetAccess(idCourse, idMaterial);
+            ajaxGetAccess(idCourse, idMaterial,window.isControlMaterial);
         }
     });
 }
 
-
-function ajaxGetAccess(idCourse, idMaterial)
+function ajaxGetAccess(idCourse, idMaterial, isControlMaterial)
 {
     window.currentCourse = idCourse;
     window.currentMaterial = idMaterial;
+    window.isControlMaterial = isControlMaterial;
     $.ajax({
         type: 'POST',
-        url: '/controlMaterial/getAccessInfo',
+        url: (isControlMaterial) ? '/controlMaterial/getAccessInfo' : '/learnMaterial/getAccessInfo',
         data: {idCourse: idCourse, idMaterial: idMaterial},
         error: onError,
         success: function(data)
@@ -161,6 +166,7 @@ function ajaxGetAccess(idCourse, idMaterial)
         }
     });
 }
+
 
 function ajaxDeleteAllNonUsedMaterials()
 {
@@ -1316,20 +1322,22 @@ $(document).ready(function(){
     $("#XUploadForm-form").bind("fileuploadadd",function()
     {
         var elem = $("#XUploadForm-form input[type=file]")[0];
-        var flag = true;
-        for (var i in elem.files)
-        {
-            if (elem.files[i].size > window.MAX_UPLOAD_FILESIZE)
-                flag = false;
-        }
-        if (flag)
-        {
-            onAlert("TOO_BIG_FILE");
+//        var flag = true;
+//        for (var i in elem.files)
+//        {
+//            console.log(elem);
+//            console.log(elem.files[i]);
+//            if (elem.files[i].size > window.MAX_UPLOAD_FILESIZE)
+//                flag = false;
+//        }
+//        if (flag)
+//        {
+//            onAlert("TOO_BIG_FILE");
             //Очистка input
-            $(this).wrap('<form>').closest('form').get(0).reset();
-            $(this).unwrap();
-            $(this).trigger("change");
-        } else
+//            $(this).wrap('<form>').closest('form').get(0).reset();
+//            $(this).unwrap();
+//            $(this).trigger("change");
+//        } else
             setTimeout(function(){
                 $("#XUploadForm-form button[type=submit]").click();
             },100);

@@ -90,6 +90,22 @@ class CoursesMaterial extends CActiveRecord
 		));
 	}
 
+    public static function getAccessedLearnMaterials($idCourse)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare('idCourse',$idCourse);
+        $criteria->order = 'zindex';
+        $cMaterials = CoursesMaterial::model()->findAll($criteria);
+        $result = array();
+        foreach ($cMaterials as $item)
+        {
+            $test = LearnMaterial::model()->findByPk($item->idMaterial);
+            $test->accessInfo = $test->hasAccess($idCourse);
+            array_push($result,$test);
+        }
+        return $result;
+    }
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

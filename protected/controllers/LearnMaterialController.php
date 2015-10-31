@@ -296,5 +296,40 @@ class LearnMaterialController extends CController
 
     }
 
+    public function actionGetAccessInfo()
+    {
+        $idLearnMaterial = $_POST['idMaterial'];
+        $idCourse = $_POST['idCourse'];
+        $this->renderPartial("/accessLearnMaterial/configAccessForm", array("idLearnMaterial" => $idLearnMaterial, "idCourse" => $idCourse));
+
+    }
+
+    public function actionUpdateAccessInfo()
+    {
+        $accessModel = AccessLearnMaterial::model()->findByPk($_POST['AccessLearnMaterial']['id']);
+        $accessModel->attributes = $_POST['AccessLearnMaterial'];
+        if ($accessModel->idRecord * 1 == 0) // ??????????!!!!!
+            $accessModel->idRecord = 1;
+        $accessModel->startDate = DateHelper::getDatabaseDateFromRussian($_POST['AccessLearnMaterial']['startDate'],true);
+        $accessModel->endDate = DateHelper::getDatabaseDateFromRussian($_POST['AccessLearnMaterial']['endDate'],true);
+        $accessModel->save();
+    }
+
+    public function actionAddAccessInfo()
+    {
+        $idLearnMaterial = $_POST['idMaterial'];
+        $idCourse = $_POST['idCourse'];
+        $typeRelation = $_POST['typeRelation'];
+        $access = new AccessLearnMaterial();
+        $access->type_relation = $typeRelation;
+        $access->idLearnMaterial = $idLearnMaterial;
+        $access->idCourse = $idCourse;
+        $access->save();
+    }
+
+    public function actionDeleteAccessInfo()
+    {
+        AccessLearnMaterial::model()->deleteByPk($_POST['id']);
+    }
 
 }

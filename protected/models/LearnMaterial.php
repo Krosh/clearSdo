@@ -18,6 +18,8 @@ class LearnMaterial extends CActiveRecord
     public $ext = "";
     public $courses = "";
     public $showOnlyNoUsed = false;
+    public $accessInfo;
+
     /**
      * @return string the associated database table name
      */
@@ -217,6 +219,85 @@ class LearnMaterial extends CActiveRecord
         CoursesMaterial::model()->deleteAll("idMaterial = :id",array("id" => $this->id));
         return parent::beforeDelete() ;
     }
+
+    public function addCommonAccess($idCourse)
+    {
+        $access = new AccessLearnMaterial();
+        $access->idLearnMaterial = $this->id;
+        $access->idCourse = $idCourse;
+        $access->type_relation = ACCESS_RELATION_COMMON;
+        $access->accessType = 1;
+        $access->save();
+    }
+
+    public function getCommonAccess($idCourse)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare("type_relation",1);
+        $criteria->compare("idLearnMaterial",$this->id);
+        $criteria->compare("idCourse",$idCourse);
+        $accessInfo = AccessLearnMaterial::model()->find($criteria);
+        if ($accessInfo->accessType == 2)
+            return false;
+        else
+            return true;
+    }
+
+    public function hasAccess($idCourse)
+    {
+        $criteria = new CDbCriteria();
+        $criteria->compare("idRecord", Yii::app()->user->getId());
+        $criteria->compare("type_relation",3);
+        $criteria->compare("idLearnMaterial",$this->id);
+        $criteria->compare("idCourse",$idCourse);
+        $accessInfo = AccessLearnMaterial::model()->find($criteria);
+        if ($accessInfo != null)
+        {
+            if ($accessInfo->checkAccess(Yii::app()->user->getModel()))
+                return $accessInfo;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->compare("idStudent",Yii::app()->user->getId());
+        $mas = StudentGroup::model()->findAll($criteria);
+        $res = array();
+        foreach ($mas as $st)
+        {
+            $res[] = $st->idGroup;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->addInCondition("idRecord", $res);
+        $criteria->compare("type_relation",2);
+        $criteria->compare("idLearnMaterial",$this->id);
+        $criteria->compare("idCourse",$idCourse);
+        $accessInfos = AccessLearnMaterial::model()->findAll($criteria);
+        if (count($accessInfos) >0)
+        {
+            for ($i = 0; $i<count($accessInfos); $i++)
+            {
+                $accessInfo = $accessInfos[$i];
+                if ($accessInfo->checkAccess(Yii::app()->user->getModel()))
+                    return $accessInfo;
+            }
+        }
+        $criteria = new CDbCriteria();
+        $criteria->compare("type_relation",1);
+        $criteria->compare("idLearnMaterial",$this->id);
+        $criteria->compare("idCourse",$idCourse);
+        $accessInfo = AccessLearnMaterial::model()->find($criteria);
+        if ($accessInfo == null)
+        {
+            $this->addCommonAccess($idCourse);
+            return $this->getCommonAccess($idCourse);
+        } else
+        {
+            $accessInfo->checkAccess(Yii::app()->user->getModel());
+            if ($accessInfo != null)
+                return $accessInfo;
+            return null;
+        }
+    }
+
+
 
     public function deleteDocument()
     {
