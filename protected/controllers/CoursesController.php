@@ -205,7 +205,7 @@ class CoursesController extends CController
         if(extension_loaded('zip'))
         {
             $course = Course::model()->findByPk($idCourse);
-            $learnMaterials = LearnMaterial::getMaterialsFromCourse($course->id);
+            $learnMaterials = CoursesMaterial::getAccessedLearnMaterials($course->id);
             $zip = new ZipArchive();
             $zip_name = $course->title.".zip";
             if($zip->open($zip_name, ZIPARCHIVE::CREATE)!==TRUE)
@@ -213,14 +213,19 @@ class CoursesController extends CController
                 return;
             }
             $currentDirectory = "";
+            $visibleFolderStatus = true;
             foreach ($learnMaterials as $item)
             {
+                $visibleStatus = ($item->accessInfo != null && $item->accessInfo->hasAccess);
+                if ($item->category == MATERIAL_TITLE)
+                    $visibleFolderStatus = $visibleStatus;
+                if (!$visibleFolderStatus || !$visibleStatus)
+                    continue;
                 if ($item->category == MATERIAL_TITLE)
                 {
                     // Создаем новую директорию в архиве
-                    $currentDirectory = StringHelper::translitText($item->title);
+                    $currentDirectory = StringHelper::translitText($item->title)."/";
                     $zip->addEmptyDir($currentDirectory);
-                    $currentDirectory.= "/";
                 }
                 else
                 {
