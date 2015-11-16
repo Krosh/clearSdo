@@ -51,44 +51,84 @@
             <?php endif; ?>
 
             <?php echo CHtml::activeHiddenField($model,'id')?>
-            <?php $categories = array(1 => 'Открыт', 2 => 'Закрыт', 3 => 'По времени', 4 => 'Последовательно'); ?>
-            <?php echo CHtml::label('Доступ',null,array('style' => 'width: 50px;')); ?>
-            <?php echo CHtml::activeDropDownList($model,'accessType',$categories, array('class' => 'accessTypeList', 'onchange' => 'ajaxUpdateAccess(this); updateAccessDivs($(this.form))')); ?>
-            <div class = "dateAccess" data-id ="<?php echo $model->id?>" style="display: inline">
-                <?php echo CHtml::label('Дата начала',null); ?>
-                <?php echo CHtml::textField('AccessControlMaterial[startDate]',DateHelper::getRussianDateFromDatabase($model->startDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
-                <div class = "endDateDiv" style="display: inline">
-                    <?php echo CHtml::label('Дата окончания',null); ?>
-                    <?php echo CHtml::textField('AccessControlMaterial[endDate]',DateHelper::getRussianDateFromDatabase($model->endDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
-                    <!--      TODO:: добавить кнопку для очистки даты закрытия
-                    -->
-                </div>
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('Доступ',null,array()); ?>
+                    </td>
+                    <td>
+                        <?php $categories = array(1 => 'Открыт', 2 => 'Закрыт', 3 => 'По времени', 4 => 'Последовательно'); ?>
+                        <?php echo CHtml::activeDropDownList($model,'accessType',$categories, array('style' => 'width: 100%', 'class' => 'accessTypeList', 'onchange' => 'ajaxUpdateAccess(this); updateAccessDivs($(this.form))')); ?>
+                    </td>
+                </tr>
+            </table>
+
+            <table class = "dateAccess" data-id ="<?php echo $model->id?>" style="width: 100%">
+                <tr>
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('Дата начала',null); ?>
+                    </td>
+                    <td>
+                        <?php echo CHtml::textField('AccessControlMaterial[startDate]',DateHelper::getRussianDateFromDatabase($model->startDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
+                    </td>
+                </tr>
+                <tr class = "endDateDiv">
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('Дата окончания',null); ?>
+                    </td>
+                    <td>
+                        <?php echo CHtml::textField('AccessControlMaterial[endDate]',DateHelper::getRussianDateFromDatabase($model->endDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
+                        <!--      TODO:: добавить кнопку для очистки даты закрытия -->
+                    </td>
+                </tr>
+            </table>
+
+            <table class = "beforeAccess" data-id ="<?php echo $model->id?>" style="width: 100%">
+                <tr>
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('Дата начала',null); ?>
+                    </td>
+                    <td>
+                        <?php echo CHtml::textField('AccessControlMaterial[startDate]',DateHelper::getRussianDateFromDatabase($model->startDate,true),array('class' => 'dateTimePicker', 'onchange' => 'ajaxUpdateAccess(this);'));?>
+                    </td>
+                </tr>
+                <tr class = "endDateDiv">
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('После прохождения какого теста дать доступ',null); ?>
+                        <?php
+
+                        $criteria = new CDbCriteria();
+                        $criteria->compare('idCourse',$idCourse);
+                        $criteria->order = "zindex";
+                        $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
+
+                        $items = array();
+                        foreach ($coursesMaterials as $item)
+                        {
+                            $cm = ControlMaterial::model()->findByPk($item->idControlMaterial);
+                            $items[$cm->id] = $cm->title;
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo CHtml::activeDropDownList($model,"idBeforeMaterial", $items,array ('class' => 'datePicker', 'onchange' => 'ajaxUpdateAccess(this); ')); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 160px">
+                        <?php echo CHtml::label('Минимальная оценка',null); ?>
+                    </td>
+                    <td>    
+                        <?php echo CHtml::activeTextField($model,"minMark", array('onchange' => 'ajaxUpdateAccess(this); ', 'style' => 'width: 40px')); ?>
+                    </td>
+                </tr>
+            </table>
+
+            <div>
+                <?php if ($model->type_relation != ACCESS_RELATION_COMMON):?>
+                    <a class="red" href="#" onclick="ajaxDeleteAccess(<?php echo $model->id.",".$idCourse.",".$idMaterial ?>); return false"><i class="fa fa-remove"></i></a>
+                <?php endif; ?>
             </div>
-
-            <div class = "beforeAccess" data-id ="<?php echo $model->id?>" style="display: inline">
-                <?php echo CHtml::label('После прохождения какого теста дать доступ',null); ?>
-                <?php
-
-                $criteria = new CDbCriteria();
-                $criteria->compare('idCourse',$idCourse);
-                $criteria->order = "zindex";
-                $coursesMaterials = CoursesControlMaterial::model()->findAll($criteria);
-
-                $items = array();
-                foreach ($coursesMaterials as $item)
-                {
-                    $cm = ControlMaterial::model()->findByPk($item->idControlMaterial);
-                    $items[$cm->id] = $cm->title;
-                }
-                ?>
-                <?php echo CHtml::activeDropDownList($model,"idBeforeMaterial", $items,array ('class' => 'datePicker', 'onchange' => 'ajaxUpdateAccess(this); ')); ?>
-
-                <?php echo CHtml::label('Минимальная оценка',null); ?>
-                <?php echo CHtml::activeTextField($model,"minMark", array('onchange' => 'ajaxUpdateAccess(this); ', 'style' => 'width: 40px')); ?>
-            </div>
-            <?php if ($model->type_relation != ACCESS_RELATION_COMMON):?>
-                <a style="padding-left:10px" class="red" href="#" onclick="ajaxDeleteAccess(<?php echo $model->id.",".$idCourse.",".$idMaterial ?>); return false"><i class="fa fa-remove"></i></a>
-            <?php endif; ?>
 
         </div>
 
