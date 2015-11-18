@@ -53,7 +53,7 @@
                     </div>
                     
                     <?php if(Yii::app()->user->isTeacher()):?>
-                        <a class="btn white small" href="/courses/create"><i class="fa fa-plus"></i> Создать новый курс</a>
+                        <a id = "addCourse" class="btn white small" href="/courses/create"><i class="fa fa-plus"></i> Создать новый курс</a>
                     <?php endif; ?>
                     <div id = "ajaxCoursesDiv">
 
