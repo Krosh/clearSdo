@@ -160,11 +160,11 @@ $listeners = Course::getGroups($model->id);
 
     <!-- редактирование доступа -->
     <div class="modal fade" id="editAccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-lock"></i>Настройки доступа</h4>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-lock"></i> Настройки доступа</h4>
                 </div>
                 <div class="modal-body">
                     <div id="editCourse-access" class="form modal-form">
@@ -307,7 +307,7 @@ $listeners = Course::getGroups($model->id);
 <!-- добавление имеющихся -->
 <div class="modal fade" id="addexist" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" style="text-align: center">
+        <div class="modal-content">
             <div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-book"></i> Добавить файл из имеющихся</h4>
@@ -315,6 +315,20 @@ $listeners = Course::getGroups($model->id);
             <div class="modal-body">
 
                 <div id = "editCourse-uchMaterialAddExist" class="form modal-form">
+                    <style>
+                    #learnMaterialPicker_select {
+                        width: 45%;
+                        display: inline-block;
+                        margin-right: 10px;
+                    }
+
+                    #learnMaterialPicker {
+                        width: 52% !important;
+                        display: inline-block;
+                        float: right;
+                    }
+                    </style>
+
                     <?php
                     $mas = array();
                     $models = LearnMaterial::model()->findAll("category <> ".MATERIAL_TITLE." AND idAutor = ".Yii::app()->user->getId());
