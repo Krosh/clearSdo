@@ -40,7 +40,7 @@
                 ?>
                 </span>
                 <div style="float:right;">
-                    <a style="padding-left:10px" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>,false); return false"><i class="fa <?php echo ($item->getCommonAccess($idCourse)) ? 'fa-unlock': 'fa-lock'?>"></i></a>
+                    <a href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>,false); return false"><i class="fa <?php echo ($item->getCommonAccess($idCourse)) ? 'fa-unlock': 'fa-lock'?>"></i></a>
                     <a class="red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $currentCourseMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>
                 </div>
             </td>
@@ -69,7 +69,8 @@
                 </div>
             </td>
             <td class="right">
-                <a style="padding-left:10px" href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>,false); return false"><i class="fa <?php echo ($item->getCommonAccess($idCourse)) ? 'fa-unlock': 'fa-lock'?>"></i></a>
+                <?=$item->getEditButton()?>
+                <a href="#" data-target="#editAccessModal" data-toggle="modal" onclick = "ajaxGetAccess(<?php echo $idCourse?>,<?php echo $item->id; ?>,false); return false"><i class="fa <?php echo ($item->getCommonAccess($idCourse)) ? 'fa-unlock': 'fa-lock'?>"></i></a>
                 <a class="red" href="#" onclick="deleteLearnMaterial(<?php echo $idCourse?>,<?php echo $item->id; ?>,<?php echo $currentCourseMaterial->id; ?>); return false"><i class="fa fa-remove"></i></a>
             </td>
         <? endif; ?>
