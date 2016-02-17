@@ -1330,6 +1330,7 @@ menu .menu-item {
 }
 .page-title small {
   display: block;
+  font-weight: normal !important;
 }
 .page-subtitle {
   font-size: 13px;
@@ -1354,6 +1355,10 @@ menu .menu-item {
 }
 .page-heading .courses-list a {
   color: #959595;
+}
+.page-heading .page-title {
+  font-style: 19px;
+  font-weight: bold;
 }
 .page-heading .page-print {
   color: #2c3e50;

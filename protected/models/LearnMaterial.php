@@ -84,7 +84,7 @@ class LearnMaterial extends CActiveRecord
             'category' => 'Категория',
             'idAutor' => 'Код автора',
             'showOnlyNoUsed' => 'Показать только неиспользуемые',
-            'content' => 'Содержимое',
+            'content' => '',
         );
     }
 
@@ -124,6 +124,9 @@ class LearnMaterial extends CActiveRecord
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
+            'pagination'=>array(
+                'pageSize'=>25
+            )
         ));
     }
 
@@ -322,8 +325,6 @@ class LearnMaterial extends CActiveRecord
 
     public function getInfoText($needEditButton = false)
     {
-        if ($this->category == MATERIAL_INBROWSER && $needEditButton)
-            return '<a href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil"></i> Редактировать</a>';
         if ($this->category == MATERIAL_FILE)
         {
             $size = filesize($this->getPathToMaterial());
@@ -361,6 +362,14 @@ class LearnMaterial extends CActiveRecord
         if ($this->category == MATERIAL_LINK)
             $sizeText = $this->path;
         return $sizeText;
+    }
+
+    public function getEditButton() {
+        if ($this->category == MATERIAL_INBROWSER){
+            return '<a href="'.Yii::app()->controller->createUrl("/learnMaterial/edit", array("idMaterial" => $this->id)).'"><i class="fa fa-pencil"></i></a>';
+        } else {
+            return "";
+        }
     }
 
     public function getViewedTitle()

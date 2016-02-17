@@ -85,7 +85,7 @@
 			<td colspan="2">
 				<div class="row buttons">
 					<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', array("class" => "btn blue")); ?>
-					<a href="#" onclick="location.reload(); return false;" class="btn gray">Отмена</a>
+					<a href="#" onclick="$('.modal').modal('hide'); return false;" class="btn gray">Отмена</a>
 				</div>
 			</td>
 		</tr>
