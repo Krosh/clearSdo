@@ -125,7 +125,7 @@
                                                 ));
 
                                                 */?>
-                        <div class = "selectUser" >
+                        <div class = "selectStudent" data-idGroup = "<?php echo $model->id; ?>">
                             <?php
                             echo CHTML::hiddenField("addUserToGroup",-1,array(
                                 'onchange' => "$.ajax({

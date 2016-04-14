@@ -79,7 +79,7 @@ foreach ($coursesMaterials as $item)
                             <div style="display: inline; cursor:pointer;" class="has-tip" title="Редактировать" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" onclick="showMarkTextbox(<?php echo $student->id; ?>,<?php echo $material->id; ?>)">
                                 <?php echo ControlMaterial::getMark($student->id,$material->id); ?>
                             </div>
-                            <input class = "changeOnEnter" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" data-autosave = "1" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id, false); ?>" onchange = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" onfocusout="$(this).change()" style = "display: none; width: 40px">
+                            <input class = "changeOnEnter" data-student="<?php echo $student->id; ?>" data-material = "<?php echo $material->id; ?>" data-autosave = "1" type = "textbox" value = "<?php echo ControlMaterial::getMark($student->id,$material->id, false); ?>" onchange = "saveMark(<?php echo $student->id?>,<?php echo $material->id; ?>,this.value)" onfocusout="$(this).change()" style = "display: none; width: 40px !important">
                             <?php if ($userFileAnswer != null): ?>
                                 <a class="has-tip" title="Скачать" href = '<?php echo $this->createUrl('/controlMaterial/getUserAnswer', array('idControlMaterial' => $material->id, 'idUser' => $student->id)); ?>' target="_blank"><i class="fa fa-cloud-download"></i></a>
                             <?php endif; ?>
