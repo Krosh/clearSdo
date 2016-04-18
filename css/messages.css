@@ -101,7 +101,7 @@ html {
   background-repeat: no-repeat;
   background-position: center center;
   display: block;
-  border: 2px solid transparent;
+  border: 2px solid #fff;
 }
 #dialogs .dialog a {
   color: #000;
@@ -187,7 +187,7 @@ html {
   height: 382px !important;
 }
 #messages .message {
-  padding: 15px;
+  padding: 15px 30px;
 }
 #messages .message a.avatar {
   width: 50px;

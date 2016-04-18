@@ -1920,7 +1920,8 @@ a.update + a.delete {
     header .search,
     .wrapper .sidebar,
     footer,
-    .page-print {
+    .page-print,
+    .journal_table a {
         display: none !important;
     }
 }
@@ -2095,7 +2096,7 @@ a.update + a.delete {
 }
 
 .short-link {
-    display: block;
+    display: inline-block;
     max-width: 500px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -2144,7 +2145,8 @@ a.update + a.delete {
 }
 
 .modal-dialog {
-    width: 700px !important;
+    width: 90% !important;
+    max-width: 800px !important;
 
     table {
         width: 100%;
@@ -2157,4 +2159,24 @@ a.update + a.delete {
 
 .ms-container {
     width: 100% !important;
+}
+
+#learnMaterialTable, #controlMaterialTable {
+    td.right {
+        width: 10% !important;
+    }
+}
+
+table.journal_table  {
+    width: auto !important;
+
+    td {
+        min-width: 50px;
+
+        text-align: center;
+
+        &:first-child {
+            text-align: left !important;
+        }
+    }
 }

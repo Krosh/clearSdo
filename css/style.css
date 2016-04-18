@@ -9,7 +9,6 @@
 @import url("redactor.css");
 @import url("plugins/multi-select.css");
 @import url("plugins/frosty.min.css");
-@import url("tutorial.css");
 /*!
  * Fluidable Grid System 1.1.2
  *
@@ -2663,7 +2662,8 @@ a.update + a.delete {
   header .search,
   .wrapper .sidebar,
   footer,
-  .page-print {
+  .page-print,
+  .journal_table a {
     display: none !important;
   }
 }
@@ -2810,7 +2810,7 @@ a.update + a.delete {
   overflow: hidden;
 }
 .short-link {
-  display: block;
+  display: inline-block;
   max-width: 500px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -2850,7 +2850,8 @@ a.update + a.delete {
   color: blue;
 }
 .modal-dialog {
-  width: 700px !important;
+  width: 90% !important;
+  max-width: 800px !important;
 }
 .modal-dialog table {
   width: 100%;
@@ -2863,4 +2864,18 @@ a.update + a.delete {
 }
 .ms-container {
   width: 100% !important;
+}
+#learnMaterialTable td.right,
+#controlMaterialTable td.right {
+  width: 10% !important;
+}
+table.journal_table {
+  width: auto !important;
+}
+table.journal_table td {
+  min-width: 50px;
+  text-align: center;
+}
+table.journal_table td:first-child {
+  text-align: left !important;
 }
