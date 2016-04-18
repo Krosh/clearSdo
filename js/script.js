@@ -1598,8 +1598,8 @@ $(document).ready(function(){
      * Загрузка факультетов
      */
     function loadFaculties(faculty, floader, group, gloader, group_id) {
-        var fUrl = "https://altstu-schedule.herokuapp.com/api/faculties/",
-            gUrl = "https://altstu-schedule.herokuapp.com/api/groupsByFaculty/";
+        var fUrl = "http://altstu-schedule.twntsvn.cf/api/faculties/",
+            gUrl = "http://altstu-schedule.twntsvn.cf/api/groupsByFaculty/";
 
         $.getJSON(fUrl, function(data) {
             $.each(data, function() {
@@ -1653,7 +1653,7 @@ $(document).ready(function(){
     if($("#schedule-groups").length) {
         var groups = JSON.parse($("#schedule-groups").val())
         scheduleContent = $("#schedule-content"),
-            url = "https://altstu-schedule.herokuapp.com/api/scheduleByGroup/",
+            url = "http://altstu-schedule.twntsvn.cf/api/scheduleByGroup/",
             sloader = $(".schedule-loader");
 
         var week1spt = moment("09-01-" + new Date().getFullYear(), "MM-DD-YYYY").week(); // сравниваем если четность недели 1 сентября == четности текущией недели => 1 неделя

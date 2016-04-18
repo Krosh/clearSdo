@@ -36,7 +36,8 @@ $learnMaterials = CoursesMaterial::getAccessedLearnMaterials($model->id);
                         <a href="<?php echo $this->createUrl("/site/editCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим редактирования</span></a>
                     <?php endif; ?>
                     <br>
-                    <h2 id="files" class="col-9" >Учебные материалы</h2>
+
+                    <h2 id="files" class="col-9" style="padding-left:0 !important;margin-top:30px;">Учебные материалы</h2>
                     <span class="col-3 right">
                         <a href = "<?php echo $this->createUrl("courses/getCoursesFiles", array("idCourse" => $model->id));?>">
                             <i class="fa fa-download fa-2x has-tip" data-original-title="Скачать все материалы архивом" title="Скачать все материалы архивом"></i>
@@ -81,7 +82,7 @@ $learnMaterials = CoursesMaterial::getAccessedLearnMaterials($model->id);
                                     ?>
                                 </td>
                                 <td class="right">
-                                    <?php echo $item->getInfoText(); ?>
+                                    <span class="short-link"><?php echo $item->getInfoText(); ?></span>
                                 </td>
                             <? endif; ?>
                             </tr>

@@ -28,15 +28,14 @@ $listeners = Course::getGroups($model->id);
 
 <div class="content">
 <div class="page-heading">
+    <div class="page-title">
+        Курс: <?php echo $model->title?>
+    </div><br>
+    <a href="<?php echo $this->createUrl("/site/viewCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим просмотра</span></a>
+    <div id="editCourse-groups"></div>
+
     <div class="col-group">
-        <div class="col-3">
-            <div class="page-title">
-                Курс: <?php echo $model->title?>
-            </div><br>
-            <a href="<?php echo $this->createUrl("/site/viewCourse", array("idCourse" => $model->id))?>" ><span>Перейти в режим просмотра</span></a>
-            <div id="editCourse-groups"></div>
-        </div>
-        <br>
+        <div class="col-3"></div>
         <div class="col-9 right">
             <div style="vertical-align: middle">
                 <div class="btn courses-list dropdown nohover has-tip" data-original-title="Журнал" title="Журнал">

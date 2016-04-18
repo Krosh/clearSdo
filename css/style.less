@@ -1422,6 +1422,8 @@ textarea {
     max-width: 20px;
     width: 100%;
     margin-right: 20px;
+    z-index: 0;
+    position: relative;
 }
 
 .fa-loading-icon {
@@ -2083,6 +2085,20 @@ a.update + a.delete {
 .bottoms-info-table {
     padding-left: 44px;
     color: #666;
+
+    span {
+        display: block;
+        max-width: 500px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}
+
+.short-link {
+    display: block;
+    max-width: 500px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .relax {
@@ -2115,7 +2131,8 @@ a.update + a.delete {
 }
 
 .changeOnEnter {
-    width: 480px !important;
+    // width: 480px !important;
+    width: ~"calc(100% - 45px)" !important
 }
 
 .row.buttons {
@@ -2124,4 +2141,20 @@ a.update + a.delete {
 
 .getmaterial a {
     color: blue;
+}
+
+.modal-dialog {
+    width: 700px !important;
+
+    table {
+        width: 100%;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], textarea {
+        width: 100% !important;
+    }
+}
+
+.ms-container {
+    width: 100% !important;
 }
