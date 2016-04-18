@@ -112,6 +112,13 @@ function ajaxUpdateAccess(elem)
         type: 'POST',
         url: (window.isControlMaterial) ? '/controlMaterial/updateAccessInfo' : '/learnMaterial/updateAccessInfo',
         data: $(elem.form).serialize()+"&idCourse="+window.currentCourse+"&idMaterial="+window.currentMaterial+s,
+        success: function(data)
+        {
+            if (window.isControlMaterial)
+                updateControlMaterials(window.currentCourse);
+            else
+                updateLearnMaterials(window.currentCourse);
+        },
         error: onError,
     });
 }
@@ -426,7 +433,7 @@ function saveMark(idStudent,idControlMaterial,mark)
                 $('div[data-student='+idUser+'][data-material='+idMaterial+'] span').html(mark).show().removeClass("mark-bad").addClass((mark < 25) ? 'mark-bad':'');
                 $('input[data-student='+idUser+'][data-material='+idMaterial+']').attr("data-autosave",1).val(mark).hide();
             }
-  //          updateJournal(window.idGroup,window.idCourse);
+            //          updateJournal(window.idGroup,window.idCourse);
         },
         error: onError,
     });
@@ -666,12 +673,15 @@ function addLearnMaterial(idCourse)
     formData.append("linkPath",$("#LinkPath").val());
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/learnMaterial/addMaterial");
+    $("#uploadProgressBar").progressbar("value",false);
     xhr.upload.addEventListener("progress", function(e) {
+        $("#uploadProgressBar").progressbar("value",parseInt((e.loaded / e.total * 100).toFixed(0)));
         $("#progressBar").html((e.loaded / e.total * 100).toFixed(0).toString()+"%");
     }, false);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             console.log(xhr.responseText);
+            $("#uploadProgressBar").progressbar("value",0);
             if(xhr.status == 200) {
 //                $("#loadfile").hide();
                 $("#learnMaterialLoader").hide();
@@ -1333,14 +1343,14 @@ $(document).ready(function(){
 //        if (flag)
 //        {
 //            onAlert("TOO_BIG_FILE");
-            //Очистка input
+        //Очистка input
 //            $(this).wrap('<form>').closest('form').get(0).reset();
 //            $(this).unwrap();
 //            $(this).trigger("change");
 //        } else
-            setTimeout(function(){
-                $("#XUploadForm-form button[type=submit]").click();
-            },100);
+        setTimeout(function(){
+            $("#XUploadForm-form button[type=submit]").click();
+        },100);
     });
     $("#XUploadForm-form").bind("fileuploaddone",function()
     {
@@ -1681,6 +1691,7 @@ $(document).ready(function(){
         });
     }
 
+    //TODO:: убрать это говно ddslick или переписать его на использование ajax запросов при вводе части фамилии
     if ($(".selectUser").length)
     {
         $.ajax({
@@ -1708,6 +1719,37 @@ $(document).ready(function(){
             }
         });
     }
+
+    if ($(".selectStudent").length)
+    {
+        $('.selectStudent').each(function()
+        {
+            var $self = $(this);
+            $.ajax({
+                type: 'GET',
+                dataType: 'JSON',
+                url: '/user/ajaxGetStudentsToSlick',
+                data: {idGroup: $self.attr("data-idGroup")},
+                height: 40,
+                success: function(data)
+                {
+                    $self.append('<div class = "selectUserBox"></div>');
+                    var selectUser = $self.children(".selectUserBox");
+                    selectUser.ddslick({
+                        data:data,
+                        width:274,
+                        imagePosition:"left",
+                        needTextBox: true,
+                        placeholderTextBox: 'Выберите студента...',
+                        onSelected: function(selectedData){
+                            $($(selectedData.selectedItem).closest('.selectStudent')).children("input").val(selectedData.selectedData.value).change();
+                        }
+                    });
+                }
+            });
+        });
+    }
+
     if ($(".selectTeacher").length)
     {
         $.ajax({

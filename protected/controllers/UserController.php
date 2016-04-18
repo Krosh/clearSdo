@@ -30,6 +30,51 @@ class UserController extends CController
         );
     }
 
+    public function actionAjaxGetStudentsToSlick()
+    {
+        $idGroup = Yii::app()->request->getParam("idGroup");
+        $criteria = new CDbCriteria();
+//        $criteria->addCondition("id <> ".Yii::app()->user->id);
+        $criteria->compare("role",ROLE_STUDENT);
+        $users = User::model()->findAll($criteria);
+        $arr = array();
+        foreach ($users as $user)
+        {
+            $role = "Студент ";
+            $groups = StudentGroup::model()->findAll("idStudent = :id", array(':id' => $user->id));
+            $groupNames = array();
+            $flag = true;
+            foreach ($groups as $item)
+            {
+                if ($item->idGroup == $idGroup)
+                {
+                    $flag = false;
+                    break;
+                }
+                $group = Group::model()->findByPk($item->idGroup);
+                $groupNames[] = $group->Title;
+            }
+            if (!$flag)
+                continue;
+            $item = array();
+            $item['value'] = $user->id;
+            $item['text'] = $user->fio;
+            $item['selected'] = false;
+            $item['description'] = implode(",",$groupNames);
+            $item['imageSrc'] = $user->getAvatarPath(AVATAR_SIZE_MINI);
+            $arr[] = $item;
+        }
+        $item = array();
+        $item['value'] = -1;
+        $item['text'] = "Никого не нашли :(";
+        $item['selected'] = false;
+        $item['description'] = "Попробуйте уточнить данные поиска";
+        $item['imageSrc'] = "";
+        $arr[] = $item;
+        echo json_encode($arr);
+
+    }
+
     public function actionGetStudents()
     {
         $name = $_POST["searchText"];

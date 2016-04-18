@@ -119,6 +119,7 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
 <script src="../../js/jquery.are-you-sure.js"></script>
 <script src="../../js/jquery.noty.packaged.min.js"></script>
 <script src="../../js/ZergRush.js"></script>
+<script src="../../js/tutorial.js"></script>
 <script src="../../js/script.js"></script>
 </body>
 </html>

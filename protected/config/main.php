@@ -75,6 +75,9 @@ return array(
         'syntaxhighlighter' => array(
             'class' => 'ext.syntaxhighlighter.JMSyntaxHighlighter',
         ),
+        'cache'=>array(
+            'class'=>'system.caching.CFileCache',
+        ),
         'imageHandler'=>array('class'=>'CImageHandler'),
         'morphy'=>array(
             'class'=>'ext.phpMorphy.RMorphy',

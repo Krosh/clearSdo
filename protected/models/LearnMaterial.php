@@ -311,6 +311,10 @@ class LearnMaterial extends CActiveRecord
 
     public function getFileSize()
     {
+        if (!is_file($this->getPathToMaterial()))
+        {
+            return '<span style = "color:red">Файл не найден на сервере</span>';
+        }
         $size = filesize($this->getPathToMaterial());
         $sizePrefixxes = array(" Б"," Кб", " Мб", " Гб");
         $i = 0;
@@ -327,15 +331,7 @@ class LearnMaterial extends CActiveRecord
     {
         if ($this->category == MATERIAL_FILE)
         {
-            $size = filesize($this->getPathToMaterial());
-            $sizePrefixxes = array(" Б"," Кб", " Мб", " Гб");
-            $i = 0;
-            do
-            {
-                $sizeText = $size.$sizePrefixxes[$i];
-                $i++;
-                $size = floor($size/1024);
-            } while ($size>0);
+            $sizeText = $this->getFileSize();
         }
         if ($this->category == MATERIAL_WEBINAR)
         {
