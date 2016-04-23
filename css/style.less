@@ -1426,6 +1426,10 @@ textarea {
     position: relative;
 }
 
+.file-icon[data-href] {
+    cursor: pointer;
+}
+
 .fa-loading-icon {
     display: none;
     color: @blue;
@@ -2177,6 +2181,27 @@ table.journal_table  {
 
         &:first-child {
             text-align: left !important;
+        }
+    }
+}
+
+
+.modal-body {
+    position: relative;
+
+    #uploadProgressBar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 7px !important;
+        border: none !important;
+        border-radius: 0 !important;
+
+        .ui-progressbar-value {
+            border: none !important;
+            border-radius: 0 !important;
+            background: #2980b9 !important;
         }
     }
 }

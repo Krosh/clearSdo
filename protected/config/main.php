@@ -72,6 +72,10 @@ return array(
         ),
     ),
     'components'=>array(
+        'cache'=>array( 
+            'class'=>'system.caching.CFileCache', 
+        ),
+
         'syntaxhighlighter' => array(
             'class' => 'ext.syntaxhighlighter.JMSyntaxHighlighter',
         ),

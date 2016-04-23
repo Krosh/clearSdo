@@ -163,7 +163,7 @@ function updateDialogs()
                 getDialogWithUser($(this).attr("data-idUser"), $(this).attr("data-isConf"));
 
             });
-            console.log(data);
+            // console.log(data);
             if (data.idDialog>0)
                 $(".dialog[data-idUser="+data.idDialog+"][data-isConf="+data.isConf+"]").click();
         }

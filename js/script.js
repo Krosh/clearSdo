@@ -676,15 +676,16 @@ function addLearnMaterial(idCourse)
     $("#uploadProgressBar").progressbar("value",false);
     xhr.upload.addEventListener("progress", function(e) {
         $("#uploadProgressBar").progressbar("value",parseInt((e.loaded / e.total * 100).toFixed(0)));
-        $("#progressBar").html((e.loaded / e.total * 100).toFixed(0).toString()+"%");
+        // $("#progressBar").html((e.loaded / e.total * 100).toFixed(0).toString()+"%");
     }, false);
+    
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             console.log(xhr.responseText);
             $("#uploadProgressBar").progressbar("value",0);
             if(xhr.status == 200) {
 //                $("#loadfile").hide();
-                $("#learnMaterialLoader").hide();
+                // $("#learnMaterialLoader").hide();
                 $("#learnMaterialSubmitButton").show();
                 if (xhr.responseText == "success")
                 {
@@ -694,7 +695,7 @@ function addLearnMaterial(idCourse)
                 {
                     onAlert("LOAD_FILE_ERROR");
                 }
-                $("#progressBar").html("");
+                // $("#progressBar").html("");
             }
         }
     };

@@ -63,7 +63,14 @@
             </div>
         </div>
         <div class="avatar">
-            <div class="the-avatar-box" style="background-image: url('<?php echo Yii::app()->user->getAvatarPath(AVATAR_SIZE_MINI); ?>')"></div>
+            <? 
+            $av = Yii::app()->user->getAvatarPath(AVATAR_SIZE_MINI);
+
+            if($av == DEFAULT_AVATAR_PATH) {
+                $av = "/img/avatar-default.png";
+            }
+            ?>
+            <div class="the-avatar-box" style="background-image: url('<?=$av?>')"></div>
         </div>
     </div>
 </div>

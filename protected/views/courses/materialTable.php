@@ -48,8 +48,12 @@
             <td colspan="2">
                 <?
                 $f = $item->getIconExtension();
+                $url = "";
+                if($f != "webinar") {
+                    $url = 'data-href="' . $this->createUrl("/learnMaterial/getMaterial", array("matId" => $item->id)) . '"';
+                }
                 ?>
-                <img class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
+                <img <?=$url?> class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
                 <input class = "changeOnEnter" id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->getViewedTitle()?>" style="display:none">
                 <span id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
                 <?
@@ -61,7 +65,13 @@
                     <?php if ($item->category == MATERIAL_LINK): ?>
                         <input class = "changeOnEnter" id = "editLink<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialLink(this,<?php echo $item->id;?>)" value = "<?php echo $item->getInfoText(true);?>" style="display:none">
                         <span id = "labelLink<?php echo $item->id;?>" onclick="startChangeLearnMaterialLink(this,<?php echo $item->id;?>)">
-                            <?php echo $item->getInfoText(true); ?>
+
+                        <?
+                        $link = $item->getInfoText(true);
+                        // echo $link;
+                        $link = parse_url($link);
+                        echo $link["host"];
+                        ?>
                         </span>
                     <?php else: ?>
                         <?php echo $item->getInfoText(true); ?>

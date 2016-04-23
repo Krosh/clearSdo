@@ -2243,6 +2243,9 @@ textarea:active {
   z-index: 0;
   position: relative;
 }
+.file-icon[data-href] {
+  cursor: pointer;
+}
 .fa-loading-icon {
   display: none;
   color: #2c3e50;
@@ -2878,4 +2881,21 @@ table.journal_table td {
 }
 table.journal_table td:first-child {
   text-align: left !important;
+}
+.modal-body {
+  position: relative;
+}
+.modal-body #uploadProgressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7px !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.modal-body #uploadProgressBar .ui-progressbar-value {
+  border: none !important;
+  border-radius: 0 !important;
+  background: #2980b9 !important;
 }

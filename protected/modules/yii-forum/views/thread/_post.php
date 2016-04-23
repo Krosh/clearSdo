@@ -27,7 +27,7 @@ $isAdmin = !Yii::app()->user->isGuest && Yii::app()->user->isAdminOnForum($data-
         <table class="post-answer-view">
             <tr>
                 <td>
-                    <div class="the-avatar-box" style="background-image: url('<?=($data->author->sdoUser != null) ? $data->author->sdoUser->getAvatarPath(AVATAR_SIZE_MEDIUM) : DEFAULT_AVATAR_PATH;?>')"></div>
+                    <div class="the-avatar-box" style="background-image: url('<?=($data->author->sdoUser != null) ? $data->author->sdoUser->getAvatarPath(AVATAR_SIZE_MEDIUM) : "/img/avatar-default.png";?>')"></div>
                     <?php echo ($data->author->sdoUser != null) ? CHtml::link(CHtml::encode($data->author->name), $data->author->url): CHtml::encode($data->author->name."(удален)"); ?>
                     <div class="fut" style="border:none!important;">
                         <?php if ($data->author->sdoUser != null) :?>

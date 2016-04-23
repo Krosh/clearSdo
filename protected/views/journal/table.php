@@ -21,7 +21,7 @@ foreach ($coursesMaterials as $item)
     $controlMaterials[] = ControlMaterial::model()->findByPk($item->idControlMaterial);
 }
 ?>
-    <table class="table hover-table">
+    <table class="table hover-table journal_table">
         <thead>
         <tr style="display: table-row!important;">
             <th style="vertical-align:top;">
@@ -60,9 +60,7 @@ foreach ($coursesMaterials as $item)
                     <strong><?=$n?></strong>
                     <?php echo $student->fio;?>
                 </td>
-                <td>
-
-                </td>
+                <td></td>
                 <?php foreach ($controlMaterials as $material):?>
                     <?php if ($material->is_point):?>
                         <?php if ($material->is_autocalc): ?>

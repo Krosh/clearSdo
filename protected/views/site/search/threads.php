@@ -7,7 +7,7 @@
             </td>
             <td>
                 <div class="right">
-                    <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo ($thread->posts[0]->author->sdoUser != null) ? $thread->posts[0]->author->sdoUser->getAvatarPath(AVATAR_SIZE_MEDIUM) : DEFAULT_AVATAR_PATH; ?>">
+                    <img style="border-radius: 50%; width: 70px; height: 70px; max-height: 70px; max-width: 70px" src="<?php echo ($thread->posts[0]->author->sdoUser != null) ? $thread->posts[0]->author->sdoUser->getAvatarPath(AVATAR_SIZE_MEDIUM) : "/img/avatar-default.png"; ?>">
                 </div>
             </td>
         </tr>

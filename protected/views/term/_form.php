@@ -33,7 +33,16 @@
                 <?php echo $form->error($model,'start_date'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dateField($model,'start_date'); ?>
+                <?php 
+                $this->widget('zii.widgets.jui.CJuiDatePicker',array( 
+                    'model'=>$model, 
+                    'attribute'=>'start_date', 
+                    'options'=>array( 
+                    'dateFormat'=>'dd.mm.yy', 
+                ), 
+                    'htmlOptions'=>array('value'=>DateHelper::getRussianDateFromDatabase($model->start_date)) 
+                )); 
+                ?>
             </td>
         </tr>
         <tr>
@@ -42,7 +51,16 @@
                 <?php echo $form->error($model,'end_date'); ?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dateField($model,'end_date'); ?>
+                <?php 
+                $this->widget('zii.widgets.jui.CJuiDatePicker',array( 
+                    'model'=>$model, 
+                    'attribute'=>'end_date', 
+                    'options'=>array( 
+                    'dateFormat'=>'dd.mm.yy', 
+                ), 
+                    'htmlOptions'=>array('value'=>DateHelper::getRussianDateFromDatabase($model->end_date)) 
+                )); 
+                ?>
             </td>
         </tr>
     </table>
