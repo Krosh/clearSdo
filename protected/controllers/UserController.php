@@ -103,6 +103,11 @@ class UserController extends CController
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
+        if (!is_null(Yii::app()->getRequest("idGroup")))
+        {
+            $model->role = ROLE_STUDENT;
+            $model->idGroup = Yii::app()->request->getParam("idGroup");
+        }
         if(isset($_POST['User']))
         {
             $model->attributes=$_POST['User'];
@@ -116,7 +121,12 @@ class UserController extends CController
             }
             $model->newAvatar = $_POST['User']['newAvatar'];
             if($model->save())
-                $this->redirect(array('admin'));
+            {
+                if ($model->idGroup > 0)
+                    $this->redirect($this->createUrl("/group/update",array("id" => $model->idGroup)));
+                else
+                    $this->redirect(array('admin'));
+            }
         }
 
         $this->render('create',array(

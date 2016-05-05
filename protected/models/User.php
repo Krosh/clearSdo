@@ -30,6 +30,7 @@ define("AVATAR_SIZE_MEDIUM",2);
 class User extends CActiveRecord
 {
 
+    public $idGroup = -1;
     public $newAvatar = "";
     public $showOnlyNoModerated = false;
     public $errorOnSave = "";
@@ -69,11 +70,11 @@ class User extends CActiveRecord
             array('dateChangePassword', 'length', 'max'=>20),
             array('lastVisit', 'length', 'max'=>20),
             array('curVisit', 'length', 'max'=>20),
-            array('gender, defaultLanguage', 'length', 'max'=>20),
+            array('idGroup,gender, defaultLanguage', 'length', 'max'=>20),
             array('birthday', 'length', 'max'=>10),
             // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('new_email,idForumUser, phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
+			array('idGroup,new_email,idForumUser, phone, email, showOnlyNoModerated, isAvatarModerated, id, login, password, fio, role, avatar', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -263,6 +264,13 @@ class User extends CActiveRecord
             $this->isAvatarModerated = true;
         if (!file_exists(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id))
             mkdir(Yii::getPathOfAlias('webroot.media').DIRECTORY_SEPARATOR.$this->id);
+        if ($this->idGroup > 0)
+        {
+            $model = new StudentGroup();
+            $model->idGroup = $this->idGroup;
+            $model->idStudent = $this->id;
+            $model->save();
+        }
         return parent::afterSave();
     }
 

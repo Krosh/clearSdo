@@ -89,6 +89,8 @@ if ($model->errorOnSave != "")
         </td>
     </tr>
 
+    <?php echo $form->hiddenField($model,"idGroup"); ?>
+
     <tr>
         <td width="35%">
             <?php echo $form->labelEx($model,'role'); ?>

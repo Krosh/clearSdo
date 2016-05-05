@@ -88,6 +88,9 @@
                             ),
                         )); ?>
 
+                        <?php echo CHtml::link('Добавить нового пользователя',$this->createUrl("/user/create",array("idGroup" => $model->id)),array("class" => "btn blue")); ?>
+
+                        <br>
                         Добавить существующего пользователя в группу:
                         <!--  --><?php
                         /*                        $mas = array();
