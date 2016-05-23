@@ -107,7 +107,8 @@ class CoursesController extends CController
         $criteria->compare('idAutor', Yii::app()->user->getId());
         if (CoursesAutor::model()->count($criteria) == 0)
             return;
-        Course::model()->deleteByPk($id);
+        $course = Course::model()->findByPk($id);
+        $course->delete();
     }
 
     public function actionCalendar($id)

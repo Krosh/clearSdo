@@ -51,6 +51,26 @@
                 <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
             </td>
         </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo CHtml::activeLabel($model,'status', array()); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->dropDownList($model, 'status', Group::getStatuses()); ?>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="35%">
+                <?php echo CHtml::activeLabel($model,'form_teaching', array()); ?>
+            </td>
+            <td width="65%" class="input-full-width">
+                <?php echo $form->dropDownList($model, 'form_teaching', Group::getFormsTeaching()); ?>
+            </td>
+        </tr>
+
+
         <? /* <tr>
             <td width="35%">
                 <?php echo CHtml::activeLabel($model,'id_altstu', array()); ?>

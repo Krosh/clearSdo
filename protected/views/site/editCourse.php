@@ -140,9 +140,8 @@ $listeners = Course::getGroups($model->id);
                         <select id='addGroupsSelect' multiple='multiple'>
                         </select>
                         <?php
-                        $criteria = new CDbCriteria();
-                        $criteria->order = "id DESC";
-                        $terms = Term::model()->findAll($criteria);
+                        $term = new Term("search");
+                        $terms = $term->search()->getData();
                         $arr = array();
                         foreach ($terms as $item)
                         {
@@ -169,6 +168,7 @@ $listeners = Course::getGroups($model->id);
                     <div id="editCourse-access" class="form modal-form">
                         <?php
                         // Необходимо вывести виджет, чтобы прогрузились файлы
+                        // TODO:: просто в ручную вызвать подключение jquery.ui
                         $arr = AccessControlMaterial::model()->findAll();
                         if (count($arr) > 0)
                         {

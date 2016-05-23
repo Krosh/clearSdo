@@ -285,8 +285,12 @@ class Course extends CActiveRecord
 
     public function beforeDelete()
     {
+        Yii::import('application.modules.yii-forum.models.*');
+
         $criteria = new CDbCriteria();
-        $criteria->compare('idCourse',$id);
+        $criteria->compare('idCourse',$this->id);
+
+        Forum::model()->deleteAll($criteria);
         CoursesAutor::model()->deleteAll($criteria);
         CoursesControlMaterial::model()->deleteAll($criteria);
         CoursesGroup::model()->deleteAll($criteria);

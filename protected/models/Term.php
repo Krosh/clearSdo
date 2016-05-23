@@ -83,8 +83,6 @@ class Term extends CActiveRecord
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
@@ -94,7 +92,12 @@ class Term extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-		));
+            'sort' => array(
+                'defaultOrder'=>array(
+                    'title'=>CSort::SORT_ASC,
+                )
+            )
+        ));
 	}
 
 	/**
@@ -131,6 +134,13 @@ class Term extends CActiveRecord
     public function canDelete()
     {
         return !CoursesGroup::model()->exists("idTerm = :idTerm", array(":idTerm" => $this->id));
+    }
+
+    public function beforeSave()
+    {
+        $this->start_date = DateHelper::getDatabaseDateFromRussian($this->start_date);
+        $this->end_date = DateHelper::getDatabaseDateFromRussian($this->end_date);
+        return parent::beforeSave();
     }
 
 }

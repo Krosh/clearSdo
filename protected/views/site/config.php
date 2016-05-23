@@ -52,7 +52,8 @@
                                 </td>
                                 <td width="65%" class="input-full-width">
                                     <?php
-                                    $terms = Term::model()->findAll();
+                                    $term = new Term("search");
+                                    $terms = $term->search()->getData();
                                     $arr = array();
                                     foreach ($terms as $item)
                                     {

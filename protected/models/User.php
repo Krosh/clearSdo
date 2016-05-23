@@ -30,6 +30,7 @@ define("AVATAR_SIZE_MEDIUM",2);
 class User extends CActiveRecord
 {
 
+    public $noNeedToLog = false;
     public $idGroup = -1;
     public $newAvatar = "";
     public $showOnlyNoModerated = false;

@@ -30,6 +30,7 @@ class UserIdentity extends CUserIdentity {
             $this->username = $user->fio;
             $this->errorCode = self::ERROR_NONE;
 
+            $user->noNeedToLog = true;
             $user->lastVisit = $user->curVisit;
             $user->curVisit = date("Y-m-d H:i:s");
             $user->save();

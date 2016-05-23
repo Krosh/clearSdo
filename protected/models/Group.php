@@ -1,16 +1,44 @@
 <?php
 
+define("STATUS_ACTIVE",1);
+define("STATUS_INACTIVE",2);
 /**
  * This is the model class for table "tbl_groups".
  *
  * The followings are the available columns in table 'tbl_groups':
  * @property integer $id
+ * @property integer $status
+ * @property integer $form_teaching
  * @property string $Title
  * @property string $id_altstu
  * @property string $facluty
  */
 class Group extends CActiveRecord
 {
+
+
+    public static function getStatuses()
+    {
+        return [1 => "Обучаются", "Закончили"];
+    }
+
+    public static function getFormsTeaching()
+    {
+        return [1 => "Очная", "Вечерняя", "Заочная"];
+    }
+
+    public function getStatusAsString()
+    {
+        return Group::getStatuses()[$this->status];
+    }
+
+    public function getFormTeachingAsString()
+    {
+        return Group::getFormsTeaching()[$this->form_teaching];
+    }
+
+
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,9 +68,10 @@ class Group extends CActiveRecord
 			array('Title', 'required'),
 			array('faculty', 'required'),
 			array('Title, id_altstu', 'length', 'max'=>20),
-			// The following rule is used by search().
+            array('form_teaching,status', 'numerical', 'integerOnly'=>true),
+            // The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, Title, id_altstu', 'safe', 'on'=>'search'),
+			array('form_teaching,status,id, Title, id_altstu', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +95,8 @@ class Group extends CActiveRecord
 			'Title' => 'Название',
 			'faculty' => 'Факультет',
             'id_altstu' => 'Код группы на сайте АЛТГТУ',
+            'status' => 'Статус',
+            'form_teaching' => 'Форма обучения',
 		);
 	}
 

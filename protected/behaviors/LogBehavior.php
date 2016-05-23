@@ -17,6 +17,8 @@ class LogBehavior extends CActiveRecordBehavior
 
     public function afterSave($event)
     {
+        if (isset($this->owner->noNeedToLog) && $this->owner->noNeedToLog)
+            return true;
         if ($this->owner->isNewRecord)
         {
             $this->addLogRecord(LOG_CREATE);
