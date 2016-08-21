@@ -364,6 +364,7 @@ function loadStudentsFromExcel()
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
                 $.fn.yiiGridView.update("group-grid");
+                var n = noty({text: 'Новые пользователи добавлены в группу', type: "success"});
             }
         }
     };
@@ -1692,7 +1693,6 @@ $(document).ready(function(){
         });
     }
 
-    //TODO:: убрать это говно ddslick или переписать его на использование ajax запросов при вводе части фамилии
     if ($(".selectUser").length)
     {
         $.ajax({
@@ -1809,7 +1809,7 @@ $(document).ready(function(){
     };
 
 
-    if($(".footer-authors").length) {
+/*    if($(".footer-authors").length) {
         $(".footer-authors").frosty({
             html: true,
             content: 'Разработка: <a href="#" target="_blank" style="color: #fff">Прохоров Павел</a>, <a href="http://medvedev.im" target="_blank" style="color: #fff" data-zerg-rush>Медведев Илья</a>',
@@ -1824,5 +1824,5 @@ $(document).ready(function(){
         z = new ZergRush(20);
 
         return false;
-    });
+    });*/
 });

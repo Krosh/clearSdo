@@ -23,8 +23,8 @@
                         $this->widget('zii.widgets.jui.CJuiTabs',array(
                             'tabs'=>array(
                                 'Люди'=>array('content'=>$this->renderPartial("/site/search/peoples", array("users" => $users),true) , 'id'=>'peoplesTab'),
-                                'Сообщения на форуме'=>array('content'=>$this->renderPartial("/site/search/threads", array("threads" => $threads),true) , 'id'=>'threadsTab'),
-                            ),
+          /*                      'Сообщения на форуме'=>array('content'=>$this->renderPartial("/site/search/threads", array("threads" => $threads),true) , 'id'=>'threadsTab'),
+          */                  ),
                             // additional javascript options for the tabs plugin
                             'options'=>array(
                                 'collapsible'=>true,

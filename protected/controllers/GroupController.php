@@ -161,7 +161,8 @@ class GroupController extends CController
                 $student = new User();
                 $student->fio = $Excel->sheets[0]['cells'][$num][1]." ".$Excel->sheets[0]['cells'][$num][2]." ".$Excel->sheets[0]['cells'][$num][3];
                 $student->role = "student";
-                $student->login = StringHelper::translitText(str_replace("-","",$group->Title)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][1],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][2],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][3],0,2));
+//                $student->login = StringHelper::translitText(str_replace("-","",$group->Title)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][1],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][2],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][3],0,2));
+                $student->login = StringHelper::translitText(str_replace("-","",$group->Title))."-".$num;
                 $student->password = $num;
                 if ($student->save())
                 {

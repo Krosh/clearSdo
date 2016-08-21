@@ -68,7 +68,7 @@ class Group extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Title', 'required'),
-			array('faculty', 'required'),
+//			array('faculty', 'required'),
 			array('Title, id_altstu', 'length', 'max'=>20),
             array('form_teaching,status', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().

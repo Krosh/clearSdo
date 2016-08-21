@@ -1,3 +1,7 @@
+<?php
+    return;
+?>
+
 <? /*
 <div class="sidebar-item">
     <div class="sidebar-title">

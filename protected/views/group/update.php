@@ -38,10 +38,10 @@
                             </style>
                             <table style="width: 100%" class="mid">
                                 <tr>
-                                    <td width="35%">
-                                        Добавить студентов из файла excel:
+                                    <td width="45%">
+                                        Добавить пользователей из файла excel<a href = "#" class="has-tip" title="1. Файл должен быть в формате XLS(Книге Excel 97-2003)<br>2.В первых трех столбцах должны содержаться соответственно фамилия, имя и отчество добавляемых учащихся<br>3. Логины студентов будут софрмирован из названия группы транслитом и порядкого номера в файле Excel, пароль равен порядковуму номеру в файле Excel">(Подробнее)</a>:
                                     </td>
-                                    <td width="65%" class="input-full-width" style="margin-top: 10px; ">
+                                    <td width="55%" class="input-full-width" style="margin-top: 10px; ">
                                         <?php
                                         echo Chtml::fileField("filename");
                                         echo CHtml::hiddenField("idGroup",$model->id);
@@ -67,6 +67,9 @@
                             'columns'=>array(
                                 array(
                                     'value' => '$data->fio',
+                                ),
+                                array(
+                                    'value' => '$data->login',
                                 ),
                                 array(
                                     'class'=>'CButtonColumn',

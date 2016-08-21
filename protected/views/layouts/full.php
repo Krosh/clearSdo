@@ -88,10 +88,10 @@ $cs->registerScriptFile("/js/moment-with-locales.min.js");
 <footer class="fixed">
     <div class="container">
         <div class="col-6">
-            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#" class="skiptranslate">СДО Стимул</a>
+            Copyright © 2008-<?=date("Y")?>, все права защищены <a href="http://www.sdo-stimul.ru" class="skiptranslate">СДО Стимул</a>
         </div>
-        <div class="col-6 right">
-            <span class="skiptranslate">СДО Стимул 2.0</span> &nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" class="footer-authors">Разработка системы</a>
+<!--        <div class="col-6 right">
+            <a href = "www.sdo-stimul.ru"><span class="skiptranslate">СДО Стимул 2.0</span></a> &nbsp;&nbsp;&nbsp; <!--<a href="javascript:void(0)" class="footer-authors">Разработка системы</a>-->
         </div>
     </div>
 </footer>

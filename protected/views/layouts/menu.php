@@ -73,10 +73,10 @@
                 </div>
             </div>
         <? endif; ?>
-        <div class="link">
+<!--        <div class="link">
             <a href="/forum">Форум</a>
         </div>
-    </div>
+-->    </div>
 </div>
 <script>
     $(document).ready(function()

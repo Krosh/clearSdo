@@ -20,26 +20,26 @@
     <?php echo $form->errorSummary($model); ?>
 
     <table style="width: 100%">
-        <tr>
+      <!--  <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'faculty', array()); ?>
+                <?php /*echo CHtml::activeLabel($model,'faculty', array()); */?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dropDownList($model, 'faculty', array("0" => "Выберите...")); ?>
+                <?php /*echo $form->dropDownList($model, 'faculty', array("0" => "Выберите...")); */?>
                 <i class="fa fa-spinner fa-spin faculty-loader"></i>
             </td>
         </tr>
 
         <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'id_altstu', array()); ?>
+                <?php /*echo CHtml::activeLabel($model,'id_altstu', array()); */?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dropDownList($model, 'id_altstu', array("0" => "Выберите факультет..."), array("disabled"=>"disabled")); ?>
-                <?php //echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
+                <?php /*echo $form->dropDownList($model, 'id_altstu', array("0" => "Выберите факультет..."), array("disabled"=>"disabled")); */?>
+                <?php /*//echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); */?>
                 <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
             </td>
-        </tr>
+        </tr>-->
 
         <tr>
             <td width="35%">
@@ -48,27 +48,27 @@
             <td width="65%" class="input-full-width">
                 <?php echo $form->textField($model, 'Title'); ?>
                 <?php //echo $form->textField($model,'Title',array('size'=>20,'maxlength'=>20)); ?>
-                <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
-            </td>
+         <!--       <i class="fa fa-spinner fa-spin group-loader" style="display: none;"></i>
+         -->   </td>
         </tr>
 
-        <tr>
+  <!--      <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'status', array()); ?>
+                <?php /*echo CHtml::activeLabel($model,'status', array()); */?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dropDownList($model, 'status', Group::getStatuses()); ?>
+                <?php /*echo $form->dropDownList($model, 'status', Group::getStatuses()); */?>
             </td>
         </tr>
-
-        <tr>
+-->
+     <!--   <tr>
             <td width="35%">
-                <?php echo CHtml::activeLabel($model,'form_teaching', array()); ?>
+                <?php /*echo CHtml::activeLabel($model,'form_teaching', array()); */?>
             </td>
             <td width="65%" class="input-full-width">
-                <?php echo $form->dropDownList($model, 'form_teaching', Group::getFormsTeaching()); ?>
+                <?php /*echo $form->dropDownList($model, 'form_teaching', Group::getFormsTeaching()); */?>
             </td>
-        </tr>
+        </tr>-->
 
 
         <? /* <tr>
