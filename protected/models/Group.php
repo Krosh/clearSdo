@@ -19,22 +19,24 @@ class Group extends CActiveRecord
 
     public static function getStatuses()
     {
-        return [1 => "Обучаются", "Закончили"];
+        return array(1 => "Обучаются", "Закончили");
     }
 
     public static function getFormsTeaching()
     {
-        return [1 => "Очная", "Вечерняя", "Заочная"];
+        return array(1 => "Очная", "Вечерняя", "Заочная");
     }
 
     public function getStatusAsString()
     {
-        return Group::getStatuses()[$this->status];
+        $item = Group::getStatuses();
+        return $item[$this->status];
     }
 
     public function getFormTeachingAsString()
     {
-        return Group::getFormsTeaching()[$this->form_teaching];
+        $item = Group::getFormsTeaching();
+        return $item[$this->form_teaching];
     }
 
 
