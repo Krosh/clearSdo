@@ -53,12 +53,12 @@
                             'buttons' => array(
                                 'delete' => array(
                                     'url' => '$this->grid->controller->createUrl("/courses/fullDeleteCourse", array("id"=>$data["id"]))',
-                                    'label' => '<i class="fa fa-remove"></i>',
+                                    'label' => '<i class="fa fa-remove" title="Удалить"></i>',
                                     'imageUrl' => false
                                 ),
                                 'update' => array(
                                     'url' => '$this->grid->controller->createUrl("/site/editCourse", array("idCourse"=>$data["id"]))',
-                                    'label' => '<i class="fa fa-pencil"></i>',
+                                    'label' => '<i class="fa fa-pencil" title="Редактировать"></i>',
                                     'imageUrl' => false
                                 )
                             )

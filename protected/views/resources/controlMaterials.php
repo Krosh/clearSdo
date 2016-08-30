@@ -52,12 +52,12 @@
                                     'template' => '{update} {delete}',
                                     'buttons' => array(
                                         'delete' => array(
-                                            'label' => '<i class="fa fa-remove"></i>',
+                                            'label' => '<i class="fa fa-remove" title="Удалить"></i>',
                                             'imageUrl' => false,
                                             'url' => '$this->grid->controller->createUrl("/controlMaterial/fullDeleteMaterial", array("id"=>$data["id"]))',
                                         ),
                                         'update' => array(
-                                            'label' => '<i class="fa fa-pencil"></i>',
+                                            'label' => '<i class="fa fa-pencil" title="Редактировать"></i>',
                                             'imageUrl' => false,
                                             'url' => '$this->grid->controller->createUrl("/controlMaterial/edit", array("idMaterial"=>$data["id"]))',
                                         )

@@ -57,6 +57,6 @@
         <?php $this->endWidget(); ?>
     </div>
 
-    <div class="copyright">Copyright © 2008-<?=date("Y")?>, все права защищены <a href="#">СДО Стимул</a></div>
+    <div class="copyright">Copyright © 2008-<?=date("Y")?>, все права защищены <a href="http://www.sdo-stimul.ru">СДО Стимул</a></div>
 </div>
 

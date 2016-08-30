@@ -60,7 +60,9 @@
                             'template' => '{delete}',
                             'buttons' => array(
                                 'delete' => array(
+                                    'label' => '<i class="fa fa-remove" title="Удалить"></i>',
                                     'url' => '$this->grid->controller->createUrl("/learnMaterial/fullDeleteMaterial", array("id"=>$data["id"]))',
+                                    'imageUrl' => false
                                 )
                             )
                         ),

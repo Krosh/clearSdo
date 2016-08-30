@@ -39,11 +39,11 @@
                             'template' => '{update} {delete}',
                             'buttons' => array(
                                 'update' => array(
-                                    'label' => '<i class="fa fa-pencil"></i>',
+                                    'label' => '<i class="fa fa-pencil" title="Редактировать"></i>',
                                     'imageUrl' => false
                                 ),
                                 'delete' => array(
-                                    'label' => '<i class="fa fa-remove"></i>',
+                                    'label' => '<i class="fa fa-remove" title="Удалить"></i>',
                                     'imageUrl' => false
                                 ),
                             ),

@@ -1,10 +1,10 @@
 @import url("reset.css");
-@import url("http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=cyrillic-ext,latin-ext,latin,cyrillic");
+@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic&subset=cyrillic-ext,latin-ext,latin,cyrillic");
 @import url("fonts/fonts.css");
 @import url("fonts/fileicon.css");
 @import url("plugins/jquery.fs.picker.css");
 @import url("plugins/jquery.fs.tabber.css");
-@import url("http://cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
+@import url("https://cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
 @import url("bootstrap.css");
 @import url("redactor.css");
 @import url("plugins/multi-select.css");
