@@ -23,7 +23,7 @@ class SiteController extends CController
             'yiic',
             'migrate',
             //          'down'
-//                      'create',
+//                 *     'create',
             //                  'add_links_to_forumusers',
         ));
         echo htmlentities(ob_get_clean(), null, Yii::app()->charset);

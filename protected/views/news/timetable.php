@@ -1,4 +1,5 @@
 <?php
+if (!Yii::app()->params["connectedWithAltSTU"])
     return;
 ?>
 
@@ -72,7 +73,7 @@ if (Yii::app()->user->isStudent()) {
 }
 ?>
 
-<? if($groups) { ?>
+<?php if($groups): ?>
 <textarea class="hide" id="schedule-groups"><?=trim(json_encode($groups))?></textarea>
 
 <div class="sidebar-item">
@@ -83,4 +84,4 @@ if (Yii::app()->user->isStudent()) {
         <i class="fa fa-spinner fa-spin schedule-loader"></i>
     </div>
 </div>
-<? } ?>
+<?php endif; ?>

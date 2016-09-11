@@ -6,7 +6,9 @@
  * The followings are the available columns in table 'tbl_webinars':
  * @property integer $id
  * @property string $idWebinar
+ * @property boolean $isPublic
  * @property string $dateStart
+ * @property string $password
  * @property integer $status
  */
 class Webinar extends CActiveRecord

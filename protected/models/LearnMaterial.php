@@ -20,6 +20,9 @@ class LearnMaterial extends CActiveRecord
     public $showOnlyNoUsed = false;
     public $accessInfo;
 
+    public $webinarPassword = "";
+    public $webinarIsPublic = false;
+
     /**
      * @return string the associated database table name
      */
@@ -52,6 +55,7 @@ class LearnMaterial extends CActiveRecord
             array('path, title', 'length', 'max'=>2000),
             array('content', 'length', 'max'=>65535),
             array('ext, courses', 'length', 'max'=>45),
+            array('webinarIsPublic,webinarPassword','safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('content, showOnlyNoUsed,ext, courses, id, path, title, category, idAutor', 'safe', 'on'=>'search'),
@@ -84,6 +88,8 @@ class LearnMaterial extends CActiveRecord
             'category' => 'Категория',
             'idAutor' => 'Код автора',
             'showOnlyNoUsed' => 'Показать только неиспользуемые',
+            "webinarIsPublic" => "Является публичным",
+            "webinarPassword" => "Пароль для входа",
             'content' => '',
         );
     }
@@ -165,6 +171,17 @@ class LearnMaterial extends CActiveRecord
         }
     }
 
+    public function afterFind()
+    {
+        if ($this->category == MATERIAL_WEBINAR)
+        {
+            $webinar = Webinar::model()->findByPk($this->content);
+            $this->webinarIsPublic = $webinar->isPublic;
+            $this->webinarPassword = $webinar->password;
+        }
+        return parent::afterFind();
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -186,6 +203,8 @@ class LearnMaterial extends CActiveRecord
                 $webinar = new Webinar();
                 $webinar->dateStart = $this->path;
                 $webinar->status = STATUS_PREPARE;
+                $webinar->password = $this->webinarPassword;
+                $webinar->isPublic = $this->webinarIsPublic;
                 $webinar->save();
                 $this->content = $webinar->id;
             }
@@ -339,19 +358,19 @@ class LearnMaterial extends CActiveRecord
             $webinar->checkOnEnd();
             if ($webinar->status == STATUS_PREPARE && Yii::app()->user->role == ROLE_TEACHER)
             {
-                return '<a href = "#" onclick = "startConference('.$this->id.'); return false"><i class = "fa fa-play"></i> Начать вебинар</a>';
+                return '<a class = "hrefMaterialWebinar" target = "_blank" href = "#" onclick = "startConference('.$this->id.'); return false"><i class = "fa fa-play"></i> Начать вебинар</a>';
             }
             if ($webinar->status == STATUS_ACTIVE)
             {
-                return '<a href = "'.Yii::app()->controller->createUrl("/webinar/connectToConference", array("idMaterial" => $this->id)).'" target = "_blank"><i class = "fa fa-user-plus"></i> Присоединиться к вебинару</a>';
+                return '<a class = "hrefMaterialWebinar" target = "_blank" href = "'.Yii::app()->controller->createUrl("/webinar/connectToConference", array("idMaterial" => $this->id)).'" target = "_blank"><i class = "fa fa-user-plus"></i> Присоединиться к вебинару</a>';
             }
             if ($webinar->status == STATUS_END)
             {
                 $path  = $webinar->getRecordPath();
                 if (!$path)
-                    return 'Вебинар окончен';
+                    return '<span class = "hrefMaterialWebinar" >Вебинар окончен</span>';
                 else
-                    return '<a href = "'.$path.'" target="_blank"><i class = "fa fa-video-camera"></i> Просмотреть запись</a>';
+                    return '<a class = "hrefMaterialWebinar" href = "'.$path.'" target="_blank"><i class = "fa fa-video-camera"></i> Просмотреть запись</a>';
             }
         }
         if ($this->category == MATERIAL_LINK)

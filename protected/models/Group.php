@@ -135,8 +135,12 @@ class Group extends CActiveRecord
         }
         $criteria = new CDbCriteria();
         $criteria->addInCondition('id',$arr);
+        $criteria->order = "fio ASC";
         return new CActiveDataProvider('User',array(
             'criteria' => $criteria,
+            'pagination'=>array(
+                'pageSize'=>50,
+            ),
         ));
     }
 

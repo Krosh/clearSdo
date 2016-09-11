@@ -136,6 +136,7 @@ class GroupController extends CController
     public function actionLoadStudentsFromExcel()
     {
         srand();
+        $newStudents = [];
         include(Yii::getPathOfAlias("webroot.protected.components.excel_reader2").".php");
         $idGroup = $_POST["idGroup"];
         $group = Group::model()->findByPk($idGroup);
@@ -161,53 +162,50 @@ class GroupController extends CController
                 $student = new User();
                 $student->fio = $Excel->sheets[0]['cells'][$num][1]." ".$Excel->sheets[0]['cells'][$num][2]." ".$Excel->sheets[0]['cells'][$num][3];
                 $student->role = "student";
-//                $student->login = StringHelper::translitText(str_replace("-","",$group->Title)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][1],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][2],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][3],0,2));
-                $student->login = StringHelper::translitText(str_replace("-","",$group->Title))."-".$num;
-                $student->password = $num;
+                $student->login = StringHelper::translitText(str_replace("-","",$group->Title))."_".StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][1],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][2],0,2)).StringHelper::translitText(substr($Excel->sheets[0]['cells'][$num][3],0,2));
+//                $student->login = StringHelper::translitText(mb_substr($Excel->sheets[0]['cells'][$num][1],1,1).mb_substr($Excel->sheets[1]['cells'][$num][1],1,1).mb_substr($Excel->sheets[2]['cells'][$num][1],1,1));
+                $newLogin = $student->login;
+                $i = 1;
+                while (User::model()->exists("login = '".$newLogin."'"))
+                    $newLogin = $student->login."_".($i++);
+                $student->login = $newLogin;
+                $student->password = rand(11111111,99999999);
                 if ($student->save())
                 {
                     $sg = new StudentGroup();
                     $sg->idStudent = $student->id;
                     $sg->idGroup = $idGroup;
                     $sg->save();
-                };
+                    $newStudents[] = $student;
+                } else
+                {
+                    $errorStudents[] = $student;
+                }
             }
             unlink($path);
         }
+
+        // Add students to csv and return it
+        $filePath = "temp/".$group->Title.time().".csv";
+
+        $output = fopen($filePath, 'w');
+        fputcsv($output, array(mb_convert_encoding("ФИО","WINDOWS-1251","UTF-8"),mb_convert_encoding("Логин","WINDOWS-1251","UTF-8"),mb_convert_encoding("Пароль","WINDOWS-1251","UTF-8")),";");
+        foreach ($newStudents as $user)
+        {
+            fputcsv($output, array(mb_convert_encoding($user->fio,"WINDOWS-1251","UTF-8"), mb_convert_encoding($user->login,"WINDOWS-1251","UTF-8"), mb_convert_encoding($user->realPassword,"WINDOWS-1251","UTF-8")),";");
+        }
+        header('Content-type: application/json');
+        echo CJSON::encode(array("path" => $filePath));
     }
 
-    function getContent($url, array $post){
-        $ecx = count($post);
-        while($ecx--){
-            @$post['fields'].=key($post).'='.array_shift($post).'&';
-        }
-        $post = rtrim($post['fields'], '&');
-        try {
-            $crl = curl_init($url);
-            curl_setopt_array($crl, array(
-                    CURLOPT_RETURNTRANSFER => 1,
-                    CURLOPT_POST => 1,
-                    CURLOPT_POSTFIELDS => $post,
-                    CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)',
-                    CURLOPT_FOLLOWLOCATION => 1
-                )
-            );
-            if(!($html = curl_exec($crl))) throw new Exception();
-            curl_close($crl);
-            return $html;
-
-        } catch(Exception $e){
-            return FALSE;
-        }
-    }
 
     public function actionGetTimetable()
     {
         $this->layout = null;
-         $idGroup = $_POST['idGroup'];
-        $url = 'http://www.altstu.ru/main/schedule/';
+        $idGroup = Yii::app()->request->getParam('idGroup');
         $group = Group::model()->findByPk($idGroup);
-        $text = $this->getContent($url,array("group" => $group->id_altstu));
+        $url = 'http://www.altstu.ru/main/schedule/';
+        $text = CurlHelper::getContent($url,array("group" => $group->id_altstu));
         preg_match_all("-<div class=\"schedule\">(.*)<div id=\"aside\">-s",$text,$matches);
         $text = $matches[1][0];
 

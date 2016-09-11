@@ -30,6 +30,7 @@ define("AVATAR_SIZE_MEDIUM",2);
 class User extends CActiveRecord
 {
 
+    public $realPassword = "";
     public $noNeedToLog = false;
     public $idGroup = -1;
     public $newAvatar = "";
@@ -180,6 +181,7 @@ class User extends CActiveRecord
     protected function beforeSave(){
         if ($this->isNewRecord)
         {
+            $this->realPassword = $this->password;
             $this->password = md5($this->password);
         }
         if ($this->email != "")

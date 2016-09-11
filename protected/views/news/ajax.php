@@ -14,10 +14,11 @@ $check_url = get_headers($url);
 if (!strpos($check_url[0],'200')) return;
 $xml = xml_parser_create();
 xml_parser_set_option($xml, XML_OPTION_SKIP_WHITE, 1);
-xml_parse_into_struct($xml, $this->getContent($url,array()), $element, $index);
+xml_parse_into_struct($xml, CurlHelper::getContent($url,array()), $element, $index);
 xml_parser_free($xml);
 $count = min(count($index["TITLE"])-1,$MAX_NEWS_COUNT);
 ?>
+
 <?php for ($i=0; $i < $count; $i++):?>
     <?php
     $text = $element[$index["DESCRIPTION"][$i+1]]["value"];

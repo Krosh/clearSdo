@@ -30,6 +30,54 @@ function readNotice(idNotice, hidedObject)
     });
 }
 
+
+function webinarChangePublicStatus(id,obj)
+{
+    var $obj = $(obj);
+    $.ajax({
+        type: 'GET',
+        url: '/webinar/changePublicStatus',
+        data: {id: id},
+        error: onError,
+        success: function(data)
+        {
+            if ($("#password-"+id).is(":visible"))
+            {
+                $obj.find(".js-webinar-private").show();
+                $obj.find(".js-webinar-public").hide();
+                $("#webinarPath"+id+" a").hide();
+                $("#password-"+id).hide();
+            } else
+            {
+                $obj.find(".js-webinar-private").hide();
+                $obj.find(".js-webinar-public").show();
+                $("#webinarPath"+id+" a").show();
+                $("#password-"+id).show();
+            }
+        }
+    });
+}
+
+function webinarShowPassword(id)
+{
+    $('input[name=password'+id+']').show();
+}
+
+function webinarChangePassword(id, obj)
+{
+    $obj = $(obj);
+    $.ajax({
+        type: 'GET',
+        url: '/webinar/changePassword',
+        data: {id: id, password: $obj.val() },
+        error: onError,
+        success: function(data)
+        {
+            $obj.hide();
+        }
+    });
+}
+
 function closeLearnMaterialDialog()
 {
     $("#learnMaterialForm").trigger('reset');
@@ -356,15 +404,23 @@ function changeWeights(idMaterial,idCourse)
 
 function loadStudentsFromExcel()
 {
+    if (document.getElementById("filename").value == "")
+    {
+        var n = noty({text: 'Нажмите кнопку Обзор для выбора файла с данными', type: "alert"});
+        return;
+    }
     var form = document.forms.loadStudentsFromExcelForm;
     var formData = new FormData(form);
+    console.log(formData);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/group/loadStudentsFromExcel");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if(xhr.status == 200) {
+                var data = JSON.parse(xhr.response);
                 $.fn.yiiGridView.update("group-grid");
                 var n = noty({text: 'Новые пользователи добавлены в группу', type: "success"});
+                window.location = "/"+data.path;
             }
         }
     };
@@ -701,6 +757,9 @@ function addLearnMaterial(idCourse)
         }
     };
     xhr.send(formData);
+    form.reset();
+    $(".dateDiv .checked").removeClass("checked");
+    $(".js-webinar-only-public").hide();
 }
 
 
@@ -1157,8 +1216,8 @@ $(document).ready(function(){
             });
         }
     });
-    if ($('.dtPicker').length)
-        $('.dtPicker').datetimepicker({ format:'d.m.Y H:i'});
+//    if ($('.dtPicker').length)
+//        $('.dtPicker').datetimepicker({ format:'d.m.Y H:i'});
 
     // Переход у таблиц по data-href
     if (window.currentTerm !== undefined) {

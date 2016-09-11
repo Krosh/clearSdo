@@ -7,6 +7,17 @@
     window.id_altstu = '<?php echo $model->id_altstu; ?>';
     window.faculty = '<?php echo $model->faculty; ?>';
 </script>
+<style>
+    table.mid td {
+        vertical-align: middle;
+    }
+
+    .NFI-wrapper {
+        display: inline-block !important;
+        vertical-align: middle !important;
+    }
+</style>
+
 
 <div class="wrapper">
     <div class="container">
@@ -22,40 +33,6 @@
 
                     <div>
                         <?php $this->renderPartial('_form', array('model'=>$model)); ?>
-                        <div style="width: 100%">
-                            <?php
-                            echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
-                            ?>
-                            <style>
-                                table.mid td {
-                                    vertical-align: middle;
-                                }
-
-                                .NFI-wrapper {
-                                    display: inline-block !important;
-                                    vertical-align: middle !important;
-                                }
-                            </style>
-                            <table style="width: 100%" class="mid">
-                                <tr>
-                                    <td width="45%">
-                                        Добавить пользователей из файла excel<a href = "#" class="has-tip" title="1. Файл должен быть в формате XLS(Книге Excel 97-2003)<br>2.В первых трех столбцах должны содержаться соответственно фамилия, имя и отчество добавляемых учащихся<br>3. Логины студентов будут софрмирован из названия группы транслитом и порядкого номера в файле Excel, пароль равен порядковуму номеру в файле Excel">(Подробнее)</a>:
-                                    </td>
-                                    <td width="55%" class="input-full-width" style="margin-top: 10px; ">
-                                        <?php
-                                        echo Chtml::fileField("filename");
-                                        echo CHtml::hiddenField("idGroup",$model->id);
-                                        ?>
-                                        <?php
-                                        echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()", 'class' => 'btn blue small'));
-                                        ?>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
-                            <?php echo CHtml::endForm(); ?>
-
-                        </div>
                         <?php $this->widget('zii.widgets.grid.CGridView', array(
                             'id'=>'group-grid',
                             'dataProvider'=>$model->searchAllStudents(),
@@ -63,12 +40,18 @@
                                 'class' => 'table green',
                                 'style' => 'width: 100%',
                             ),
-                            'filter'=>$model,
+                            'filter'=>null,
                             'columns'=>array(
                                 array(
+                                    'header' => '№',
+                                    'value'  => '$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + $row + 1',
+                                ),
+                                array(
+                                    'header' => 'ФИО',
                                     'value' => '$data->fio',
                                 ),
                                 array(
+                                    'header' => 'Логин',
                                     'value' => '$data->login',
                                 ),
                                 array(
@@ -91,50 +74,31 @@
                             ),
                         )); ?>
 
-                        <?php echo CHtml::link('Добавить нового пользователя',$this->createUrl("/user/create",array("idGroup" => $model->id)),array("class" => "btn blue")); ?>
 
+
+
+                        <div>
+                            Вы можете добавить студентов в группу тремя способами:
+                        </div>
                         <br>
-                        Добавить существующего пользователя в группу:
-                        <!--  --><?php
-                        /*                        $mas = array();
-                                                $models = User::model()->findAll("role = ".ROLE_STUDENT);
-                                                foreach ($models as $item)
-                                                {
-                                                    $mas[$item->id] = $item->fio;
-                                                }
-                                                $fakeModel = new User;
-                                                $fakeModel->fio = "";
-                                                $this->widget('ext.combobox.EJuiComboBox', array(
-                                                    'model' => $fakeModel,
-                                                    'attribute' => 'fio',
-                                                    'data' => $mas,
-                                                    'options' => array(
-                                                        'onSelect' => '
-                                                            $.ajax({
-                                                            type: "POST",
-                                                            url: "/group/addToGroup",
-                                                            data: {fio: item.value, group:'.$model->id.'},
-                                                            success: function(data)
-                                                            {
-                                                                $.fn.yiiGridView.update("group-grid");
-                                                                $(this).val("");
-
-                                                            },
-                                                            error: function(jqXHR, textStatus, errorThrown){
-                                                                alert("error"+textStatus+errorThrown);
-                                                            }});
-                                                            ',
-                                                        'allowText' => false,
-                                                    ),
-                                                    // Options passed to the text input
-                                                    'htmlOptions' => array('size' => 30),
-                                                ));
-
-                                                */?>
-                        <div class = "selectStudent" data-idGroup = "<?php echo $model->id; ?>">
-                            <?php
-                            echo CHTML::hiddenField("addUserToGroup",-1,array(
-                                'onchange' => "$.ajax({
+                        <table style="width: 100%" class="mid">
+                            <tr>
+                                <td>
+                                    1) Добавить из существующих в базе:
+                                </td>
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;2) Создать нового
+                                </td>
+                                <td>
+                                    3) Добавить пользователей из файла excel<a href = "#" class="has-tip" title="1. Файл должен быть в формате XLS(Книге Excel 97-2003)<br>2.В первых трех столбцах должны содержаться соответственно фамилия, имя и отчество добавляемых учащихся<br>3. Логины студентов будут софрмирован из названия группы транслитом и порядкого номера в файле Excel, пароль равен порядковому номеру в файле Excel">(Подробнее)</a>:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%">
+                                    <div class = "selectStudent" data-idGroup = "<?php echo $model->id; ?>">
+                                        <?php
+                                        echo CHTML::hiddenField("addUserToGroup",-1,array(
+                                            'onchange' => "$.ajax({
                                               type: 'POST',
                                               url: '/group/addToGroup',
                                               data: {id: this.value, group:".$model->id."},
@@ -144,14 +108,37 @@
                                                     $(this).val('');
                                               }});
                                               ",
-                            ));
-                            ?>
-                        </div>
+                                        ));
+                                        ?>
+                                    </div>
+                                </td>
+                                <td width="20%">
+                                    <?php echo CHtml::link('Создать',$this->createUrl("/user/create",array("idGroup" => $model->id)),array("class" => "btn blue")); ?>
+                                </td>
+                                <td width="40%">
+                                    <div style="width: 100%">
+                                        <?php
+                                        echo CHtml::form("",'post',array("id" => "loadStudentsFromExcelForm"));
+                                        ?>
+                                        <?php
+                                        echo Chtml::fileField("filename");
+                                        echo CHtml::hiddenField("idGroup",$model->id);
+                                        ?>
+                                        <?php
+                                        echo Chtml::button("Загрузить", array("onclick" => "loadStudentsFromExcel()", 'class' => 'btn blue small'));
+                                        ?>
+                                </td>
+                                <?php echo CHtml::endForm(); ?>
 
                     </div>
+                    </td>
+                    </tr>
+                    </table>
 
                 </div>
+
             </div>
+        </div>
 
 
-            
+

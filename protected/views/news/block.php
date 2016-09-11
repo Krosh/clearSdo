@@ -11,6 +11,8 @@
     <div class="sidebar-title">
         Новости
     </div>
-<!--    <div class="sidebar-content" id = "news-content">
+    <?php if (Yii::app()->params["connectedWithAltSTU"]):?>
+    <div class="sidebar-content" id = "news-content">
     </div>
---></div>
+    <?php endif; ?>
+</div>

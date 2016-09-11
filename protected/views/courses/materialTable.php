@@ -54,12 +54,29 @@
                 }
                 ?>
                 <img <?=$url?> class="file-icon" src="/img/fileicons/<?=$f?>.png" alt="">
-                <input class = "changeOnEnter" id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->getViewedTitle()?>" style="display:none">
-                <span id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
+                <input class = "editMaterialTitle changeOnEnter" id = "editTitle<?php echo $item->id;?>" type="text" onchange="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" onfocusout="ajaxChangeLearnMaterialTitle(this,<?php echo $item->id;?>)" value = "<?php echo $item->getViewedTitle()?>" style="display:none; width: 300px !important;">
+                <span class = "labelMaterialTitle" id = "labelTitle<?php echo $item->id;?>" onclick="startChangeLearnMaterialTitle(this,<?php echo $item->id;?>)">
                 <?
                 echo $item->getViewedTitle();
                 ?>
                 </span>
+
+                <?php if ($item->category == MATERIAL_WEBINAR):?>
+                    <?php
+                    $webinar = Webinar::model()->findByPk($item->content);
+                    $isPublic = $webinar->isPublic;
+                    $password = $webinar->password;
+                    ?>
+                    <span onclick="webinarChangePublicStatus(<?php echo $item->id; ?>,this)" class="webinar_status_icon">
+                        <i class="js-webinar-public fa fa-globe fa-2x has-tip" title="Публичный вебинар" data-title="Публичный вебинар" <?php if (!$isPublic):?>style="display: none" <?php endif; ?>></i>
+                        <i class="js-webinar-private fa fa-low-vision fa-2x has-tip" title="Приватный вебинар" data-title="Приватный вебинар" <?php if ($isPublic):?>style="display: none" <?php endif; ?>></i>
+                    </span>
+
+                    <span class="webinar_password" id = "password-<?php echo $item->id ;?>" style="<?php if (!$isPublic) echo "display:none"; ?>">
+                        <i class="fa fa-key fa-2x" onclick="webinarShowPassword(<?php echo $item->id ;?>)"></i>
+                        <?php echo CHtml::textField("password".$item->id,$password,array("onchange" => "webinarChangePassword({$item->id}, this)", "class" => "changeOnEnter", "style" => "display:none")); ?>
+                    </span>
+                <?php endif; ?>
 
                 <div class="bottoms-info-table">
                     <?php if ($item->category == MATERIAL_LINK): ?>
@@ -75,6 +92,11 @@
                         </span>
                     <?php else: ?>
                         <?php echo $item->getInfoText(true); ?>
+                    <?php endif; ?>
+                    <?php if ($item->category == MATERIAL_WEBINAR):?>
+                        <span id = "webinarPath<? echo $item->id;?>" class="webinar_path" >
+                            <a href = "<?php echo "/webinar/connect?id=".$item->id; ?>" <?php if (!$isPublic):?>style="display: none" <?php endif; ?>>Публичная ссылка</a>
+                        </span>
                     <?php endif; ?>
                 </div>
             </td>

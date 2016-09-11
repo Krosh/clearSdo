@@ -48,6 +48,7 @@ return array(
         'attendeePW' => 'adsasdasd',
         'moderatorPW' => 'asdsgsdhsa12sd',
         'timezone' => "Asia/Omsk",
+        "connectedWithAltSTU" => true,
         'avatarStatuses' => array('Проходит модерацию', 'Одобрен модератором', 'Заблокирован модератором'),
         'roles' => array (ROLE_ADMIN => 'Администратор', ROLE_STUDENT => 'Студент', ROLE_TEACHER => 'Преподаватель'),
     ),

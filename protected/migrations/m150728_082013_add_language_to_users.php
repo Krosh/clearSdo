@@ -3,7 +3,9 @@
 class m150728_082013_add_language_to_users extends CDbMigration
 {
 	public function up()
-	{    $sql = "
+	{
+
+        $sql = "
  ALTER TABLE `tbl_users`
 ADD COLUMN `defaultLanguage` VARCHAR(45) NULL AFTER `idForumUser`;
 ";

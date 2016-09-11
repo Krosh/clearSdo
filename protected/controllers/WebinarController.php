@@ -13,20 +13,6 @@ class WebinarController extends CController
         );
     }
 
-    public function actionInit()
-    {
-        $bbb=Yii::app()->bigbluebutton;
-//set default passwords (you may also set them from configuration)
-        $bbb->attendeePW=123;
-        $bbb->moderatorPW=12345;
-
-//create simple meeting with default parameters and generate join url for TestUser
-        $meeting=$bbb->createMeeting("test_from_russia");
-//see what response we've got from server
-        CVarDumper::dump($meeting, 10, 1);
-        echo "<br/>";
-    }
-
     public function actionConnectToConference($idMaterial)
     {
         $material = LearnMaterial::model()->findByPk($idMaterial);
@@ -79,6 +65,22 @@ class WebinarController extends CController
         }
     }
 
+    public function actionChangePublicStatus($id)
+    {
+        $material = LearnMaterial::model()->findByPk($id);
+        $webinar = Webinar::model()->findByPk($material->content * 1);
+        $webinar->isPublic = 1 - $webinar->isPublic;
+        $webinar->save();
+    }
+
+    public function actionChangePassword($id,$password)
+    {
+        $material = LearnMaterial::model()->findByPk($id);
+        $webinar = Webinar::model()->findByPk($material->content);
+        $webinar->password = $password;
+        $webinar->save();
+    }
+
     static public function actionGetRecords($idMaterial)
     {
         $material = LearnMaterial::model()->findByPk($idMaterial);
@@ -115,7 +117,35 @@ class WebinarController extends CController
         echo "<br/>";
     }
 
+    public function actionConnect($id)
+    {
+        $material = LearnMaterial::model()->findByPk($id);
+        if ($material == null)
+            throw new Exception("Такого вебинара не зарегистрировано");
 
+        $error = false;
+        $form = new LoginWebinarForm();
+        if(isset($_POST['LoginWebinarForm']))
+        {
+            $form->attributes=$_POST['LoginWebinarForm'];
+            $mat = Webinar::model()->findByPk($material->content);
+            if ($mat == null || !$mat->isPublic)
+                throw new Exception("Такого вебинара не зарегистрировано");
+            if ($mat->password == $form->password)
+            {
+                $bbb=Yii::app()->bigbluebutton;
+                $bbb->attendeePW=Yii::app()->params['attendeePW'];
+                $bbb->moderatorPW=Yii::app()->params['moderatorPW'];
+
+                $role = BigBlueButton::ROLE_VIEWER;
+                $joinUrl=$bbb->getJoinMeetingUrl($mat->idWebinar, $form->username, null, $role);
+                $this->redirect($joinUrl);
+            } else
+                $error = true;
+        }
+        $this->layout = "/layouts/main";
+        $this->render("connect",array("model" => $form, "title" => $material->title, "error" => $error));
+    }
 
 
 

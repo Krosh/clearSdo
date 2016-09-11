@@ -39,7 +39,6 @@
                     <?php echo $form->labelEx($model,'path'); ?>
                 </div>
                 <div class="dateDiv">
-                    <label>Дата начала:</label>
                 </div>
             </td>
             <td>
@@ -52,12 +51,39 @@
                     <?php echo $form->error($model,'path'); ?>
                 </div>
                 <div class="dateDiv">
-                    <?php
-//                        echo
-                    ?>
-  <!--                  <?php /*echo $form->textField($model,'path',array('id' => "filePath", 'class' => 'dtPicker'))*/?>
-  -->              </div>
+
+                    <!--                    --><?php //echo $form->textField($model,'path',array('id' => "filePath", 'class' => 'dtPicker')); ?>
+                    <?php echo $form->label($model,"webinarIsPublic"); ?>
+                    <?php echo $form->checkBox($model,"webinarIsPublic",array("class" => "js-change-public")); ?>
+                </div>
+                <?php
+                    Yii::app()->clientScript->registerScript("webinarPublic","
+                        $('.js-change-public').change(function()
+                        {
+                            if ($(this).is(':checked'))
+                            {
+                                $('.js-webinar-only-public').show();
+                            } else
+                            {
+                                $('.js-webinar-only-public').hide();
+                            }
+                        }).change();
+                    ")
+                ?>
             </td>
+        </tr>
+        <tr class="js-webinar-only-public">
+            <td>
+                <div class="dateDiv ">
+                    <?php echo $form->label($model,"webinarPassword"); ?>
+                </div>
+            </td>
+            <td>
+                <div class="dateDiv">
+                    <?php echo $form->textField($model,"webinarPassword"); ?>
+                </div>
+            </td>
+
         </tr>
     </table>
 

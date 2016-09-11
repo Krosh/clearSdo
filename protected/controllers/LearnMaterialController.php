@@ -120,6 +120,11 @@ class LearnMaterialController extends CController
         $mat->idAutor = Yii::app()->user->getId();
         $mat->title = $_POST["LearnMaterial"]["title"];
         $mat->category = $_POST["LearnMaterial"]["category"];
+        if (isset($_POST["LearnMaterial"]["webinarIsPublic"]))
+        {
+            $mat->webinarIsPublic = $_POST["LearnMaterial"]["webinarIsPublic"];
+            $mat->webinarPassword = $_POST["LearnMaterial"]["webinarPassword"];
+        }
         $mat->category == MATERIAL_LINK ? $mat->path = $_POST["LinkPath"]:$mat->path = $_FILES['filePath']['name'];
         if ($mat->save())
         {
