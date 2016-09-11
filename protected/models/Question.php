@@ -149,7 +149,7 @@ class Question extends CActiveRecord
             $courseMaterial->save();
         }
         Yii::app()->user->setFlash('message','Порядок материалов изменен');
-        $this->redirect($this->createUrl('/site/editCourse', array('id' => $id)));
+//        $this->redirect($this->createUrl('/courses/edit', array('id' => $id)));
     }
 
     public function getMark($userAnswer)

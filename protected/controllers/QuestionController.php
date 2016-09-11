@@ -119,7 +119,7 @@ class QuestionController extends CController
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $test = ControlMaterial::model()->findByPk($idMaterial);
         $this->breadcrumbs=array(
-            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            $course->title => array($this->createUrl("/courses/edit",array("id" => Yii::app()->session['currentCourse']))),
             $test->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
             'Вопрос'=> array($this->createUrl("/question/edit",array("idMaterial" => $idMaterial,"id" => $id))),
         );

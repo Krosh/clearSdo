@@ -341,7 +341,7 @@ class ControlMaterialController extends CController
         $model = $this->loadModel($idMaterial);
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $this->breadcrumbs=array(
-            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            $course->title => array($this->createUrl("/courses/edit",array("id" => Yii::app()->session['currentCourse']))),
             $model->title => array($this->createUrl("/controlMaterial/edit",array("idMaterial" => $idMaterial))),
         );
         if (isset($_POST['ControlMaterial']))

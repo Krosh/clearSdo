@@ -68,10 +68,10 @@
         ?>
         <?
         if($isStudent) {
-            $url = "/viewCourse?idCourse=". $item->id;
+            $url = $this->createUrl("/courses/view",array("id" =>  $item->id));
         } else
         {
-            $url = "/editCourse?idCourse=". $item->id;
+            $url = $this->createUrl("/courses/edit",array("id" =>  $item->id));
         }
         ?>
         <tr data-href="<?=$url?>">

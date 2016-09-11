@@ -16,6 +16,39 @@ class CoursesController extends CController
         );
     }
 
+    public function actionEdit($id)
+    {
+        $course = Course::model()->findByPk($id);
+        if ($course == null)
+        {
+            throw new CHttpException(404,'Не ломайте стимул!!');
+        }
+        Yii::app()->session['currentCourse'] = $id;
+        $this->breadcrumbs=array(
+            $course->title => array($this->createUrl("/courses/edit",array("id" => $id)))
+        );
+        if(isset($_POST['Course']))
+        {
+            $course->attributes=$_POST['Course'];
+            if($course->save())
+                $this->refresh();
+        }
+
+        $this->render('edit', array('model' => $course));
+    }
+
+    public function actionView($id)
+    {
+        $course = Course::model()->findByPk($id);
+        if ($course == null)
+        {
+            // Бросить ошибку
+        }
+        Yii::app()->session['currentCourse'] = $id;
+        $this->render('view', array('model' => $course));
+    }
+
+
     public function actionGetCourses()
     {
         $idTerm = $_POST['idTerm'];
@@ -97,7 +130,7 @@ class CoursesController extends CController
     {
         $model = new Course();
         $model->save();
-        $this->redirect($this->createUrl("/editCourse?idCourse=".$model->id));
+        $this->redirect($this->createUrl("/courses/edit?id=".$model->id));
     }
 
     public function actionFullDeleteCourse($id)
@@ -115,7 +148,7 @@ class CoursesController extends CController
     {
         $model = Course::model()->findByPk($id);
         $this->breadcrumbs=array(
-            $model->title => array($this->createUrl("/site/editCourse",array("idCourse" => $id))),
+            $model->title => array($this->createUrl("/courses/edit",array("id" => $id))),
             "Календарь" => "",
         );
         $this->noNeedSidebar = true;

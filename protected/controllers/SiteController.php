@@ -86,38 +86,6 @@ class SiteController extends CController
         }
     }
 
-    public function actionViewCourse($idCourse)
-    {
-        $course = Course::model()->findByPk($idCourse);
-        if ($course == null)
-        {
-            // Бросить ошибку
-        }
-        Yii::app()->session['currentCourse'] = $idCourse;
-        $this->render('viewCourse', array('model' => $course));
-    }
-
-    public function actionEditCourse($idCourse)
-    {
-        $course = Course::model()->findByPk($idCourse);
-        if ($course == null)
-        {
-            throw new CHttpException(404,'Не ломайте стимул!!');
-        }
-        Yii::app()->session['currentCourse'] = $idCourse;
-        $this->breadcrumbs=array(
-            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse)))
-        );
-        if(isset($_POST['Course']))
-        {
-            $course->attributes=$_POST['Course'];
-            if($course->save())
-                $this->refresh();
-        }
-
-        $this->render('editCourse', array('model' => $course));
-    }
-
     public function actionJournal($idCourse,$idGroup, $print = false)
     {
         $course = Course::model()->findByPk($idCourse);
@@ -138,7 +106,7 @@ class SiteController extends CController
         else
         {
             $this->breadcrumbs=array(
-                $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => $idCourse))),
+                $course->title => array($this->createUrl("/courses/edit",array("id" => $idCourse))),
                 "Журнал ".$group->Title => array($this->createUrl("/site/journal",array("idCourse" => $idCourse, "idGroup" => $idGroup)))
             );
             if ($print)

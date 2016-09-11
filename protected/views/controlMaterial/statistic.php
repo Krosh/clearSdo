@@ -17,7 +17,7 @@
                     <div class="page-heading">
                         <div class="page-title">
                             Статистика по: <?php echo $controlMaterial->title; ?></div>
-                        <a href = "<?php echo $this->createUrl("/site/editCourse", array("idCourse" => Yii::app()->session['currentCourse'])); ?>"><div>Вернуться к курсу</div></a>
+                        <a href = "<?php echo $this->createUrl("/courses/edit", array("id" => Yii::app()->session['currentCourse'])); ?>"><div>Вернуться к курсу</div></a>
                         <div class="clearfix"></div>
                         <div id = "chartContainer" style="width: 100%; height: 400px">
 

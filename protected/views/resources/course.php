@@ -57,7 +57,7 @@
                                     'imageUrl' => false
                                 ),
                                 'update' => array(
-                                    'url' => '$this->grid->controller->createUrl("/site/editCourse", array("idCourse"=>$data["id"]))',
+                                    'url' => '$this->grid->controller->createUrl("/courses/edit", array("id"=>$data["id"]))',
                                     'label' => '<i class="fa fa-pencil" title="Редактировать"></i>',
                                     'imageUrl' => false
                                 )

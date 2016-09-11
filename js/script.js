@@ -395,7 +395,7 @@ function changeWeights(idMaterial,idCourse)
         type: "POST",
         success: function(data)
         {
-            window.location =  "/editCourse?idCourse="+idCourse;
+            window.location =  "/courses/edit?id="+idCourse;
         },
         error: onError,
     });

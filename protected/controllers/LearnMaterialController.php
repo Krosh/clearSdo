@@ -52,12 +52,12 @@ class LearnMaterialController extends CController
         {
             $mat->attributes=$_POST['LearnMaterial'];
             if($mat->save())
-                $this->redirect($this->createUrl("/site/editCourse", array("idCourse" => Yii::app()->session['currentCourse'])));
+                $this->redirect($this->createUrl("/courses/edit", array("id" => Yii::app()->session['currentCourse'])));
         }
 
         $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
         $this->breadcrumbs=array(
-            $course->title => array($this->createUrl("/site/editCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+            $course->title => array($this->createUrl("/courses/edit",array("id" => Yii::app()->session['currentCourse']))),
             $mat->title => array($this->createUrl("/learnMaterial/edit",array("idMaterial" => $idMaterial))),
         );
         $this->render("edit", array("model" => $mat));
@@ -223,7 +223,7 @@ class LearnMaterialController extends CController
         {
             $course = Course::model()->findByPk(Yii::app()->session['currentCourse']);
             $this->breadcrumbs=array(
-                $course->title => array($this->createUrl("/site/viewCourse",array("idCourse" => Yii::app()->session['currentCourse']))),
+                $course->title => array($this->createUrl("/courses/view",array("id" => Yii::app()->session['currentCourse']))),
                 $mat->title => array($this->createUrl("/learnMaterial/getMaterial",array("matId" => $mat->id))),
             );
             $this->render("view", array("model" => $mat));
