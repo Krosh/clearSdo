@@ -213,7 +213,7 @@ class LearnMaterialController extends CController
     public function actionGetMaterials()
     {
         $idCourse = $_POST["idCourse"];
-        $this->renderPartial("/courses/materialTable", array("idCourse" => $idCourse));
+        $this->renderPartial("/learnMaterial/table", array("idCourse" => $idCourse));
     }
 
     public function actionGetMaterial($matId)
