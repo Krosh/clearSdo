@@ -5,6 +5,7 @@
  */
 class CoursesController extends CController
 {
+    public $layout = "/layouts/full";
     public $breadcrumbs;
     public $noNeedSidebar = false;
     public function filters()
@@ -152,7 +153,6 @@ class CoursesController extends CController
             "Календарь" => "",
         );
         $this->noNeedSidebar = true;
-        $this->layout = "//layouts/full";
         $alreadyHasDateMaterials = array();
         $withoutDateMaterials = array();
         foreach ($model->coursesControlMaterial as $item)
