@@ -362,7 +362,7 @@ class User extends CActiveRecord
         $this->email = $oldEmail;
         $this->save();
         $text = "Для изменения адреса электронной почты, перейдите по ссылке: http://".$_SERVER['SERVER_NAME']."/user/setNewEmail?idUser=".$this->id."&cache=".$this->activationCache;
-        if(MailHelper::sendMail($this->new_email,"Изменение адрема электронной почты",$text)) {
+        if(MailHelper::sendMail($this->new_email,"Изменение адреса электронной почты",$text)) {
             return true;
         } else {
             return false;

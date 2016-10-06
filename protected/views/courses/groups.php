@@ -8,7 +8,7 @@
  */?>
 <?php
 $groups = Course::getGroups($idCourse,$idTerm);
-$allGroups = Group::model()->findAll("status = ".STATUS_ACTIVE);
+$allGroups = Group::model()->findAll("status = ".GROUP_ACTIVE);
 $res = "";
 foreach ($allGroups as $item)
 {

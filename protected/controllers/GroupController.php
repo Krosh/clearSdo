@@ -136,7 +136,7 @@ class GroupController extends CController
     public function actionLoadStudentsFromExcel()
     {
         srand();
-        $newStudents = [];
+        $newStudents = array();
         include(Yii::getPathOfAlias("webroot.protected.components.excel_reader2").".php");
         $idGroup = $_POST["idGroup"];
         $group = Group::model()->findByPk($idGroup);

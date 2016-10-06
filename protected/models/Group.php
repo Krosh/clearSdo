@@ -1,7 +1,7 @@
 <?php
 
-define("STATUS_ACTIVE",1);
-define("STATUS_INACTIVE",2);
+define("GROUP_ACTIVE",1);
+define("GROUP_INACTIVE",2);
 /**
  * This is the model class for table "tbl_groups".
  *
